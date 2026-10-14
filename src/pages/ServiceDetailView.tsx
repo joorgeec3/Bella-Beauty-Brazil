@@ -126,7 +126,7 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
               </div>
             </div>
             <div className="lg:col-span-6">
-              <img src={service.image} alt={service.id === 'teeth-whitening' ? 'Bella Beauty Brazil studio treatment room in Greenslopes' : `${service.title} at Bella Beauty Brazil in Greenslopes`} className="w-full aspect-[4/3] object-cover rounded-2xl shadow-2xl border border-white/20" />
+              <img src={service.image} alt={service.id === 'teeth-whitening' ? 'Bella Beauty Brazil studio interior in Greenslopes' : service.category === 'Skin' ? 'Bella Beauty Brazil editorial photograph of facial skin care' : `${service.title} at Bella Beauty Brazil in Greenslopes`} className="w-full aspect-[4/3] object-cover rounded-2xl shadow-2xl border border-white/20" />
             </div>
           </div>
         </div>
