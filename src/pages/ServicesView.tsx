@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { ArrowRight, CalendarDays, Clock3, MapPin, Search, X } from 'lucide-react';
 import { BOOKING_URL, SERVICES, Language, getLocalizedService, getServiceBookingUrl } from '../data/siteData';
+import { siteImages } from '../data/siteImages';
 
 interface ServicesViewProps {
   initialServiceId?: string;
@@ -72,6 +73,23 @@ const copy: Record<Language, {
 };
 
 const featuredServiceIds = ['nano-strokes', 'shadow-hybrid', 'lip-blush', 'brow-lamination', 'lash-lift', 'teeth-whitening'];
+
+// Only use authentic, individually distinct images when a matching one exists.
+// The remaining treatments stay visible as text-rich cards until the studio provides photos.
+const cardPhotos: Record<string, string> = {
+  'nano-strokes': siteImages.services.brows,
+  'lip-blush': siteImages.services.lipBlush,
+  'lash-lift': siteImages.services.lashes,
+  dermaplaning: siteImages.services.facialTreatment,
+  'brow-sculpt-tint': siteImages.services.browTreatment,
+  'teeth-whitening': siteImages.aboutMe.treatmentRoom,
+  waxing: siteImages.services.waxing,
+};
+const imageAlt = (id: string, title: string) =>
+  id === 'teeth-whitening' ? 'Interior of the Bella Beauty Brazil studio in Greenslopes'
+    : id === 'brow-sculpt-tint' ? 'Livia Rego styling eyebrows at Bella Beauty Brazil'
+    : id === 'dermaplaning' ? 'Editorial photograph of a facial treatment at Bella Beauty Brazil'
+    : title + ' at Bella Beauty Brazil';
 const normalizeSearch = (value: string) => value.toLocaleLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 
 export const ServicesView: React.FC<ServicesViewProps> = ({ initialServiceId, onNavigateToService, language }) => {
@@ -166,12 +184,11 @@ export const ServicesView: React.FC<ServicesViewProps> = ({ initialServiceId, on
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
           {filteredServices.map((service) => <article key={service.id}
             className="bg-white border border-[#e8d6d5] rounded-2xl shadow-sm overflow-hidden flex flex-col sm:flex-row hover:shadow-lg transition-shadow">
-            <a href={'/services/' + service.id} onClick={(event) => navigate(event, service.id)}
+            {cardPhotos[service.id] && <a href={'/services/' + service.id} onClick={(event) => navigate(event, service.id)}
               className="block sm:w-[165px] sm:shrink-0 overflow-hidden bg-[#eee2df] focus-visible:outline-2 focus-visible:outline-[#9a5967]">
-              <img src={service.image}
-                alt={service.id === 'teeth-whitening' ? 'Bella Beauty Brazil studio room in Greenslopes' : service.category === 'Skin' ? 'Bella Beauty Brazil facial treatment editorial photograph' : service.title + ' at Bella Beauty Brazil'}
+              <img src={cardPhotos[service.id]} alt={imageAlt(service.id, service.title)}
                 loading="lazy" className="w-full h-44 sm:h-full max-h-[240px] sm:max-h-none object-cover hover:scale-[1.03] transition-transform duration-500" />
-            </a>
+            </a>}
             <div className="min-w-0 p-4 sm:p-5 flex-1 flex flex-col">
               <span className="font-montserrat text-[10px] font-bold uppercase tracking-[0.14em] text-[#9a5967]">{categoryLabels[language][service.category as Category] || service.category}</span>
               <h2 className="font-raleway text-lg sm:text-xl font-semibold text-[#5b3239] mt-1 leading-snug">{service.title}</h2>
