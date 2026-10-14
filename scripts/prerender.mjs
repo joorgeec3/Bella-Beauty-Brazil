@@ -25,16 +25,27 @@ const isGitHubPages = process.env.GITHUB_PAGES === 'true';
 const buildDir = isGitHubPages ? 'dist-pages' : 'dist';
 const publicAsset = (path) => isGitHubPages ? `/Bella-Beauty-Brazil${path}` : path;
 const source = await readFile(join(buildDir, 'index.html'), 'utf8');
-const scriptSrc = source.match(/<script type="module"[^>]+src="([^"]+)"/)?.[1] || '/src/main.tsx';
-const cssLinks = [...source.matchAll(/<link rel="stylesheet"[^>]+href="([^"]+)"/g)].map((match) => `<link rel="stylesheet" href="${match[1]}">`).join('');
-
+const siteOrigin = (process.env.PUBLIC_SITE_URL || 'https://bella-beauty-brazil.vercel.app').replace(/\/+$/, '');
+const renderPage = ({ title, description, canonicalUrl, body, schema }) => {
+  // Replace the homepage tags; adding a second title/canonical is invalid SEO.
+  let html = source
+    .replace(/<title>[\s\S]*?<\/title>/i, `<title>${escapeHtml(title)}</title>`)
+    .replace(/<meta name="description"[^>]*>/i, `<meta name="description" content="${escapeHtml(description)}" />`)
+    .replace(/<link rel="canonical"[^>]*>/i, `<link rel="canonical" href="${canonicalUrl}" />`)
+    .replace(/<meta property="og:title"[^>]*>/i, `<meta property="og:title" content="${escapeHtml(title)}" />`)
+    .replace(/<meta property="og:description"[^>]*>/i, `<meta property="og:description" content="${escapeHtml(description)}" />`)
+    .replace(/<meta property="og:url"[^>]*>/i, `<meta property="og:url" content="${canonicalUrl}" />`)
+    .replace(/<div id="root"><\/div>/, `<div id="root">${body}</div>`);
+  if (schema) html = html.replace(/<\/head>/i, `<script type="application/ld+json">${JSON.stringify(schema)}</script></head>`);
+  return html;
+};
 for (const [slug, service] of Object.entries(services)) {
-  const url = `https://www.bellabeautybrazil.com.au/services/${slug}`;
+  const url = `${siteOrigin}/services/${slug}`;
   const title = `${service.title} | Bella Beauty Brazil Greenslopes`;
   const description = `${service.description} Confirmed Timely details and official booking at Bella Beauty Brazil in Greenslopes, Brisbane.`;
   const schema = { '@context': 'https://schema.org', '@type': 'Service', name: service.title, description: service.description, provider: { '@type': 'BeautySalon', name: 'Bella Beauty Brazil', telephone: '+61 402 148 437', address: { '@type': 'PostalAddress', streetAddress: 'Suite 3, 412 Logan Road', addressLocality: 'Greenslopes', addressRegion: 'QLD', postalCode: '4120', addressCountry: 'AU' } }, areaServed: ['Greenslopes', 'Brisbane Southside', 'Greater Brisbane'], offers: service.price ? { '@type': 'Offer', priceCurrency: 'AUD', price: service.price, url: 'https://bellabrazil.gettimely.com/' } : undefined };
   const body = `<main><article><p>Bella Beauty Brazil · Greenslopes, Brisbane</p><h1>${escapeHtml(service.title)}</h1><p>${escapeHtml(service.description)}</p><img src="${publicAsset(service.image)}" alt="${escapeHtml(service.title)} at Bella Beauty Brazil in Greenslopes" /><h2>About this treatment</h2><p>Explore the confirmed service details, suitability information, preparation and aftercare guidance, FAQs and official Timely booking for Bella Beauty Brazil.</p><h2>Book this service</h2>${service.price ? `<p>A${service.price} · ${service.duration}</p>` : ''}<p><a href="https://bellabrazil.gettimely.com/">Book on Timely</a></p></article></main>`;
-  const html = source.replace(/<html[^>]*>/, '<html lang="en-AU">').replace(/<head>([\s\S]*?)<\/head>/, `<head>$1<title>${escapeHtml(title)}</title><meta name="description" content="${escapeHtml(description)}"><link rel="canonical" href="${url}">${cssLinks}<script type="application/ld+json">${JSON.stringify(schema)}</script></head>`).replace(/<div id="root"><\/div>/, `<div id="root">${body}</div>`).replace(/<script type="module"[^>]+><\/script>/, `<script type="module" src="${scriptSrc}"></script>`);
+  const html = renderPage({ title, description, canonicalUrl: url, body, schema });
   const target = isGitHubPages ? join(buildDir, 'services', slug, 'index.html') : join(buildDir, 'services', slug);
   await mkdir(dirname(target), { recursive: true });
   await writeFile(target, html);
@@ -48,9 +59,9 @@ const simplePages = {
   contact: ['Contact & Book', 'Contact Bella Beauty Brazil or book an appointment via the official Timely booking page.'],
 };
 for (const [slug, [title, description]] of Object.entries(simplePages)) {
-  const canonicalUrl = `https://www.bellabeautybrazil.com.au/${slug}`;
+  const canonicalUrl = `${siteOrigin}/${slug}`;
   const body = `<main><article><h1>${escapeHtml(title)}</h1><p>${escapeHtml(description)}</p><a href="https://bellabrazil.gettimely.com/">Book with Bella Beauty Brazil</a></article></main>`;
-  const html = source.replace(/<html[^>]*>/, '<html lang="en-AU">').replace(/<head>([\s\S]*?)<\/head>/, `<head>$1<title>${escapeHtml(title)} | Bella Beauty Brazil</title><meta name="description" content="${escapeHtml(description)}"><link rel="canonical" href="${canonicalUrl}">${cssLinks}</head>`).replace(/<div id="root"><\/div>/, `<div id="root">${body}</div>`);
+  const html = renderPage({ title: `${title} | Bella Beauty Brazil`, description, canonicalUrl, body });
   // Use directories for informational routes on every host. /services already exists
   // as a directory for individual treatment pages; writing dist/services as a file
   // throws EISDIR and fails the Vercel build.
@@ -58,4 +69,11 @@ for (const [slug, [title, description]] of Object.entries(simplePages)) {
   await mkdir(dirname(target), { recursive: true });
   await writeFile(target, html);
 }
-console.log(`Prerendered ${Object.keys(services).length} service routes and ${Object.keys(simplePages).length} informational routes with indexable HTML.`);
+// The sitemap is generated from the actual routes so no service can be accidentally omitted.
+const siteRoutes = ['/', ...Object.keys(simplePages).map((slug) => `/${slug}`), ...Object.keys(services).map((slug) => `/services/${slug}`)];
+const sitemapXml = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
+  siteRoutes.map((route) => `  <url><loc>${siteOrigin}${route}</loc></url>`).join('\n') +
+  '\n</urlset>\n';
+await writeFile(join(buildDir, 'sitemap.xml'), sitemapXml);
+await writeFile(join(buildDir, 'robots.txt'), `User-agent: *\nAllow: /\nSitemap: ${siteOrigin}/sitemap.xml\n`);
+console.log(`Prerendered ${Object.keys(services).length} service routes, ${Object.keys(simplePages).length} informational routes and ${siteRoutes.length} sitemap URLs.`);
