@@ -22,11 +22,13 @@ export const GalleryMarquee: React.FC<{language:Language}> = ({ language }) => {
   const categories = useMemo(() => (['All', 'Brows', 'Lips', 'Lashes', 'Skin', 'Studio', 'Livia'] as Filter[]).filter(c => c==='All' || bellaGallery.some(item=>item.category===c)),[]);
   const current = useMemo(() => bellaGallery.filter(item=>filter==='All'||item.category===filter),[filter]);
   const shown = filter==='All' ? current.slice(0,limit) : current;
-  const duplicated = shown.length > 1 ? [...shown, ...shown] : shown;
+  // Never show cloned cards side-by-side when a filtered category has too few photos.
+  const isLooping = shown.length >= 6;
+  const duplicated = isLooping ? [...shown, ...shown] : shown;
 
   useEffect(() => {
     const viewport = viewportRef.current;
-    if (!viewport || shown.length < 2) return;
+    if (!viewport || !isLooping) return;
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (reducedMotion || paused || lightboxIndex !== null) return;
     const speed = window.innerWidth < 640 ? 20 : 30;
@@ -35,7 +37,9 @@ export const GalleryMarquee: React.FC<{language:Language}> = ({ language }) => {
       const delta = Math.min(time - last, 40);
       lastTimeRef.current = time;
       viewport.scrollLeft += (speed * delta) / 1000;
-      const loopPoint = viewport.scrollWidth / 2;
+      // Measure the *actual* start of the clone set. scrollWidth / 2 is off by half a gap.
+      const cards = viewport.querySelectorAll<HTMLElement>('[data-bella-gallery-card]');
+      const loopPoint = cards[shown.length]?.offsetLeft - cards[0]?.offsetLeft;
       if (loopPoint > 0 && viewport.scrollLeft >= loopPoint) viewport.scrollLeft -= loopPoint;
       frameRef.current = window.requestAnimationFrame(tick);
     };
@@ -45,13 +49,14 @@ export const GalleryMarquee: React.FC<{language:Language}> = ({ language }) => {
       frameRef.current = null;
       lastTimeRef.current = null;
     };
-  }, [filter, limit, paused, lightboxIndex, shown.length]);
+  }, [filter, limit, paused, lightboxIndex, isLooping, shown.length]);
 
   const changeFilter = (category:Filter) => {
     setFilter(category);
     setLimit(10);
     setLightboxIndex(null);
     setPaused(false);
+    lastTimeRef.current = null;
     if (viewportRef.current) viewportRef.current.scrollLeft = 0;
   };
   const move = (direction: number) => {
@@ -72,7 +77,7 @@ export const GalleryMarquee: React.FC<{language:Language}> = ({ language }) => {
       <button type="button" onClick={()=>move(-1)} aria-label={language==='en'?'Previous gallery photos':language==='pt'?'Fotos anteriores':'Fotos anteriores'} className="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-[#5b3239]/90 text-white shadow-lg transition hover:bg-[#7a4753] focus-visible:outline focus-visible:outline-4 focus-visible:outline-[#efb7c8] cursor-pointer"><ChevronLeft className="h-5 w-5" /></button>
       <div ref={viewportRef} className="gallery-marquee-viewport overflow-x-auto px-12 sm:px-16 pb-3" onMouseEnter={()=>setPaused(true)} onMouseLeave={()=>setPaused(false)} onFocus={()=>setPaused(true)} onBlur={()=>setPaused(false)} onTouchStart={()=>setPaused(true)} onTouchEnd={()=>setPaused(false)} tabIndex={0} aria-label={language==='en'?'Automatically scrolling gallery':language==='pt'?'Galeria com rolagem automática':'Galería con desplazamiento automático'}>
         <div className="flex w-max gap-4">
-          {duplicated.map((item,index)=><button key={`${filter}-${item.id}-${index}`} type="button" onClick={()=>{setPaused(true);setLightboxIndex(index % shown.length);}} className="group shrink-0 w-[min(58vw,208px)] sm:w-[250px] lg:w-[270px] aspect-[4/5] rounded-xl overflow-hidden reveal-scale shadow-lg border border-[#d8be9b]/60 cursor-pointer bg-[#eae0da] focus-visible:outline focus-visible:outline-4 focus-visible:outline-[#9a5967]" aria-label={`${item.alt} - ${language==='pt'?'ampliar':language==='es'?'ampliar':'expand'}`} tabIndex={index >= shown.length ? -1 : 0}>
+          {duplicated.map((item,index)=><button key={`${filter}-${item.id}-${index}`} type="button" onClick={()=>{setPaused(true);setLightboxIndex(index % shown.length);}} data-bella-gallery-card className="group shrink-0 w-[min(58vw,208px)] sm:w-[250px] lg:w-[270px] aspect-[4/5] rounded-xl overflow-hidden shadow-lg border border-[#d8be9b]/60 cursor-pointer bg-[#eae0da] focus-visible:outline focus-visible:outline-4 focus-visible:outline-[#9a5967]" aria-hidden={index >= shown.length ? true : undefined} aria-label={`${item.alt} - ${language==='pt'?'ampliar':language==='es'?'ampliar':'expand'}`} tabIndex={index >= shown.length ? -1 : 0}>
             <img src={item.image} alt={index >= shown.length ? '' : item.alt} loading="lazy" draggable={false} className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105" />
           </button>)}
         </div>
@@ -80,8 +85,8 @@ export const GalleryMarquee: React.FC<{language:Language}> = ({ language }) => {
       <button type="button" onClick={()=>move(1)} aria-label={language==='en'?'Next gallery photos':language==='pt'?'Próximas fotos':'Fotos siguientes'} className="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-[#5b3239]/90 text-white shadow-lg transition hover:bg-[#7a4753] focus-visible:outline focus-visible:outline-4 focus-visible:outline-[#efb7c8] cursor-pointer"><ChevronRight className="h-5 w-5" /></button>
     </div>
     <div className="mt-6 flex items-center justify-center gap-3 text-[11px] tracking-wide text-[#675960]">
-      <button type="button" onClick={()=>setPaused(value=>!value)} className="inline-flex items-center gap-1.5 rounded-full border border-[#9a5967]/40 px-3 py-1.5 hover:bg-[#f3d9d0] cursor-pointer" aria-pressed={paused}>{paused ? <Play className="h-3 w-3" /> : <Pause className="h-3 w-3" />}{paused ? (language==='en'?'Play':language==='pt'?'Reproduzir':'Reproducir') : (language==='en'?'Pause':language==='pt'?'Pausar':'Pausar')}</button>
-      <span>{language==='en'?'Auto-scroll · Hover or focus to pause · Swipe to browse':language==='pt'?'Rolagem automática · Passe o mouse ou foque para pausar · Deslize para navegar':'Desplazamiento automático · Pase el cursor o enfoque para pausar · Deslice para navegar'}</span>
+      {isLooping && <button type="button" onClick={()=>setPaused(value=>!value)} className="inline-flex items-center gap-1.5 rounded-full border border-[#9a5967]/40 px-3 py-1.5 hover:bg-[#f3d9d0] cursor-pointer" aria-pressed={paused}>{paused ? <Play className="h-3 w-3" /> : <Pause className="h-3 w-3" />}{paused ? (language==='en'?'Play':language==='pt'?'Reproduzir':'Reproducir') : (language==='en'?'Pause':language==='pt'?'Pausar':'Pausar')}</button>}
+      <span>{isLooping ? (language==='en'?'Auto-scroll · Hover or focus to pause · Swipe to browse':language==='pt'?'Rolagem automática · Passe o mouse ou foque para pausar · Deslize para navegar':'Desplazamiento automático · Pase el cursor o enfoque para pausar · Deslice para navegar') : (language==='en'?'Swipe or use arrows to browse':language==='pt'?'Deslize ou use as setas para navegar':'Deslice o use las flechas para navegar')}</span>
     </div>
     {filter==='All'&&limit<current.length&&<div className="text-center mt-9"><button type="button" onClick={()=>{setLimit(v=>v+10);setPaused(false);}} className="rounded-full px-8 py-3 bg-[#5b3239] text-white text-xs font-bold tracking-widest uppercase hover:bg-[#7a4753] cursor-pointer">{language==='en'?'Show More':language==='pt'?'Ver Mais':'Ver Más'}</button></div>}
     <GalleryLightbox images={shown} index={lightboxIndex} onClose={()=>{setLightboxIndex(null);setPaused(false);}} onIndexChange={setLightboxIndex} language={language}/>

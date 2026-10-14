@@ -89,8 +89,18 @@ const translated = (language: Language, en: string, pt: string, es: string) => l
 export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId, language, onNavigate }) => {
   const base = SERVICES.find((service) => service.id === serviceId) || SERVICES[0];
   const service = getLocalizedService(base, language);
-  const group = GROUPS[base.id] || GROUPS['nano-strokes'];
-  const groupCopy = language === 'en' ? group : GROUP_TRANSLATIONS[base.id]?.[language] || group;
+  // A service without a dedicated comparison must never inherit the Nano Strokes FAQ.
+  const categoryRelated = SERVICES.filter((item) => item.category === base.category && item.id !== base.id).slice(0, 3);
+  const group = GROUPS[base.id] || {
+    related: categoryRelated.map((item) => item.id),
+    difference: `${base.title} is a ${base.category || 'beauty'} service offered at Bella Beauty Brazil. Other treatments in this category may use different techniques. Confirm the appropriate option with the studio before booking.`,
+    care: 'Preparation, suitability and aftercare vary by treatment. Follow the instructions provided by Bella Beauty Brazil during your appointment.',
+    faq: `How can I book ${base.title}? Check the official Timely booking page for service availability, current prices and appointment details.`,
+  };
+  const fallbackTranslation = language === 'pt'
+    ? { difference: `${base.title} é um serviço da categoria ${base.category || 'beleza'} da Bella Beauty Brazil. Confirme a técnica mais adequada diretamente com o estúdio.`, care: 'O preparo, a indicação e os cuidados dependem do tratamento. Siga as orientações da Bella Beauty Brazil.', faq: `Como agendar ${base.title}? Consulte a disponibilidade, os preços e as informações no Timely oficial.` }
+    : { difference: `${base.title} es un servicio de ${base.category || 'belleza'} de Bella Beauty Brazil. Consulta con el estudio qué técnica es la adecuada.`, care: 'La preparación, la idoneidad y los cuidados varían según el tratamiento. Sigue las instrucciones de Bella Beauty Brazil.', faq: `¿Cómo reservar ${base.title}? Consulta disponibilidad, precios y detalles en el Timely oficial.` };
+  const groupCopy = language === 'en' ? group : GROUP_TRANSLATIONS[base.id]?.[language] || { ...group, ...fallbackTranslation };
   const related = group.related.map((id) => SERVICES.find((item) => item.id === id)).filter(Boolean) as typeof SERVICES;
   const isPriceConfirmed = Boolean(service.price && service.duration);
 
