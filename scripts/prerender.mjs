@@ -60,7 +60,7 @@ for (const [slug, service] of Object.entries(services)) {
   const schemaGraph = faqSchema ? { '@context': 'https://schema.org', '@graph': [schema, faqSchema] } : schema;
   const body = `<main><article><p>Bella Beauty Brazil · Greenslopes, Brisbane</p><h1>${escapeHtml(service.title)}</h1><p>${escapeHtml(service.description)}</p><img src="${publicAsset(service.image)}" alt="${escapeHtml(service.title)} at Bella Beauty Brazil in Greenslopes" /><h2>About this treatment</h2>${treatmentInfo}<h2>Book this service</h2>${service.price ? `<p>A$${service.price} · ${service.duration}</p>` : ''}<p><a href="https://book.gettimely.com/bellabrazil/book/embed?client-login=true">Book on Timely</a></p></article></main>`;
   const html = renderPage({ title, description, canonicalUrl: url, body, schema: schemaGraph });
-  const target = isGitHubPages ? join(buildDir, 'services', slug, 'index.html') : join(buildDir, 'services', slug);
+  const target = join(buildDir, 'services', slug, 'index.html');
   await mkdir(dirname(target), { recursive: true });
   await writeFile(target, html);
 }
