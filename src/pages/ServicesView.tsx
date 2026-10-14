@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { ArrowRight, CalendarDays, Clock3, MapPin, Search, X } from 'lucide-react';
-import { BOOKING_URL, SERVICES, Language, getLocalizedService } from '../data/siteData';
+import { BOOKING_URL, SERVICES, Language, getLocalizedService, getServiceBookingUrl } from '../data/siteData';
 
 interface ServicesViewProps {
   initialServiceId?: string;
@@ -185,7 +185,7 @@ export const ServicesView: React.FC<ServicesViewProps> = ({ initialServiceId, on
                   className="inline-flex items-center gap-1.5 border border-[#9a5967]/40 rounded-full px-3.5 py-2.5 text-[11px] font-montserrat font-bold text-[#5b3239] hover:bg-[#f3d9d0] focus-visible:outline-2 focus-visible:outline-[#9a5967] transition-colors">
                   {labels.details}<ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
                 </a>
-                <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer"
+                <a href={getServiceBookingUrl(service.id)} target="_blank" rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 rounded-full px-3.5 py-2.5 bg-[#5b3239] text-white text-[11px] font-montserrat font-bold hover:bg-[#7a4753] focus-visible:outline-2 focus-visible:outline-[#9a5967] transition-colors">
                   <CalendarDays className="w-3.5 h-3.5" aria-hidden="true" />{typeof service.price === 'number' ? labels.book : labels.enquire}
                 </a>
