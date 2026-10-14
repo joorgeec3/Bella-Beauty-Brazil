@@ -23,7 +23,7 @@ export const GalleryMarquee: React.FC<{language:Language}> = ({ language }) => {
   const current = useMemo(() => bellaGallery.filter(item=>filter==='All'||item.category===filter),[filter]);
   const shown = filter==='All' ? current.slice(0,limit) : current;
   // Never show cloned cards side-by-side when a filtered category has too few photos.
-  const isLooping = shown.length >= 4;
+  const isLooping = shown.length >= 6;
   const duplicated = isLooping ? [...shown, ...shown] : shown;
 
   useEffect(() => {
@@ -56,12 +56,13 @@ export const GalleryMarquee: React.FC<{language:Language}> = ({ language }) => {
     setLimit(10);
     setLightboxIndex(null);
     setPaused(false);
+    lastTimeRef.current = null;
     if (viewportRef.current) viewportRef.current.scrollLeft = 0;
   };
   const move = (direction: number) => {
     const viewport = viewportRef.current;
     if (!viewport) return;
-    if (isLooping) setPaused(true);
+    setPaused(true);
     viewport.scrollBy({ left: direction * Math.max(viewport.clientWidth * 0.72, 260), behavior: 'smooth' });
   };
 
