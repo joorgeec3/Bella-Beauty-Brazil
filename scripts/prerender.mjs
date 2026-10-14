@@ -1,5 +1,6 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
+import ts from 'typescript';
 
 const services = {
   'nano-strokes': { title: 'Nano Strokes / Microblading', description: 'Semi-permanent brow artistry designed to create realistic, natural-looking hair strokes.', image: '/assets/bella/cosmetic-tattooing.png', price: '615', duration: '2 hours, 30 mins' },
@@ -27,6 +28,13 @@ const buildDir = isGitHubPages ? 'dist-pages' : 'dist';
 const publicAsset = (path) => isGitHubPages ? `/Bella-Beauty-Brazil${path}` : path;
 const source = await readFile(join(buildDir, 'index.html'), 'utf8');
 const siteOrigin = (process.env.PUBLIC_SITE_URL || 'https://bella-beauty-brazil.vercel.app').replace(/\/+$/, '');
+// Use one editorial source for both the visitor-facing React UI and the SEO HTML.
+const serviceGuideSource = await readFile('src/data/serviceGuides.ts', 'utf8');
+const serviceGuideJs = ts.transpileModule(serviceGuideSource, {
+  compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 },
+}).outputText;
+const { SERVICE_GUIDES } = await import('data:text/javascript;base64,' + Buffer.from(serviceGuideJs).toString('base64'));
+
 const renderPage = ({ title, description, canonicalUrl, body, schema }) => {
   // Replace the homepage tags; adding a second title/canonical is invalid SEO.
   let html = source
@@ -45,8 +53,20 @@ for (const [slug, service] of Object.entries(services)) {
   const title = `${service.title} | Bella Beauty Brazil Greenslopes`;
   const description = `${service.description} Confirmed Timely details and official booking at Bella Beauty Brazil in Greenslopes, Brisbane.`;
   const schema = { '@context': 'https://schema.org', '@type': 'Service', name: service.title, description: service.description, provider: { '@type': 'BeautySalon', name: 'Bella Beauty Brazil', telephone: '+61 402 148 437', address: { '@type': 'PostalAddress', streetAddress: 'Suite 3, 412 Logan Road', addressLocality: 'Greenslopes', addressRegion: 'QLD', postalCode: '4120', addressCountry: 'AU' } }, areaServed: ['Greenslopes', 'Brisbane Southside', 'Greater Brisbane'], offers: service.price ? { '@type': 'Offer', priceCurrency: 'AUD', price: service.price, url: 'https://bellabrazil.gettimely.com/' } : undefined };
-  const body = `<main><article><p>Bella Beauty Brazil · Greenslopes, Brisbane</p><h1>${escapeHtml(service.title)}</h1><p>${escapeHtml(service.description)}</p><img src="${publicAsset(service.image)}" alt="${escapeHtml(service.title)} at Bella Beauty Brazil in Greenslopes" /><h2>About this treatment</h2><p>Explore the confirmed service details, suitability information, preparation and aftercare guidance, FAQs and official Timely booking for Bella Beauty Brazil.</p><h2>Book this service</h2>${service.price ? `<p>A${service.price} · ${service.duration}</p>` : ''}<p><a href="https://bellabrazil.gettimely.com/">Book on Timely</a></p></article></main>`;
-  const html = renderPage({ title, description, canonicalUrl: url, body, schema });
+  const guide = SERVICE_GUIDES[slug]?.en;
+  const treatmentInfo = guide
+    ? `<h2>Who might this treatment suit?</h2><p>${escapeHtml(guide.idealFor)}</p><h2>How does it compare?</h2><p>${escapeHtml(guide.comparison)}</p><h2>Common questions</h2><h3>${escapeHtml(guide.question)}</h3><p>${escapeHtml(guide.answer)}</p>`
+    : '<p>Ask Bella Beauty Brazil about suitability, preparation and aftercare before booking.</p>';
+  const faqSchema = guide ? {
+    '@type': 'FAQPage',
+    mainEntity: [{
+      '@type': 'Question', name: guide.question,
+      acceptedAnswer: { '@type': 'Answer', text: guide.answer },
+    }],
+  } : null;
+  const schemaGraph = faqSchema ? { '@context': 'https://schema.org', '@graph': [schema, faqSchema] } : schema;
+  const body = `<main><article><p>Bella Beauty Brazil · Greenslopes, Brisbane</p><h1>${escapeHtml(service.title)}</h1><p>${escapeHtml(service.description)}</p><img src="${publicAsset(service.image)}" alt="${escapeHtml(service.title)} at Bella Beauty Brazil in Greenslopes" /><h2>About this treatment</h2>${treatmentInfo}<h2>Book this service</h2>${service.price ? `<p>A$${service.price} · ${service.duration}</p>` : ''}<p><a href="https://bellabrazil.gettimely.com/">Book on Timely</a></p></article></main>`;
+  const html = renderPage({ title, description, canonicalUrl: url, body, schema: schemaGraph });
   const target = isGitHubPages ? join(buildDir, 'services', slug, 'index.html') : join(buildDir, 'services', slug);
   await mkdir(dirname(target), { recursive: true });
   await writeFile(target, html);
