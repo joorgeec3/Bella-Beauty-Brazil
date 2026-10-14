@@ -50,7 +50,7 @@ const simplePages = {
 for (const [slug, [title, description]] of Object.entries(simplePages)) {
   const canonicalUrl = `https://www.bellabeautybrazil.com.au/${slug}`;
   const body = `<main><article><h1>${escapeHtml(title)}</h1><p>${escapeHtml(description)}</p><a href="https://bellabrazil.gettimely.com/">Book with Bella Beauty Brazil</a></article></main>`;
-  const html = source.replace(/<html[^>]*>/, '<html lang="en-AU">').replace(/<head>([\\s\\S]*?)<\\/head>/, `<head>$1<title>${escapeHtml(title)} | Bella Beauty Brazil</title><meta name="description" content="${escapeHtml(description)}"><link rel="canonical" href="${canonicalUrl}">${cssLinks}</head>`).replace(/<div id="root"><\\/div>/, `<div id="root">${body}</div>`);
+  const html = source.replace(/<html[^>]*>/, '<html lang="en-AU">').replace(/<head>([\s\S]*?)<\/head>/, `<head>$1<title>${escapeHtml(title)} | Bella Beauty Brazil</title><meta name="description" content="${escapeHtml(description)}"><link rel="canonical" href="${canonicalUrl}">${cssLinks}</head>`).replace(/<div id="root"><\/div>/, `<div id="root">${body}</div>`);
   const target = isGitHubPages ? join(buildDir, slug, 'index.html') : join(buildDir, slug);
   await mkdir(dirname(target), { recursive: true });
   await writeFile(target, html);
