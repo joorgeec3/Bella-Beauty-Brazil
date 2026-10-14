@@ -61,7 +61,8 @@ const simplePages = {
 };
 for (const [slug, [title, description]] of Object.entries(simplePages)) {
   const canonicalUrl = `${siteOrigin}/${slug}`;
-  const body = `<main><article><h1>${escapeHtml(title)}</h1><p>${escapeHtml(description)}</p><a href="https://bellabrazil.gettimely.com/">Book with Bella Beauty Brazil</a></article></main>`;
+  const catalogueLinks = slug === 'services' ? `<h2>Our treatments</h2><ul>${Object.entries(services).map(([id, service]) => `<li><a href="${siteOrigin}/services/${id}">${escapeHtml(service.title)}</a></li>`).join('')}</ul>` : '';
+  const body = `<main><article><h1>${escapeHtml(title)}</h1><p>${escapeHtml(description)}</p>${catalogueLinks}<a href="https://bellabrazil.gettimely.com/">Book with Bella Beauty Brazil</a></article></main>`;
   const html = renderPage({ title: `${title} | Bella Beauty Brazil`, description, canonicalUrl, body });
   // Use directories for informational routes on every host. /services already exists
   // as a directory for individual treatment pages; writing dist/services as a file
