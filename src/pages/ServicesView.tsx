@@ -138,7 +138,7 @@ export const ServicesView: React.FC<ServicesViewProps> = ({ initialServiceId, on
           {featuredServiceIds.map((serviceId) => {
             const service = localizedServices.find((item) => item.id === serviceId);
             if (!service) return null;
-            return <a key={service.id} href={'/services/' + service.id} onClick={(event) => navigate(event, service.id)}
+            return <a key={service.id} href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/services/${service.id}`} onClick={(event) => navigate(event, service.id)}
               className="inline-flex gap-1.5 items-center rounded-full border border-[#dfbcc4] bg-white px-3.5 py-2.5 text-xs font-montserrat font-semibold text-[#5b3239] hover:bg-[#f3d9d0] focus-visible:outline-2 focus-visible:outline-[#9a5967] transition-colors">
               {service.title}<ArrowRight className="w-3 h-3 shrink-0" aria-hidden="true" />
             </a>;
@@ -184,7 +184,7 @@ export const ServicesView: React.FC<ServicesViewProps> = ({ initialServiceId, on
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
           {filteredServices.map((service) => <article key={service.id}
             className="bg-white border border-[#e8d6d5] rounded-2xl shadow-sm overflow-hidden flex flex-col sm:flex-row hover:shadow-lg transition-shadow">
-            {cardPhotos[service.id] && <a href={'/services/' + service.id} onClick={(event) => navigate(event, service.id)}
+            {cardPhotos[service.id] && <a href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/services/${service.id}`} onClick={(event) => navigate(event, service.id)}
               className="block sm:w-[165px] sm:shrink-0 overflow-hidden bg-[#eee2df] focus-visible:outline-2 focus-visible:outline-[#9a5967]">
               <img src={cardPhotos[service.id]} alt={imageAlt(service.id, service.title)}
                 loading="lazy" className="w-full h-44 sm:h-full max-h-[240px] sm:max-h-none object-cover hover:scale-[1.03] transition-transform duration-500" />
@@ -198,7 +198,7 @@ export const ServicesView: React.FC<ServicesViewProps> = ({ initialServiceId, on
                 {service.duration && <span className="inline-flex items-center gap-1"><Clock3 className="w-3.5 h-3.5" aria-hidden="true" />{service.duration}</span>}
               </div>
               <div className="flex flex-wrap items-center gap-2 mt-auto pt-4">
-                <a href={'/services/' + service.id} onClick={(event) => navigate(event, service.id)}
+                <a href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/services/${service.id}`} onClick={(event) => navigate(event, service.id)}
                   className="inline-flex items-center gap-1.5 border border-[#9a5967]/40 rounded-full px-3.5 py-2.5 text-[11px] font-montserrat font-bold text-[#5b3239] hover:bg-[#f3d9d0] focus-visible:outline-2 focus-visible:outline-[#9a5967] transition-colors">
                   {labels.details}<ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
                 </a>
