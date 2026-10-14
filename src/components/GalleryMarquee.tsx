@@ -19,6 +19,9 @@ export const GalleryMarquee: React.FC<{language:Language}> = ({ language }) => {
   const viewportRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef<number | null>(null);
   const lastTimeRef = useRef<number | null>(null);
+  const driftDirectionRef = useRef(1);
+  const hoveredRef = useRef(false);
+  const resumeTimerRef = useRef<number | null>(null);
   const categories = useMemo(() => (['All', 'Brows', 'Lips', 'Lashes', 'Skin', 'Studio', 'Livia'] as Filter[]).filter(c => c==='All' || bellaGallery.some(item=>item.category===c)),[]);
   const current = useMemo(() => bellaGallery.filter(item=>filter==='All'||item.category===filter),[filter]);
   const shown = filter==='All' ? current.slice(0,limit) : current;
@@ -28,19 +31,31 @@ export const GalleryMarquee: React.FC<{language:Language}> = ({ language }) => {
 
   useEffect(() => {
     const viewport = viewportRef.current;
-    if (!viewport || !isLooping) return;
+    if (!viewport || shown.length < 2) return;
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (reducedMotion || paused || lightboxIndex !== null) return;
-    const speed = window.innerWidth < 640 ? 20 : 30;
+    // The old 20–30px/s movement was barely noticeable; CSS scroll snapping also resisted it.
+    const speed = window.innerWidth < 640 ? 44 : 66;
+    const cards = viewport.querySelectorAll<HTMLElement>('[data-bella-gallery-card]');
+    const loopPoint = isLooping && cards[shown.length] && cards[0]
+      ? cards[shown.length].offsetLeft - cards[0].offsetLeft : 0;
     const tick = (time: number) => {
       const last = lastTimeRef.current ?? time;
       const delta = Math.min(time - last, 40);
       lastTimeRef.current = time;
-      viewport.scrollLeft += (speed * delta) / 1000;
-      // Measure the *actual* start of the clone set. scrollWidth / 2 is off by half a gap.
-      const cards = viewport.querySelectorAll<HTMLElement>('[data-bella-gallery-card]');
-      const loopPoint = cards[shown.length]?.offsetLeft - cards[0]?.offsetLeft;
-      if (loopPoint > 0 && viewport.scrollLeft >= loopPoint) viewport.scrollLeft -= loopPoint;
+      const distance = (speed * delta) / 1000;
+      if (isLooping && loopPoint > 0) {
+        viewport.scrollLeft += distance;
+        if (viewport.scrollLeft >= loopPoint) viewport.scrollLeft -= loopPoint;
+      } else {
+        // With only a few genuine photos, move between the edges instead of cloning them.
+        const end = viewport.scrollWidth - viewport.clientWidth;
+        if (end > 2) {
+          viewport.scrollLeft = Math.min(end, Math.max(0, viewport.scrollLeft + distance * driftDirectionRef.current));
+          if (viewport.scrollLeft >= end - 1) driftDirectionRef.current = -1;
+          if (viewport.scrollLeft <= 1) driftDirectionRef.current = 1;
+        }
+      }
       frameRef.current = window.requestAnimationFrame(tick);
     };
     frameRef.current = window.requestAnimationFrame(tick);
@@ -57,13 +72,20 @@ export const GalleryMarquee: React.FC<{language:Language}> = ({ language }) => {
     setLightboxIndex(null);
     setPaused(false);
     lastTimeRef.current = null;
+    driftDirectionRef.current = 1;
     if (viewportRef.current) viewportRef.current.scrollLeft = 0;
   };
   const move = (direction: number) => {
     const viewport = viewportRef.current;
     if (!viewport) return;
     setPaused(true);
+    if (resumeTimerRef.current !== null) window.clearTimeout(resumeTimerRef.current);
     viewport.scrollBy({ left: direction * Math.max(viewport.clientWidth * 0.72, 260), behavior: 'smooth' });
+    // An arrow click must not stop autoplay permanently.
+    resumeTimerRef.current = window.setTimeout(() => {
+      if (!hoveredRef.current) setPaused(false);
+      resumeTimerRef.current = null;
+    }, 1700);
   };
 
   return <section id="gallery" className="bg-site text-[#3c3033] py-16 lg:py-24 overflow-hidden">
@@ -75,7 +97,7 @@ export const GalleryMarquee: React.FC<{language:Language}> = ({ language }) => {
     </div>
     <div className="relative max-w-7xl mx-auto scroll-motion-layer" data-scroll-motion>
       <button type="button" onClick={()=>move(-1)} aria-label={language==='en'?'Previous gallery photos':language==='pt'?'Fotos anteriores':'Fotos anteriores'} className="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-[#5b3239]/90 text-white shadow-lg transition hover:bg-[#7a4753] focus-visible:outline focus-visible:outline-4 focus-visible:outline-[#efb7c8] cursor-pointer"><ChevronLeft className="h-5 w-5" /></button>
-      <div ref={viewportRef} className="gallery-marquee-viewport overflow-x-auto px-12 sm:px-16 pb-3" onMouseEnter={()=>setPaused(true)} onMouseLeave={()=>setPaused(false)} onFocus={()=>setPaused(true)} onBlur={()=>setPaused(false)} onTouchStart={()=>setPaused(true)} onTouchEnd={()=>setPaused(false)} tabIndex={0} aria-label={language==='en'?'Automatically scrolling gallery':language==='pt'?'Galeria com rolagem automática':'Galería con desplazamiento automático'}>
+      <div ref={viewportRef} className="gallery-marquee-viewport overflow-x-auto px-12 sm:px-16 pb-3" onMouseEnter={()=>{hoveredRef.current=true;setPaused(true);}} onMouseLeave={()=>{hoveredRef.current=false;setPaused(false);}} onFocus={()=>setPaused(true)} onBlur={()=>setPaused(false)} onTouchStart={()=>setPaused(true)} onTouchEnd={()=>setPaused(false)} tabIndex={0} aria-label={language==='en'?'Automatically scrolling gallery':language==='pt'?'Galeria com rolagem automática':'Galería con desplazamiento automático'}>
         <div className="flex w-max gap-4">
           {duplicated.map((item,index)=><button key={`${filter}-${item.id}-${index}`} type="button" onClick={()=>{setPaused(true);setLightboxIndex(index % shown.length);}} data-bella-gallery-card className="group shrink-0 w-[min(58vw,208px)] sm:w-[250px] lg:w-[270px] aspect-[4/5] rounded-xl overflow-hidden shadow-lg border border-[#d8be9b]/60 cursor-pointer bg-[#eae0da] focus-visible:outline focus-visible:outline-4 focus-visible:outline-[#9a5967]" aria-hidden={index >= shown.length ? true : undefined} aria-label={`${item.alt} - ${language==='pt'?'ampliar':language==='es'?'ampliar':'expand'}`} tabIndex={index >= shown.length ? -1 : 0}>
             <img src={item.image} alt={index >= shown.length ? '' : item.alt} loading="lazy" draggable={false} className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105" />
