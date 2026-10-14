@@ -9,7 +9,7 @@ interface FeatureCardData { image: string; icon: React.ReactNode; label: string;
 export const FeaturesRibbon: React.FC<FeaturesRibbonProps> = ({ language }) => {
   const cards: FeatureCardData[] = [
     {
-      image: `${import.meta.env.BASE_URL}assets/bella/gallery/studio-behind-scenes-01.webp`,
+      image: siteImages.services.browTreatment,
       icon: <Sparkles className="w-3 h-3 text-[#9a5967]" />,
       label: language === 'en' ? 'Brows · Technique' : language === 'pt' ? 'Sobrancelhas · Técnica' : 'Cejas · Técnica',
       title: language === 'en' ? 'Brow Artistry' : language === 'pt' ? 'Arte para sobrancelhas' : 'Arte para cejas',

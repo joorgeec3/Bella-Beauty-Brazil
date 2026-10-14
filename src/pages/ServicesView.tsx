@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowRight, CheckCircle2, Sparkles } from 'lucide-react';
 import { SERVICES, Service, Language, getLocalizedService } from '../data/siteData';
+import { siteAsset, siteImages } from '../data/siteImages';
 
 interface ServicesViewProps {
   initialServiceId?: string;
@@ -12,7 +13,20 @@ interface ServicesViewProps {
 export const ServicesView: React.FC<ServicesViewProps> = ({ initialServiceId, onNavigateToService, language }) => {
   const [selectedId] = useState(initialServiceId || SERVICES[0].id);
   const selectedService: Service = getLocalizedService(SERVICES.find((s) => s.id === selectedId) || SERVICES[0], language);
-  const localizedServices = SERVICES.map((s) => getLocalizedService(s, language));
+  const cardImages: Record<string, string> = {
+    'nano-strokes': siteImages.services.brows,
+    'lip-blush': siteImages.services.lipBlush,
+    'lash-lift': siteImages.services.lashes,
+    dermaplaning: siteImages.services.facialTreatment,
+    'brow-sculpt-tint': siteImages.services.browTreatment,
+    'facial-spa': siteImages.aboutMe.treatmentRoom,
+    waxing: siteImages.services.waxing,
+  };
+  const featuredServiceIds = Object.keys(cardImages);
+  const localizedServices = featuredServiceIds.flatMap((id) => {
+    const service = SERVICES.find((item) => item.id === id);
+    return service ? [{ ...getLocalizedService(service, language), image: cardImages[id] }] : [];
+  });
   const label = language === 'en' ? 'View service' : language === 'pt' ? 'Ver serviço' : 'Ver servicio';
 
   return <div className="bg-site">

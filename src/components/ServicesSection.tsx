@@ -6,9 +6,11 @@ import { siteAsset, siteImages } from '../data/siteImages';
 interface ServicesSectionProps { onOpenAppointment: () => void; onNavigateToServices: (serviceId?: string) => void; language: Language; }
 
 export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenAppointment, onNavigateToServices, language }) => {
-  const topServices = ['nano-strokes', 'lip-blush', 'lash-lift', 'dermaplaning'].flatMap((id) => {
+  const topServices = ['nano-strokes', 'lip-blush', 'dermaplaning'].flatMap((id) => {
     const service = SERVICES.find((item) => item.id === id);
-    return service ? [getLocalizedService(service, language)] : [];
+    if (!service) return [];
+    const image = id === 'dermaplaning' ? siteImages.aboutMe.treatmentRoom : service.image;
+    return [{ ...getLocalizedService(service, language), image }];
   });
   return <section className="relative bg-site py-16 lg:py-24 overflow-hidden border-b border-neutral-100">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -17,7 +19,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenAppointm
         <p className="font-raleway text-2xl sm:text-3xl text-[#9a5967] font-normal uppercase tracking-widest">{language === 'en' ? 'beauty treatments' : language === 'pt' ? 'tratamentos de beleza' : 'tratamientos de belleza'}</p>
         <div className="w-16 h-0.5 bg-[#9a5967] mx-auto mt-4" />
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16 scroll-stagger">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16 scroll-stagger">
         {topServices.map((service, index) => <button type="button" key={service.id} onClick={() => onNavigateToServices(service.id)} className={`group relative h-96 rounded-2xl overflow-hidden reveal-scale shadow-lg cursor-pointer transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl reveal-on-scroll text-left ${index === 1 ? 'reveal-delay-1' : index === 2 ? 'reveal-delay-2' : index === 3 ? 'reveal-delay-3' : ''}`}>
           <div className="absolute inset-0 overflow-hidden scroll-motion-layer" data-scroll-motion><img src={service.image} alt={service.title} className="service-card-image w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-110" loading="lazy" /></div>
           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/20 group-hover:from-black/95 transition-all duration-300" />

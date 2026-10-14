@@ -27,7 +27,7 @@ const copy = {
 
 export const SERVICES: Service[] = [
   { id: 'nano-strokes', title: 'Nano Strokes / Microblading', subtitle: 'Cosmetic Tattooing', description: copy.microblading, image: siteImages.services.microblading, price: 615, duration: '2 hours, 30 mins', category: 'Brows', benefits: ['Natural-looking hair strokes', 'Personalised brow mapping', 'Professional semi-permanent finish'] },
-  { id: 'cosmetic-tattooing', title: 'Cosmetic Tattooing', subtitle: 'Semi-permanent makeup', description: 'Cosmetic tattooing services published in the official Timely catalogue. View available options and book through Timely.', image: siteImages.services.lipBlush, category: 'Brows', benefits: ['Consultation-led service', 'Timely availability', 'Official booking required'] },
+  { id: 'cosmetic-tattooing', title: 'Cosmetic Tattooing', subtitle: 'Semi-permanent makeup', description: 'Cosmetic tattooing services published in the official Timely catalogue. View available options and book through Timely.', image: siteImages.services.lipBlush, category: 'Lips', benefits: ['Consultation-led service', 'Timely availability', 'Official booking required'] },
   { id: 'lip-blush', title: 'Lip Blush', subtitle: 'Cosmetic Tattooing', description: copy.lipBlush, image: siteImages.services.lipBlush, price: 615, duration: '2 hours, 30 mins', category: 'Lips', benefits: ['Natural-looking lip colour', 'Shape enhancement', 'Consultation-led treatment'] },
   { id: 'brow-sculpt', title: 'Brow Sculpt Signature', subtitle: 'Brows', description: 'Signature brow sculpting and shaping published in Timely.', image: siteImages.services.brows, price: 56, duration: '25 mins', category: 'Brows', benefits: ['Sculpt and shape', 'Tailored brow design', 'Official Timely booking'] },
   { id: 'brow-sculpt-tint', title: 'Brow Sculpt & Tint', subtitle: 'Brows', description: copy.brows, image: siteImages.services.brows, price: 76, duration: '35 mins', category: 'Brows', benefits: ['Sculpt and shape', 'Tint included', 'Aftercare guidance'] },
@@ -84,9 +84,9 @@ export const getLocalizedService = (service: Service, language: Language): Servi
 
 export const COURSES: Course[] = [
   { id: 'lash-lift-course', title: 'Lash Lift Course 1:1', description: 'One-to-one Lash Lift training.', duration: '8 hours', price: 950, image: siteImages.services.courses, bookingUrl: BOOKING_URL },
-  { id: 'brow-lamination-course', title: 'Brow Lamination Course 1:1', description: 'One-to-one Brow Lamination training.', duration: '8 hours, 5 mins', price: 950, image: siteImages.services.courses, bookingUrl: BOOKING_URL },
-  { id: 'classic-eyelashes-course', title: 'Classic Eyelashes Extensions Course 1:1', description: 'One-to-one classic eyelash extensions training.', duration: '6 hours, 30 mins', price: 1400, image: siteImages.services.courses, bookingUrl: BOOKING_URL },
-  { id: 'nano-strokes-course', title: 'Microblading Course — Nano Strokes', description: 'Realistic Micro Nano Strokes training.', duration: '16 hours', price: 4200, image: siteImages.services.courses, bookingUrl: BOOKING_URL },
+  { id: 'brow-lamination-course', title: 'Brow Lamination Course 1:1', description: 'One-to-one Brow Lamination training.', duration: '8 hours, 5 mins', price: 950, image: siteImages.services.browTreatment, bookingUrl: BOOKING_URL },
+  { id: 'classic-eyelashes-course', title: 'Classic Eyelashes Extensions Course 1:1', description: 'One-to-one classic eyelash extensions training.', duration: '6 hours, 30 mins', price: 1400, image: siteImages.services.lashes, bookingUrl: BOOKING_URL },
+  { id: 'nano-strokes-course', title: 'Microblading Course — Nano Strokes', description: 'Realistic Micro Nano Strokes training.', duration: '16 hours', price: 4200, image: siteImages.services.brows, bookingUrl: BOOKING_URL },
 ];
 
 export const PRODUCTS: Product[] = [

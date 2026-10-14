@@ -220,6 +220,7 @@ export default function App() {
             <HeroSlider
               onOpenAppointment={() => setAppointmentModalOpen(true)}
               onOpenCourses={() => handleNavigate('store')}
+              onOpenServices={() => handleNavigate('services')}
               language={language}
             />
             <FeaturesRibbon language={language} />
