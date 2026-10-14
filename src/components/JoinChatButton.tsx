@@ -28,7 +28,7 @@ export const JoinChatButton: React.FC<JoinChatButtonProps> = ({ language }) => {
               <div>
                 <h4 className="font-bold text-xs uppercase tracking-wider">Bella Beauty</h4>
                 <p className="text-[10px] text-white/80">
-                  {language === 'en' ? 'Online support' : language === 'pt' ? 'Atendimento online' : 'Atención al cliente'}
+                  {language === 'en' ? 'Message us on WhatsApp' : language === 'pt' ? 'Fale pelo WhatsApp' : 'Escríbenos por WhatsApp'}
                 </p>
               </div>
             </div>
@@ -45,12 +45,12 @@ export const JoinChatButton: React.FC<JoinChatButtonProps> = ({ language }) => {
             <div className="bg-white rounded-lg p-3 shadow-xs max-w-[85%] text-xs font-montserrat text-neutral-800 leading-relaxed rounded-tl-none">
               <p>
                 {language === 'en'
-                  ? 'Hello 👋 How can we help you today?'
+                  ? 'Use the button below to open WhatsApp and send your enquiry.'
                   : language === 'pt'
-                  ? 'Olá 👋 Como podemos ajudar você hoje?'
-                  : 'Hola 👋 ¿En qué podemos ayudarte?'}
+                  ? 'Use o botão abaixo para abrir o WhatsApp e enviar sua mensagem.'
+                  : 'Usa el botón inferior para abrir WhatsApp y enviar tu consulta.'}
               </p>
-              <span className="text-[9px] text-neutral-400 block text-right mt-1">{language === 'en' ? 'Just now' : language === 'pt' ? 'Agora' : 'Ahora'}</span>
+              <span className="text-[9px] text-neutral-400 block text-right mt-1">{language === 'en' ? 'WhatsApp' : language === 'pt' ? 'WhatsApp' : 'WhatsApp'}</span>
             </div>
           </div>
 
