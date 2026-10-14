@@ -1,0 +1,127 @@
+import React from 'react';
+import { Calendar, Award, ShieldCheck, HeartHandshake, Sparkles } from 'lucide-react';
+import { Language } from '../data/siteData';
+import { siteImages } from '../data/siteImages';
+
+interface AboutUsViewProps {
+  onOpenAppointment: () => void;
+  language: Language;
+}
+
+export const AboutUsView: React.FC<AboutUsViewProps> = ({ onOpenAppointment, language }) => {
+  return (
+    <div className="bg-site">
+      {/* Hero Header */}
+      <div className="relative bg-neutral-900 text-white py-20 lg:py-28 text-center overflow-hidden">
+        <div className="absolute inset-0 opacity-20">
+          <img
+            src={siteImages.aboutMe.clinicSpace}
+            alt="About Bella Beauty Brazilian Beauty"
+            className="w-full h-full object-cover"
+          />
+        </div>
+        <div className="relative max-w-4xl mx-auto px-4 z-10">
+          <div className="w-16 h-16 mx-auto mb-4">
+            <img src={siteImages.brand.goldEmblemStamp} alt="Emblem" className="w-full h-full object-contain" />
+          </div>
+          <p className="text-xs uppercase tracking-widest text-[#efb7c8] mb-2 font-bold">
+            {language === 'en' ? 'Our Story & Philosophy' : language === 'pt' ? 'Nossa história e filosofia' : 'Nuestra historia y filosofía'}
+          </p>
+          <h1 className="font-raleway text-4xl sm:text-5xl font-light uppercase tracking-wider text-white">
+            {language === 'en' ? 'About Bella Beauty' : language === 'pt' ? 'Sobre a Bella Beauty' : 'Sobre Bella Beauty'}
+          </h1>
+          <div className="w-20 h-0.5 bg-[#9a5967] mx-auto mt-4" />
+        </div>
+      </div>
+
+      {/* Main Philosophy */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-20">
+          <div className="lg:col-span-6 space-y-6">
+            <span className="text-xs font-bold uppercase tracking-widest text-[#9a5967]">
+              {language === 'en' ? 'Beauty with Technique' : language === 'pt' ? 'Beleza com técnica' : 'Belleza con técnica'}
+            </span>
+            <h2 className="font-raleway text-3xl sm:text-4xl font-light uppercase text-neutral-900 leading-tight">
+              {language === 'en' ? <>Care with <span className="font-bold text-[#9a5967]">Purpose &amp; Precision</span></> : language === 'pt' ? <>Cuidado com <span className="font-bold text-[#9a5967]">propósito e precisão</span></> : <>Cuidado con <span className="font-bold text-[#9a5967]">propósito y precisión</span></>}
+            </h2>
+            <div className="space-y-4 font-montserrat text-neutral-600 text-sm leading-relaxed">
+              <p>
+                {language === 'en' ? 'Bella Beauty Brazil specialises in brows, lashes, cosmetic tattooing and skin treatments. Founded by Livia Rego, our studio brings expertise, precision and personalised care to Brisbane.' : language === 'pt' ? 'A Bella Beauty Brazil é especializada em sobrancelhas, cílios, tatuagem cosmética e tratamentos para a pele. Fundada por Livia Rego, nosso estúdio une técnica, precisão e cuidado personalizado em Brisbane.' : 'Bella Beauty Brazil se especializa en cejas, pestañas, tatuaje cosmético y tratamientos para la piel. Fundado por Livia Rego, nuestro estudio ofrece técnica, precisión y atención personalizada en Brisbane.'}
+              </p>
+              <p>
+                {language === 'en' ? 'With a serene, welcoming space in Greenslopes, our commitment is to deliver careful treatments that enhance your natural beauty and confidence.' : language === 'pt' ? 'Com um espaço acolhedor em Greenslopes, nosso compromisso é oferecer tratamentos cuidadosos que realçam sua beleza e confiança naturais.' : 'Con un espacio acogedor en Greenslopes, nuestro compromiso es ofrecer tratamientos cuidadosos que realcen tu belleza y confianza naturales.'}
+              </p>
+            </div>
+
+            <div className="pt-2">
+              <button
+                onClick={onOpenAppointment}
+                className="inline-flex items-center space-x-2 bg-[#5b3239] hover:bg-[#7a4753] text-white text-xs font-bold uppercase tracking-widest px-8 py-3.5 rounded-full shadow-md transition-all cursor-pointer"
+              >
+                <Calendar className="w-4 h-4 text-amber-200" />
+                <span>{language === 'en' ? 'BOOK NOW' : language === 'pt' ? 'AGENDA' : 'AGENDAR CITA'}</span>
+              </button>
+            </div>
+          </div>
+
+          <div className="lg:col-span-6 flex justify-center">
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl max-w-lg border border-[#9a5967]/30">
+              <img
+                src={siteImages.aboutMe.liviaPhoto}
+                alt="Livia Rego - Bella Beauty Brazilian Beauty"
+                className="w-full h-auto object-cover"
+                loading="lazy"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Pillars */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 border-t border-neutral-100 pt-16">
+          <div className="text-center p-6 rounded-2xl bg-site-soft/70">
+            <div className="w-12 h-12 bg-[#9a5967]/10 text-[#9a5967] rounded-full flex items-center justify-center mx-auto mb-4">
+              <Award className="w-6 h-6" />
+            </div>
+            <h3 className="font-raleway text-lg font-bold uppercase tracking-wider text-neutral-900 mb-2">
+              {language === 'en' ? 'Authentic Technique' : 'Técnica Autêntica'}
+            </h3>
+            <p className="font-montserrat text-xs text-neutral-600 leading-relaxed">
+              {language === 'en'
+                ? 'Professional beauty technique focused on precision, comfort and personalised care.'
+                : 'Técnica profissional de beleza focada em precisão, conforto e cuidado personalizado.'}
+            </p>
+          </div>
+
+          <div className="text-center p-6 rounded-2xl bg-site-soft/70">
+            <div className="w-12 h-12 bg-[#9a5967]/10 text-[#9a5967] rounded-full flex items-center justify-center mx-auto mb-4">
+              <ShieldCheck className="w-6 h-6" />
+            </div>
+            <h3 className="font-raleway text-lg font-bold uppercase tracking-wider text-neutral-900 mb-2">
+              {language === 'en' ? 'Personalized Care' : 'Atendimento Personalizado'}
+            </h3>
+            <p className="font-montserrat text-xs text-neutral-600 leading-relaxed">
+              {language === 'en'
+                ? 'Each session respects your individual needs and body sensitivity in a tranquil atmosphere.'
+                : 'Cada atendimento respeita a sensibilidade e necessidades do seu corpo em uma atmosfera acolhedora.'}
+            </p>
+          </div>
+
+          <div className="text-center p-6 rounded-2xl bg-site-soft/70">
+            <div className="w-12 h-12 bg-[#9a5967]/10 text-[#9a5967] rounded-full flex items-center justify-center mx-auto mb-4">
+              <HeartHandshake className="w-6 h-6" />
+            </div>
+            <h3 className="font-raleway text-lg font-bold uppercase tracking-wider text-neutral-900 mb-2">
+              {language === 'en' ? 'Dedicated Experience' : 'Experiência Acolhedora'}
+            </h3>
+            <p className="font-montserrat text-xs text-neutral-600 leading-relaxed">
+              {language === 'en'
+                ? 'A serene haven designed for relaxation, relief, and renewed vitality.'
+                : 'Ambiente sereno desenhado para desacelerar, relaxar e renovar suas energias.'}
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  );
+};

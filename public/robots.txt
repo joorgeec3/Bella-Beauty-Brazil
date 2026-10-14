@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://www.bellabeautybrazil.com.au/sitemap.xml

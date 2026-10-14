@@ -1,0 +1,8 @@
+{
+  "name": "Magic Hands Clinic - Lymphatic & Body Sculpting",
+  "description": "Magic Hands Clinic specializes in Brazilian lymphatic drainage, body sculpting, and metabolic therapy in Sydney, Australia.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

@@ -1,0 +1,10 @@
+node_modules/
+build/
+dist/
+dist-pages/
+coverage/
+audit-captures/
+.DS_Store
+*.log
+.env*
+!.env.example
