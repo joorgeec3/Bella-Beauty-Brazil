@@ -199,14 +199,16 @@ export const Header: React.FC<HeaderProps> = ({
                 <span>{language === 'en' ? 'Services' : language === 'pt' ? 'Serviços' : 'Servicios'}</span>
                 <ChevronDown className="w-3.5 h-3.5 text-[#806859] transition-transform group-hover:rotate-180 group-hover:text-[#9a5967]" />
               </button>
-              <div className="absolute left-0 mt-0 w-64 bg-[#fbf8f5] shadow-xl rounded-b-md border border-[#d8be9b]/40 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 py-2">
-                {SERVICES.map((s) => (
-                  <button
-                    key={s.id}
-                    onClick={() => onNavigate('services', s.id)}
-                    className="w-full text-left px-4 py-2.5 text-xs text-[#3c3033] hover:bg-[#ede5dc] hover:text-[#9a5967] transition-colors uppercase tracking-wider cursor-pointer"
-                  >
-                    {s.title}
+              <div className="absolute left-0 mt-0 w-72 bg-[#fbf8f5] shadow-xl rounded-b-md border border-[#d8be9b]/40 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all duration-200 z-50 py-2">
+                <button type="button" onClick={() => onNavigate('services')}
+                  className="w-full text-left px-4 py-3 text-xs font-bold uppercase tracking-wider text-[#5b3239] hover:bg-[#f3d9d0] cursor-pointer">
+                  {language === 'en' ? 'Browse all services · Search & filters' : language === 'pt' ? 'Todos os serviços · Busca e filtros' : 'Todos los servicios · Búsqueda y filtros'}
+                </button>
+                <div className="mx-4 my-1 border-t border-[#d8be9b]/50" />
+                {SERVICES.filter((service) => ['nano-strokes', 'shadow-hybrid', 'lip-blush', 'brow-lamination', 'lash-lift', 'teeth-whitening'].includes(service.id)).map((service) => (
+                  <button key={service.id} type="button" onClick={() => onNavigate('services', service.id)}
+                    className="w-full text-left px-4 py-2.5 text-xs text-[#3c3033] hover:bg-[#ede5dc] hover:text-[#9a5967] transition-colors cursor-pointer">
+                    {service.title}
                   </button>
                 ))}
               </div>
