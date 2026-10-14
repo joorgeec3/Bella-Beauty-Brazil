@@ -1,6 +1,7 @@
 import React from 'react';
 import { ArrowLeft, ArrowRight, Calendar, CheckCircle2, Clock, MapPin } from 'lucide-react';
 import { BOOKING_URL, Language, SERVICES, getLocalizedService } from '../data/siteData';
+import { SERVICE_GUIDES } from '../data/serviceGuides';
 
 interface ServiceDetailViewProps {
   serviceId: string;
@@ -103,6 +104,7 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
   const groupCopy = language === 'en' ? group : GROUP_TRANSLATIONS[base.id]?.[language] || { ...group, ...fallbackTranslation };
   const related = group.related.map((id) => SERVICES.find((item) => item.id === id)).filter(Boolean) as typeof SERVICES;
   const isPriceConfirmed = Boolean(service.price && service.duration);
+  const guide = SERVICE_GUIDES[base.id]?.[language];
 
   return (
     <div className="bg-site">
@@ -135,7 +137,13 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
           <div className="lg:col-span-8 space-y-8">
             <section className="bg-white rounded-2xl border border-[#e8d6d5] p-6 sm:p-10 shadow-sm scroll-rise">
               <h2 className="font-raleway text-2xl sm:text-3xl font-bold uppercase tracking-wider text-[#5b3239]">{translated(language, 'About this treatment', 'Sobre este tratamento', 'Sobre este tratamiento')}</h2>
-              <p className="font-montserrat text-neutral-700 leading-relaxed mt-4">{service.description} {groupCopy.difference}</p>
+              <p className="font-montserrat text-neutral-700 leading-relaxed mt-4">{service.description} {!guide && groupCopy.difference}</p>
+              {guide && <>
+                <h3 className="font-raleway text-xl font-bold text-[#5b3239] mt-8">{translated(language, 'Who may this treatment suit?', 'Para quem este tratamento pode ser indicado?', '¿Para quién puede ser adecuado este tratamiento?')}</h3>
+                <p className="font-montserrat text-neutral-700 leading-relaxed mt-3">{guide.idealFor}</p>
+                <h3 className="font-raleway text-xl font-bold text-[#5b3239] mt-8">{translated(language, 'How is it different?', 'Quais são as diferenças?', '¿En qué se diferencia?')}</h3>
+                <p className="font-montserrat text-neutral-700 leading-relaxed mt-3">{guide.comparison}</p>
+              </>}
               <h3 className="font-raleway text-xl font-bold text-[#5b3239] mt-8">{translated(language, 'Benefits and what to expect', 'Benefícios e o que esperar', 'Beneficios y qué esperar')}</h3>
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
                 {(service.benefits || []).map((benefit) => <li key={benefit} className="flex items-start gap-2 text-sm font-montserrat text-neutral-700"><CheckCircle2 className="w-4 h-4 text-[#9a5967] shrink-0 mt-0.5" />{benefit}</li>)}
@@ -148,6 +156,7 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
             <section className="space-y-3">
               <h2 className="font-raleway text-2xl font-bold uppercase tracking-wider text-[#5b3239]">FAQ</h2>
               <details className="bg-white border border-[#e8d6d5] rounded-xl p-5" open><summary className="font-montserrat font-bold text-[#5b3239] cursor-pointer">{translated(language, 'What should I know before booking?', 'O que devo saber antes de agendar?', '¿Qué debo saber antes de reservar?')}</summary><p className="font-montserrat text-sm text-neutral-700 leading-relaxed mt-3">{groupCopy.faq}</p></details>
+              {guide && <details className="bg-white border border-[#e8d6d5] rounded-xl p-5"><summary className="font-montserrat font-bold text-[#5b3239] cursor-pointer">{guide.question}</summary><p className="font-montserrat text-sm text-neutral-700 leading-relaxed mt-3">{guide.answer}</p></details>}
               <details className="bg-white border border-[#e8d6d5] rounded-xl p-5"><summary className="font-montserrat font-bold text-[#5b3239] cursor-pointer">{translated(language, 'Is the displayed price confirmed?', 'O preço exibido está confirmado?', '¿El precio mostrado está confirmado?')}</summary><p className="font-montserrat text-sm text-neutral-700 leading-relaxed mt-3">{isPriceConfirmed ? translated(language, 'Yes. The displayed price and duration are from the Bella Beauty Brazil Timely catalogue. Availability remains subject to the official booking page.', 'Sim. O preço e a duração exibidos vêm do catálogo Timely da Bella Beauty Brazil. A disponibilidade depende da página oficial de reserva.', 'Sí. El precio y la duración provienen del catálogo Timely de Bella Beauty Brazil. La disponibilidad depende de la página oficial de reserva.') : translated(language, 'No price is displayed here because it was not confirmed in the available catalogue. Please enquire through Timely.', 'Nenhum preço é exibido porque não foi confirmado no catálogo disponível. Consulte pelo Timely.', 'No se muestra precio porque no fue confirmado en el catálogo disponible. Consulta por Timely.')}</p></details>
             </section>
           </div>
