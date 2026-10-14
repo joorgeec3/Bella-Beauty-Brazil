@@ -20,11 +20,7 @@ if (!robots.includes(`Sitemap: ${origin}/sitemap.xml`)) throw new Error('robots.
 
 for (const url of urls) {
   const route = url.slice(origin.length);
-  const file = route === '/'
-    ? join(dir, 'index.html')
-    : route.startsWith('/services/') && process.env.GITHUB_PAGES !== 'true'
-      ? join(dir, route.slice(1))
-      : join(dir, route.slice(1), 'index.html');
+  const file = route === '/' ? join(dir, 'index.html') : join(dir, route.slice(1), 'index.html');
   await access(file).catch(() => { throw new Error(`Missing pre-rendered route: ${route}`); });
 }
 console.log('Static SEO smoke test passed: 23 routes, 17 services, sitemap, robots and entry files.');
