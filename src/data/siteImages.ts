@@ -14,7 +14,8 @@ export const siteImages = {
     lipBlush: siteAsset('assets/bella/cosmetic-tattooing.png'),
     brows: siteAsset('assets/bella/brows.png'),
     lashes: siteAsset('assets/bella/lashes.jpg'),
-    treatments: siteAsset('assets/bella/treatments.png'),
+    // A genuine facial treatment photo: the old treatments.png depicts a pigment/palette kit.
+    treatments: siteAsset('assets/bella/dermaplaning-facial-treatment.webp'),
     waxing: siteAsset('assets/bella/waxing.png'),
     courses: siteAsset('assets/bella/courses.png'),
   },
