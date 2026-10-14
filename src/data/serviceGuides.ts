@@ -153,6 +153,26 @@ export const SERVICE_GUIDES: Partial<Record<string, Record<Language, ServiceGuid
       answer: 'No. Son tratamientos distintos, con procedimientos y cuidados diferentes. Consulta tus objetivos y sensibilidades con Bella Beauty Brazil antes de reservar.'
     }
   },
+  'teeth-whitening': {
+    en: {
+      idealFor: 'For clients interested in asking the studio about its professional teeth whitening appointment. Personal suitability and expected results should be discussed before booking.',
+      comparison: 'Teeth Whitening is listed separately from cosmetic tattooing and facial skin treatments. It is a distinct appointment rather than part of a facial or brow service.',
+      question: 'How much is Teeth Whitening and how long does it take?',
+      answer: 'The Bella Beauty Brazil Timely catalogue lists Teeth Whitening at A$199 for 1 hour. Confirm availability, preparation and aftercare on the official booking page.'
+    },
+    pt: {
+      idealFor: 'Para quem deseja consultar o estúdio sobre seu serviço profissional de clareamento dental. A indicação e o resultado esperado devem ser discutidos antes de agendar.',
+      comparison: 'Teeth Whitening é um atendimento separado de tatuagem cosmética e tratamentos faciais. Não faz parte automaticamente de serviços de pele ou sobrancelhas.',
+      question: 'Quanto custa e quanto dura o clareamento dental?',
+      answer: 'O catálogo Timely da Bella Beauty Brazil publica Teeth Whitening por A$199, com duração de 1 hora. Confirme disponibilidade, preparo e cuidados pelo agendamento oficial.'
+    },
+    es: {
+      idealFor: 'Para quienes desean consultar con el estudio sobre el blanqueamiento dental profesional. La idoneidad y los resultados esperados deben hablarse antes de reservar.',
+      comparison: 'Teeth Whitening se publica por separado del tatuaje cosmético y los tratamientos faciales. No forma parte automáticamente de un servicio facial o de cejas.',
+      question: '¿Cuánto cuesta y cuánto dura Teeth Whitening?',
+      answer: 'El catálogo Timely de Bella Beauty Brazil indica A$199 y 1 hora. Confirma disponibilidad, preparación y cuidados a través de la reserva oficial.'
+    }
+  },
   'facial-spa': {
     en: {
       idealFor: 'For clients wanting to enquire about a dedicated facial appointment and the approach offered by Bella Beauty Brazil.',
