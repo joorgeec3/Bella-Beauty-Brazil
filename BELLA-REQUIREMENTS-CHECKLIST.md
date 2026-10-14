@@ -24,20 +24,29 @@
 - [x] Manter Timely como destino oficial de reserva; não simular checkout.
 - [x] Manter preços e durações somente quando constam do catálogo Timely registrado.
 - [x] Incluir Teeth Whitening (A$199 · 1 hour) com imagem geral do estúdio, sem fingir uma foto do procedimento.
-- [x] Disponibilizar conteúdo editorial específico (indicações possíveis, diferenças, FAQ) em EN-AU/PT/ES para Nano Strokes, Hybrid Brows, Lip Blush, Brow Sculpt & Tint, Brow Lamination, Lash Lift, Dermaplaning, Facial Spa e Teeth Whitening.
+- [x] Disponibilizar conteúdo editorial específico (indicações possíveis, diferenças, FAQ) em EN-AU/PT/ES **para os 17 serviços**, tanto nas páginas React quanto no HTML pré-renderizado para buscadores.
 - [x] Preservar galeria regular, categoria Meet Livia e comparativos Before & After em seção própria.
 - [x] Manter cursos confirmados com CTA Enquire/Timely, sem checkout fictício.
-- [ ] Adicionar imagens **reais e aprovadas** que faltam para ter fotografia distinta por categoria e serviço; evitar apresentar fotos de outros tratamentos.
-- [ ] Conferir novamente as avaliações do Google, números e trechos antes de afirmar que são atuais.
-- [ ] Confirmar com Bella os detalhes específicos de instrução/aftercare que dependem do protocolo do estúdio.
+- [x] Corrigir a fotografia de pele: substituir a imagem de materiais/pigmentos por uma foto real de atendimento facial presente no projeto, sem alterar a hero.
+- [x] Corrigir as descrições alternativas (ALT) para indicar quando se trata de fotografia editorial, e não de registro do tratamento exato.
+- [ ] Receber fotos **reais e aprovadas** específicas de outros tratamentos para eliminar todas as imagens repetidas. O acervo atual não contém 17 fotos individuais apropriadas; não inventar tratamentos ou fotos.
+- [x] Conferir nota/reviews por fonte pública independente: RightForMe registrou 5,0 de 126 avaliações do Google em 25 setembro de 2026. O site deixa claro que não é feed em tempo real.
+- [ ] Confirmar com acesso direto ao perfil Google o conteúdo integral, a autoria e a contagem atual das avaliações individuais; manter botão para o perfil oficial.
+- [x] Evitar publicar protocolos de preparação e cuidados não verificados; os 17 textos orientam a consultar diretamente Bella Beauty Brazil.
+- [ ] Confirmar com Bella os detalhes específicos de instrução/aftercare antes de ampliar o conteúdo com etapas ou garantias clínicas.
 
 ## Etapa 3 — qualidade e publicação
 - [x] Animações funcionaram após a configuração de movimento reduzido ser alterada no Windows do usuário.
 - [x] Preservar `prefers-reduced-motion` para visitantes que escolham reduzir movimento.
 - [ ] Validar visualmente preview em desktop e celular (375, 390, 430, 768, 1024 e 1440 px).
 - [ ] Confirmar lightbox, filtros, Before & After, menus, traduções e CTAs no navegador.
-- [ ] Testar manualmente links para Timely, Maps, telefone, WhatsApp e Instagram.
-- [ ] Medir LCP, CLS e INP (metas, não resultados prometidos).
+- [x] Revisar no código os links de Timely, Maps, telefone, WhatsApp e Instagram; remover um ícone duplicado do Instagram.
+- [x] Corrigir formulários e chats: a página de contato abre rascunho no e-mail sem simular mensagem enviada; o WhatsApp abre uma conversa real e o modal direciona a unidade Greenslopes.
+- [ ] Testar os links em navegador real, inclusive abrir o Timely e seu fluxo no celular.
+- [x] Precarregar imagem hero em alta prioridade sem alterar o layout.
+- [ ] Medir LCP, CLS e INP em navegador/usuários reais (metas, não resultados prometidos).
+- [x] Configurar `npm run build` para fazer checagem TypeScript, gerar 23 URLs e validar a existência dos arquivos de SEO e robots, antes de aceitar o deploy.
+- [x] Validar presença dos 17 slugs no código, no prerender e no sitemap, e confirmar existência das imagens no repositório.
 - [ ] Revisar o PR e mesclar à `main` somente após os testes. Conferir nova implantação Production na Vercel.
 
 ## Atenção sobre domínio
