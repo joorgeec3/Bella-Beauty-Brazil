@@ -16,6 +16,9 @@
 - [ ] Configurar/verificar Google Search Console e enviar sitemap do domínio definitivo.
 
 ## Etapa 2 — conteúdo, serviços e conversão
+- [x] Organizar a página Services para uso prático: busca por nome/técnica, sete categorias com contagem, acesso rápido aos tratamentos prioritários e cartões compactos com dois CTAs (detalhes e reserva Timely).
+- [x] Simplificar o dropdown do cabeçalho: seis atalhos e link Todos os serviços, em vez de 17 opções numa lista extensa.
+- [x] Preservar URLs individuais e navegação normal quando o visitante usa os filtros.
 - [x] Preservar o design aprovado da Sheila e a hero (Book Now, Courses, See Our Google Reviews).
 - [x] Manter identidade Bella Beauty Brazil, Meet Livia, localização, telefone, horários e contatos.
 - [x] Manter Timely como destino oficial de reserva; não simular checkout.
