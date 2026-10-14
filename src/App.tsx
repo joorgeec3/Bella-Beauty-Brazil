@@ -52,7 +52,8 @@ const resolveRoute = () => {
   if (path === '/locations') return { tab: 'locations', serviceId: undefined };
   if (path === '/contact') return { tab: 'contact', serviceId: undefined };
   if (path === '/courses' || path === '/store') return { tab: 'store', serviceId: undefined };
-  return { tab: 'home', serviceId: undefined };
+  if (path === '/') return { tab: 'home', serviceId: undefined };
+  return { tab: 'not-found', serviceId: undefined };
 };
 
 export default function App() {
