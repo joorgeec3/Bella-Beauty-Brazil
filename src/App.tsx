@@ -32,6 +32,8 @@ import { ServiceDetailView } from './pages/ServiceDetailView';
 import { Language, Product, SERVICES } from './data/siteData';
 
 const APP_BASE_PATH = import.meta.env.BASE_URL.replace(/\/$/, '');
+// Change VITE_PUBLIC_SITE_URL to the official domain only after the domain points at this Vercel project.
+const PUBLIC_SITE_ORIGIN = (import.meta.env.VITE_PUBLIC_SITE_URL || 'https://bella-beauty-brazil.vercel.app').replace(/\/+$/, '');
 
 const resolveRoute = () => {
   if (typeof window === 'undefined') return { tab: 'home', serviceId: undefined as string | undefined };
@@ -113,23 +115,43 @@ export default function App() {
     ogTitle?.setAttribute('content', current.title);
     const ogDescription = document.querySelector('meta[property="og:description"]');
     ogDescription?.setAttribute('content', current.description);
+    const currentPath = currentTab === 'service-detail' && activeServiceId
+      ? `/services/${encodeURIComponent(activeServiceId)}`
+      : currentTab === 'home' ? '/'
+      : currentTab === 'store' || currentTab === 'courses' ? '/courses'
+      : `/${currentTab}`;
+    const canonicalUrl = PUBLIC_SITE_ORIGIN + currentPath;
+    let canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+    if (!canonical) {
+      canonical = document.createElement('link');
+      canonical.rel = 'canonical';
+      document.head.appendChild(canonical);
+    }
+    canonical.href = canonicalUrl;
+    let ogUrl = document.querySelector<HTMLMetaElement>('meta[property="og:url"]');
+    if (!ogUrl) {
+      ogUrl = document.createElement('meta');
+      ogUrl.setAttribute('property', 'og:url');
+      document.head.appendChild(ogUrl);
+    }
+    ogUrl.content = canonicalUrl;
 
     const structuredData = {
       '@context': 'https://schema.org',
       '@graph': [
         {
           '@type': 'BeautySalon',
-          '@id': 'https://www.bellabeautybrazil.com.au/#business',
+          '@id': `${PUBLIC_SITE_ORIGIN}/#business`,
           name: 'Bella Beauty Brazil',
-          url: 'https://www.bellabeautybrazil.com.au/',
+          url: `${PUBLIC_SITE_ORIGIN}/`,
           telephone: '+61 402 148 437',
           email: 'livia.anjos14@gmail.com',
           address: { '@type': 'PostalAddress', streetAddress: 'Suite 3, 412 Logan Road', addressLocality: 'Greenslopes', addressRegion: 'QLD', postalCode: '4120', addressCountry: 'AU' },
           sameAs: ['https://www.instagram.com/bellabeautybrazil/', 'https://bellabrazil.gettimely.com/'],
         },
-        { '@type': 'Person', '@id': 'https://www.bellabeautybrazil.com.au/#livia-rego', name: 'Livia Rego', worksFor: { '@id': 'https://www.bellabeautybrazil.com.au/#business' } },
-        ...SERVICES.slice(0, 8).map((service) => ({ '@type': 'Service', name: service.title, provider: { '@id': 'https://www.bellabeautybrazil.com.au/#business' }, areaServed: ['Greenslopes', 'Brisbane Southside', 'Greater Brisbane'], offers: service.price ? { '@type': 'Offer', priceCurrency: 'AUD', price: service.price } : undefined })),
-        { '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.bellabeautybrazil.com.au/' }, { '@type': 'ListItem', position: 2, name: current.title.replace(' | Bella Beauty Brazil', '') }] },
+        { '@type': 'Person', '@id': `${PUBLIC_SITE_ORIGIN}/#livia-rego`, name: 'Livia Rego', worksFor: { '@id': `${PUBLIC_SITE_ORIGIN}/#business` } },
+        ...SERVICES.map((service) => ({ '@type': 'Service', '@id': `${PUBLIC_SITE_ORIGIN}/services/${service.id}#service`, name: service.title, url: `${PUBLIC_SITE_ORIGIN}/services/${service.id}`, provider: { '@id': `${PUBLIC_SITE_ORIGIN}/#business` }, areaServed: ['Greenslopes', 'Brisbane Southside', 'Greater Brisbane'], offers: service.price ? { '@type': 'Offer', priceCurrency: 'AUD', price: service.price, url: 'https://bellabrazil.gettimely.com/' } : undefined })),
+        { '@type': 'BreadcrumbList', itemListElement: currentTab === 'home' ? [{ '@type': 'ListItem', position: 1, name: 'Home', item: `${PUBLIC_SITE_ORIGIN}/` }] : [{ '@type': 'ListItem', position: 1, name: 'Home', item: `${PUBLIC_SITE_ORIGIN}/` }, { '@type': 'ListItem', position: 2, name: current.title.replace(' | Bella Beauty Brazil', ''), item: canonicalUrl }] },
       ],
     };
     let script = document.getElementById('bella-dynamic-schema') as HTMLScriptElement | null;
