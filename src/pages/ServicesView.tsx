@@ -169,7 +169,7 @@ export const ServicesView: React.FC<ServicesViewProps> = ({ initialServiceId, on
             <a href={'/services/' + service.id} onClick={(event) => navigate(event, service.id)}
               className="block sm:w-[165px] sm:shrink-0 overflow-hidden bg-[#eee2df] focus-visible:outline-2 focus-visible:outline-[#9a5967]">
               <img src={service.image}
-                alt={service.id === 'teeth-whitening' ? 'Bella Beauty Brazil studio room in Greenslopes' : service.title + ' at Bella Beauty Brazil'}
+                alt={service.id === 'teeth-whitening' ? 'Bella Beauty Brazil studio room in Greenslopes' : service.category === 'Skin' ? 'Bella Beauty Brazil facial treatment editorial photograph' : service.title + ' at Bella Beauty Brazil'}
                 loading="lazy" className="w-full h-44 sm:h-full max-h-[240px] sm:max-h-none object-cover hover:scale-[1.03] transition-transform duration-500" />
             </a>
             <div className="min-w-0 p-4 sm:p-5 flex-1 flex flex-col">
