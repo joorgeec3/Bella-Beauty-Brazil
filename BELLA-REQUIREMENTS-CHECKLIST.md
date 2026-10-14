@@ -16,6 +16,11 @@
 - [ ] Configurar/verificar Google Search Console e enviar sitemap do domínio definitivo.
 
 ## Etapa 2 — conteúdo, serviços e conversão
+- [x] Trocar a página inicial Timely (`bellabrazil.gettimely.com/`) pelo formulário de seleção de reservas (`book.gettimely.com/bellabrazil/book/embed?client-login=true`) em CTAs gerais, cards e SEO pré-renderizado.
+- [x] Remover o modal adicional de Greenslopes nos CTAs gerais: Book Now abre diretamente o seletor Timely em nova guia, mantendo aparência da hero.
+- [x] Aplicar o link **individual comprovado** no curso de Classic Eyelash Extensions (Timely `product=3230447:SV`).
+- [ ] Completar a seleção automática dos outros **16 tratamentos**, quando a proprietária disponibilizar os respectivos links ou IDs oficiais em Timely → Setup → Booking buttons. Sem isso, usar apenas o seletor de serviços, sem inventar IDs.
+
 - [x] Organizar a página Services para uso prático: busca por nome/técnica, sete categorias com contagem, acesso rápido aos tratamentos prioritários e cartões compactos com dois CTAs (detalhes e reserva Timely).
 - [x] Simplificar o dropdown do cabeçalho: seis atalhos e link Todos os serviços, em vez de 17 opções numa lista extensa.
 - [x] Preservar URLs individuais e navegação normal quando o visitante usa os filtros.
