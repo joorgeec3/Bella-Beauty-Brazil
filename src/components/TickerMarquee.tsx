@@ -16,7 +16,7 @@ export const TickerMarquee: React.FC<{ language: Language }> = ({ language }) =>
           display: flex;
           width: max-content;
           flex-wrap: nowrap;
-          animation: bellaVisitUsMove 28s linear infinite !important;
+          animation: bellaVisitUsMove 15s linear infinite !important;
           animation-play-state: running !important;
           will-change: transform;
         }
@@ -34,7 +34,7 @@ export const TickerMarquee: React.FC<{ language: Language }> = ({ language }) =>
           gap: 22px;
           margin: 0 16px;
           font-size: clamp(24px,3vw,42px);
-          font-weight: 200;
+          font-weight: 400;
           letter-spacing: .12em;
           line-height: 1.25;
           text-transform: uppercase;
