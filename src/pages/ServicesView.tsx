@@ -34,7 +34,7 @@ const copy: Record<Language, {
     noResults: 'No treatments found',
     noResultsText: 'Try a different word or choose another category.',
     details: 'Learn more', book: 'Book on Timely', enquire: 'Ask the studio',
-    from: 'Official Timely listing',
+    from: 'Prices and availability may change. Confirm on Timely.',
     helpTitle: 'Not sure which treatment to book?',
     helpText: 'Our studio can help you choose a suitable appointment and explain preparation and aftercare.',
     helpCta: 'Check appointments on Timely',
@@ -49,7 +49,7 @@ const copy: Record<Language, {
     noResults: 'Nenhum tratamento encontrado',
     noResultsText: 'Tente outra palavra ou escolha outra categoria.',
     details: 'Saiba mais', book: 'Agendar no Timely', enquire: 'Consultar o estúdio',
-    from: 'Catálogo oficial Timely',
+    from: 'Preços e horários podem mudar. Confirme no Timely.',
     helpTitle: 'Não sabe qual tratamento escolher?',
     helpText: 'O estúdio pode orientar sobre o atendimento adequado, preparo e cuidados após o procedimento.',
     helpCta: 'Ver horários no Timely',
@@ -64,7 +64,7 @@ const copy: Record<Language, {
     noResults: 'No se encontraron tratamientos',
     noResultsText: 'Prueba otra palabra o elige otra categoría.',
     details: 'Más información', book: 'Reservar en Timely', enquire: 'Consultar al estudio',
-    from: 'Catálogo oficial Timely',
+    from: 'Los precios y horarios pueden cambiar. Confirma en Timely.',
     helpTitle: '¿No sabes qué tratamiento elegir?',
     helpText: 'El estudio puede orientarte sobre la cita adecuada, la preparación y los cuidados.',
     helpCta: 'Consultar citas en Timely',
@@ -151,6 +151,8 @@ export const ServicesView: React.FC<ServicesViewProps> = ({ initialServiceId, on
           })}
         </div>
       </section>
+
+      <p className="font-montserrat text-xs text-[#675960] mb-5" role="note">{labels.from}</p>
 
       <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
         <p aria-live="polite" className="font-montserrat text-xs sm:text-sm text-[#675960]">
