@@ -1,6 +1,7 @@
 import React from 'react';
 import { ArrowLeft, ArrowRight, Calendar, CheckCircle2, Clock, MapPin } from 'lucide-react';
-import { BOOKING_URL, Language, SERVICES, getLocalizedService } from '../data/siteData';
+import { Language, SERVICES, getLocalizedService, getServiceBookingUrl, SERVICE_BOOKING_LINKS } from '../data/siteData';
+import { SERVICE_GUIDES } from '../data/serviceGuides';
 
 interface ServiceDetailViewProps {
   serviceId: string;
@@ -103,6 +104,7 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
   const groupCopy = language === 'en' ? group : GROUP_TRANSLATIONS[base.id]?.[language] || { ...group, ...fallbackTranslation };
   const related = group.related.map((id) => SERVICES.find((item) => item.id === id)).filter(Boolean) as typeof SERVICES;
   const isPriceConfirmed = Boolean(service.price && service.duration);
+  const guide = SERVICE_GUIDES[base.id]?.[language];
 
   return (
     <div className="bg-site">
@@ -117,14 +119,14 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
               <h1 className="font-raleway text-3xl sm:text-5xl font-light uppercase tracking-wider leading-tight">{service.title}</h1>
               <p className="font-montserrat text-sm sm:text-base text-neutral-200 mt-5 max-w-xl leading-relaxed">{service.description}</p>
               <div className="flex flex-wrap gap-4 mt-7">
-                <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-[#efb7c8] hover:bg-white text-[#5b3239] text-xs font-bold uppercase tracking-widest px-7 py-4 rounded-full cursor-pointer transition-colors">
+                <a href={getServiceBookingUrl(base.id)} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-[#efb7c8] hover:bg-white text-[#5b3239] text-xs font-bold uppercase tracking-widest px-7 py-4 rounded-full cursor-pointer transition-colors">
                   <Calendar className="w-4 h-4" /> {translated(language, 'Book now', 'Agendar agora', 'Reservar ahora')}
                 </a>
                 <span className="inline-flex items-center gap-2 text-xs uppercase tracking-wider text-neutral-200"><MapPin className="w-4 h-4 text-[#efb7c8]" /> Greenslopes, QLD 4120</span>
               </div>
             </div>
             <div className="lg:col-span-6">
-              <img src={service.image} alt={`${service.title} at Bella Beauty Brazil in Greenslopes`} className="w-full aspect-[4/3] object-cover rounded-2xl shadow-2xl border border-white/20" />
+              <img src={service.image} alt={service.id === 'teeth-whitening' ? 'Bella Beauty Brazil studio interior in Greenslopes' : service.category === 'Skin' ? 'Bella Beauty Brazil editorial photograph of facial skin care' : `${service.title} at Bella Beauty Brazil in Greenslopes`} className="w-full aspect-[4/3] object-cover rounded-2xl shadow-2xl border border-white/20" />
             </div>
           </div>
         </div>
@@ -135,7 +137,13 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
           <div className="lg:col-span-8 space-y-8">
             <section className="bg-white rounded-2xl border border-[#e8d6d5] p-6 sm:p-10 shadow-sm scroll-rise">
               <h2 className="font-raleway text-2xl sm:text-3xl font-bold uppercase tracking-wider text-[#5b3239]">{translated(language, 'About this treatment', 'Sobre este tratamento', 'Sobre este tratamiento')}</h2>
-              <p className="font-montserrat text-neutral-700 leading-relaxed mt-4">{service.description} {groupCopy.difference}</p>
+              <p className="font-montserrat text-neutral-700 leading-relaxed mt-4">{service.description} {!guide && groupCopy.difference}</p>
+              {guide && <>
+                <h3 className="font-raleway text-xl font-bold text-[#5b3239] mt-8">{translated(language, 'Who may this treatment suit?', 'Para quem este tratamento pode ser indicado?', '¿Para quién puede ser adecuado este tratamiento?')}</h3>
+                <p className="font-montserrat text-neutral-700 leading-relaxed mt-3">{guide.idealFor}</p>
+                <h3 className="font-raleway text-xl font-bold text-[#5b3239] mt-8">{translated(language, 'How is it different?', 'Quais são as diferenças?', '¿En qué se diferencia?')}</h3>
+                <p className="font-montserrat text-neutral-700 leading-relaxed mt-3">{guide.comparison}</p>
+              </>}
               <h3 className="font-raleway text-xl font-bold text-[#5b3239] mt-8">{translated(language, 'Benefits and what to expect', 'Benefícios e o que esperar', 'Beneficios y qué esperar')}</h3>
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
                 {(service.benefits || []).map((benefit) => <li key={benefit} className="flex items-start gap-2 text-sm font-montserrat text-neutral-700"><CheckCircle2 className="w-4 h-4 text-[#9a5967] shrink-0 mt-0.5" />{benefit}</li>)}
@@ -148,7 +156,8 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
             <section className="space-y-3">
               <h2 className="font-raleway text-2xl font-bold uppercase tracking-wider text-[#5b3239]">FAQ</h2>
               <details className="bg-white border border-[#e8d6d5] rounded-xl p-5" open><summary className="font-montserrat font-bold text-[#5b3239] cursor-pointer">{translated(language, 'What should I know before booking?', 'O que devo saber antes de agendar?', '¿Qué debo saber antes de reservar?')}</summary><p className="font-montserrat text-sm text-neutral-700 leading-relaxed mt-3">{groupCopy.faq}</p></details>
-              <details className="bg-white border border-[#e8d6d5] rounded-xl p-5"><summary className="font-montserrat font-bold text-[#5b3239] cursor-pointer">{translated(language, 'Is the displayed price confirmed?', 'O preço exibido está confirmado?', '¿El precio mostrado está confirmado?')}</summary><p className="font-montserrat text-sm text-neutral-700 leading-relaxed mt-3">{isPriceConfirmed ? translated(language, 'Yes. The displayed price and duration are from the Bella Beauty Brazil Timely catalogue. Availability remains subject to the official booking page.', 'Sim. O preço e a duração exibidos vêm do catálogo Timely da Bella Beauty Brazil. A disponibilidade depende da página oficial de reserva.', 'Sí. El precio y la duración provienen del catálogo Timely de Bella Beauty Brazil. La disponibilidad depende de la página oficial de reserva.') : translated(language, 'No price is displayed here because it was not confirmed in the available catalogue. Please enquire through Timely.', 'Nenhum preço é exibido porque não foi confirmado no catálogo disponível. Consulte pelo Timely.', 'No se muestra precio porque no fue confirmado en el catálogo disponible. Consulta por Timely.')}</p></details>
+              {guide && <details className="bg-white border border-[#e8d6d5] rounded-xl p-5"><summary className="font-montserrat font-bold text-[#5b3239] cursor-pointer">{guide.question}</summary><p className="font-montserrat text-sm text-neutral-700 leading-relaxed mt-3">{guide.answer}</p></details>}
+              <details className="bg-white border border-[#e8d6d5] rounded-xl p-5"><summary className="font-montserrat font-bold text-[#5b3239] cursor-pointer">{translated(language, 'Where can I confirm the latest price?', 'Onde confirmar o preço atual?', '¿Dónde puedo confirmar el precio actual?')}</summary><p className="font-montserrat text-sm text-neutral-700 leading-relaxed mt-3">{isPriceConfirmed ? translated(language, 'The price and duration shown reflect the service catalogue recorded for this website. Prices and availability may change; the official Timely page is the final reference when booking.', 'O preço e a duração apresentados refletem o catálogo registrado para este site. Eles podem mudar; consulte o Timely oficial para o valor e a disponibilidade atualizados.', 'El precio y la duración corresponden al catálogo registrado para este sitio. Pueden cambiar; consulta el Timely oficial para conocer el precio y la disponibilidad actual.') : translated(language, 'No price is displayed here because it was not confirmed in the available catalogue. Please enquire through Timely.', 'Nenhum preço é exibido porque não foi confirmado no catálogo disponível. Consulte pelo Timely.', 'No se muestra precio porque no fue confirmado en el catálogo disponible. Consulta por Timely.')}</p></details>
             </section>
           </div>
           <aside className="lg:col-span-4 space-y-5">
@@ -156,7 +165,9 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
               <h2 className="font-raleway text-2xl font-bold uppercase tracking-wider">{translated(language, 'Book this service', 'Agende este serviço', 'Reserva este servicio')}</h2>
               <div className="flex items-center gap-3 mt-5 text-[#efb7c8]"><Calendar className="w-5 h-5" /><strong className="font-montserrat text-xl">{isPriceConfirmed ? `A$${service.price}` : translated(language, 'Enquire', 'Consultar', 'Consultar')}</strong></div>
               {service.duration && <div className="flex items-center gap-3 mt-3 text-neutral-200"><Clock className="w-5 h-5" /><span className="font-montserrat text-sm">{service.duration}</span></div>}
-              <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="mt-7 inline-flex w-full items-center justify-center gap-2 bg-[#efb7c8] hover:bg-white text-[#5b3239] text-xs font-bold uppercase tracking-widest px-5 py-4 rounded-full cursor-pointer transition-colors"><Calendar className="w-4 h-4" />{translated(language, 'Book on Timely', 'Agendar no Timely', 'Reservar en Timely')}</a>
+              <a href={getServiceBookingUrl(base.id)} target="_blank" rel="noopener noreferrer" className="mt-7 inline-flex w-full items-center justify-center gap-2 bg-[#efb7c8] hover:bg-white text-[#5b3239] text-xs font-bold uppercase tracking-widest px-5 py-4 rounded-full cursor-pointer transition-colors"><Calendar className="w-4 h-4" />{SERVICE_BOOKING_LINKS[base.id]
+                ? translated(language, 'Book this treatment', 'Agendar este tratamento', 'Reservar este tratamiento')
+                : translated(language, 'Choose treatment on Timely', 'Selecionar tratamento no Timely', 'Elegir tratamiento en Timely')}</a>
               <p className="font-montserrat text-xs text-neutral-300 mt-5 leading-relaxed">{translated(language, 'Bella Beauty Brazil · Suite 3, 412 Logan Road, Greenslopes, QLD 4120.', 'Bella Beauty Brazil · Suite 3, 412 Logan Road, Greenslopes, QLD 4120.', 'Bella Beauty Brazil · Suite 3, 412 Logan Road, Greenslopes, QLD 4120.')}</p>
             </div>
             <div className="bg-white rounded-2xl border border-[#e8d6d5] p-6">

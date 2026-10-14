@@ -1,0 +1,40 @@
+name: Responsive UI QA
+
+on:
+  pull_request:
+    paths:
+      - 'src/**'
+      - 'scripts/**'
+      - 'public/**'
+      - 'package.json'
+      - 'vite.config.ts'
+      - '.github/workflows/responsive-qa.yml'
+  workflow_dispatch:
+
+jobs:
+  browser-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Install project dependencies
+        run: npm ci
+      - name: Build and type-check all routes
+        run: npm run build
+      - name: Install isolated Playwright browser test dependency
+        run: npm install --no-save --package-lock=false playwright
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Check mobile, tablet and desktop
+        run: node scripts/responsive-qa.mjs
+      - name: Save visual QA screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bella-responsive-qa
+          path: qa-screenshots/
+          if-no-files-found: ignore

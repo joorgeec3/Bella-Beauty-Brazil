@@ -35,7 +35,7 @@ export const bellaGallery: BellaGalleryItem[] = uniqueImages([
   { id: 'brows-editorial', image: '/assets/bella/brows.png', category: 'Brows', kind: 'editorial', alt: 'Bella Beauty Brazil individual brow treatment' },
   { id: 'lips-editorial', image: '/assets/bella/cosmetic-tattooing.png', category: 'Lips', kind: 'editorial', alt: 'Bella Beauty Brazil individual lip cosmetic tattooing treatment' },
   { id: 'lashes-editorial', image: '/assets/bella/lashes.jpg', category: 'Lashes', kind: 'editorial', alt: 'Bella Beauty Brazil individual eyelash treatment' },
-  { id: 'skin-editorial', image: '/assets/bella/treatments.png', category: 'Skin', kind: 'editorial', alt: 'Bella Beauty Brazil individual skin treatment preparation' },
+  { id: 'skin-editorial', image: '/assets/bella/dermaplaning-facial-treatment.webp', category: 'Skin', kind: 'editorial', alt: 'Professional facial skin treatment at Bella Beauty Brazil' },
   // Keep the brow appointment photograph for Brow Artistry, not repeated in the gallery.
   ...clientGallery.filter((item) => item.kind === 'livia' && !['livia-portrait-01', 'livia-portrait-02'].includes(item.id)),
   { id: 'studio-interior-01', image: '/assets/bella/gallery/studio-treatment-room.webp', category: 'Studio', kind: 'studio', alt: 'Bella Beauty Brazil treatment room with bed and brand wall' },

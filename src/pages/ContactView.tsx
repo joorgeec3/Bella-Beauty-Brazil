@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Phone, MapPin, Clock, Send, CheckCircle2 } from 'lucide-react';
+import { Phone, MapPin, Clock, Send } from 'lucide-react';
 import { LOCATIONS } from '../data/siteData';
 import { Language } from '../data/siteData';
 
@@ -15,7 +15,6 @@ export const ContactView: React.FC<ContactViewProps> = ({ language }) => {
     location: 'Greenslopes',
     message: '',
   });
-  const [submitted, setSubmitted] = useState(false);
   const location = LOCATIONS[0];
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -40,8 +39,8 @@ export const ContactView: React.FC<ContactViewProps> = ({ language }) => {
             {language === 'en'
               ? 'Have questions about our beauty treatments or need guidance? We are here to help!'
               : language === 'pt'
-              ? 'Tem dúvidas sobre nossa tratamentos de beleza ou precisa de orientação? Estamos aqui para ajudar!'
-              : '¿Tienes dudas sobre nuestro tratamientos de belleza o necesitas asesoría? ¡Estamos para ayudarte!'}
+              ? 'Tem dúvidas sobre nossos tratamentos de beleza ou precisa de orientação? Estamos aqui para ajudar!'
+              : '¿Tienes dudas sobre nuestros tratamientos de belleza o necesitas asesoría? ¡Estamos para ayudarte!'}
           </p>
           <div className="w-16 h-0.5 bg-[#9a5967] mx-auto mt-4" />
         </div>
@@ -118,27 +117,12 @@ export const ContactView: React.FC<ContactViewProps> = ({ language }) => {
             </h3>
             <p className="font-montserrat text-xs text-neutral-600 mb-6">
               {language === 'en'
-                ? 'Fill out the form below and our team will get back to you shortly.'
+                ? 'Complete the fields below to open a draft in your email app. Please press Send there to deliver it to our studio.'
                 : language === 'pt'
-                ? 'Preencha o formulário abaixo e nossa equipe responderá em breve.'
-                : 'Completa el formulario y nuestro equipo te responderá a la brevedad.'}
+                ? 'Preencha os dados para abrir um rascunho no seu aplicativo de e-mail. Depois, pressione Enviar no e-mail para que a mensagem seja entregue.'
+                : 'Completa los datos para abrir un borrador en tu aplicación de correo. Después, pulsa Enviar en el correo para entregarlo.'}
             </p>
 
-            {submitted ? (
-              <div className="p-6 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-800 text-center space-y-3">
-                <CheckCircle2 className="w-10 h-10 text-emerald-600 mx-auto" />
-                <h4 className="font-raleway text-lg font-bold">
-                  {language === 'en' ? 'Message Sent Successfully!' : language === 'pt' ? 'Mensagem enviada com sucesso!' : '¡Mensaje enviado con éxito!'}
-                </h4>
-                <p className="font-montserrat text-xs text-emerald-700">
-                  {language === 'en'
-                    ? 'Thank you for reaching out. We will contact you soon.'
-                    : language === 'pt'
-                    ? 'Obrigada por entrar em contato. Falaremos com você em breve.'
-                    : 'Gracias por contactarnos. Nos comunicaremos contigo pronto.'}
-                </p>
-              </div>
-            ) : (
               <form onSubmit={handleSubmit} className="space-y-4 font-montserrat text-xs">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
@@ -213,10 +197,9 @@ export const ContactView: React.FC<ContactViewProps> = ({ language }) => {
                   className="w-full inline-flex items-center justify-center space-x-2 bg-[#5b3239] hover:bg-[#7a4753] text-white font-montserrat font-bold text-xs uppercase tracking-widest py-4 px-8 rounded-full shadow-md transition-colors cursor-pointer"
                 >
                   <Send className="w-3.5 h-3.5 text-amber-200" />
-                  <span>{language === 'en' ? 'Send Message' : language === 'pt' ? 'Enviar mensagem' : 'Enviar mensaje'}</span>
+                  <span>{language === 'en' ? 'Open email app' : language === 'pt' ? 'Abrir aplicativo de e-mail' : 'Abrir correo electrónico'}</span>
                 </button>
               </form>
-            )}
           </div>
 
         </div>
