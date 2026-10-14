@@ -45,7 +45,7 @@ for (const [slug, service] of Object.entries(services)) {
   const url = `${siteOrigin}/services/${slug}`;
   const title = `${service.title} | Bella Beauty Brazil Greenslopes`;
   const description = `${service.description} Confirmed Timely details and official booking at Bella Beauty Brazil in Greenslopes, Brisbane.`;
-  const schema = { '@context': 'https://schema.org', '@type': 'Service', name: service.title, description: service.description, provider: { '@type': 'BeautySalon', name: 'Bella Beauty Brazil', telephone: '+61 402 148 437', address: { '@type': 'PostalAddress', streetAddress: 'Suite 3, 412 Logan Road', addressLocality: 'Greenslopes', addressRegion: 'QLD', postalCode: '4120', addressCountry: 'AU' } }, areaServed: ['Greenslopes', 'Brisbane Southside', 'Greater Brisbane'], offers: service.price ? { '@type': 'Offer', priceCurrency: 'AUD', price: service.price, url: 'https://bellabrazil.gettimely.com/' } : undefined };
+  const schema = { '@context': 'https://schema.org', '@type': 'Service', name: service.title, description: service.description, provider: { '@type': 'BeautySalon', name: 'Bella Beauty Brazil', telephone: '+61 402 148 437', address: { '@type': 'PostalAddress', streetAddress: 'Suite 3, 412 Logan Road', addressLocality: 'Greenslopes', addressRegion: 'QLD', postalCode: '4120', addressCountry: 'AU' } }, areaServed: ['Greenslopes', 'Brisbane Southside', 'Greater Brisbane'], offers: service.price ? { '@type': 'Offer', priceCurrency: 'AUD', price: service.price, url: 'https://book.gettimely.com/bellabrazil/book/embed?client-login=true' } : undefined };
   const guide = SERVICE_GUIDES[slug]?.en;
   const treatmentInfo = guide
     ? `<h2>Who might this treatment suit?</h2><p>${escapeHtml(guide.idealFor)}</p><h2>How does it compare?</h2><p>${escapeHtml(guide.comparison)}</p><h2>Common questions</h2><h3>${escapeHtml(guide.question)}</h3><p>${escapeHtml(guide.answer)}</p>`
@@ -58,7 +58,7 @@ for (const [slug, service] of Object.entries(services)) {
     }],
   } : null;
   const schemaGraph = faqSchema ? { '@context': 'https://schema.org', '@graph': [schema, faqSchema] } : schema;
-  const body = `<main><article><p>Bella Beauty Brazil · Greenslopes, Brisbane</p><h1>${escapeHtml(service.title)}</h1><p>${escapeHtml(service.description)}</p><img src="${publicAsset(service.image)}" alt="${escapeHtml(service.title)} at Bella Beauty Brazil in Greenslopes" /><h2>About this treatment</h2>${treatmentInfo}<h2>Book this service</h2>${service.price ? `<p>A$${service.price} · ${service.duration}</p>` : ''}<p><a href="https://bellabrazil.gettimely.com/">Book on Timely</a></p></article></main>`;
+  const body = `<main><article><p>Bella Beauty Brazil · Greenslopes, Brisbane</p><h1>${escapeHtml(service.title)}</h1><p>${escapeHtml(service.description)}</p><img src="${publicAsset(service.image)}" alt="${escapeHtml(service.title)} at Bella Beauty Brazil in Greenslopes" /><h2>About this treatment</h2>${treatmentInfo}<h2>Book this service</h2>${service.price ? `<p>A$${service.price} · ${service.duration}</p>` : ''}<p><a href="https://book.gettimely.com/bellabrazil/book/embed?client-login=true">Book on Timely</a></p></article></main>`;
   const html = renderPage({ title, description, canonicalUrl: url, body, schema: schemaGraph });
   const target = isGitHubPages ? join(buildDir, 'services', slug, 'index.html') : join(buildDir, 'services', slug);
   await mkdir(dirname(target), { recursive: true });
@@ -75,7 +75,7 @@ const simplePages = {
 for (const [slug, [title, description]] of Object.entries(simplePages)) {
   const canonicalUrl = `${siteOrigin}/${slug}`;
   const catalogueLinks = slug === 'services' ? `<h2>Our treatments</h2><ul>${Object.entries(services).map(([id, service]) => `<li><a href="${siteOrigin}/services/${id}">${escapeHtml(service.title)}</a></li>`).join('')}</ul>` : '';
-  const body = `<main><article><h1>${escapeHtml(title)}</h1><p>${escapeHtml(description)}</p>${catalogueLinks}<a href="https://bellabrazil.gettimely.com/">Book with Bella Beauty Brazil</a></article></main>`;
+  const body = `<main><article><h1>${escapeHtml(title)}</h1><p>${escapeHtml(description)}</p>${catalogueLinks}<a href="https://book.gettimely.com/bellabrazil/book/embed?client-login=true">Book with Bella Beauty Brazil</a></article></main>`;
   const html = renderPage({ title: `${title} | Bella Beauty Brazil`, description, canonicalUrl, body });
   // Use directories for informational routes on every host. /services already exists
   // as a directory for individual treatment pages; writing dist/services as a file
