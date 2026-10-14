@@ -17,7 +17,6 @@ import { SmoothScrollController } from './components/SmoothScrollController';
 import { TestimonialsSection } from './components/TestimonialsSection';
 import { InstagramSection } from './components/InstagramSection';
 import { Footer } from './components/Footer';
-import { AppointmentModal } from './components/AppointmentModal';
 import { SideHoursDrawer } from './components/SideHoursDrawer';
 import { JoinChatButton } from './components/JoinChatButton';
 import { BackToTopButton } from './components/BackToTopButton';
@@ -29,7 +28,7 @@ import { ContactView } from './pages/ContactView';
 import { WorkWithUsView } from './pages/WorkWithUsView';
 import { StoreView } from './pages/StoreView';
 import { ServiceDetailView } from './pages/ServiceDetailView';
-import { Language, Product, SERVICES } from './data/siteData';
+import { BOOKING_URL, Language, Product, SERVICES } from './data/siteData';
 
 const APP_BASE_PATH = import.meta.env.BASE_URL.replace(/\/$/, '');
 // Change VITE_PUBLIC_SITE_URL to the official domain only after the domain points at this Vercel project.
@@ -60,11 +59,11 @@ export default function App() {
   const initialRoute = resolveRoute();
   const [currentTab, setCurrentTab] = useState<string>(initialRoute.tab);
   const [activeServiceId, setActiveServiceId] = useState<string | undefined>(initialRoute.serviceId);
-  const [appointmentModalOpen, setAppointmentModalOpen] = useState(false);
   const [sideHoursOpen, setSideHoursOpen] = useState(false);
   const [quickviewProduct, setQuickviewProduct] = useState<Product | null>(null);
   const [language, setLanguage] = useState<Language>('en');
   const [showFloatingAppointment, setShowFloatingAppointment] = useState(false);
+  const openBooking = () => window.open(BOOKING_URL, '_blank', 'noopener,noreferrer');
 
   React.useEffect(() => {
     const handleScroll = () => setShowFloatingAppointment(window.scrollY > 520);
@@ -241,7 +240,7 @@ export default function App() {
       <Header
         currentTab={currentTab}
         onNavigate={handleNavigate}
-        onOpenAppointment={() => setAppointmentModalOpen(true)}
+        onOpenAppointment={openBooking}
         onOpenHours={() => setSideHoursOpen(true)}
         language={language}
         onSelectLanguage={(lang) => setLanguage(lang)}
@@ -269,7 +268,7 @@ export default function App() {
         {currentTab === 'home' && (
           <>
             <HeroSlider
-              onOpenAppointment={() => setAppointmentModalOpen(true)}
+              onOpenAppointment={openBooking}
               onOpenCourses={() => handleNavigate('store')}
               onOpenServices={() => handleNavigate('services')}
               language={language}
@@ -277,14 +276,14 @@ export default function App() {
             <FeaturesRibbon language={language} />
             <TickerMarquee language={language} />
             <ServicesSection
-              onOpenAppointment={() => setAppointmentModalOpen(true)}
+              onOpenAppointment={openBooking}
               onNavigateToServices={(serviceId) => handleNavigate('services', serviceId)}
               language={language}
             />
             <GalleryMarquee language={language} />
             <BeforeAfterSection language={language} />
             <LocationsCarousel
-              onOpenAppointment={() => setAppointmentModalOpen(true)}
+              onOpenAppointment={openBooking}
               language={language}
             />
             <TestimonialsSection language={language} />
@@ -294,7 +293,7 @@ export default function App() {
 
         {currentTab === 'about' && (
           <AboutUsView
-            onOpenAppointment={() => setAppointmentModalOpen(true)}
+            onOpenAppointment={openBooking}
             language={language}
           />
         )}
@@ -302,7 +301,7 @@ export default function App() {
         {currentTab === 'services' && (
           <ServicesView
             initialServiceId={activeServiceId}
-            onOpenAppointment={() => setAppointmentModalOpen(true)}
+            onOpenAppointment={openBooking}
             language={language}
             onNavigateToService={(serviceId) => handleNavigate('services', serviceId)}
           />
@@ -318,7 +317,7 @@ export default function App() {
 
         {currentTab === 'locations' && (
           <LocationsView
-            onOpenAppointment={() => setAppointmentModalOpen(true)}
+            onOpenAppointment={openBooking}
             language={language}
           />
         )}
@@ -347,7 +346,7 @@ export default function App() {
       {/* Floating Appointment Button (Matching #boton in original site) */}
       <button
         id="boton-flotante"
-        onClick={() => setAppointmentModalOpen(true)}
+        onClick={openBooking}
         className={`flex items-center space-x-2 py-3 px-5 sm:px-6 cursor-pointer transition-opacity duration-300 ${showFloatingAppointment ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none sm:opacity-100 sm:pointer-events-auto'}`}
         aria-label={language === 'en' ? 'Book now' : language === 'pt' ? 'Agendar agora' : 'Reservar ahora'}
       >
@@ -362,18 +361,12 @@ export default function App() {
       <BackToTopButton language={language} />
 
       {/* Modals & Drawers */}
-      <AppointmentModal
-        isOpen={appointmentModalOpen}
-        onClose={() => setAppointmentModalOpen(false)}
-        language={language}
-      />
-
       <ProductQuickviewModal
         product={quickviewProduct}
         onClose={() => setQuickviewProduct(null)}
         onOpenAppointment={() => {
           setQuickviewProduct(null);
-          setAppointmentModalOpen(true);
+          openBooking();
         }}
         language={language}
       />
