@@ -1,6 +1,6 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
-import ts from 'typescript';
+import { SERVICE_GUIDES } from '../src/data/serviceGuides.ts';
 
 const services = {
   'nano-strokes': { title: 'Nano Strokes / Microblading', description: 'Semi-permanent brow artistry designed to create realistic, natural-looking hair strokes.', image: '/assets/bella/cosmetic-tattooing.png', price: '615', duration: '2 hours, 30 mins' },
@@ -28,13 +28,6 @@ const buildDir = isGitHubPages ? 'dist-pages' : 'dist';
 const publicAsset = (path) => isGitHubPages ? `/Bella-Beauty-Brazil${path}` : path;
 const source = await readFile(join(buildDir, 'index.html'), 'utf8');
 const siteOrigin = (process.env.PUBLIC_SITE_URL || 'https://bella-beauty-brazil.vercel.app').replace(/\/+$/, '');
-// Use one editorial source for both the visitor-facing React UI and the SEO HTML.
-const serviceGuideSource = await readFile('src/data/serviceGuides.ts', 'utf8');
-const serviceGuideJs = ts.transpileModule(serviceGuideSource, {
-  compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 },
-}).outputText;
-const { SERVICE_GUIDES } = await import('data:text/javascript;base64,' + Buffer.from(serviceGuideJs).toString('base64'));
-
 const renderPage = ({ title, description, canonicalUrl, body, schema }) => {
   // Replace the homepage tags; adding a second title/canonical is invalid SEO.
   let html = source
