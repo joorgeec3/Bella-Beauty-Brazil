@@ -43,7 +43,10 @@ const resolveRoute = () => {
     : rawPath;
   const path = pathWithinApp.replace(/\/+$/, '') || '/';
   const serviceMatch = path.match(/^\/services\/([^/]+)$/);
-  if (serviceMatch) return { tab: 'service-detail', serviceId: serviceMatch[1] };
+  if (serviceMatch) {
+    const exists = SERVICES.some((service) => service.id === serviceMatch[1]);
+    return exists ? { tab: 'service-detail', serviceId: serviceMatch[1] } : { tab: 'not-found', serviceId: undefined };
+  }
   if (path === '/services') return { tab: 'services', serviceId: undefined };
   if (path === '/about') return { tab: 'about', serviceId: undefined };
   if (path === '/locations') return { tab: 'locations', serviceId: undefined };
@@ -99,6 +102,7 @@ export default function App() {
         title: 'Beauty Courses | Bella Beauty Brazil Professional Training',
         description: 'View Bella Beauty Brazil one-to-one professional beauty courses, confirmed durations and prices in AUD.',
       },
+      'not-found': { title: 'Page Not Found | Bella Beauty Brazil', description: 'The requested page could not be found. Browse Bella Beauty Brazil treatments and courses in Greenslopes.' },
       'service-detail': {
         title: 'Beauty Treatment | Bella Beauty Brazil Greenslopes',
         description: 'Explore a Bella Beauty Brazil treatment with confirmed Timely details, preparation guidance, FAQs and official booking in Greenslopes, Brisbane.',
@@ -119,6 +123,7 @@ export default function App() {
       ? `/services/${encodeURIComponent(activeServiceId)}`
       : currentTab === 'home' ? '/'
       : currentTab === 'store' || currentTab === 'courses' ? '/courses'
+      : currentTab === 'not-found' ? window.location.pathname
       : `/${currentTab}`;
     const canonicalUrl = PUBLIC_SITE_ORIGIN + currentPath;
     let canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
@@ -135,6 +140,13 @@ export default function App() {
       document.head.appendChild(ogUrl);
     }
     ogUrl.content = canonicalUrl;
+    let robots = document.querySelector<HTMLMetaElement>('meta[name="robots"]');
+    if (!robots) {
+      robots = document.createElement('meta');
+      robots.name = 'robots';
+      document.head.appendChild(robots);
+    }
+    robots.content = currentTab === 'not-found' ? 'noindex,follow' : 'index,follow';
 
     const structuredData = {
       '@context': 'https://schema.org',
@@ -237,6 +249,22 @@ export default function App() {
 
       {/* Main View Router */}
       <main className="flex-grow">
+        {currentTab === 'not-found' && (
+          <section className="bg-site py-24 min-h-[60vh] flex items-center justify-center px-4 text-center">
+            <div className="max-w-xl">
+              <p className="font-montserrat text-xs font-semibold uppercase tracking-widest text-[#9a5967]">Bella Beauty Brazil · 404</p>
+              <h1 className="font-raleway text-3xl sm:text-5xl font-light uppercase tracking-wide text-[#5b3239] mt-3">
+                {language === 'en' ? 'Page not found' : language === 'pt' ? 'Página não encontrada' : 'Página no encontrada'}
+              </h1>
+              <p className="font-montserrat text-sm text-[#675960] mt-5 leading-relaxed">
+                {language === 'en' ? 'The requested treatment page does not exist. Explore our current services or contact the studio.' : language === 'pt' ? 'Esta página de tratamento não existe. Conheça os serviços atuais ou fale com o estúdio.' : 'Esta página de tratamiento no existe. Consulta nuestros servicios actuales o contacta al estudio.'}
+              </p>
+              <button type="button" onClick={() => handleNavigate('services')} className="mt-8 rounded-full px-8 py-4 bg-[#5b3239] text-white text-xs font-bold uppercase tracking-widest cursor-pointer hover:bg-[#7a4753]">
+                {language === 'en' ? 'Browse services' : language === 'pt' ? 'Ver serviços' : 'Ver servicios'}
+              </button>
+            </div>
+          </section>
+        )}
         {currentTab === 'home' && (
           <>
             <HeroSlider
