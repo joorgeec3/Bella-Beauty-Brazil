@@ -12,7 +12,12 @@ export interface LocationItem { id: string; name: string; subtitle?: string; add
 export interface Testimonial { id: string; name: string; service: string; content: string; rating: number; }
 export interface InstagramPost { id: string; caption: string; image: string; url: string; isVideo: boolean; }
 
-export const BOOKING_URL = 'https://bellabrazil.gettimely.com/';
+// Timely's booking selector (not the public mini-site homepage).
+export const BOOKING_URL = 'https://book.gettimely.com/bellabrazil/book/embed?client-login=true';
+// Product-specific links require a verified Timely product ID. Never guess these IDs.
+export const SERVICE_BOOKING_LINKS: Record<string, string> = {};
+export const getServiceBookingUrl = (serviceId: string) => SERVICE_BOOKING_LINKS[serviceId] || BOOKING_URL;
+
 export const INSTAGRAM_URL = 'https://www.instagram.com/bellabeautybrazil/';
 export const WHATSAPP_URL = 'https://wa.me/61402148437';
 
@@ -88,7 +93,7 @@ export const getLocalizedService = (service: Service, language: Language): Servi
 export const COURSES: Course[] = [
   { id: 'lash-lift-course', title: 'Lash Lift Course 1:1', description: 'One-to-one Lash Lift training.', duration: '8 hours', price: 950, image: siteImages.services.courses, bookingUrl: BOOKING_URL },
   { id: 'brow-lamination-course', title: 'Brow Lamination Course 1:1', description: 'One-to-one Brow Lamination training.', duration: '8 hours, 5 mins', price: 950, image: siteImages.services.courses, bookingUrl: BOOKING_URL },
-  { id: 'classic-eyelashes-course', title: 'Classic Eyelashes Extensions Course 1:1', description: 'One-to-one classic eyelash extensions training.', duration: '6 hours, 30 mins', price: 1400, image: siteImages.services.courses, bookingUrl: BOOKING_URL },
+  { id: 'classic-eyelashes-course', title: 'Classic Eyelashes Extensions Course 1:1', description: 'One-to-one classic eyelash extensions training.', duration: '6 hours, 30 mins', price: 1400, image: siteImages.services.courses, bookingUrl: 'https://book.gettimely.com/bellabrazil/book/embed?client-login=true&product=3230447%3ASV' },
   { id: 'nano-strokes-course', title: 'Microblading Course — Nano Strokes', description: 'Realistic Micro Nano Strokes training.', duration: '16 hours', price: 4200, image: siteImages.services.courses, bookingUrl: BOOKING_URL },
 ];
 
