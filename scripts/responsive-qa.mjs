@@ -6,8 +6,9 @@ import { chromium } from 'playwright';
 const base = 'http://127.0.0.1:4173';
 const sizes = [375, 390, 430, 768, 1024, 1440];
 const errors = [];
-const server = spawn('npm', ['run', 'preview', '--', '--host', '127.0.0.1', '--port', '4173', '--strictPort'], { stdio: 'pipe' });
+const server = spawn(process.execPath, ['./node_modules/vite/bin/vite.js', 'preview', '--host', '127.0.0.1', '--port', '4173', '--strictPort'], { stdio: 'pipe' });
 server.stderr.on('data', (chunk) => process.stderr.write(chunk));
+server.stdout.on('data', (chunk) => process.stdout.write(chunk));
 const fail = (message, error) => errors.push(`${message}: ${error instanceof Error ? error.message : String(error)}`);
 const check = async (name, fn) => { try { await fn(); console.log('PASS', name); } catch (e) { fail(name,e); console.error('FAIL',name,e?.message||e); } };
 const available = async () => {
