@@ -113,7 +113,7 @@ export const ServicesView: React.FC<ServicesViewProps> = ({ initialServiceId, on
       <p className="font-montserrat text-sm text-neutral-200 max-w-2xl mx-auto mt-5 leading-relaxed">{labels.intro}</p>
     </header>
 
-    <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
       <section aria-label={labels.quick} className="mb-9">
         <p className="font-montserrat text-xs font-semibold uppercase tracking-[0.14em] text-[#9a5967] mb-3">{labels.quick}</p>
         <div className="flex flex-wrap gap-2">
@@ -209,6 +209,6 @@ export const ServicesView: React.FC<ServicesViewProps> = ({ initialServiceId, on
           {labels.helpCta}<ArrowRight className="w-4 h-4" aria-hidden="true" />
         </a>
       </aside>
-    </main>
+    </div>
   </div>;
 };
