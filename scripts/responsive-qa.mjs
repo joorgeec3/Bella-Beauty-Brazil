@@ -24,6 +24,8 @@ try {
   browser = await chromium.launch({ headless: true });
   for (const width of sizes) {
     const page = await browser.newPage({ viewport: { width, height: 860 }, deviceScaleFactor: 1 });
+    page.setDefaultTimeout(7500);
+    page.setDefaultNavigationTimeout(15000);
     const jsErrors = [];
     page.on('pageerror', (error) => jsErrors.push(error.message));
     const go = async (path) => {
@@ -38,7 +40,7 @@ try {
     await check(`${width}px homepage hero, navigation, overflow`, async () => {
       await go('/');
       assert.equal(await page.locator('.hero-cta-sequence button').count(), 3, 'Hero needs Book, Courses and Services');
-      await page.screenshot({ path: `qa-screenshots/${width}-home.png`, fullPage: true });
+      await page.screenshot({ path: `qa-screenshots/${width}-home.png`, fullPage: true, animations: 'disabled', timeout: 15000 });
     });
 
     await check(`${width}px tablet/mobile menu`, async () => {
@@ -63,7 +65,7 @@ try {
       const bookingLinks = await page.locator('main article a[target="_blank"]').evaluateAll((links) => links.map((a) => a.href));
       assert.equal(bookingLinks.length, 17);
       assert(bookingLinks.every((url) => url.includes('book.gettimely.com/bellabrazil/book/')), 'Booking button opened Timely home or wrong destination');
-      await page.screenshot({ path: `qa-screenshots/${width}-services.png`, fullPage: true });
+      await page.screenshot({ path: `qa-screenshots/${width}-services.png`, fullPage: true, animations: 'disabled', timeout: 15000 });
       const search = page.locator('input[type="search"]');
       await search.fill('lip blush');
       assert.equal(await page.locator('main article').count(), 1, 'Treatment search results incorrect');
