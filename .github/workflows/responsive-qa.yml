@@ -11,10 +11,6 @@ on:
       - '.github/workflows/responsive-qa.yml'
   workflow_dispatch:
 
-concurrency:
-  group: responsive-qa-${{ github.ref }}
-  cancel-in-progress: true
-
 jobs:
   browser-smoke:
     runs-on: ubuntu-latest
