@@ -17,6 +17,7 @@ const services = {
   microneedling: { title: 'Microneedling', description: 'Skin-focused microneedling treatment from Bella Beauty Brazil.', image: '/assets/bella/treatments.png', price: '185', duration: '1 hour' },
   'facial-spa': { title: 'Facial Spa', description: 'Bella Beauty Brazil professional facial spa treatments.', image: '/assets/bella/treatments.png', price: '150', duration: '1 hour, 20 mins' },
   'deluxe-facial': { title: 'Deluxe Facial', description: 'Deluxe facial treatment at Bella Beauty Brazil in Greenslopes.', image: '/assets/bella/treatments.png', price: '360', duration: '1 hour, 50 mins' },
+  'teeth-whitening': { title: 'Teeth Whitening', description: 'Teeth whitening service published by Bella Beauty Brazil in the official Timely catalogue; confirm suitability and aftercare with the studio.', image: '/assets/bella/gallery/studio-treatment-room.webp', price: '199', duration: '1 hour' },
   waxing: { title: 'Brazilian Waxing', description: 'Professional Brazilian waxing from Bella Beauty Brazil.', image: '/assets/bella/waxing.png', price: '82', duration: '30 mins' },
 };
 
