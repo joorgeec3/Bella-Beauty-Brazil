@@ -20,7 +20,7 @@ export const ApprovedPriceList: React.FC<{language: Language}> = ({ language }) 
       </header>
       <div className="grid gap-3 sm:gap-4">
         {APPROVED_SERVICE_CATALOG.map((group) => (
-          <details key={group.id} id={`prices-${group.id}`} open={undefined} className="group overflow-hidden rounded-2xl border border-[#e8d6d5] bg-white shadow-sm" >
+          <details key={group.id} id={`prices-${group.id}`} open={group.id === 'skin'} className="group overflow-hidden rounded-2xl border border-[#e8d6d5] bg-white shadow-sm" >
             <summary className="cursor-pointer flex items-center justify-between gap-4 px-5 sm:px-7 py-5 sm:py-6 text-[#5b3239] focus-visible:outline-2 focus-visible:outline-[#9a5967] list-none [&::-webkit-details-marker]:hidden">
               <span className="flex flex-col gap-1 text-left">
                 <span className="font-raleway text-lg sm:text-2xl font-semibold">{group.title}</span>
