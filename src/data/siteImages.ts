@@ -40,7 +40,7 @@ export const siteImages = {
     waxing: siteAsset('assets/bella/client-2026-10/waxing-treatment.webp'),
     courses: siteAsset('assets/bella/courses.png'),
   },
-  gallery: { hero: siteAsset('assets/bella/hero.png'), livia: siteAsset('assets/bella/gallery/livia-portrait-03.webp') },
+  gallery: { hero: siteAsset('assets/bella/hero.png'), livia: siteAsset('assets/bella/client-2026-10/about-livia-03.webp') },
   locations: { greenslopes: siteAsset('assets/bella/gallery/studio-treatment-room.webp') },
 };
 
