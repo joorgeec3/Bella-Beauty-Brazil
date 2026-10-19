@@ -63,7 +63,7 @@ try {
       assert(page.url().endsWith('/services'), 'Hero button does not lead to services');
       assert.equal(await page.locator('main article').count(), 17, 'Expected 17 treatment cards');
       const imageSources = await page.locator('main article img').evaluateAll((images) => images.map((image) => image.getAttribute('src')));
-      assert.equal(imageSources.length, 6, 'Show only six confirmed, distinct service photos after client removals');
+      assert.equal(imageSources.length, 7, 'Show seven distinct service photos with the new Nano Strokes image');
       assert.equal(new Set(imageSources).size, imageSources.length, 'Repeated service card photos');
       assert(imageSources.every(src => !/brows\.png|treatments\.png|brows-result-04|lashes-result-02/.test(src)), 'Removed client photo still shown on a service card');
       const bookingLinks = await page.locator('main article a[target="_blank"]').evaluateAll((links) => links.map((a) => a.href));
@@ -93,6 +93,27 @@ try {
       await go('/services/unknown-treatment');
       assert((await page.locator('h1').first().innerText()).toLowerCase().includes('not found'), 'Unknown service did not show not-found page');
       assert.equal(await page.locator('meta[name="robots"]').getAttribute('content'), 'noindex,follow');
+    });
+
+    await check(`${width}px salon section and 17 real uploaded images`, async () => {
+      await go('/');
+      const photos = page.locator('#salon img');
+      assert.equal(await photos.count(), 5, 'Salon section must show five distinct salon pictures');
+      const salonImageUrls = await photos.evaluateAll(images => images.map(image => image.getAttribute('src')));
+      assert.equal(new Set(salonImageUrls).size, 5, 'Salon section repeats images');
+      const allClientImagePaths = [
+        'brow-tools.webp','brow-styling.webp','waxing-treatment.webp',
+        'lip-blush-palette.webp','lip-blush-procedure.webp','lip-blush-photography.webp',
+        'nano-strokes-procedure.webp','nano-strokes-mirror.webp','nano-strokes-finishing.webp',
+        'salon-brand-wall.webp','salon-details.webp','salon-consultation.webp',
+        'salon-client-experience.webp','salon-celebration.webp',
+        'about-livia-01.webp','about-livia-02.webp','about-livia-03.webp',
+      ];
+      for (const file of allClientImagePaths) {
+        const response = await page.request.get(base + '/assets/bella/client-2026-10/' + file);
+        assert(response.ok(), 'Missing real client image from project public assets: ' + file);
+        assert((response.headers()['content-type'] || '').includes('image'), 'Invalid image MIME: ' + file);
+      }
     });
 
     await check(`${width}px gallery dialog and keyboard controls`, async () => {
