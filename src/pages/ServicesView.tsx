@@ -85,7 +85,7 @@ const cardPhotos: Record<string, string> = {
   'lash-lift': siteImages.services.lashes,
   dermaplaning: siteImages.services.facialTreatment,
   'brow-sculpt-tint': siteImages.services.browTreatment,
-  'teeth-whitening': siteImages.aboutMe.treatmentRoom,
+  // Teeth whitening has no client-approved treatment photo yet; do not use a random room photo.
   waxing: siteImages.services.waxing,
   'shadow-brows': siteImages.client.browTools,
   'shadow-hybrid': siteImages.client.browStyling,

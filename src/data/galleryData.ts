@@ -9,7 +9,7 @@ const withSiteBase = (item: BellaGalleryItem): BellaGalleryItem => ({
 
 export const clientGallery: BellaGalleryItem[] = [
   { id: 'lashes-result-01', image: '/assets/bella/gallery/lashes-result-01.webp', category: 'Lashes', kind: 'result', alt: 'Eyelash treatment comparison showing eyes before and after' },
-  { id: 'lashes-result-03', image: '/assets/bella/gallery/lashes-result-03.webp', category: 'Lashes', kind: 'result', alt: 'Eyelash and eyebrow styling results in comparison photos' },
+  { id: 'lashes-result-03', image: '/assets/bella/gallery/lashes-result-03.webp', category: 'Brows', kind: 'result', alt: 'Eyebrow styling before-and-after comparison' },
   { id: 'lips-result-01', image: '/assets/bella/gallery/lips-result-01.webp', category: 'Lips', kind: 'result', alt: 'Lip treatment comparison in natural light' },
   { id: 'brows-result-01', image: '/assets/bella/gallery/brows-result-01.webp', category: 'Brows', kind: 'result', alt: 'Facial and brow styling comparison in two images' },
   { id: 'brows-result-02', image: '/assets/bella/gallery/brows-result-02.webp', category: 'Brows', kind: 'result', alt: 'Close-up eyebrow treatment comparison' },
@@ -57,6 +57,7 @@ export const bellaGallery: BellaGalleryItem[] = uniqueImages([
 const homepageFeaturedImageNames = new Set([
   'nano-strokes-procedure.webp',
   'lip-blush-procedure.webp',
+  'waxing-treatment.webp',
   'about-livia-02.webp',
   'salon-brand-wall.webp',
   'salon-details.webp',
@@ -66,7 +67,7 @@ const homepageFeaturedImageNames = new Set([
 ]);
 export const homeGallery = bellaGallery.filter(({ image }) => !homepageFeaturedImageNames.has(image.split('/').pop() || ''));
 
-// The featured lash comparison already appears in the first section, so do not repeat it below.
+// The featured lash-lift comparison appears above; the other results remain available without repetition.
 export const bellaBeforeAfter = uniqueImages(clientGallery.filter((item) =>
-  item.kind === 'result' && !item.image.endsWith('/lashes-result-03.webp')
+  item.kind === 'result' && !item.image.endsWith('/lashes-result-05.webp')
 ));
