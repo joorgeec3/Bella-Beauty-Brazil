@@ -2,6 +2,42 @@ import React from 'react';
 import { ArrowRight, CalendarDays, ChevronDown } from 'lucide-react';
 import { APPROVED_SERVICE_CATALOG } from '../data/approvedServiceCatalog';
 import { BOOKING_URL, Language } from '../data/siteData';
+import { getServicePhotos } from './ServicePhotoGallery';
+
+/** Matching PDF entries open a full service page with the correct client photos, when available. */
+const approvedServiceRoutes: Record<string,string> = {
+  "Microblading – Nano Strokes": "nano-strokes",
+  "Shadow Brows": "shadow-brows",
+  "Lip Blush – Lip Tattooing": "lip-blush",
+  "Cosmetic Tattoo Removal": "cosmetic-tattoo-removal",
+  "Brow Sculpt Signature": "brow-sculpt",
+  "Brow Sculpt & Tint": "brow-sculpt-tint",
+  "Brow Sculpt & Hybrid Dye": "shadow-hybrid",
+  "Brow Lamination, Shape & Tint": "brow-lamination",
+  "Male Brow Sculpt": "male-brow-sculpt",
+  "Dreamy Brows – Brow Sculpt & Relaxing Massage": "dreamy-brows",
+  "Dermaplaning": "dermaplaning",
+  "Microneedling": "microneedling",
+  "Lip Bliss Hydration": "lip-bliss-hydration",
+  "Facial Spa": "facial-spa",
+  "Deluxe Facial": "deluxe-facial",
+  "Grow Up Hair – Brows": "grow-up-hair-brows",
+  "Grow Up Hair – Scalp": "grow-up-hair-scalp",
+  "Lash Lift & Tint": "lash-lift",
+  "Lash Lift Only": "lash-lift-only",
+  "Classic Lash Extensions": "classic-eyelashes",
+  "Hybrid Lash Extensions": "hybrid-eyelashes",
+  "Wet Look Lash Extensions": "wet-look-lashes",
+  "Lash Tint": "lash-tint",
+  "Lash Extension Removal": "lash-extension-removal",
+  "Brazilian": "waxing",
+  "Teeth Whitening": "teeth-whitening"
+};
+const detailLabels = {
+  en: { details: 'Read full description', photos: 'photos' },
+  pt: { details: 'Ler descrição completa', photos: 'fotos' },
+  es: { details: 'Leer descripción completa', photos: 'fotos' },
+};
 
 /** October 2026 copy and AUD prices supplied and approved by Bella Beauty Brazil. */
 export const ApprovedPriceList: React.FC<{language: Language}> = ({ language }) => {
@@ -39,11 +75,24 @@ export const ApprovedPriceList: React.FC<{language: Language}> = ({ language }) 
                     </div>
                     {item.description && <p className="font-montserrat text-xs sm:text-sm text-[#675960] leading-relaxed mt-2">{item.description}</p>}
                     {item.note && <p className="font-montserrat text-xs text-[#9a5967] font-semibold mt-2">{item.note}</p>}
+                    {approvedServiceRoutes[item.name] && <a
+                      href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/services/${approvedServiceRoutes[item.name]}`}
+                      className="inline-flex items-center gap-1.5 mt-3 text-xs font-semibold text-[#8b5462] underline underline-offset-4 hover:text-[#5b3239] focus-visible:outline-2 focus-visible:outline-[#9a5967]">
+                      {detailLabels[language].details}
+                      {getServicePhotos(approvedServiceRoutes[item.name]).length > 0 && ` · ${getServicePhotos(approvedServiceRoutes[item.name]).length} ${detailLabels[language].photos}`}
+                      <ArrowRight aria-hidden="true" className="w-3.5 h-3.5"/>
+                    </a>}
                   </div>
                 ))}
               </div>
               {group.footer && <p className="bg-[#faf4f4] px-4 py-3 rounded-lg text-xs sm:text-sm text-[#675960] leading-relaxed mt-5">{group.footer}</p>}
-              <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 mt-6 bg-[#5b3239] text-white rounded-full px-5 py-3.5 text-xs font-bold tracking-wide hover:bg-[#7a4753] transition-colors focus-visible:outline-2 focus-visible:outline-[#9a5967]"><CalendarDays className="w-4 h-4" />{labels.book}<ArrowRight className="w-4 h-4" /></a>
+              {group.id === 'cosmetic' && <div className="mt-5 space-y-2 bg-[#fff8f9] border border-[#ead9df] rounded-xl px-4 py-4 text-sm text-[#675960] leading-relaxed">
+                <h3 className="font-raleway text-base font-semibold text-[#5b3239]">{language === 'en' ? 'Touch-up Appointments' : language === 'pt' ? 'Retoques' : 'Retoques'}</h3>
+                <p>{language === 'en' ? 'Your touch-up appointment allows me to assess the healed result and refine the colour, shape or definition where needed.' : language === 'pt' ? 'No retoque, avalio o resultado cicatrizado e ajusto a cor, o formato ou a definição quando necessário.' : 'En el retoque, evalúo el resultado cicatrizado y ajusto el color, la forma o la definición según sea necesario.'}</p>
+                <h3 className="font-raleway text-base font-semibold text-[#5b3239] mt-2">{language === 'en' ? 'Not Sure Which Treatment to Choose?' : language === 'pt' ? 'Não sabe qual tratamento escolher?' : '¿No sabes qué tratamiento elegir?'}</h3>
+                <p>{language === 'en' ? 'Book a consultation with me to discuss your goals and find the most suitable option for you.' : language === 'pt' ? 'Agende uma consulta para conversarmos sobre seus objetivos e encontrarmos a opção mais adequada.' : 'Reserva una consulta para hablar sobre tus objetivos y elegir la opción más adecuada.'}</p>
+              </div>}
+              <a href={BOOKING_URL} className="inline-flex items-center gap-2 mt-6 bg-[#5b3239] text-white rounded-full px-5 py-3.5 text-xs font-bold tracking-wide hover:bg-[#7a4753] transition-colors focus-visible:outline-2 focus-visible:outline-[#9a5967]"><CalendarDays className="w-4 h-4" />{labels.book}<ArrowRight className="w-4 h-4" /></a>
             </div>
           </details>
         ))}
