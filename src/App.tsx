@@ -64,7 +64,9 @@ export default function App() {
   const [quickviewProduct, setQuickviewProduct] = useState<Product | null>(null);
   const [language, setLanguage] = useState<Language>('en');
   const [showFloatingAppointment, setShowFloatingAppointment] = useState(false);
-  const openBooking = () => window.open(BOOKING_URL, '_blank', 'noopener,noreferrer');
+  // Open Timely's own service-selection screen directly in the same tab.
+  // This avoids blocked popup windows and the extra location modal on mobile/tablet.
+  const openBooking = () => { window.location.assign(BOOKING_URL); };
 
   React.useEffect(() => {
     const handleScroll = () => setShowFloatingAppointment(window.scrollY > 520);
