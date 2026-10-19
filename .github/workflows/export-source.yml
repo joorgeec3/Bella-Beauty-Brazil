@@ -1,7 +1,12 @@
 name: Export Bella Website Source
 on:
   push:
+    branches:
+      - main
     paths:
+      - 'src/**'
+      - 'public/**'
+      - 'scripts/**'
       - '.github/workflows/export-source.yml'
   workflow_dispatch:
 
