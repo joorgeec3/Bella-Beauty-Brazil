@@ -106,7 +106,7 @@ try {
       const dialog = page.getByRole('dialog', { name: /gallery/i });
       await dialog.waitFor();
       assert.equal(await dialog.getAttribute('aria-modal'), 'true');
-      assert(await dialog.getByRole('button', { name: /^Close image$/ }).isFocused(), 'Dialog close button is not focused');
+      assert(await dialog.getByRole('button', { name: /^Close image$/ }).evaluate((element) => document.activeElement === element), 'Dialog close button is not focused');
       await page.keyboard.press('ArrowRight');
       await page.keyboard.press('Escape');
       assert.equal(await dialog.count(), 0, 'Gallery did not close on Escape');
