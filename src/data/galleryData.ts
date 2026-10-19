@@ -37,8 +37,6 @@ export const bellaGallery: BellaGalleryItem[] = uniqueImages([
   { id: 'brow-tools-2026', image: '/assets/bella/client-2026-10/brow-tools.webp', category: 'Brows', kind: 'editorial', alt: 'Professional brow tools at Bella Beauty Brazil' },
   { id: 'brow-styling-2026', image: '/assets/bella/client-2026-10/brow-styling.webp', category: 'Brows', kind: 'editorial', alt: 'Livia working on brows at Bella Beauty Brazil' },
   { id: 'nano-procedure-2026', image: '/assets/bella/client-2026-10/nano-strokes-procedure.webp', category: 'Brows', kind: 'editorial', alt: 'Actual Nano Strokes procedure at Bella Beauty Brazil' },
-  { id: 'nano-mirror-2026', image: '/assets/bella/client-2026-10/nano-strokes-mirror.webp', category: 'Brows', kind: 'editorial', alt: 'Nano Strokes appointment and mirror' },
-  { id: 'nano-finishing-2026', image: '/assets/bella/client-2026-10/nano-strokes-finishing.webp', category: 'Brows', kind: 'editorial', alt: 'Nano Strokes finishing' },
   { id: 'lip-procedure-2026', image: '/assets/bella/client-2026-10/lip-blush-procedure.webp', category: 'Lips', kind: 'editorial', alt: 'Actual Lip Blush procedure at Bella Beauty Brazil' },
   { id: 'lip-palette-2026', image: '/assets/bella/client-2026-10/lip-blush-palette.webp', category: 'Lips', kind: 'editorial', alt: 'Lip Blush pigment palette at the studio' },
   { id: 'lip-photography-2026', image: '/assets/bella/client-2026-10/lip-blush-photography.webp', category: 'Lips', kind: 'editorial', alt: 'Lip Blush appointment photographed at the studio' },
