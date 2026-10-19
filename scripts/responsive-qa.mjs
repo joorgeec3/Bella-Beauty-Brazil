@@ -43,6 +43,22 @@ try {
       assert.equal(await page.locator('.hero-cta-sequence button').count(), 3, 'Hero needs Book, Courses and Services');
       const banned = await page.locator('img').evaluateAll(images => images.map(image => image.getAttribute('src')).filter(src => /brows\.png|treatments\.png|brows-result-04|lashes-result-02/.test(src || '')));
       assert.deepEqual(banned, [], 'Client-requested removed photos remain in homepage/gallery');
+      // The first impression must not recycle treatment, founder, studio, gallery or result photos.
+      const photoSelectors = [
+        '.hero-image-drift',
+        '.feature-card-image',
+        '.meet-livia-image',
+        '.service-card-image',
+        '.service-editorial-image',
+        '#gallery [data-bella-gallery-card] img',
+        '#results .before-after-track img',
+        '#salon img',
+      ].join(', ');
+      const homepagePhotos = await page.locator(photoSelectors).evaluateAll(images => images.map(img => img.getAttribute('src')).filter(Boolean));
+      assert(homepagePhotos.length >= 25, 'Homepage photo selection is unexpectedly sparse');
+      assert.equal(new Set(homepagePhotos).size, homepagePhotos.length, 'Homepage repeats photos between the first blocks or within a carousel: ' + homepagePhotos.filter((src, i) => homepagePhotos.indexOf(src) !== i).join(', '));
+      assert.equal(await page.locator('#gallery [data-bella-gallery-card]').count(), await page.locator('#gallery [data-bella-gallery-card] img').count(), 'Gallery repeats cloned image cards');
+      assert.equal(await page.locator('#results .before-after-track img').count(), 10, 'All ten unique result photos should remain visible without cloned copies');
       await page.screenshot({ path: `qa-screenshots/${width}-home.png`, fullPage: true, animations: 'disabled', timeout: 15000 });
     });
 
