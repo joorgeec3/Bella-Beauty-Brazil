@@ -1,0 +1,23 @@
+name: Export Bella Website Source
+on:
+  push:
+    paths:
+      - '.github/workflows/export-source.yml'
+  workflow_dispatch:
+
+jobs:
+  bundle:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Package exact branch source
+        run: |
+          mkdir -p .package-output
+          tar --exclude='.git' --exclude='.package-output' --exclude='node_modules' -czf .package-output/bella-source.tar.gz .
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bella-source-current
+          path: .package-output/bella-source.tar.gz
+          retention-days: 2

@@ -11,6 +11,7 @@ import { FeaturesRibbon } from './components/FeaturesRibbon';
 import { TickerMarquee } from './components/TickerMarquee';
 import { ServicesSection } from './components/ServicesSection';
 import { LocationsCarousel } from './components/LocationsCarousel';
+import { SalonGallery } from './components/SalonGallery';
 import { GalleryMarquee } from './components/GalleryMarquee';
 import { BeforeAfterSection } from './components/BeforeAfterSection';
 import { SmoothScrollController } from './components/SmoothScrollController';
@@ -286,6 +287,7 @@ export default function App() {
               onOpenAppointment={openBooking}
               language={language}
             />
+            <SalonGallery language={language} />
             <TestimonialsSection language={language} />
             <InstagramSection language={language} />
           </>
