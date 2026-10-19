@@ -3,6 +3,8 @@ import { ArrowRight, CalendarDays, Clock3, MapPin, Search, X } from 'lucide-reac
 import { BOOKING_URL, SERVICES, Language, getLocalizedService, getServiceBookingUrl } from '../data/siteData';
 import { siteImages } from '../data/siteImages';
 import { ApprovedPriceList } from '../components/ApprovedPriceList';
+import { approvedDescriptionFor } from '../data/approvedServiceCatalog';
+import { getServicePhotos } from '../components/ServicePhotoGallery';
 
 interface ServicesViewProps {
   initialServiceId?: string;
@@ -28,14 +30,14 @@ const copy: Record<Language, {
 }> = {
   en: {
     title: 'Our Services',
-    intro: 'Find the right treatment, compare your options and book through our official Timely page in Greenslopes, Brisbane.',
+    intro: 'Choose a category, open a service to read the approved description and browse our real photos, then book through Timely.',
     search: 'Search treatments, e.g. nano strokes or lash lift',
     quick: 'Quick access',
     explore: 'Explore treatments',
     result: 'service', results: 'services', clear: 'Clear filters',
     noResults: 'No treatments found',
     noResultsText: 'Try a different word or choose another category.',
-    details: 'Learn more', book: 'Choose on Timely', enquire: 'Ask the studio',
+    details: 'Photos & details', book: 'Choose on Timely', enquire: 'Ask the studio',
     from: 'Prices and availability may change. Confirm on Timely.',
     helpTitle: 'Not sure which treatment to book?',
     helpText: 'Our studio can help you choose a suitable appointment and explain preparation and aftercare.',
@@ -43,14 +45,14 @@ const copy: Record<Language, {
   },
   pt: {
     title: 'Nossos serviços',
-    intro: 'Encontre o tratamento, compare as opções e agende pelo Timely oficial em Greenslopes, Brisbane.',
+    intro: 'Escolha uma categoria, abra o serviço para ler a descrição e passar as fotos reais, depois agende pelo Timely.',
     search: 'Buscar tratamentos: nano strokes, cílios...',
     quick: 'Acesso rápido',
     explore: 'Explore os tratamentos',
     result: 'serviço', results: 'serviços', clear: 'Limpar filtros',
     noResults: 'Nenhum tratamento encontrado',
     noResultsText: 'Tente outra palavra ou escolha outra categoria.',
-    details: 'Saiba mais', book: 'Escolher no Timely', enquire: 'Consultar o estúdio',
+    details: 'Ver fotos e detalhes', book: 'Escolher no Timely', enquire: 'Consultar o estúdio',
     from: 'Preços e horários podem mudar. Confirme no Timely.',
     helpTitle: 'Não sabe qual tratamento escolher?',
     helpText: 'O estúdio pode orientar sobre o atendimento adequado, preparo e cuidados após o procedimento.',
@@ -58,14 +60,14 @@ const copy: Record<Language, {
   },
   es: {
     title: 'Nuestros servicios',
-    intro: 'Encuentra un tratamiento, compara las opciones y reserva en Timely oficial en Greenslopes, Brisbane.',
+    intro: 'Elige una categoría, abre un servicio para leer su descripción y ver las fotos reales, y reserva por Timely.',
     search: 'Buscar tratamientos: nano strokes, pestañas...',
     quick: 'Acceso rápido',
     explore: 'Explorar tratamientos',
     result: 'servicio', results: 'servicios', clear: 'Limpiar filtros',
     noResults: 'No se encontraron tratamientos',
     noResultsText: 'Prueba otra palabra o elige otra categoría.',
-    details: 'Más información', book: 'Elegir en Timely', enquire: 'Consultar al estudio',
+    details: 'Fotos y detalles', book: 'Elegir en Timely', enquire: 'Consultar al estudio',
     from: 'Los precios y horarios pueden cambiar. Confirma en Timely.',
     helpTitle: '¿No sabes qué tratamiento elegir?',
     helpText: 'El estudio puede orientarte sobre la cita adecuada, la preparación y los cuidados.',
@@ -73,7 +75,7 @@ const copy: Record<Language, {
   },
 };
 
-const featuredServiceIds = ['nano-strokes', 'shadow-hybrid', 'lip-blush', 'brow-lamination', 'lash-lift', 'teeth-whitening'];
+const featuredServiceIds = ['nano-strokes', 'shadow-brows', 'shadow-hybrid', 'brow-sculpt-tint', 'lip-blush', 'brow-lamination', 'lash-lift'];
 
 // Only use authentic, individually distinct images when a matching one exists.
 // The remaining treatments stay visible as text-rich cards until the studio provides photos.
@@ -85,11 +87,16 @@ const cardPhotos: Record<string, string> = {
   'brow-sculpt-tint': siteImages.services.browTreatment,
   'teeth-whitening': siteImages.aboutMe.treatmentRoom,
   waxing: siteImages.services.waxing,
+  'shadow-brows': siteImages.client.browTools,
+  'shadow-hybrid': siteImages.client.browStyling,
+  'brow-sculpt': siteImages.client.browStyling,
+  'brow-lamination': siteImages.client.browTools,
 };
 const imageAlt = (id: string, title: string) =>
   id === 'teeth-whitening' ? 'Interior of the Bella Beauty Brazil studio in Greenslopes'
     : id === 'brow-sculpt-tint' ? 'Livia Rego styling eyebrows at Bella Beauty Brazil'
     : id === 'dermaplaning' ? 'Editorial photograph of a facial treatment at Bella Beauty Brazil'
+    : ['shadow-brows', 'shadow-hybrid', 'brow-sculpt', 'brow-lamination'].includes(id) ? 'Authentic brow styling or tools at Bella Beauty Brazil; not a specific treatment result'
     : title + ' at Bella Beauty Brazil';
 const normalizeSearch = (value: string) => value.toLocaleLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 
@@ -193,7 +200,8 @@ export const ServicesView: React.FC<ServicesViewProps> = ({ initialServiceId, on
             <div className="min-w-0 p-4 sm:p-5 flex-1 flex flex-col">
               <span className="font-montserrat text-[10px] font-bold uppercase tracking-[0.14em] text-[#9a5967]">{categoryLabels[language][service.category as Category] || service.category}</span>
               <h2 className="font-raleway text-lg sm:text-xl font-semibold text-[#5b3239] mt-1 leading-snug">{service.title}</h2>
-              <p className="font-montserrat text-xs text-neutral-600 leading-relaxed line-clamp-2 mt-2">{service.description}</p>
+              <p className="font-montserrat text-xs text-neutral-600 leading-relaxed line-clamp-3 mt-2">{language === 'en' ? (approvedDescriptionFor(service.id) || service.description) : service.description}</p>
+              {getServicePhotos(service.id).length > 0 && <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#9a5967] mt-2">{language === 'en' ? `See ${getServicePhotos(service.id).length} real photos` : language === 'pt' ? `Ver ${getServicePhotos(service.id).length} fotos reais` : `Ver ${getServicePhotos(service.id).length} fotos reales`}</span>}
               <div className="flex flex-wrap gap-x-4 gap-y-1 mt-3 text-xs text-[#675960] font-montserrat">
                 <span className="font-bold text-[#5b3239]">{typeof service.price === 'number' ? 'A$' + service.price : labels.enquire}</span>
                 {service.duration && <span className="inline-flex items-center gap-1"><Clock3 className="w-3.5 h-3.5" aria-hidden="true" />{service.duration}</span>}
