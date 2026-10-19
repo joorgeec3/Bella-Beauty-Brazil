@@ -56,12 +56,12 @@ try {
       assert.equal(await menu.getAttribute('aria-expanded'), 'false');
     });
 
-    await check(`${width}px services, 20 routes, authentic photos, search, filtering, booking`, async () => {
+    await check(`${width}px services, 27 routes, authentic photos, search, filtering, booking`, async () => {
       await page.goto(base + '/');
       await page.locator('.hero-cta-sequence button').nth(2).click();
       await page.locator('input[type="search"]').waitFor();
       assert(page.url().endsWith('/services'), 'Hero button does not lead to services');
-      assert.equal(await page.locator('main article').count(), 20, 'Expected 20 clear treatment cards including Shadow Brows');
+      assert.equal(await page.locator('main article').count(), 27, 'All 27 featured and PDF-only treatment pages must be accessible');
       assert.equal(await page.getByRole('heading', { name: 'Shadow Brows', exact: true }).count(), 1, 'Shadow Brows must be a selectable cosmetic tattoo service');
       const priceGroups = page.locator('#full-price-list details');
       assert.equal(await priceGroups.count(), 7, 'Approved PDF must show seven price groups including women and men waxing');
@@ -75,8 +75,8 @@ try {
       assert(imageSources.length >= 10, 'Brow, Lip Blush, Nano Strokes and Waxing previews should have real photos');
       assert(imageSources.some(src => src?.includes('client-2026-10/nano-strokes-procedure.webp')), 'Nano Strokes must use its own client photo');
       assert(imageSources.every(src => !/brows\.png|treatments\.png|brows-result-04|lashes-result-02/.test(src)), 'Removed client photo still shown on a service card');
-      const bookingLinks = await page.locator('main article a[target="_blank"]').evaluateAll((links) => links.map((a) => a.href));
-      assert.equal(bookingLinks.length, 20);
+      const bookingLinks = await page.locator('main article a[href*="gettimely.com"]').evaluateAll((links) => links.map((a) => a.href));
+      assert.equal(bookingLinks.length, 27);
       assert(bookingLinks.every((url) => url.includes('book.gettimely.com/bellabrazil/book/')), 'Booking button opened Timely home or wrong destination');
       await page.screenshot({ path: `qa-screenshots/${width}-services.png`, fullPage: true, animations: 'disabled', timeout: 15000 });
       const search = page.locator('input[type="search"]');
@@ -85,12 +85,26 @@ try {
       await search.fill('not-a-treatment-at-bella');
       assert.equal(await page.locator('main article').count(), 0);
       await page.getByRole('button', { name: /Clear filters|Limpar filtros|Limpiar filtros/ }).first().click();
-      assert.equal(await page.locator('main article').count(), 20);
+      assert.equal(await page.locator('main article').count(), 27);
       await page.locator('[role="group"] button').filter({ hasText: 'Lashes' }).click();
-      assert.equal(await page.locator('main article').count(), 4, 'Lashes category does not contain four services');
+      assert.equal(await page.locator('main article').count(), 8, 'The PDF-added lash treatments must be individually available');
       await page.locator('[role="group"] button').filter({ hasText: 'Skin' }).click();
       assert.equal(await page.locator('main article').count(), 7, 'Approved Skin & Hair treatment cards must total seven');
       await go('/services');
+    });
+
+    await check(`${width}px Book Now opens Timely service selection in the current tab`, async () => {
+      await go('/services');
+      await page.route('https://book.gettimely.com/**', route => route.fulfill({
+        status: 200, contentType: 'text/html', body: '<html><body><h1>Timely service selection</h1></body></html>',
+      }));
+      const booking = page.locator('main article a[href*="book.gettimely.com"]').first();
+      assert.equal(await booking.getAttribute('target'), null, 'Mobile and tablet booking must not open a separate tab');
+      await booking.click();
+      await page.waitForURL(/book\\.gettimely\\.com\\/bellabrazil\\/book\\//);
+      assert((await page.locator('h1').innerText()).includes('Timely service selection'), 'Booking did not open the Timely selection directly');
+      await page.unroute('https://book.gettimely.com/**');
+      await go('/');
     });
 
     await check(`${width}px treatment, courses, contact and 404 routes`, async () => {
