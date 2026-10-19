@@ -77,7 +77,6 @@ const featuredServiceIds = ['nano-strokes', 'shadow-hybrid', 'lip-blush', 'brow-
 // Only use authentic, individually distinct images when a matching one exists.
 // The remaining treatments stay visible as text-rich cards until the studio provides photos.
 const cardPhotos: Record<string, string> = {
-  'nano-strokes': siteImages.services.brows,
   'lip-blush': siteImages.services.lipBlush,
   'lash-lift': siteImages.services.lashes,
   dermaplaning: siteImages.services.facialTreatment,

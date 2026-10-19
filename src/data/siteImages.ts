@@ -1,7 +1,7 @@
 const siteAsset = (path: string) => `${import.meta.env.BASE_URL}${path.replace(/^\/+/, '')}`;
 
 export const siteImages = {
-  hero: { mainBella: siteAsset('assets/bella/hero.png'), thumbProcedure1: siteAsset('assets/bella/brows.png'), thumbProcedure2: siteAsset('assets/bella/lashes.jpg') },
+  hero: { mainBella: siteAsset('assets/bella/hero.png'), thumbProcedure1: siteAsset('assets/bella/gallery/studio-behind-scenes-01.webp'), thumbProcedure2: siteAsset('assets/bella/lashes.jpg') },
   aboutMe: {
     liviaPhoto: siteAsset('assets/bella/gallery/livia-portrait-01.webp'),
     liviaFeaturePhoto: siteAsset('assets/bella/gallery/livia-portrait-02.webp'),
@@ -12,11 +12,11 @@ export const siteImages = {
   services: {
     browTreatment: siteAsset('assets/bella/gallery/studio-behind-scenes-01.webp'),
     facialTreatment: siteAsset('assets/bella/dermaplaning-facial-treatment.webp'),
-    microblading: siteAsset('assets/bella/brows.png'),
+    microblading: siteAsset('assets/bella/gallery/studio-behind-scenes-01.webp'),
     lipBlush: siteAsset('assets/bella/cosmetic-tattooing.png'),
-    brows: siteAsset('assets/bella/brows.png'),
+    brows: siteAsset('assets/bella/gallery/studio-behind-scenes-01.webp'),
     lashes: siteAsset('assets/bella/lashes.jpg'),
-    // A genuine facial treatment photo: the old treatments.png depicts a pigment/palette kit.
+    // Approved real facial-care image; the old pigment-vial photograph is removed.
     treatments: siteAsset('assets/bella/dermaplaning-facial-treatment.webp'),
     waxing: siteAsset('assets/bella/waxing.png'),
     courses: siteAsset('assets/bella/courses.png'),

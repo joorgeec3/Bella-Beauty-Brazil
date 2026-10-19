@@ -41,6 +41,8 @@ try {
     await check(`${width}px homepage hero, navigation, overflow`, async () => {
       await go('/');
       assert.equal(await page.locator('.hero-cta-sequence button').count(), 3, 'Hero needs Book, Courses and Services');
+      const banned = await page.locator('img').evaluateAll(images => images.map(image => image.getAttribute('src')).filter(src => /brows\.png|treatments\.png|brows-result-04|lashes-result-02/.test(src || '')));
+      assert.deepEqual(banned, [], 'Client-requested removed photos remain in homepage/gallery');
       await page.screenshot({ path: `qa-screenshots/${width}-home.png`, fullPage: true, animations: 'disabled', timeout: 15000 });
     });
 
@@ -61,8 +63,9 @@ try {
       assert(page.url().endsWith('/services'), 'Hero button does not lead to services');
       assert.equal(await page.locator('main article').count(), 17, 'Expected 17 treatment cards');
       const imageSources = await page.locator('main article img').evaluateAll((images) => images.map((image) => image.getAttribute('src')));
-      assert.equal(imageSources.length, 7, 'Show only seven verified, distinct service photos');
+      assert.equal(imageSources.length, 6, 'Show only six confirmed, distinct service photos after client removals');
       assert.equal(new Set(imageSources).size, imageSources.length, 'Repeated service card photos');
+      assert(imageSources.every(src => !/brows\.png|treatments\.png|brows-result-04|lashes-result-02/.test(src)), 'Removed client photo still shown on a service card');
       const bookingLinks = await page.locator('main article a[target="_blank"]').evaluateAll((links) => links.map((a) => a.href));
       assert.equal(bookingLinks.length, 17);
       assert(bookingLinks.every((url) => url.includes('book.gettimely.com/bellabrazil/book/')), 'Booking button opened Timely home or wrong destination');
