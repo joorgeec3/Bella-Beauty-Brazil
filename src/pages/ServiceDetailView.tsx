@@ -99,6 +99,13 @@ const translated = (language: Language, en: string, pt: string, es: string) => l
 export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId, language, onNavigate }) => {
   const base = SERVICES.find((service) => service.id === serviceId) || SERVICES[0];
   const service = getLocalizedService(base, language);
+  // A dedicated service photo is used only when it depicts the correct treatment family.
+  // Never show dermaplaning as Microneedling, or an empty room as Teeth Whitening.
+  const noMatchingTreatmentPhoto = [
+    'teeth-whitening', 'cosmetic-tattoo-removal', 'lip-bliss-hydration',
+    'grow-up-hair-brows', 'grow-up-hair-scalp',
+    'microneedling', 'facial-spa', 'deluxe-facial',
+  ].includes(base.id);
   // A service without a dedicated comparison must never inherit the Nano Strokes FAQ.
   const categoryRelated = SERVICES.filter((item) => item.category === base.category && item.id !== base.id).slice(0, 3);
   const group = GROUPS[base.id] || {
@@ -138,7 +145,18 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
               </div>
             </div>
             <div className="lg:col-span-6">
-              <img src={service.image} alt={service.id === 'teeth-whitening' ? 'Bella Beauty Brazil studio interior in Greenslopes' : ['lip-bliss-hydration', 'grow-up-hair-brows', 'grow-up-hair-scalp'].includes(service.id) ? 'Bella Beauty Brazil studio interior, an editorial image rather than this specific treatment' : service.category === 'Skin' ? 'Bella Beauty Brazil editorial photograph of facial skin care' : `${service.title} at Bella Beauty Brazil in Greenslopes`} className="w-full aspect-[4/3] object-cover rounded-2xl shadow-2xl border border-white/20" />
+              {noMatchingTreatmentPhoto
+                ? <div className="w-full aspect-[4/3] rounded-2xl border border-[#efb7c8]/30 bg-gradient-to-br from-[#70404e] via-[#5b3239] to-[#2f1f29] shadow-2xl flex flex-col items-center justify-center text-center p-8">
+                    <CheckCircle2 className="w-10 h-10 text-[#efb7c8] mb-5" aria-hidden="true" />
+                    <span className="text-xs uppercase tracking-[0.22em] text-[#efb7c8] font-bold mb-3">Bella Beauty Brazil</span>
+                    <p className="font-raleway text-2xl sm:text-3xl font-semibold text-white">{service.title}</p>
+                    <p className="font-montserrat text-sm text-white/75 mt-4 max-w-xs">
+                      {translated(language, 'Personalised treatment and consultation', 'Tratamento e consulta personalizados', 'Tratamiento y consulta personalizados')}
+                    </p>
+                  </div>
+                : <img src={service.image}
+                    alt={['shadow-brows', 'shadow-hybrid', 'brow-lamination'].includes(base.id) ? 'Brow styling tools and treatment imagery from Bella Beauty Brazil' : `${service.title} at Bella Beauty Brazil in Greenslopes`}
+                    className="w-full aspect-[4/3] object-cover rounded-2xl shadow-2xl border border-white/20" />}
             </div>
           </div>
         </div>
