@@ -8,11 +8,11 @@ const origin = (process.env.PUBLIC_SITE_URL || 'https://bella-beauty-brazil.verc
 const xml = await readFile(join(dir, 'sitemap.xml'), 'utf8');
 const urls = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
 
-if (urls.length !== 23 || new Set(urls).size !== urls.length) {
-  throw new Error(`Expected 23 unique sitemap URLs (home, 5 pages, 17 services), got ${urls.length}`);
+if (urls.length !== 26 || new Set(urls).size !== urls.length) {
+  throw new Error(`Expected 26 unique sitemap URLs (home, 5 pages, 20 services), got ${urls.length}`);
 }
 const services = urls.filter((url) => url.startsWith(origin + '/services/'));
-if (services.length !== 17) throw new Error(`Expected 17 service routes; got ${services.length}`);
+if (services.length !== 20) throw new Error(`Expected 20 service routes; got ${services.length}`);
 if (!urls.every((url) => url.startsWith(origin + '/'))) throw new Error('Sitemap hostname differs from configured origin');
 
 const robots = await readFile(join(dir, 'robots.txt'), 'utf8');
@@ -23,4 +23,4 @@ for (const url of urls) {
   const file = route === '/' ? join(dir, 'index.html') : join(dir, route.slice(1), 'index.html');
   await access(file).catch(() => { throw new Error(`Missing pre-rendered route: ${route}`); });
 }
-console.log('Static SEO smoke test passed: 23 routes, 17 services, sitemap, robots and entry files.');
+console.log('Static SEO smoke test passed: 26 routes, 20 services, sitemap, robots and entry files.');

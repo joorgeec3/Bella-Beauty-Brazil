@@ -56,18 +56,26 @@ try {
       assert.equal(await menu.getAttribute('aria-expanded'), 'false');
     });
 
-    await check(`${width}px services, 17 routes, unique photos, search, filtering, booking`, async () => {
+    await check(`${width}px services, 20 routes, unique photos, search, filtering, booking`, async () => {
       await page.goto(base + '/');
       await page.locator('.hero-cta-sequence button').nth(2).click();
       await page.locator('input[type="search"]').waitFor();
       assert(page.url().endsWith('/services'), 'Hero button does not lead to services');
-      assert.equal(await page.locator('main article').count(), 17, 'Expected 17 treatment cards');
+      assert.equal(await page.locator('main article').count(), 20, 'Expected 20 treatment cards');
+      const priceGroups = page.locator('#full-price-list details');
+      assert.equal(await priceGroups.count(), 7, 'Approved PDF must show seven price groups including women and men waxing');
+      assert(await page.locator('#prices-skin').evaluate((node) => node.open), 'Skin Treatments group should start expanded');
+      const skinList = await page.locator('#prices-skin').innerText();
+      assert(skinList.includes('Lip Bliss Hydration') && skinList.includes('Grow Up Hair') && skinList.includes('Deluxe Facial'), 'Approved PDF Skin Treatments are incomplete');
+      await page.locator('#prices-cosmetic summary').click();
+      const cosmetic = await page.locator('#prices-cosmetic').innerText();
+      assert(cosmetic.includes('A$630') && cosmetic.includes('A$150'), 'New Cosmetic Tattooing pricing is missing');
       const imageSources = await page.locator('main article img').evaluateAll((images) => images.map((image) => image.getAttribute('src')));
       assert.equal(imageSources.length, 7, 'Show seven distinct service photos with the new Nano Strokes image');
       assert.equal(new Set(imageSources).size, imageSources.length, 'Repeated service card photos');
       assert(imageSources.every(src => !/brows\.png|treatments\.png|brows-result-04|lashes-result-02/.test(src)), 'Removed client photo still shown on a service card');
       const bookingLinks = await page.locator('main article a[target="_blank"]').evaluateAll((links) => links.map((a) => a.href));
-      assert.equal(bookingLinks.length, 17);
+      assert.equal(bookingLinks.length, 20);
       assert(bookingLinks.every((url) => url.includes('book.gettimely.com/bellabrazil/book/')), 'Booking button opened Timely home or wrong destination');
       await page.screenshot({ path: `qa-screenshots/${width}-services.png`, fullPage: true, animations: 'disabled', timeout: 15000 });
       const search = page.locator('input[type="search"]');
@@ -76,9 +84,11 @@ try {
       await search.fill('not-a-treatment-at-bella');
       assert.equal(await page.locator('main article').count(), 0);
       await page.getByRole('button', { name: /Clear filters|Limpar filtros|Limpiar filtros/ }).first().click();
-      assert.equal(await page.locator('main article').count(), 17);
+      assert.equal(await page.locator('main article').count(), 20);
       await page.locator('[role="group"] button').filter({ hasText: 'Lashes' }).click();
       assert.equal(await page.locator('main article').count(), 4, 'Lashes category does not contain four services');
+      await page.locator('[role="group"] button').filter({ hasText: 'Skin' }).click();
+      assert.equal(await page.locator('main article').count(), 7, 'Approved Skin & Hair treatment cards must total seven');
       await go('/services');
     });
 
@@ -87,7 +97,7 @@ try {
       assert(await page.locator('h1').first().innerText());
       assert((await page.locator('a[href*="book.gettimely.com"]').count()) > 0, 'Treatment booking link not found');
       await go('/courses');
-      assert.equal(await page.locator('main article').count(), 4, 'Expected four confirmed courses');
+      assert.equal(await page.locator('main article').count(), 3, 'Expected three courses in the client-approved PDF');
       await go('/contact');
       assert((await page.locator('a[href^="tel:"]').count()) > 0, 'Phone action missing');
       await go('/services/unknown-treatment');

@@ -2,6 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { ArrowRight, CalendarDays, Clock3, MapPin, Search, X } from 'lucide-react';
 import { BOOKING_URL, SERVICES, Language, getLocalizedService, getServiceBookingUrl } from '../data/siteData';
 import { siteImages } from '../data/siteImages';
+import { ApprovedPriceList } from '../components/ApprovedPriceList';
 
 interface ServicesViewProps {
   initialServiceId?: string;
@@ -216,6 +217,8 @@ export const ServicesView: React.FC<ServicesViewProps> = ({ initialServiceId, on
           <p className="font-montserrat text-sm text-neutral-600 mt-2 mb-5">{labels.noResultsText}</p>
           <button type="button" onClick={clearFilters} className="rounded-full bg-[#5b3239] text-white text-xs font-semibold px-5 py-3 cursor-pointer">{labels.clear}</button>
         </div>}
+
+      <ApprovedPriceList language={language} />
 
       <aside className="mt-11 sm:mt-14 rounded-2xl bg-[#f3d9d0] border border-[#e8c5c8] p-6 sm:p-9 flex flex-col md:flex-row md:items-center md:justify-between gap-5">
         <div>
