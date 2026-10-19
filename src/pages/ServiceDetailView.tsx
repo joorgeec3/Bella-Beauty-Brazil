@@ -3,6 +3,8 @@ import { ArrowLeft, ArrowRight, Calendar, CheckCircle2, Clock, MapPin } from 'lu
 import { Language, SERVICES, getLocalizedService, getServiceBookingUrl, SERVICE_BOOKING_LINKS } from '../data/siteData';
 import { siteImages } from '../data/siteImages';
 import { SERVICE_GUIDES } from '../data/serviceGuides';
+import { approvedDescriptionFor } from '../data/approvedServiceCatalog';
+import { ServicePhotoGallery, getServicePhotos } from '../components/ServicePhotoGallery';
 
 interface ServiceDetailViewProps {
   serviceId: string;
@@ -12,13 +14,19 @@ interface ServiceDetailViewProps {
 
 const GROUPS: Record<string, { related: string[]; difference: string; care: string; faq: string }> = {
   'nano-strokes': {
-    related: ['shadow-hybrid', 'brow-sculpt-tint', 'lip-blush'],
+    related: ['shadow-brows', 'shadow-hybrid', 'brow-sculpt-tint'],
     difference: 'Nano Strokes and Microblading focus on hair-stroke style brow artistry. Shadow or Hybrid Brows create a more defined shaded finish. The best option depends on your desired look and consultation.',
     care: 'For suitability, preparation and aftercare, follow the instructions provided by Bella Beauty Brazil and confirm details during your Timely booking or consultation.',
     faq: 'Is this the right brow technique for me? Bella Beauty Brazil will assess your goals and suitability during the consultation. The published Timely price and duration are shown below.',
   },
+  'shadow-brows': {
+    related: ['nano-strokes', 'shadow-hybrid', 'brow-sculpt-tint'],
+    difference: 'Shadow Brows is cosmetic tattooing with a soft, powder-like effect (initial treatment A$630 and 45-day touch-up A$120). Brow Sculpt & Hybrid Dye is a separate, temporary hair and skin tint (A$79).',
+    care: 'Suitability, preparation and aftercare are discussed with Bella Beauty Brazil before your appointment.',
+    faq: 'Is Shadow Brows the same as Hybrid Dye? No. Shadow Brows is cosmetic tattooing, while Hybrid Dye is temporary brow colour and shaping.',
+  },
   'shadow-hybrid': {
-    related: ['nano-strokes', 'brow-sculpt-tint', 'brow-lamination'],
+    related: ['nano-strokes', 'shadow-brows', 'brow-sculpt-tint'],
     difference: 'The approved menu lists Brow Sculpt & Hybrid Dye at A$79 for a tint-and-shape service. Semi-permanent Shadow Brows is a separate cosmetic tattoo procedure, starting at A$630, with a touch-up at A$120.',
     care: 'Follow the official preparation and aftercare guidance supplied by Bella Beauty Brazil. Availability and suitability should be confirmed through the official booking page.',
     faq: 'What is the difference? Hybrid Dye is temporary brow styling at A$79; cosmetic tattoo Shadow Brows starts at A$630. Confirm your preferred treatment with the studio.',
@@ -106,20 +114,7 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
   const related = group.related.map((id) => SERVICES.find((item) => item.id === id)).filter(Boolean) as typeof SERVICES;
   const isPriceConfirmed = typeof service.price === 'number';
   const guide = SERVICE_GUIDES[base.id]?.[language];
-  const detailPhotos: Record<string, { src: string; alt: string }[]> = {
-    'nano-strokes': [
-      { src: siteImages.client.nanoStrokesMirror, alt: 'Client admiring her eyebrow treatment in a mirror' },
-      { src: siteImages.client.nanoStrokesFinishing, alt: 'Close-up of professional brow finishing details' },
-    ],
-    'lip-blush': [
-      { src: siteImages.client.lipBlushPalette, alt: 'Colour choice consultation for lip blushing' },
-      { src: siteImages.client.lipBlushPhotography, alt: 'Livia documenting a lip blush treatment' },
-    ],
-    'brow-sculpt-tint': [
-      { src: siteImages.client.browTools, alt: 'Precision brow tools used at Bella Beauty Brazil' },
-    ],
-  };
-  const supportingPhotos = detailPhotos[base.id] || [];
+  const hasClientPhotos = getServicePhotos(base.id).length > 0;
 
 
   return (
@@ -138,6 +133,7 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
                 <a href={getServiceBookingUrl(base.id)} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-[#efb7c8] hover:bg-white text-[#5b3239] text-xs font-bold uppercase tracking-widest px-7 py-4 rounded-full cursor-pointer transition-colors">
                   <Calendar className="w-4 h-4" /> {translated(language, 'Book now', 'Agendar agora', 'Reservar ahora')}
                 </a>
+                {hasClientPhotos && <a href="#service-photos" className="inline-flex items-center gap-1.5 bg-white/15 hover:bg-white/25 text-white text-xs font-bold px-5 py-4 rounded-full transition-colors">{translated(language, 'See real photos', 'Ver fotos reais', 'Ver fotos reales')}<ArrowRight className="w-4 h-4" /></a>}
                 <span className="inline-flex items-center gap-2 text-xs uppercase tracking-wider text-neutral-200"><MapPin className="w-4 h-4 text-[#efb7c8]" /> Greenslopes, QLD 4120</span>
               </div>
             </div>
@@ -148,24 +144,15 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
         </div>
       </section>
 
-      {supportingPhotos.length > 0 && (
-        <section aria-label={translated(language, 'More treatment photographs', 'Mais fotos do tratamento', 'Más fotos del tratamiento')} className="bg-site px-4 sm:px-6 lg:px-8 pt-9">
-          <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {supportingPhotos.map((photo) => (
-              <div key={photo.src} className="overflow-hidden rounded-xl border border-[#9a5967]/20 bg-[#e8d6d5] aspect-[4/3]">
-                <img src={photo.src} alt={photo.alt} loading="lazy" className="h-full w-full object-cover" />
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
+      <ServicePhotoGallery serviceId={base.id} language={language} />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
           <div className="lg:col-span-8 space-y-8">
             <section className="bg-white rounded-2xl border border-[#e8d6d5] p-6 sm:p-10 shadow-sm scroll-rise">
               <h2 className="font-raleway text-2xl sm:text-3xl font-bold uppercase tracking-wider text-[#5b3239]">{translated(language, 'About this treatment', 'Sobre este tratamento', 'Sobre este tratamiento')}</h2>
-              <p className="font-montserrat text-neutral-700 leading-relaxed mt-4">{service.description} {!guide && groupCopy.difference}</p>
+              <p className="font-montserrat text-neutral-700 leading-relaxed mt-4">{language === 'en' ? (approvedDescriptionFor(base.id) || service.description) : service.description}</p>
+              {language === 'en' && approvedDescriptionFor(base.id) && <p className="font-montserrat text-xs text-[#846f75] mt-3">Treatment description provided by Bella Beauty Brazil.</p>}
               {guide && <>
                 <h3 className="font-raleway text-xl font-bold text-[#5b3239] mt-8">{translated(language, 'Who may this treatment suit?', 'Para quem este tratamento pode ser indicado?', '¿Para quién puede ser adecuado este tratamiento?')}</h3>
                 <p className="font-montserrat text-neutral-700 leading-relaxed mt-3">{guide.idealFor}</p>
