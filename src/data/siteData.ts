@@ -12,7 +12,12 @@ export interface LocationItem { id: string; name: string; subtitle?: string; add
 export interface Testimonial { id: string; name: string; service: string; content: string; rating: number; }
 export interface InstagramPost { id: string; caption: string; image: string; url: string; isVideo: boolean; }
 
-export const BOOKING_URL = 'https://bellabrazil.gettimely.com/';
+// Timely's booking selector (not the public mini-site homepage).
+export const BOOKING_URL = 'https://book.gettimely.com/bellabrazil/book/embed?client-login=true';
+// Product-specific links require a verified Timely product ID. Never guess these IDs.
+export const SERVICE_BOOKING_LINKS: Record<string, string> = {};
+export const getServiceBookingUrl = (serviceId: string) => SERVICE_BOOKING_LINKS[serviceId] || BOOKING_URL;
+
 export const INSTAGRAM_URL = 'https://www.instagram.com/bellabeautybrazil/';
 export const WHATSAPP_URL = 'https://wa.me/61402148437';
 
@@ -41,6 +46,7 @@ export const SERVICES: Service[] = [
   { id: 'microneedling', title: 'Microneedling', subtitle: 'Skin Treatments', description: 'Microneedling treatment published in Timely.', image: siteImages.services.treatments, price: 185, duration: '1 hour', category: 'Skin', benefits: ['Skin-focused protocol', 'Consultation-led treatment', 'Official Timely booking'] },
   { id: 'facial-spa', title: 'Facial Spa', subtitle: 'Skin Treatments', description: 'Facial Spa treatment published in Timely.', image: siteImages.services.treatments, price: 150, duration: '1 hour, 20 mins', category: 'Skin', benefits: ['Facial care', 'Relaxing treatment', 'Official Timely booking'] },
   { id: 'deluxe-facial', title: 'Deluxe Facial', subtitle: 'Skin Treatments', description: 'Deluxe Facial treatment published in Timely.', image: siteImages.services.treatments, price: 360, duration: '1 hour, 50 mins', category: 'Skin', benefits: ['Deluxe facial care', 'Consultation-led treatment', 'Official Timely booking'] },
+  { id: 'teeth-whitening', title: 'Teeth Whitening', subtitle: 'Smile Treatments', description: 'Professional teeth whitening appointment listed in the official Bella Beauty Brazil Timely catalogue. Discuss suitability and aftercare with the studio.', image: siteImages.locations.greenslopes, price: 199, duration: '1 hour', category: 'Smile', benefits: ['Published Timely appointment', 'Consultation about suitability', 'Official booking and studio aftercare guidance'] },
   { id: 'waxing', title: 'Brazilian Waxing', subtitle: 'Waxing', description: 'Brazilian waxing published in Timely.', image: siteImages.services.waxing, price: 82, duration: '30 mins', category: 'Waxing', benefits: ['Professional waxing', 'Official Timely booking', 'Aftercare guidance'] },
 ];
 
@@ -60,6 +66,7 @@ const SERVICE_COPY: Record<string, { pt: string; es: string }> = {
   'microneedling': { pt: 'Tratamento de microneedling publicado no catálogo oficial Timely.', es: 'Tratamiento de microneedling publicado en el catálogo oficial de Timely.' },
   'facial-spa': { pt: 'Tratamento Facial Spa publicado no catálogo oficial Timely.', es: 'Tratamiento Facial Spa publicado en el catálogo oficial de Timely.' },
   'deluxe-facial': { pt: 'Tratamento Deluxe Facial publicado no catálogo oficial Timely.', es: 'Tratamiento Deluxe Facial publicado en el catálogo oficial de Timely.' },
+  'teeth-whitening': { pt: 'Clareamento dental profissional publicado no catálogo oficial Timely da Bella Beauty Brazil. Confirme indicação e cuidados com o estúdio.', es: 'Blanqueamiento dental profesional publicado en el catálogo oficial Timely de Bella Beauty Brazil. Consulta la idoneidad y los cuidados con el estudio.' },
   waxing: { pt: 'Serviço profissional de waxing, realizado com cuidado e precisão.', es: 'Servicio profesional de waxing, realizado con cuidado y precisión.' },
 };
 
@@ -70,14 +77,15 @@ const SERVICE_BENEFITS: Record<string, { pt: string[]; es: string[] }> = {
   'brow-sculpt-tint': { pt: ['Escultura e formato', 'Tintura incluída', 'Orientação de cuidados'], es: ['Esculpido y diseño', 'Tinte incluido', 'Orientación de cuidados'] },
   'brow-lamination': { pt: ['Laminação', 'Formato e tintura', 'Styling personalizado'], es: ['Laminado', 'Diseño y tinte', 'Styling personalizado'] },
   'lash-lift': { pt: ['Elevação e tintura', 'Acabamento prático', 'Consulta para a área dos olhos'], es: ['Lifting y tinte', 'Acabado práctico', 'Consulta para el área de los ojos'] },
+  'teeth-whitening': { pt: ['Atendimento publicado no Timely', 'Avaliação da indicação', 'Agendamento e orientações de cuidados oficiais'], es: ['Cita publicada en Timely', 'Consulta de idoneidad', 'Reserva y consejos de cuidado oficiales'] },
   dermaplaning: { pt: ['Protocolo focado na pele', 'Disponibilidade no Timely', 'Cuidado profissional no estúdio'], es: ['Protocolo enfocado en la piel', 'Disponibilidad en Timely', 'Cuidado profesional en el estudio'] },
 };
 
 export const getLocalizedService = (service: Service, language: Language): Service => language === 'en' ? service : {
   ...service,
   subtitle: language === 'pt'
-    ? ({ 'Cosmetic Tattooing': 'Tatuagem Cosmética', 'Semi-permanent makeup': 'Maquiagem semipermanente', Brows: 'Sobrancelhas', Lashes: 'Cílios', 'Skin Treatments': 'Tratamentos para a pele', Waxing: 'Waxing' } as Record<string, string>)[service.subtitle || ''] || service.subtitle
-    : ({ 'Cosmetic Tattooing': 'Tatuaje Cosmético', 'Semi-permanent makeup': 'Maquillaje semipermanente', Brows: 'Cejas', Lashes: 'Pestañas', 'Skin Treatments': 'Tratamientos para la piel', Waxing: 'Waxing' } as Record<string, string>)[service.subtitle || ''] || service.subtitle,
+    ? ({ 'Cosmetic Tattooing': 'Tatuagem Cosmética', 'Semi-permanent makeup': 'Maquiagem semipermanente', Brows: 'Sobrancelhas', Lashes: 'Cílios', 'Skin Treatments': 'Tratamentos para a pele', 'Smile Treatments': 'Tratamentos para o sorriso', Waxing: 'Waxing' } as Record<string, string>)[service.subtitle || ''] || service.subtitle
+    : ({ 'Cosmetic Tattooing': 'Tatuaje Cosmético', 'Semi-permanent makeup': 'Maquillaje semipermanente', Brows: 'Cejas', Lashes: 'Pestañas', 'Skin Treatments': 'Tratamientos para la piel', 'Smile Treatments': 'Tratamientos de sonrisa', Waxing: 'Waxing' } as Record<string, string>)[service.subtitle || ''] || service.subtitle,
   description: SERVICE_COPY[service.id]?.[language] || service.description,
   benefits: SERVICE_BENEFITS[service.id]?.[language] || service.benefits,
 };
@@ -85,7 +93,7 @@ export const getLocalizedService = (service: Service, language: Language): Servi
 export const COURSES: Course[] = [
   { id: 'lash-lift-course', title: 'Lash Lift Course 1:1', description: 'One-to-one Lash Lift training.', duration: '8 hours', price: 950, image: siteImages.services.courses, bookingUrl: BOOKING_URL },
   { id: 'brow-lamination-course', title: 'Brow Lamination Course 1:1', description: 'One-to-one Brow Lamination training.', duration: '8 hours, 5 mins', price: 950, image: siteImages.services.browTreatment, bookingUrl: BOOKING_URL },
-  { id: 'classic-eyelashes-course', title: 'Classic Eyelashes Extensions Course 1:1', description: 'One-to-one classic eyelash extensions training.', duration: '6 hours, 30 mins', price: 1400, image: siteImages.services.lashes, bookingUrl: BOOKING_URL },
+  { id: 'classic-eyelashes-course', title: 'Classic Eyelashes Extensions Course 1:1', description: 'One-to-one classic eyelash extensions training.', duration: '6 hours, 30 mins', price: 1400, image: siteImages.services.lashes, bookingUrl: 'https://book.gettimely.com/bellabrazil/book/embed?client-login=true&product=3230447%3ASV' },
   { id: 'nano-strokes-course', title: 'Microblading Course — Nano Strokes', description: 'Realistic Micro Nano Strokes training.', duration: '16 hours', price: 4200, image: siteImages.services.brows, bookingUrl: BOOKING_URL },
 ];
 

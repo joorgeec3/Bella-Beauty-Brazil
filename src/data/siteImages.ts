@@ -10,13 +10,14 @@ export const siteImages = {
   },
   brand: { logoEmblem: siteAsset('assets/bella/logo.png'), logoWordmark: siteAsset('assets/bella/logo.png'), goldEmblemStamp: siteAsset('assets/bella/logo.png'), logoHorizontalDark: siteAsset('assets/bella/logo.png'), goldSignatureBadge: siteAsset('assets/bella/logo.png') },
   services: {
+    browTreatment: siteAsset('assets/bella/gallery/studio-behind-scenes-01.webp'),
+    facialTreatment: siteAsset('assets/bella/dermaplaning-facial-treatment.webp'),
     microblading: siteAsset('assets/bella/brows.png'),
     lipBlush: siteAsset('assets/bella/cosmetic-tattooing.png'),
     brows: siteAsset('assets/bella/brows.png'),
     lashes: siteAsset('assets/bella/lashes.jpg'),
-    treatments: siteAsset('assets/bella/treatments.png'),
-    browTreatment: siteAsset('assets/bella/gallery/studio-behind-scenes-01.webp'),
-    facialTreatment: siteAsset('assets/bella/dermaplaning-facial-treatment.webp'),
+    // A genuine facial treatment photo: the old treatments.png depicts a pigment/palette kit.
+    treatments: siteAsset('assets/bella/dermaplaning-facial-treatment.webp'),
     waxing: siteAsset('assets/bella/waxing.png'),
     courses: siteAsset('assets/bella/courses.png'),
   },

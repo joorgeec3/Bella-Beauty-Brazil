@@ -39,10 +39,10 @@ export const AppointmentModal: React.FC<AppointmentModalProps> = ({
         <div className="text-center mb-6 pt-2">
           <h2 className="font-raleway text-xl sm:text-2xl font-bold uppercase tracking-wider text-white">
             {language === 'en'
-              ? 'SELECT THE LOCATION CLOSEST TO YOU'
+              ? 'BOOK AN APPOINTMENT IN GREENSLOPES'
               : language === 'pt'
-              ? 'SELECIONE A UNIDADE MAIS PRÓXIMA DE VOCÊ'
-              : 'SELECCIONA LA SEDE MÁS CERCANA A TI'}
+              ? 'AGENDE SEU HORÁRIO EM GREENSLOPES'
+              : 'RESERVA TU CITA EN GREENSLOPES'}
           </h2>
           <p className="font-montserrat text-xs text-[#9a5967] uppercase tracking-widest mt-1">
             Bella Beauty Brazil · Brisbane, Australia
@@ -88,10 +88,10 @@ export const AppointmentModal: React.FC<AppointmentModalProps> = ({
         <div className="mt-8 text-center text-xs text-neutral-500 font-montserrat">
           <p>
             {language === 'en'
-              ? 'Click your nearest clinic to book your appointment online.'
+              ? 'Select our Greenslopes studio to continue to the official Timely booking page.'
               : language === 'pt'
-              ? 'Clique na unidade mais próxima para agendar online.'
-              : 'Haz clic en tu sede preferida para reservar tu cita en línea.'}
+              ? 'Selecione nosso estúdio em Greenslopes para abrir o agendamento oficial pelo Timely.'
+              : 'Selecciona nuestro estudio en Greenslopes para continuar con la reserva oficial en Timely.'}
           </p>
         </div>
 

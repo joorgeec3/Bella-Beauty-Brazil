@@ -65,17 +65,6 @@ export const Footer: React.FC<FooterProps> = ({ language, onNavigate }) => {
 
         {/* Social Icons */}
         <div className="flex items-center space-x-4 mb-8">
-          <a
-            href="https://www.instagram.com/bellabeautybrazil/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-10 h-10 rounded-full bg-neutral-900 border border-neutral-700 flex items-center justify-center text-white hover:bg-[#9a5967] hover:border-[#9a5967] transition-colors"
-            aria-label="Instagram"
-          >
-            <svg className="w-4 h-4 fill-current" viewBox="0 0 172 300">
-              <path d="M160.5 2.1v44.1h-26.1q-14.4 0-19.5 6t-5.1 18V102H159l-6.6 49.5h-42.6v127.2H58.5V151.5H15.9V102h42.6V65.4q0-31.2 17.4-48.3T122.4 0q24.6 0 38.1 2.1z" />
-            </svg>
-          </a>
 
           <a
             href="https://www.instagram.com/bellabeautybrazil/"

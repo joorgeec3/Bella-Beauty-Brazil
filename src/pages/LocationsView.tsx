@@ -31,10 +31,10 @@ export const LocationsView: React.FC<LocationsViewProps> = ({
           </p>
           <p className="font-montserrat text-xs text-neutral-400 mt-3 max-w-2xl mx-auto leading-relaxed">
             {language === 'en'
-              ? 'Convenient for clients across Brisbane Southside, including Stones Corner, Coorparoo, Holland Park, Annerley, Tarragindi and Woolloongabba, with nearby access from Mount Gravatt, Carina, Carindale, Camp Hill and Sunnybank.'
+              ? 'Convenient for clients across Brisbane Southside, including Stones Corner, Coorparoo, Holland Park, Annerley, Tarragindi and Woolloongabba, welcoming visitors from Mount Gravatt, Upper Mount Gravatt, Carina, Carindale, Camp Hill, Sunnybank, Eight Mile Plains and Greater Brisbane.'
               : language === 'pt'
-              ? 'Prático para clientes do sul de Brisbane, incluindo Stones Corner, Coorparoo, Holland Park, Annerley, Tarragindi e Woolloongabba, com acesso próximo a Mount Gravatt, Carina, Carindale, Camp Hill e Sunnybank.'
-              : 'Práctico para clientas del sur de Brisbane, incluidos Stones Corner, Coorparoo, Holland Park, Annerley, Tarragindi y Woolloongabba, con acceso cercano desde Mount Gravatt, Carina, Carindale, Camp Hill y Sunnybank.'}
+              ? 'Prático para clientes do sul de Brisbane, incluindo Stones Corner, Coorparoo, Holland Park, Annerley, Tarragindi e Woolloongabba, recebendo clientes de Mount Gravatt, Upper Mount Gravatt, Carina, Carindale, Camp Hill, Sunnybank, Eight Mile Plains e de outras regiões de Greater Brisbane.'
+              : 'Práctico para clientas del sur de Brisbane, incluidos Stones Corner, Coorparoo, Holland Park, Annerley, Tarragindi y Woolloongabba, atendiendo a clientas de Mount Gravatt, Upper Mount Gravatt, Carina, Carindale, Camp Hill, Sunnybank, Eight Mile Plains y otras zonas de Greater Brisbane.'}
           </p>
           <div className="w-16 h-0.5 bg-[#9a5967] mx-auto mt-4" />
         </div>

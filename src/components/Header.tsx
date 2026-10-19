@@ -22,6 +22,7 @@ export const Header: React.FC<HeaderProps> = ({
   onSelectLanguage,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const menuTriggerRef = React.useRef<HTMLButtonElement>(null);
   const [showHeader, setShowHeader] = useState(true);
   const lastScrollYRef = React.useRef(0);
   const mobileMenuOpenRef = React.useRef(mobileMenuOpen);
@@ -33,6 +34,18 @@ export const Header: React.FC<HeaderProps> = ({
 
   React.useEffect(() => {
     mobileMenuOpenRef.current = mobileMenuOpen;
+  }, [mobileMenuOpen]);
+
+  React.useEffect(() => {
+    if (!mobileMenuOpen) return;
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setMobileMenuOpen(false);
+        menuTriggerRef.current?.focus();
+      }
+    };
+    window.addEventListener('keydown', handleEscape);
+    return () => window.removeEventListener('keydown', handleEscape);
   }, [mobileMenuOpen]);
 
   // Smooth Hide on Scroll Down / Show on Scroll Up
@@ -169,7 +182,7 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-1 lg:space-x-3 xl:space-x-4 text-xs font-semibold uppercase tracking-wider text-[#3c3033]">
+          <nav className="hidden xl:flex items-center space-x-1 lg:space-x-3 xl:space-x-4 text-xs font-semibold uppercase tracking-wider text-[#3c3033]">
             <button
               onClick={() => onNavigate('home')}
               className={`px-2.5 py-1.5 transition-colors cursor-pointer rounded-sm ${
@@ -199,14 +212,16 @@ export const Header: React.FC<HeaderProps> = ({
                 <span>{language === 'en' ? 'Services' : language === 'pt' ? 'Serviços' : 'Servicios'}</span>
                 <ChevronDown className="w-3.5 h-3.5 text-[#806859] transition-transform group-hover:rotate-180 group-hover:text-[#9a5967]" />
               </button>
-              <div className="absolute left-0 mt-0 w-64 bg-[#fbf8f5] shadow-xl rounded-b-md border border-[#d8be9b]/40 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 py-2">
-                {SERVICES.map((s) => (
-                  <button
-                    key={s.id}
-                    onClick={() => onNavigate('services', s.id)}
-                    className="w-full text-left px-4 py-2.5 text-xs text-[#3c3033] hover:bg-[#ede5dc] hover:text-[#9a5967] transition-colors uppercase tracking-wider cursor-pointer"
-                  >
-                    {s.title}
+              <div className="absolute left-0 mt-0 w-72 bg-[#fbf8f5] shadow-xl rounded-b-md border border-[#d8be9b]/40 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all duration-200 z-50 py-2">
+                <button type="button" onClick={() => onNavigate('services')}
+                  className="w-full text-left px-4 py-3 text-xs font-bold uppercase tracking-wider text-[#5b3239] hover:bg-[#f3d9d0] cursor-pointer">
+                  {language === 'en' ? 'Browse all services · Search & filters' : language === 'pt' ? 'Todos os serviços · Busca e filtros' : 'Todos los servicios · Búsqueda y filtros'}
+                </button>
+                <div className="mx-4 my-1 border-t border-[#d8be9b]/50" />
+                {SERVICES.filter((service) => ['nano-strokes', 'shadow-hybrid', 'lip-blush', 'brow-lamination', 'lash-lift', 'teeth-whitening'].includes(service.id)).map((service) => (
+                  <button key={service.id} type="button" onClick={() => onNavigate('services', service.id)}
+                    className="w-full text-left px-4 py-2.5 text-xs text-[#3c3033] hover:bg-[#ede5dc] hover:text-[#9a5967] transition-colors cursor-pointer">
+                    {service.title}
                   </button>
                 ))}
               </div>
@@ -303,9 +318,13 @@ export const Header: React.FC<HeaderProps> = ({
             {/* Mobile/tablet menu trigger (visible below lg) */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2 text-[#5c4943] hover:text-[#9a5967] transition-colors cursor-pointer relative z-50 flex items-center justify-center rounded-lg hover:bg-[#ede6df]/50"
-              aria-label="Toggle Menu"
+              className="xl:hidden p-2 text-[#5c4943] hover:text-[#9a5967] transition-colors cursor-pointer relative z-50 flex items-center justify-center rounded-lg hover:bg-[#ede6df]/50"
+              aria-label={mobileMenuOpen
+                ? language === 'en' ? 'Close menu' : language === 'pt' ? 'Fechar menu' : 'Cerrar menú'
+                : language === 'en' ? 'Open menu' : language === 'pt' ? 'Abrir menu' : 'Abrir menú'}
               aria-expanded={mobileMenuOpen}
+              aria-controls="bella-mobile-menu"
+              ref={menuTriggerRef}
             >
               <div className="relative w-6 h-6 flex items-center justify-center">
                 <Menu
@@ -326,7 +345,8 @@ export const Header: React.FC<HeaderProps> = ({
 
       {/* Mobile/tablet drawer navigation (único menu abaixo de lg) */}
       <div
-        className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out bg-site border-b border-[#d8be9b]/40 shadow-2xl ${
+        id="bella-mobile-menu"
+        className={`xl:hidden overflow-hidden transition-all duration-300 ease-in-out bg-site border-b border-[#d8be9b]/40 shadow-2xl ${
           mobileMenuOpen ? 'max-h-[85vh] opacity-100 py-3 px-4 overflow-y-auto' : 'max-h-0 opacity-0 py-0 px-4 pointer-events-none'
         }`}
       >
