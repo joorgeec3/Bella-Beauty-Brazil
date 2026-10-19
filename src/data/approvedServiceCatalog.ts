@@ -89,6 +89,13 @@ export const APPROVED_SERVICE_CATALOG: ApprovedCategory[] = [
 
 /** Exact English description from the studio's approved PDF, where the service has a direct match. */
 const APPROVED_NAMES_BY_SERVICE_ID: Record<string,string> = {
+  "cosmetic-tattoo-removal": "Cosmetic Tattoo Removal",
+  "male-brow-sculpt": "Male Brow Sculpt",
+  "dreamy-brows": "Dreamy Brows – Brow Sculpt & Relaxing Massage",
+  "lash-lift-only": "Lash Lift Only",
+  "wet-look-lashes": "Wet Look Lash Extensions",
+  "lash-tint": "Lash Tint",
+  "lash-extension-removal": "Lash Extension Removal",
   "nano-strokes": "Microblading – Nano Strokes",
   "shadow-brows": "Shadow Brows",
   "lip-blush": "Lip Blush – Lip Tattooing",
