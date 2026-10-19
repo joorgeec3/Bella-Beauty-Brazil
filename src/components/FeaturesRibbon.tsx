@@ -17,7 +17,8 @@ export const FeaturesRibbon: React.FC<FeaturesRibbonProps> = ({ language }) => {
       footer: language === 'en' ? 'Personalised care' : language === 'pt' ? 'Cuidado personalizado' : 'Cuidado personalizado',
     },
     {
-      image: siteImages.services.lashes,
+      // A dedicated lash-result photo is used here once, not repeated in the carousel below.
+      image: `${import.meta.env.BASE_URL}assets/bella/gallery/lashes-result-03.webp`,
       icon: <Eye className="w-3 h-3 text-[#9a5967]" />,
       label: language === 'en' ? 'Lashes · Definition' : language === 'pt' ? 'Cílios · Definição' : 'Pestañas · Definición',
       title: language === 'en' ? 'Lash Treatments' : language === 'pt' ? 'Tratamentos para cílios' : 'Tratamientos de pestañas',
@@ -25,7 +26,8 @@ export const FeaturesRibbon: React.FC<FeaturesRibbonProps> = ({ language }) => {
       footer: language === 'en' ? 'Care for your eyes' : language === 'pt' ? 'Cuidado para o olhar' : 'Cuidado para la mirada',
     },
     {
-      image: siteImages.services.treatments,
+      // A distinct studio photograph keeps the first fold visually varied.
+      image: `${import.meta.env.BASE_URL}assets/bella/gallery/studio-mirror-area.webp`,
       icon: <ShieldCheck className="w-3 h-3 text-[#9a5967]" />,
       label: language === 'en' ? 'Skin · Care' : language === 'pt' ? 'Pele · Cuidado' : 'Piel · Cuidado',
       title: language === 'en' ? 'Skin Treatments' : language === 'pt' ? 'Tratamentos para a pele' : 'Tratamientos para la piel',
