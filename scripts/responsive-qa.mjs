@@ -62,6 +62,13 @@ try {
       await page.locator('input[type="search"]').waitFor();
       assert(page.url().endsWith('/services'), 'Hero button does not lead to services');
       assert.equal(await page.locator('main article').count(), 17, 'Expected 17 treatment cards');
+      const priceGroups = page.locator('#full-price-list details');
+      assert.equal(await priceGroups.count(), 7, 'Approved PDF must show seven price groups including women and men waxing');
+      assert(await page.locator('#prices-skin').evaluate((node) => node.open), 'Skin Treatments group should start expanded');
+      const skinList = await page.locator('#prices-skin').innerText();
+      assert(skinList.includes('Lip Bliss Hydration') && skinList.includes('Grow Up Hair') && skinList.includes('Deluxe Facial'), 'Approved PDF Skin Treatments are incomplete');
+      const cosmetic = await page.locator('#prices-cosmetic').innerText();
+      assert(cosmetic.includes('A$630') && cosmetic.includes('A$150'), 'New Cosmetic Tattooing pricing is missing');
       const imageSources = await page.locator('main article img').evaluateAll((images) => images.map((image) => image.getAttribute('src')));
       assert.equal(imageSources.length, 7, 'Show seven distinct service photos with the new Nano Strokes image');
       assert.equal(new Set(imageSources).size, imageSources.length, 'Repeated service card photos');
@@ -87,7 +94,7 @@ try {
       assert(await page.locator('h1').first().innerText());
       assert((await page.locator('a[href*="book.gettimely.com"]').count()) > 0, 'Treatment booking link not found');
       await go('/courses');
-      assert.equal(await page.locator('main article').count(), 4, 'Expected four confirmed courses');
+      assert.equal(await page.locator('main article').count(), 3, 'Expected three courses in the client-approved PDF');
       await go('/contact');
       assert((await page.locator('a[href^="tel:"]').count()) > 0, 'Phone action missing');
       await go('/services/unknown-treatment');
