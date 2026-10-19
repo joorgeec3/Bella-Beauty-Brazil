@@ -10,8 +10,6 @@ export const siteImages = {
     lipBlushProcedure: siteAsset('assets/bella/client-2026-10/lip-blush-procedure.webp'),
     lipBlushPhotography: siteAsset('assets/bella/client-2026-10/lip-blush-photography.webp'),
     nanoStrokesProcedure: siteAsset('assets/bella/client-2026-10/nano-strokes-procedure.webp'),
-    nanoStrokesMirror: siteAsset('assets/bella/client-2026-10/nano-strokes-mirror.webp'),
-    nanoStrokesFinishing: siteAsset('assets/bella/client-2026-10/nano-strokes-finishing.webp'),
     salonBrandWall: siteAsset('assets/bella/client-2026-10/salon-brand-wall.webp'),
     salonDetails: siteAsset('assets/bella/client-2026-10/salon-details.webp'),
     salonConsultation: siteAsset('assets/bella/client-2026-10/salon-consultation.webp'),
