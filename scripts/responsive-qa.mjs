@@ -101,7 +101,7 @@ try {
       const booking = page.locator('main article a[href*="book.gettimely.com"]').first();
       assert.equal(await booking.getAttribute('target'), null, 'Mobile and tablet booking must not open a separate tab');
       await booking.click();
-      await page.waitForURL(/book\\.gettimely\\.com\\/bellabrazil\\/book\\//);
+      await page.waitForURL((url) => url.hostname === 'book.gettimely.com' && url.pathname.startsWith('/bellabrazil/book/'));
       assert((await page.locator('h1').innerText()).includes('Timely service selection'), 'Booking did not open the Timely selection directly');
       await page.unroute('https://book.gettimely.com/**');
       await go('/');
