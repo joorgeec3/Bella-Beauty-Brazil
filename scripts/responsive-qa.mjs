@@ -43,6 +43,18 @@ try {
       assert.equal(await page.locator('.hero-cta-sequence button').count(), 3, 'Hero needs Book, Courses and Services');
       const banned = await page.locator('img').evaluateAll(images => images.map(image => image.getAttribute('src')).filter(src => /brows\.png|treatments\.png|brows-result-04|lashes-result-02/.test(src || '')));
       assert.deepEqual(banned, [], 'Client-requested removed photos remain in homepage/gallery');
+      const featurePhotos = await page.locator('.feature-card-image').evaluateAll(images => images.map(img => img.getAttribute('src') || ''));
+      assert.equal(featurePhotos.length, 3, 'Three topic-specific featured photos are needed');
+      assert(featurePhotos[0].includes('studio-behind-scenes-01.webp'), 'Brows feature should show an actual brow treatment');
+      assert(featurePhotos[1].includes('lashes-result-05.webp'), 'Lashes feature should show an actual lash treatment, not brows');
+      assert(featurePhotos[2].includes('dermaplaning-facial-treatment.webp'), 'Skin feature should show an actual facial treatment');
+      const topServicePhotos = await page.locator('.service-card-image').evaluateAll(images => images.map(img => img.getAttribute('src') || ''));
+      assert.equal(topServicePhotos.length, 4, 'Four topic-specific treatment cards are needed');
+      for (const file of ['nano-strokes-procedure.webp', 'lip-blush-procedure.webp', 'lashes.jpg', 'waxing-treatment.webp']) {
+        assert(topServicePhotos.some(src => src.endsWith('/' + file)), 'Missing topic-matched homepage service photo: ' + file);
+      }
+      assert(!topServicePhotos.some(src => src.includes('dermaplaning-facial-treatment.webp')), 'Do not repeat facial treatment photo from featured section');
+
       // The first impression must not recycle treatment, founder, studio, gallery or result photos.
       const photoSelectors = [
         '.hero-image-drift',
