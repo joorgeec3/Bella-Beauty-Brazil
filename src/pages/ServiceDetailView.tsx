@@ -104,7 +104,7 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
     : { difference: `${base.title} es un servicio de ${base.category || 'belleza'} de Bella Beauty Brazil. Consulta con el estudio qué técnica es la adecuada.`, care: 'La preparación, la idoneidad y los cuidados varían según el tratamiento. Sigue las instrucciones de Bella Beauty Brazil.', faq: `¿Cómo reservar ${base.title}? Consulta disponibilidad, precios y detalles en el Timely oficial.` };
   const groupCopy = language === 'en' ? group : GROUP_TRANSLATIONS[base.id]?.[language] || { ...group, ...fallbackTranslation };
   const related = group.related.map((id) => SERVICES.find((item) => item.id === id)).filter(Boolean) as typeof SERVICES;
-  const isPriceConfirmed = Boolean(service.price && service.duration);
+  const isPriceConfirmed = typeof service.price === 'number';
   const guide = SERVICE_GUIDES[base.id]?.[language];
   const detailPhotos: Record<string, { src: string; alt: string }[]> = {
     'nano-strokes': [
@@ -142,7 +142,7 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
               </div>
             </div>
             <div className="lg:col-span-6">
-              <img src={service.image} alt={service.id === 'teeth-whitening' ? 'Bella Beauty Brazil studio interior in Greenslopes' : service.category === 'Skin' ? 'Bella Beauty Brazil editorial photograph of facial skin care' : `${service.title} at Bella Beauty Brazil in Greenslopes`} className="w-full aspect-[4/3] object-cover rounded-2xl shadow-2xl border border-white/20" />
+              <img src={service.image} alt={service.id === 'teeth-whitening' ? 'Bella Beauty Brazil studio interior in Greenslopes' : ['lip-bliss-hydration', 'grow-up-hair-brows', 'grow-up-hair-scalp'].includes(service.id) ? 'Bella Beauty Brazil studio interior, an editorial image rather than this specific treatment' : service.category === 'Skin' ? 'Bella Beauty Brazil editorial photograph of facial skin care' : `${service.title} at Bella Beauty Brazil in Greenslopes`} className="w-full aspect-[4/3] object-cover rounded-2xl shadow-2xl border border-white/20" />
             </div>
           </div>
         </div>
