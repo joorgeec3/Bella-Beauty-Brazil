@@ -94,12 +94,19 @@ try {
 
     await check(`${width}px gallery dialog and keyboard controls`, async () => {
       await go('/');
-      const first = page.locator('#gallery button').filter({ has: page.locator('img') }).first();
+      // Pause the intentionally moving gallery through its real, accessible Pause control.
+      // Scrolling a card into view while autoplay moves it is inherently unstable.
+      const pause = page.locator('#gallery').getByRole('button', { name: /^Pause$/ });
+      await pause.click();
+      assert(await page.locator('#gallery').getByRole('button', { name: /^Play$/ }).isVisible(),
+        'Gallery did not stop on Pause');
+      const first = page.locator('#gallery [data-bella-gallery-card]:not([aria-hidden="true"])').first();
       await first.scrollIntoViewIfNeeded();
       await first.click();
       const dialog = page.getByRole('dialog', { name: /gallery/i });
       await dialog.waitFor();
       assert.equal(await dialog.getAttribute('aria-modal'), 'true');
+      assert(await dialog.getByRole('button', { name: /^Close image$/ }).isFocused(), 'Dialog close button is not focused');
       await page.keyboard.press('ArrowRight');
       await page.keyboard.press('Escape');
       assert.equal(await dialog.count(), 0, 'Gallery did not close on Escape');
