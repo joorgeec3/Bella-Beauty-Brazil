@@ -43,7 +43,7 @@ export const ApprovedPriceList: React.FC<{language: Language}> = ({ language }) 
                 ))}
               </div>
               {group.footer && <p className="bg-[#faf4f4] px-4 py-3 rounded-lg text-xs sm:text-sm text-[#675960] leading-relaxed mt-5">{group.footer}</p>}
-              <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 mt-6 bg-[#5b3239] text-white rounded-full px-5 py-3.5 text-xs font-bold tracking-wide hover:bg-[#7a4753] transition-colors focus-visible:outline-2 focus-visible:outline-[#9a5967]"><CalendarDays className="w-4 h-4" />{labels.book}<ArrowRight className="w-4 h-4" /></a>
+              <a href={BOOKING_URL} className="inline-flex items-center gap-2 mt-6 bg-[#5b3239] text-white rounded-full px-5 py-3.5 text-xs font-bold tracking-wide hover:bg-[#7a4753] transition-colors focus-visible:outline-2 focus-visible:outline-[#9a5967]"><CalendarDays className="w-4 h-4" />{labels.book}<ArrowRight className="w-4 h-4" /></a>
             </div>
           </details>
         ))}
