@@ -44,10 +44,18 @@ try {
       const banned = await page.locator('img').evaluateAll(images => images.map(image => image.getAttribute('src')).filter(src => /brows\.png|treatments\.png|brows-result-04|lashes-result-02/.test(src || '')));
       assert.deepEqual(banned, [], 'Client-requested removed photos remain in homepage/gallery');
       const featurePhotos = await page.locator('.feature-card-image').evaluateAll(images => images.map(img => img.getAttribute('src') || ''));
-      assert.equal(featurePhotos.length, 3, 'Three topic-specific featured photos are needed');
+      assert.equal(featurePhotos.length, 2, 'The third feature is a non-photographic skin-care editorial, to avoid reusing the real procedure image');
       assert(featurePhotos[0].includes('studio-behind-scenes-01.webp'), 'Brows feature should show an actual brow treatment');
       assert(featurePhotos[1].includes('lashes-result-05.webp'), 'Lashes feature should show an actual lash treatment, not brows');
-      assert(featurePhotos[2].includes('dermaplaning-facial-treatment.webp'), 'Skin feature should show an actual facial treatment');
+      assert.equal(await page.locator('.service-editorial-image').count(), 1, 'Skin Treatments should have one hero photo');
+      assert((await page.locator('.service-editorial-image').getAttribute('src')).includes('dermaplaning-facial-treatment.webp'), 'Skin Treatments must show a real facial procedure rather than the empty treatment room');
+      const skinCard = page.locator('#skin-treatments-feature');
+      assert.equal(await skinCard.count(), 1, 'Premium Skin Treatments section is missing');
+      const treatmentNames = await skinCard.innerText();
+      for (const treatment of ['Dermaplaning', 'Microneedling', 'Facial Spa', 'Deluxe Facial']) {
+        assert(treatmentNames.includes(treatment), 'Skin Treatments should explain the service options: ' + treatment);
+      }
+      assert(await skinCard.getByRole('link', { name: /Explore skin treatments|Ver tratamentos de pele|Ver tratamientos de piel/ }).isVisible(), 'Skin Treatments CTA unavailable');
       const topServicePhotos = await page.locator('.service-card-image').evaluateAll(images => images.map(img => img.getAttribute('src') || ''));
       assert.equal(topServicePhotos.length, 4, 'Four topic-specific treatment cards are needed');
       for (const file of ['nano-strokes-procedure.webp', 'lip-blush-procedure.webp', 'lashes.jpg', 'waxing-treatment.webp']) {
