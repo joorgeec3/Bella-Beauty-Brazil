@@ -67,6 +67,7 @@ try {
       assert(await page.locator('#prices-skin').evaluate((node) => node.open), 'Skin Treatments group should start expanded');
       const skinList = await page.locator('#prices-skin').innerText();
       assert(skinList.includes('Lip Bliss Hydration') && skinList.includes('Grow Up Hair') && skinList.includes('Deluxe Facial'), 'Approved PDF Skin Treatments are incomplete');
+      await page.locator('#prices-cosmetic summary').click();
       const cosmetic = await page.locator('#prices-cosmetic').innerText();
       assert(cosmetic.includes('A$630') && cosmetic.includes('A$150'), 'New Cosmetic Tattooing pricing is missing');
       const imageSources = await page.locator('main article img').evaluateAll((images) => images.map((image) => image.getAttribute('src')));
