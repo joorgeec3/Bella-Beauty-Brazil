@@ -118,7 +118,13 @@ try {
       await go('/services/shadow-brows');
       assert((await page.locator('#root main').first().innerText()).includes('Shading creates a softly filled-in appearance'), 'Full PDF-approved Shadow Brows description is missing');
       await go('/services/nano-strokes');
-      assert.equal(await page.locator('#service-photos button[aria-pressed]').count(), 3, 'Nano Strokes needs the three correct treatment photos');
+      const approvedNano = page.locator('#service-photos img').first();
+      assert((await approvedNano.getAttribute('src'))?.includes('nano-strokes-procedure.webp'), 'Only approved Nano Strokes procedure photo should display');
+      const deletedPaths = ['nano-strokes-mirror.webp', 'nano-strokes-finishing.webp'];
+      const allRenderedPhotos = await page.locator('img').evaluateAll(images => images.map(img => img.getAttribute('src') || ''));
+      assert(allRenderedPhotos.every(src => deletedPaths.every(file => !src.includes(file))), 'A photo marked for removal is still displayed');
+
+      assert.equal(await page.locator('#service-photos button[aria-pressed]').count(), 0, 'Nano Strokes should show just the one approved procedure photo');
       assert(await page.locator('h1').first().innerText());
       assert((await page.locator('a[href*="book.gettimely.com"]').count()) > 0, 'Treatment booking link not found');
       await go('/courses');
@@ -130,7 +136,7 @@ try {
       assert.equal(await page.locator('meta[name="robots"]').getAttribute('content'), 'noindex,follow');
     });
 
-    await check(`${width}px salon section and 17 real uploaded images`, async () => {
+    await check(`${width}px salon section and 15 approved uploaded images`, async () => {
       await go('/');
       const photos = page.locator('#salon img');
       assert.equal(await photos.count(), 5, 'Salon section must show five distinct salon pictures');
@@ -139,11 +145,16 @@ try {
       const allClientImagePaths = [
         'brow-tools.webp','brow-styling.webp','waxing-treatment.webp',
         'lip-blush-palette.webp','lip-blush-procedure.webp','lip-blush-photography.webp',
-        'nano-strokes-procedure.webp','nano-strokes-mirror.webp','nano-strokes-finishing.webp',
+        'nano-strokes-procedure.webp',
         'salon-brand-wall.webp','salon-details.webp','salon-consultation.webp',
         'salon-client-experience.webp','salon-celebration.webp',
         'about-livia-01.webp','about-livia-02.webp','about-livia-03.webp',
       ];
+      assert.equal(allClientImagePaths.length, 15, 'Only 15 client photos should remain in public assets');
+      for (const removedFile of ['nano-strokes-mirror.webp', 'nano-strokes-finishing.webp']) {
+        const response = await page.request.get(base + '/assets/bella/client-2026-10/' + removedFile);
+        assert.equal(response.headers()['content-type']?.includes('image'), false, 'Deleted photo remains accessible as an image: ' + removedFile);
+      }
       for (const file of allClientImagePaths) {
         const response = await page.request.get(base + '/assets/bella/client-2026-10/' + file);
         assert(response.ok(), 'Missing real client image from project public assets: ' + file);
