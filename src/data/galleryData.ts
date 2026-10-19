@@ -9,13 +9,11 @@ const withSiteBase = (item: BellaGalleryItem): BellaGalleryItem => ({
 
 export const clientGallery: BellaGalleryItem[] = [
   { id: 'lashes-result-01', image: '/assets/bella/gallery/lashes-result-01.webp', category: 'Lashes', kind: 'result', alt: 'Eyelash treatment comparison showing eyes before and after' },
-  { id: 'lashes-result-02', image: '/assets/bella/gallery/lashes-result-02.webp', category: 'Lashes', kind: 'result', alt: 'Close-up eyelash treatment comparison' },
   { id: 'lashes-result-03', image: '/assets/bella/gallery/lashes-result-03.webp', category: 'Lashes', kind: 'result', alt: 'Eyelash and eyebrow styling results in comparison photos' },
   { id: 'lips-result-01', image: '/assets/bella/gallery/lips-result-01.webp', category: 'Lips', kind: 'result', alt: 'Lip treatment comparison in natural light' },
   { id: 'brows-result-01', image: '/assets/bella/gallery/brows-result-01.webp', category: 'Brows', kind: 'result', alt: 'Facial and brow styling comparison in two images' },
   { id: 'brows-result-02', image: '/assets/bella/gallery/brows-result-02.webp', category: 'Brows', kind: 'result', alt: 'Close-up eyebrow treatment comparison' },
   { id: 'brows-result-03', image: '/assets/bella/gallery/brows-result-03.webp', category: 'Brows', kind: 'result', alt: 'Eyebrow treatment result shown above and below' },
-  { id: 'brows-result-04', image: '/assets/bella/gallery/brows-result-04.webp', category: 'Brows', kind: 'result', alt: 'Brow styling results comparison' },
   { id: 'lashes-result-04', image: '/assets/bella/gallery/lashes-result-04.webp', category: 'Lashes', kind: 'result', alt: 'Eyelash styling close-up comparison' },
   { id: 'brows-result-05', image: '/assets/bella/gallery/brows-result-05.webp', category: 'Brows', kind: 'result', alt: 'Brow design comparison photographed from two angles' },
   { id: 'lips-result-02', image: '/assets/bella/gallery/lips-result-02.webp', category: 'Lips', kind: 'result', alt: 'Lip blush service comparison' },
@@ -32,7 +30,6 @@ export const clientGallery: BellaGalleryItem[] = [
 const uniqueImages = (items: BellaGalleryItem[]) => items.filter((item, index) => items.findIndex((candidate) => candidate.image === item.image) === index);
 
 export const bellaGallery: BellaGalleryItem[] = uniqueImages([
-  { id: 'brows-editorial', image: '/assets/bella/brows.png', category: 'Brows', kind: 'editorial', alt: 'Bella Beauty Brazil individual brow treatment' },
   { id: 'lips-editorial', image: '/assets/bella/cosmetic-tattooing.png', category: 'Lips', kind: 'editorial', alt: 'Bella Beauty Brazil individual lip cosmetic tattooing treatment' },
   { id: 'lashes-editorial', image: '/assets/bella/lashes.jpg', category: 'Lashes', kind: 'editorial', alt: 'Bella Beauty Brazil individual eyelash treatment' },
   { id: 'skin-editorial', image: '/assets/bella/dermaplaning-facial-treatment.webp', category: 'Skin', kind: 'editorial', alt: 'Professional facial skin treatment at Bella Beauty Brazil' },
