@@ -4,7 +4,7 @@ import { Language } from '../data/siteData';
 import { siteImages } from '../data/siteImages';
 
 interface FeaturesRibbonProps { language: Language; }
-interface FeatureCardData { image: string; icon: React.ReactNode; label: string; title: string; text: string; footer: string; }
+interface FeatureCardData { image?: string; icon: React.ReactNode; label: string; title: string; text: string; footer: string; }
 
 export const FeaturesRibbon: React.FC<FeaturesRibbonProps> = ({ language }) => {
   const cards: FeatureCardData[] = [
@@ -27,9 +27,8 @@ export const FeaturesRibbon: React.FC<FeaturesRibbonProps> = ({ language }) => {
       footer: language === 'en' ? 'Care for your eyes' : language === 'pt' ? 'Cuidado para o olhar' : 'Cuidado para la mirada',
     },
     {
-      // A distinct studio photograph keeps the first fold visually varied.
-      // Actual dermaplaning in progress; never substitute a photo of an empty room for skin care.
-      image: `${import.meta.env.BASE_URL}assets/bella/dermaplaning-facial-treatment.webp`,
+      // Keep the one approved real facial-treatment photograph for the larger Skin Treatments section.
+      // This editorial visual is deliberately non-photographic so that no image repeats on the home page.
       icon: <ShieldCheck className="w-3 h-3 text-[#9a5967]" />,
       label: language === 'en' ? 'Skin · Care' : language === 'pt' ? 'Pele · Cuidado' : 'Piel · Cuidado',
       title: language === 'en' ? 'Skin Treatments' : language === 'pt' ? 'Tratamentos para a pele' : 'Tratamientos para la piel',
@@ -77,7 +76,15 @@ export const FeaturesRibbon: React.FC<FeaturesRibbonProps> = ({ language }) => {
 
 const FeatureCard: React.FC<FeatureCardData> = ({ image, icon, label, title, text, footer }) => <article className="flex flex-col bg-[#22181b] reveal-scale rounded-3xl p-5 border border-[#9a5967]/30 shadow-xl transition-transform duration-300 hover:-translate-y-1">
   <div className="relative w-full aspect-4/5 rounded-2xl overflow-hidden bg-[#181214] mb-5 shadow-lg border border-[#9a5967]/20 scroll-motion-layer" data-scroll-motion>
-    <img src={image} alt={title} className="feature-card-image w-full h-full object-cover object-center transition-transform duration-700 hover:scale-105" loading="lazy" />
+    {image
+      ? <img src={image} alt={title} className="feature-card-image w-full h-full object-cover object-center transition-transform duration-700 hover:scale-105" loading="lazy" />
+      : <div className="w-full h-full flex flex-col items-center justify-center gap-5 bg-gradient-to-br from-[#70424f] via-[#4e313d] to-[#21191d] px-6" role="img" aria-label={title}>
+          <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-full border border-[#efb7c8]/50 bg-white/10 flex items-center justify-center shadow-xl">
+            <ShieldCheck aria-hidden="true" className="w-14 h-14 sm:w-16 sm:h-16 text-[#f8d1dd]" strokeWidth={1.25} />
+          </div>
+          <span className="font-raleway font-semibold text-center text-xl uppercase tracking-widest text-white/90">{title}</span>
+          <span className="h-px w-16 bg-[#efb7c8]/60" aria-hidden="true" />
+        </div>}
     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30" />
     <span className="absolute top-3 left-3 inline-flex items-center gap-1.5 bg-black/75 text-amber-200 text-[10px] font-bold px-2.5 py-1 rounded-full border border-amber-300/30">{icon}{label}</span>
   </div>
