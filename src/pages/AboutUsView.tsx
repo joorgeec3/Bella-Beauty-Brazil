@@ -8,6 +8,45 @@ interface AboutUsViewProps {
   language: Language;
 }
 
+const founderStory: Record<Language, { tagline: string; paragraphs: string[] }> = {
+  "en": {
+    "tagline": "Brazilian heart. Personal care. Beauty that feels like you.",
+    "paragraphs": [
+      "Hi, I’m Livia Rego, founder of Bella Beauty Brazil, brow specialist, cosmetic tattoo artist and beauty educator based in Greenslopes, Brisbane.",
+      "Originally from the Amazon region of Brazil, I moved to Australia looking for new challenges. With a background in foreign trade and air cargo sales, I never imagined beauty would become such a meaningful part of my life.",
+      "I built Bella Beauty Brazil from a home-based business, growing through personal connections, loyal clients and the care I put into every appointment.",
+      "Brows are a special passion of mine. From carefully mapped brow sculpting to realistic Nano Strokes, I love the details that make each face unique. I also offer Lip Blush, lash treatments and facials, and share my knowledge through one-on-one beauty training.",
+      "I believe good work takes time. That’s why I choose quality over quantity, giving each client my full attention. I take time to listen, understand your preferences and carefully plan your treatment. My goal is to earn your trust and build a lasting relationship, so you feel confident coming back to me.",
+      "As a business owner and a mother, I know how much it means to take a little time for yourself. Whether you visit me for a quick brow appointment or a bigger change, I want you to feel welcome, listened to and cared for.",
+      "I’d love to welcome you to Bella Beauty Brazil."
+    ]
+  },
+  "pt": {
+    "tagline": "Coração brasileiro. Cuidado pessoal. Beleza que combina com você.",
+    "paragraphs": [
+      "Oi, sou Livia Rego, fundadora da Bella Beauty Brazil, especialista em sobrancelhas, tatuagem cosmética e educadora na área da beleza em Greenslopes, Brisbane.",
+      "Sou da região amazônica do Brasil e me mudei para a Austrália em busca de novos desafios. Com experiência em comércio exterior e vendas de carga aérea, nunca imaginei que a beleza se tornaria uma parte tão importante da minha vida.",
+      "Comecei a Bella Beauty Brazil atendendo em casa e cresci por meio de conexões pessoais, clientes fiéis e do cuidado que dedico a cada atendimento.",
+      "As sobrancelhas são uma paixão especial. Da modelagem cuidadosa aos fios realistas de Nano Strokes, adoro os detalhes que tornam cada rosto único. Também ofereço Lip Blush, tratamentos de cílios e faciais, além de compartilhar meu conhecimento em cursos de beleza individuais.",
+      "Acredito que um bom trabalho exige tempo. Por isso, prefiro qualidade à quantidade e dedico toda a minha atenção a cada cliente. Escuto suas preferências, procuro entender o que você deseja e planejo cada tratamento com cuidado. Meu objetivo é conquistar sua confiança e construir uma relação duradoura, para que você se sinta segura ao voltar.",
+      "Como empresária e mãe, sei como é importante reservar um momento para cuidar de si. Seja para um atendimento rápido de sobrancelhas ou uma transformação maior, quero que você se sinta acolhida, ouvida e bem cuidada.",
+      "Vou adorar receber você na Bella Beauty Brazil."
+    ]
+  },
+  "es": {
+    "tagline": "Corazón brasileño. Atención personal. Belleza que se siente como tú.",
+    "paragraphs": [
+      "Hola, soy Livia Rego, fundadora de Bella Beauty Brazil, especialista en cejas, artista de tatuaje cosmético y educadora de belleza en Greenslopes, Brisbane.",
+      "Soy originaria de la región amazónica de Brasil y me mudé a Australia en busca de nuevos desafíos. Con experiencia en comercio exterior y ventas de carga aérea, nunca imaginé que la belleza llegaría a ser una parte tan importante de mi vida.",
+      "Comencé Bella Beauty Brazil desde casa y crecí gracias a las conexiones personales, a clientas fieles y al cuidado que pongo en cada cita.",
+      "Las cejas son una pasión especial para mí. Desde el diseño cuidadoso hasta los trazos realistas de Nano Strokes, me encantan los detalles que hacen que cada rostro sea único. También ofrezco Lip Blush, tratamientos de pestañas y faciales, y comparto mis conocimientos en formación de belleza individual.",
+      "Creo que un buen trabajo requiere tiempo. Por eso prefiero la calidad a la cantidad y dedico toda mi atención a cada clienta. Escucho tus preferencias, me tomo el tiempo para entender lo que buscas y planifico tu tratamiento cuidadosamente. Mi objetivo es ganar tu confianza y construir una relación duradera para que te sientas segura al volver.",
+      "Como empresaria y madre, sé lo importante que es dedicarte un momento a ti misma. Tanto si vienes para una cita rápida de cejas como para un cambio mayor, quiero que te sientas bienvenida, escuchada y cuidada.",
+      "Me encantará recibirte en Bella Beauty Brazil."
+    ]
+  }
+};
+
 export const AboutUsView: React.FC<AboutUsViewProps> = ({ onOpenAppointment, language }) => {
   return (
     <div className="bg-site">
@@ -76,36 +115,28 @@ export const AboutUsView: React.FC<AboutUsViewProps> = ({ onOpenAppointment, lan
           </div>
         </div>
 
-        {/* The client's approved founder story (October 2026 PDF). */}
+        {/* The client's complete approved founder story (October 2026 PDF). */}
         <section aria-labelledby="meet-livia-story" className="mb-16 sm:mb-20 rounded-2xl border border-[#e8d6d5] bg-white p-6 sm:p-10 shadow-sm">
           <p className="font-montserrat text-xs uppercase tracking-[0.18em] text-[#9a5967] font-semibold">Bella Beauty Brazil · Greenslopes</p>
           <h2 id="meet-livia-story" className="font-raleway text-2xl sm:text-3xl font-semibold text-[#5b3239] mt-3">
             {language === 'en' ? 'Meet Livia' : language === 'pt' ? 'Conheça Livia' : 'Conoce a Livia'}
           </h2>
-          <div className="grid lg:grid-cols-2 gap-6 sm:gap-10 mt-5 font-montserrat text-sm text-[#675960] leading-relaxed">
+          <p className="font-raleway text-lg text-[#9a5967] mt-3">{founderStory[language].tagline}</p>
+          <div className="grid lg:grid-cols-2 gap-6 sm:gap-10 mt-6 font-montserrat text-sm text-[#675960] leading-relaxed">
             <div className="space-y-4">
-              <p>{language === 'en'
-                ? "Hi, I’m Livia Rego, founder of Bella Beauty Brazil, brow specialist, cosmetic tattoo artist and beauty educator based in Greenslopes, Brisbane. Originally from the Amazon region of Brazil, I moved to Australia looking for new challenges."
-                : language === 'pt'
-                  ? 'Oi, sou Livia Rego, fundadora da Bella Beauty Brazil, especialista em sobrancelhas, tatuagem cosmética e educadora de beleza em Greenslopes, Brisbane. Vim da região amazônica do Brasil para novos desafios na Austrália.'
-                  : 'Hola, soy Livia Rego, fundadora de Bella Beauty Brazil, especialista en cejas, tatuaje cosmético y formación en belleza en Greenslopes, Brisbane. Soy de la Amazonía brasileña y me mudé a Australia buscando nuevos desafíos.'}</p>
-              <p>{language === 'en'
-                ? 'I built Bella Beauty Brazil from a home-based business, growing through personal connections, loyal clients and the care I put into every appointment. Brows are a special passion of mine.'
-                : language === 'pt'
-                  ? 'Comecei a Bella Beauty Brazil atendendo em casa e cresci graças às conexões pessoais, clientes fiéis e ao cuidado que dedico a cada atendimento. Sobrancelhas são minha paixão especial.'
-                  : 'Comencé Bella Beauty Brazil trabajando desde casa y crecí gracias a las recomendaciones, clientes fieles y el cuidado dedicado a cada cita. Las cejas son mi gran pasión.'}</p>
+              {founderStory[language].paragraphs.slice(0, 4).map((paragraph, index) => <p key={index}>{paragraph}</p>)}
             </div>
             <div className="space-y-4">
-              <p>{language === 'en'
-                ? 'I believe good work takes time. I choose quality over quantity, listening to your preferences, carefully planning your treatment and giving you my full attention.'
-                : language === 'pt'
-                  ? 'Acredito que um bom trabalho exige tempo. Prefiro qualidade à quantidade, ouvindo suas preferências, planejando cada procedimento com cuidado e oferecendo atenção individual.'
-                  : 'Creo que un buen trabajo requiere tiempo. Prefiero la calidad a la cantidad, escuchando tus preferencias y dedicando tiempo y atención a cada tratamiento.'}</p>
-              <p>{language === 'en'
-                ? 'As a business owner and a mother, I know how much it means to take a little time for yourself. I want you to feel welcome, listened to and cared for. I’d love to welcome you to Bella Beauty Brazil.'
-                : language === 'pt'
-                  ? 'Como empresária e mãe, sei como é importante reservar um momento para si. Quero que você se sinta acolhida, ouvida e bem cuidada. Vou adorar receber você na Bella Beauty Brazil.'
-                  : 'Como empresaria y madre, sé lo importante que es dedicarte tiempo. Quiero que te sientas bienvenida, escuchada y cuidada. Me encantará recibirte en Bella Beauty Brazil.'}</p>
+              {founderStory[language].paragraphs.slice(4).map((paragraph, index) => <p key={index + 4}>{paragraph}</p>)}
+              <div className="pt-2">
+                <button
+                  onClick={onOpenAppointment}
+                  className="inline-flex items-center space-x-2 bg-[#5b3239] hover:bg-[#7a4753] text-white text-xs font-bold uppercase tracking-widest px-8 py-3.5 rounded-full shadow-md transition-all cursor-pointer"
+                >
+                  <Calendar className="w-4 h-4 text-amber-200" />
+                  <span>{language === 'en' ? 'BOOK YOUR APPOINTMENT' : language === 'pt' ? 'AGENDE SEU HORÁRIO' : 'RESERVA TU CITA'}</span>
+                </button>
+              </div>
             </div>
           </div>
         </section>
