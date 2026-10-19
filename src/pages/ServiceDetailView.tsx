@@ -1,6 +1,7 @@
 import React from 'react';
 import { ArrowLeft, ArrowRight, Calendar, CheckCircle2, Clock, MapPin } from 'lucide-react';
 import { Language, SERVICES, getLocalizedService, getServiceBookingUrl, SERVICE_BOOKING_LINKS } from '../data/siteData';
+import { siteImages } from '../data/siteImages';
 import { SERVICE_GUIDES } from '../data/serviceGuides';
 
 interface ServiceDetailViewProps {
@@ -105,6 +106,21 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
   const related = group.related.map((id) => SERVICES.find((item) => item.id === id)).filter(Boolean) as typeof SERVICES;
   const isPriceConfirmed = Boolean(service.price && service.duration);
   const guide = SERVICE_GUIDES[base.id]?.[language];
+  const detailPhotos: Record<string, { src: string; alt: string }[]> = {
+    'nano-strokes': [
+      { src: siteImages.client.nanoStrokesMirror, alt: 'Client admiring her eyebrow treatment in a mirror' },
+      { src: siteImages.client.nanoStrokesFinishing, alt: 'Close-up of professional brow finishing details' },
+    ],
+    'lip-blush': [
+      { src: siteImages.client.lipBlushPalette, alt: 'Colour choice consultation for lip blushing' },
+      { src: siteImages.client.lipBlushPhotography, alt: 'Livia documenting a lip blush treatment' },
+    ],
+    'brow-sculpt-tint': [
+      { src: siteImages.client.browTools, alt: 'Precision brow tools used at Bella Beauty Brazil' },
+    ],
+  };
+  const supportingPhotos = detailPhotos[base.id] || [];
+
 
   return (
     <div className="bg-site">
@@ -131,6 +147,18 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
           </div>
         </div>
       </section>
+
+      {supportingPhotos.length > 0 && (
+        <section aria-label={translated(language, 'More treatment photographs', 'Mais fotos do tratamento', 'Más fotos del tratamiento')} className="bg-site px-4 sm:px-6 lg:px-8 pt-9">
+          <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {supportingPhotos.map((photo) => (
+              <div key={photo.src} className="overflow-hidden rounded-xl border border-[#9a5967]/20 bg-[#e8d6d5] aspect-[4/3]">
+                <img src={photo.src} alt={photo.alt} loading="lazy" className="h-full w-full object-cover" />
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
