@@ -1,4 +1,4 @@
-# Bella Beauty Brazil — checklist de requisitos (14 October 2026)
+# Bella Beauty Brazil — checklist de requisitos (revisão técnica: 19 October 2026)
 
 **Referência:** briefing aprovado, identidade visual Sheila preservada. Este checklist distingue o código preparado de testes ainda não realizados.
 
@@ -34,7 +34,9 @@
 - [x] Manter cursos confirmados com CTA Enquire/Timely, sem checkout fictício.
 - [x] Corrigir a fotografia de pele: substituir a imagem de materiais/pigmentos por uma foto real de atendimento facial presente no projeto, sem alterar a hero.
 - [x] Corrigir as descrições alternativas (ALT) para indicar quando se trata de fotografia editorial, e não de registro do tratamento exato.
-- [ ] Receber fotos **reais e aprovadas** específicas de outros tratamentos para eliminar todas as imagens repetidas. O acervo atual não contém 17 fotos individuais apropriadas; não inventar tratamentos ou fotos.
+- [x] Eliminar fotos repetidas dos **cards listados em Services**: sete imagens diferentes aprovadas, outros dez cards ficam sem fotografia (mantendo nome, preço, duração e botões).
+- [x] Garantir quatro fotografias diferentes nos cards destacados na Home, preservando a identidade original.
+- [ ] Receber fotos **reais e aprovadas** específicas para completar imagens dos dez tratamentos atualmente apresentados em cards sem fotografia, sem repetir ou inventar procedimentos.
 - [x] Conferir nota/reviews por fonte pública independente: RightForMe registrou 5,0 de 126 avaliações do Google em 25 setembro de 2026. O site deixa claro que não é feed em tempo real.
 - [ ] Confirmar com acesso direto ao perfil Google o conteúdo integral, a autoria e a contagem atual das avaliações individuais; manter botão para o perfil oficial.
 - [x] Evitar publicar protocolos de preparação e cuidados não verificados; os 17 textos orientam a consultar diretamente Bella Beauty Brazil.
@@ -43,8 +45,12 @@
 ## Etapa 3 — qualidade e publicação
 - [x] Animações funcionaram após a configuração de movimento reduzido ser alterada no Windows do usuário.
 - [x] Preservar `prefers-reduced-motion` para visitantes que escolham reduzir movimento.
-- [ ] Validar visualmente preview em desktop e celular (375, 390, 430, 768, 1024 e 1440 px).
-- [ ] Confirmar lightbox, filtros, Before & After, menus, traduções e CTAs no navegador.
+- [x] Executar **testes automatizados em Chromium** nas larguras de 375, 390, 430, 768, 1024 e 1440 px (36 verificações aprovadas, sem overflow horizontal ou erros de runtime). Relatório: https://github.com/joorgeec3/Bella-Beauty-Brazil/actions/runs/39247052710
+- [x] Salvar screenshots completos de Home e Services nas seis larguras no artefato `bella-responsive-qa` desse workflow.
+- [ ] Conferência **visual humana** dos screenshots e teste exploratório em dispositivos físicos; capturas automáticas não substituem inspeção visual manual.
+- [x] Confirmar automaticamente no Chromium: 17 cards, links Timely, busca, filtros (Lashes), estado vazio, menu compacto em 375–1024 px, Escape, abertura e fechamento da galeria por teclado, navegação de cursos e página 404.
+- [x] Corrigir teste da galeria: aguardar Pause do carrossel em movimento antes de clicar em fotos; a rotina de QA tem timeout e encerra seu servidor.
+- [ ] Conferir manualmente em navegador: animações da seção Before & After, todas as traduções, fluxo completo do Timely, links externos e aparências de 12 screenshots.
 - [x] Revisar no código os links de Timely, Maps, telefone, WhatsApp e Instagram; remover um ícone duplicado do Instagram.
 - [x] Corrigir formulários e chats: a página de contato abre rascunho no e-mail sem simular mensagem enviada; o WhatsApp abre uma conversa real e o modal direciona a unidade Greenslopes.
 - [ ] Testar os links em navegador real, inclusive abrir o Timely e seu fluxo no celular.
@@ -52,7 +58,9 @@
 - [ ] Medir LCP, CLS e INP em navegador/usuários reais (metas, não resultados prometidos).
 - [x] Configurar `npm run build` para fazer checagem TypeScript, gerar 23 URLs e validar a existência dos arquivos de SEO e robots, antes de aceitar o deploy.
 - [x] Validar presença dos 17 slugs no código, no prerender e no sitemap, e confirmar existência das imagens no repositório.
-- [ ] Revisar o PR e mesclar à `main` somente após os testes. Conferir nova implantação Production na Vercel.
+- [x] Resolver conflitos de integração com `main`: o PR #4 agora está marcado como mesclável pelo GitHub.
+- [x] Verificar build e typecheck na Vercel da branch, além dos 36 testes automatizados em GitHub Actions.
+- [ ] Publicar PR #4 na `main` apenas após aprovação do responsável pela publicação. Conferir novo deployment Production na Vercel.
 
 ## Atenção sobre domínio
 O domínio atualmente conectado à produção Vercel é `https://bella-beauty-brazil.vercel.app/`. O site institucional em `www.bellabeautybrazil.com.au` ainda não consta nos domínios conectados deste projeto. Canonicals publicados devem apontar para a versão efetivamente servida. Após migração, configurar `PUBLIC_SITE_URL` e `VITE_PUBLIC_SITE_URL` no build e atualizar os metadados estáticos de `index.html` antes de enviar o novo sitemap.
