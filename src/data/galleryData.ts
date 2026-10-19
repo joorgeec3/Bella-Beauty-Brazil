@@ -51,4 +51,22 @@ export const bellaGallery: BellaGalleryItem[] = uniqueImages([
   { id: 'salon-celebration-2026', image: '/assets/bella/client-2026-10/salon-celebration.webp', category: 'Studio', kind: 'studio', alt: 'Bella Beauty Brazil welcoming salon experience' },
 ].map((item) => withSiteBase(item as BellaGalleryItem)));
 
-export const bellaBeforeAfter = uniqueImages(clientGallery.filter((item) => item.kind === 'result'));
+/** The homepage should not show the same photos again in Services, Meet Livia or Salon.
+ * All original files remain available through the underlying sections and service detail routes.
+ */
+const homepageFeaturedImageNames = new Set([
+  'nano-strokes-procedure.webp',
+  'lip-blush-procedure.webp',
+  'about-livia-02.webp',
+  'salon-brand-wall.webp',
+  'salon-details.webp',
+  'salon-consultation.webp',
+  'salon-client-experience.webp',
+  'salon-celebration.webp',
+]);
+export const homeGallery = bellaGallery.filter(({ image }) => !homepageFeaturedImageNames.has(image.split('/').pop() || ''));
+
+// The featured lash comparison already appears in the first section, so do not repeat it below.
+export const bellaBeforeAfter = uniqueImages(clientGallery.filter((item) =>
+  item.kind === 'result' && !item.image.endsWith('/lashes-result-03.webp')
+));
