@@ -56,12 +56,13 @@ try {
       assert.equal(await menu.getAttribute('aria-expanded'), 'false');
     });
 
-    await check(`${width}px services, 20 routes, unique photos, search, filtering, booking`, async () => {
+    await check(`${width}px services, 20 routes, authentic photos, search, filtering, booking`, async () => {
       await page.goto(base + '/');
       await page.locator('.hero-cta-sequence button').nth(2).click();
       await page.locator('input[type="search"]').waitFor();
       assert(page.url().endsWith('/services'), 'Hero button does not lead to services');
-      assert.equal(await page.locator('main article').count(), 20, 'Expected 20 treatment cards');
+      assert.equal(await page.locator('main article').count(), 20, 'Expected 20 clear treatment cards including Shadow Brows');
+      assert.equal(await page.getByRole('heading', { name: 'Shadow Brows', exact: true }).count(), 1, 'Shadow Brows must be a selectable cosmetic tattoo service');
       const priceGroups = page.locator('#full-price-list details');
       assert.equal(await priceGroups.count(), 7, 'Approved PDF must show seven price groups including women and men waxing');
       assert(await page.locator('#prices-skin').evaluate((node) => node.open), 'Skin Treatments group should start expanded');
@@ -71,8 +72,8 @@ try {
       const cosmetic = await page.locator('#prices-cosmetic').innerText();
       assert(cosmetic.includes('A$630') && cosmetic.includes('A$150'), 'New Cosmetic Tattooing pricing is missing');
       const imageSources = await page.locator('main article img').evaluateAll((images) => images.map((image) => image.getAttribute('src')));
-      assert.equal(imageSources.length, 7, 'Show seven distinct service photos with the new Nano Strokes image');
-      assert.equal(new Set(imageSources).size, imageSources.length, 'Repeated service card photos');
+      assert(imageSources.length >= 10, 'Brow, Lip Blush, Nano Strokes and Waxing previews should have real photos');
+      assert(imageSources.some(src => src?.includes('client-2026-10/nano-strokes-procedure.webp')), 'Nano Strokes must use its own client photo');
       assert(imageSources.every(src => !/brows\.png|treatments\.png|brows-result-04|lashes-result-02/.test(src)), 'Removed client photo still shown on a service card');
       const bookingLinks = await page.locator('main article a[target="_blank"]').evaluateAll((links) => links.map((a) => a.href));
       assert.equal(bookingLinks.length, 20);
@@ -93,7 +94,17 @@ try {
     });
 
     await check(`${width}px treatment, courses, contact and 404 routes`, async () => {
+      await go('/services/lip-blush');
+      const lipGallery = page.locator('#service-photos');
+      assert.equal(await lipGallery.locator('button[aria-pressed]').count(), 3, 'Three client-supplied Lip Blush photos must be accessible');
+      const before = await lipGallery.locator('img').first().getAttribute('src');
+      await lipGallery.getByRole('button', { name: /Next photo|Próxima foto|Foto siguiente/ }).click();
+      assert.notEqual(await lipGallery.locator('img').first().getAttribute('src'), before, 'Gallery arrows must change the selected photo');
+      assert((await lipGallery.getByRole('link', { name: /Open full photo|Abrir foto inteira|Abrir foto completa/ }).count()) > 0, 'Full photo access missing');
+      await go('/services/shadow-brows');
+      assert((await page.locator('#root main').first().innerText()).includes('Shading creates a softly filled-in appearance'), 'Full PDF-approved Shadow Brows description is missing');
       await go('/services/nano-strokes');
+      assert.equal(await page.locator('#service-photos button[aria-pressed]').count(), 3, 'Nano Strokes needs the three correct treatment photos');
       assert(await page.locator('h1').first().innerText());
       assert((await page.locator('a[href*="book.gettimely.com"]').count()) > 0, 'Treatment booking link not found');
       await go('/courses');

@@ -8,7 +8,7 @@ interface ServicesSectionProps { onOpenAppointment: () => void; onNavigateToServ
 export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenAppointment, onNavigateToServices, language }) => {
   // Four different photos: no duplicate photos between the homepage service cards.
   const cardPhotos: Record<string, string> = {
-    'nano-strokes': siteImages.services.brows,
+    'nano-strokes': siteImages.services.microblading,
     'lip-blush': siteImages.services.lipBlush,
     'lash-lift': siteImages.services.lashes,
     dermaplaning: siteImages.services.facialTreatment,

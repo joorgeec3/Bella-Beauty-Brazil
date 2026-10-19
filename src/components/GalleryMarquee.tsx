@@ -6,9 +6,9 @@ import { GalleryLightbox } from './GalleryLightbox';
 
 type Filter = 'All' | BellaGalleryCategory;
 const labels: Record<Language, Record<Filter, string>> = {
-  en: { All:'All', Brows:'Brows', Lips:'Lips', Lashes:'Lashes', Skin:'Skin', Studio:'Studio', Livia:'Meet Livia' },
-  pt: { All:'Todas', Brows:'Sobrancelhas', Lips:'Lábios', Lashes:'Cílios', Skin:'Pele', Studio:'Estúdio', Livia:'Conheça Livia' },
-  es: { All:'Todas', Brows:'Cejas', Lips:'Labios', Lashes:'Pestañas', Skin:'Piel', Studio:'Estudio', Livia:'Conoce a Livia' },
+  en: { All:'All', Brows:'Brows', Lips:'Lips', Lashes:'Lashes', Skin:'Skin', Studio:'Studio', Livia:'Meet Livia', Waxing:'Waxing' },
+  pt: { All:'Todas', Brows:'Sobrancelhas', Lips:'Lábios', Lashes:'Cílios', Skin:'Pele', Studio:'Estúdio', Livia:'Conheça Livia', Waxing:'Depilação' },
+  es: { All:'Todas', Brows:'Cejas', Lips:'Labios', Lashes:'Pestañas', Skin:'Piel', Studio:'Estudio', Livia:'Conoce a Livia', Waxing:'Depilación' },
 };
 
 export const GalleryMarquee: React.FC<{language:Language}> = ({ language }) => {
@@ -22,7 +22,7 @@ export const GalleryMarquee: React.FC<{language:Language}> = ({ language }) => {
   const driftDirectionRef = useRef(1);
   const hoveredRef = useRef(false);
   const resumeTimerRef = useRef<number | null>(null);
-  const categories = useMemo(() => (['All', 'Brows', 'Lips', 'Lashes', 'Skin', 'Studio', 'Livia'] as Filter[]).filter(c => c==='All' || bellaGallery.some(item=>item.category===c)),[]);
+  const categories = useMemo(() => (['All', 'Brows', 'Lips', 'Lashes', 'Skin', 'Studio', 'Livia', 'Waxing'] as Filter[]).filter(c => c==='All' || bellaGallery.some(item=>item.category===c)),[]);
   const current = useMemo(() => bellaGallery.filter(item=>filter==='All'||item.category===filter),[filter]);
   const shown = filter==='All' ? current.slice(0,limit) : current;
   // Never show cloned cards side-by-side when a filtered category has too few photos.

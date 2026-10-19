@@ -141,6 +141,21 @@ export const AboutUsView: React.FC<AboutUsViewProps> = ({ onOpenAppointment, lan
           </div>
         </section>
 
+        {/* Additional recent portraits provided by Livia, replacing older gallery portraits. */}
+        <section aria-labelledby="livia-photos-heading" className="mb-16 sm:mb-20">
+          <h2 id="livia-photos-heading" className="font-raleway text-xl sm:text-2xl text-[#5b3239] font-semibold text-center">
+            {language === 'en' ? 'More photos of Livia' : language === 'pt' ? 'Mais fotos da Livia' : 'Más fotos de Livia'}
+          </h2>
+          <div className="grid grid-cols-2 gap-3 sm:gap-6 max-w-3xl mx-auto mt-6">
+            <a href={siteImages.client.aboutLivia02} target="_blank" rel="noopener noreferrer" className="overflow-hidden rounded-2xl border border-[#e8d6d5] shadow-md focus-visible:outline-2 focus-visible:outline-[#9a5967]" aria-label={language === 'en' ? 'View full photo of Livia' : 'Ver foto completa de Livia'}>
+              <img src={siteImages.client.aboutLivia02} alt="Livia Rego at Bella Beauty Brazil" className="w-full aspect-[4/5] object-cover hover:scale-105 transition-transform duration-300" loading="lazy" />
+            </a>
+            <a href={siteImages.client.aboutLivia03} target="_blank" rel="noopener noreferrer" className="overflow-hidden rounded-2xl border border-[#e8d6d5] shadow-md focus-visible:outline-2 focus-visible:outline-[#9a5967]" aria-label={language === 'en' ? 'View second photo of Livia' : 'Ver outra foto de Livia'}>
+              <img src={siteImages.client.aboutLivia03} alt="Livia Rego portrait at Bella Beauty Brazil" className="w-full aspect-[4/5] object-cover hover:scale-105 transition-transform duration-300" loading="lazy" />
+            </a>
+          </div>
+        </section>
+
         {/* Pillars */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 border-t border-neutral-100 pt-16">
           <div className="text-center p-6 rounded-2xl bg-site-soft/70">

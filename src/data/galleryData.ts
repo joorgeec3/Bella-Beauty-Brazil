@@ -1,5 +1,5 @@
 /** Real images supplied by the client. Result comparisons stay exclusively in Before & After. */
-export type BellaGalleryCategory = 'Brows' | 'Lips' | 'Lashes' | 'Skin' | 'Studio' | 'Livia';
+export type BellaGalleryCategory = 'Brows' | 'Lips' | 'Lashes' | 'Skin' | 'Studio' | 'Livia' | 'Waxing';
 export type BellaGalleryItem = { id: string; image: string; category: BellaGalleryCategory; kind: 'result' | 'studio' | 'livia' | 'editorial'; alt: string };
 
 const withSiteBase = (item: BellaGalleryItem): BellaGalleryItem => ({
@@ -29,22 +29,28 @@ export const clientGallery: BellaGalleryItem[] = [
 
 const uniqueImages = (items: BellaGalleryItem[]) => items.filter((item, index) => items.findIndex((candidate) => candidate.image === item.image) === index);
 
+/** Only the 17 newest original photos supplied by the client appear in the main gallery.
+ * Previously received comparison images remain exclusively in Before & After.
+ * No editorial image is labelled as a treatment result.
+ */
 export const bellaGallery: BellaGalleryItem[] = uniqueImages([
-  // New client-approved editorial photos, organised by the original filenames.
-  { id: 'brow-tools-2026', image: '/assets/bella/client-2026-10/brow-tools.webp', category: 'Brows', kind: 'editorial', alt: 'Professional brow styling tools at Bella Beauty Brazil' },
-  { id: 'brow-styling-2026', image: '/assets/bella/client-2026-10/brow-styling.webp', category: 'Brows', kind: 'editorial', alt: 'Livia Rego shaping eyebrows during an appointment' },
-  { id: 'nano-mirror-2026', image: '/assets/bella/client-2026-10/nano-strokes-mirror.webp', category: 'Brows', kind: 'editorial', alt: 'Client checking the brow appointment result in a hand mirror' },
-  { id: 'nano-finishing-2026', image: '/assets/bella/client-2026-10/nano-strokes-finishing.webp', category: 'Brows', kind: 'editorial', alt: 'Finishing details of a professional brow appointment' },
-  { id: 'lip-palette-2026', image: '/assets/bella/client-2026-10/lip-blush-palette.webp', category: 'Lips', kind: 'editorial', alt: 'Lip blush pigment colours selected during consultation' },
-  { id: 'lip-photography-2026', image: '/assets/bella/client-2026-10/lip-blush-photography.webp', category: 'Lips', kind: 'editorial', alt: 'Lip-blushing client photographed at the studio' },
-  { id: 'about-livia03-2026', image: '/assets/bella/client-2026-10/about-livia-03.webp', category: 'Livia', kind: 'livia', alt: 'Livia Rego, founder of Bella Beauty Brazil, in pink blazer' },
-  { id: 'lips-editorial', image: '/assets/bella/cosmetic-tattooing.png', category: 'Lips', kind: 'editorial', alt: 'Bella Beauty Brazil individual lip cosmetic tattooing treatment' },
-  { id: 'lashes-editorial', image: '/assets/bella/lashes.jpg', category: 'Lashes', kind: 'editorial', alt: 'Bella Beauty Brazil individual eyelash treatment' },
-  { id: 'skin-editorial', image: '/assets/bella/dermaplaning-facial-treatment.webp', category: 'Skin', kind: 'editorial', alt: 'Professional facial skin treatment at Bella Beauty Brazil' },
-  // Keep the brow appointment photograph for Brow Artistry, not repeated in the gallery.
-  ...clientGallery.filter((item) => item.kind === 'livia' && !['livia-portrait-01', 'livia-portrait-02'].includes(item.id)),
-  { id: 'studio-interior-01', image: '/assets/bella/gallery/studio-treatment-room.webp', category: 'Studio', kind: 'studio', alt: 'Bella Beauty Brazil treatment room with bed and brand wall' },
-  { id: 'studio-interior-02', image: '/assets/bella/gallery/studio-mirror-area.webp', category: 'Studio', kind: 'studio', alt: 'Bella Beauty Brazil studio mirror and beauty display shelves' },
+  { id: 'brow-tools-2026', image: '/assets/bella/client-2026-10/brow-tools.webp', category: 'Brows', kind: 'editorial', alt: 'Professional brow tools at Bella Beauty Brazil' },
+  { id: 'brow-styling-2026', image: '/assets/bella/client-2026-10/brow-styling.webp', category: 'Brows', kind: 'editorial', alt: 'Livia working on brows at Bella Beauty Brazil' },
+  { id: 'nano-procedure-2026', image: '/assets/bella/client-2026-10/nano-strokes-procedure.webp', category: 'Brows', kind: 'editorial', alt: 'Actual Nano Strokes procedure at Bella Beauty Brazil' },
+  { id: 'nano-mirror-2026', image: '/assets/bella/client-2026-10/nano-strokes-mirror.webp', category: 'Brows', kind: 'editorial', alt: 'Nano Strokes appointment and mirror' },
+  { id: 'nano-finishing-2026', image: '/assets/bella/client-2026-10/nano-strokes-finishing.webp', category: 'Brows', kind: 'editorial', alt: 'Nano Strokes finishing' },
+  { id: 'lip-procedure-2026', image: '/assets/bella/client-2026-10/lip-blush-procedure.webp', category: 'Lips', kind: 'editorial', alt: 'Actual Lip Blush procedure at Bella Beauty Brazil' },
+  { id: 'lip-palette-2026', image: '/assets/bella/client-2026-10/lip-blush-palette.webp', category: 'Lips', kind: 'editorial', alt: 'Lip Blush pigment palette at the studio' },
+  { id: 'lip-photography-2026', image: '/assets/bella/client-2026-10/lip-blush-photography.webp', category: 'Lips', kind: 'editorial', alt: 'Lip Blush appointment photographed at the studio' },
+  { id: 'waxing-2026', image: '/assets/bella/client-2026-10/waxing-treatment.webp', category: 'Waxing', kind: 'editorial', alt: 'Waxing procedure with Livia' },
+  { id: 'livia01-2026', image: '/assets/bella/client-2026-10/about-livia-01.webp', category: 'Livia', kind: 'livia', alt: 'Livia Rego in a pink blazer' },
+  { id: 'livia02-2026', image: '/assets/bella/client-2026-10/about-livia-02.webp', category: 'Livia', kind: 'livia', alt: 'Livia Rego, founder of Bella Beauty Brazil' },
+  { id: 'livia03-2026', image: '/assets/bella/client-2026-10/about-livia-03.webp', category: 'Livia', kind: 'livia', alt: 'Livia Rego portrait' },
+  { id: 'salon-brand-wall-2026', image: '/assets/bella/client-2026-10/salon-brand-wall.webp', category: 'Studio', kind: 'studio', alt: 'Bella Beauty Brazil salon brand wall' },
+  { id: 'salon-details-2026', image: '/assets/bella/client-2026-10/salon-details.webp', category: 'Studio', kind: 'studio', alt: 'Salon beauty products and atmosphere' },
+  { id: 'salon-consultation-2026', image: '/assets/bella/client-2026-10/salon-consultation.webp', category: 'Studio', kind: 'studio', alt: 'Consultation at Bella Beauty Brazil' },
+  { id: 'salon-client-experience-2026', image: '/assets/bella/client-2026-10/salon-client-experience.webp', category: 'Studio', kind: 'studio', alt: 'Inside a studio appointment' },
+  { id: 'salon-celebration-2026', image: '/assets/bella/client-2026-10/salon-celebration.webp', category: 'Studio', kind: 'studio', alt: 'Bella Beauty Brazil welcoming salon experience' },
 ].map((item) => withSiteBase(item as BellaGalleryItem)));
 
 export const bellaBeforeAfter = uniqueImages(clientGallery.filter((item) => item.kind === 'result'));
