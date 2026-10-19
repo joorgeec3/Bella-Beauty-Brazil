@@ -130,7 +130,7 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
               <h1 className="font-raleway text-3xl sm:text-5xl font-light uppercase tracking-wider leading-tight">{service.title}</h1>
               <p className="font-montserrat text-sm sm:text-base text-neutral-200 mt-5 max-w-xl leading-relaxed">{service.description}</p>
               <div className="flex flex-wrap gap-4 mt-7">
-                <a href={getServiceBookingUrl(base.id)} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-[#efb7c8] hover:bg-white text-[#5b3239] text-xs font-bold uppercase tracking-widest px-7 py-4 rounded-full cursor-pointer transition-colors">
+                <a href={getServiceBookingUrl(base.id)}  className="inline-flex items-center gap-2 bg-[#efb7c8] hover:bg-white text-[#5b3239] text-xs font-bold uppercase tracking-widest px-7 py-4 rounded-full cursor-pointer transition-colors">
                   <Calendar className="w-4 h-4" /> {translated(language, 'Book now', 'Agendar agora', 'Reservar ahora')}
                 </a>
                 {hasClientPhotos && <a href="#service-photos" className="inline-flex items-center gap-1.5 bg-white/15 hover:bg-white/25 text-white text-xs font-bold px-5 py-4 rounded-full transition-colors">{translated(language, 'See real photos', 'Ver fotos reais', 'Ver fotos reales')}<ArrowRight className="w-4 h-4" /></a>}
@@ -180,7 +180,7 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
               <h2 className="font-raleway text-2xl font-bold uppercase tracking-wider">{translated(language, 'Book this service', 'Agende este serviço', 'Reserva este servicio')}</h2>
               <div className="flex items-center gap-3 mt-5 text-[#efb7c8]"><Calendar className="w-5 h-5" /><strong className="font-montserrat text-xl">{isPriceConfirmed ? `A$${service.price}` : translated(language, 'Enquire', 'Consultar', 'Consultar')}</strong></div>
               {service.duration && <div className="flex items-center gap-3 mt-3 text-neutral-200"><Clock className="w-5 h-5" /><span className="font-montserrat text-sm">{service.duration}</span></div>}
-              <a href={getServiceBookingUrl(base.id)} target="_blank" rel="noopener noreferrer" className="mt-7 inline-flex w-full items-center justify-center gap-2 bg-[#efb7c8] hover:bg-white text-[#5b3239] text-xs font-bold uppercase tracking-widest px-5 py-4 rounded-full cursor-pointer transition-colors"><Calendar className="w-4 h-4" />{SERVICE_BOOKING_LINKS[base.id]
+              <a href={getServiceBookingUrl(base.id)}  className="mt-7 inline-flex w-full items-center justify-center gap-2 bg-[#efb7c8] hover:bg-white text-[#5b3239] text-xs font-bold uppercase tracking-widest px-5 py-4 rounded-full cursor-pointer transition-colors"><Calendar className="w-4 h-4" />{SERVICE_BOOKING_LINKS[base.id]
                 ? translated(language, 'Book this treatment', 'Agendar este tratamento', 'Reservar este tratamiento')
                 : translated(language, 'Choose treatment on Timely', 'Selecionar tratamento no Timely', 'Elegir tratamiento en Timely')}</a>
               <p className="font-montserrat text-xs text-neutral-300 mt-5 leading-relaxed">{translated(language, 'Bella Beauty Brazil · Suite 3, 412 Logan Road, Greenslopes, QLD 4120.', 'Bella Beauty Brazil · Suite 3, 412 Logan Road, Greenslopes, QLD 4120.', 'Bella Beauty Brazil · Suite 3, 412 Logan Road, Greenslopes, QLD 4120.')}</p>
