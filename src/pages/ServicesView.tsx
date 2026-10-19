@@ -211,7 +211,7 @@ export const ServicesView: React.FC<ServicesViewProps> = ({ initialServiceId, on
                   className="inline-flex items-center gap-1.5 border border-[#9a5967]/40 rounded-full px-3.5 py-2.5 text-[11px] font-montserrat font-bold text-[#5b3239] hover:bg-[#f3d9d0] focus-visible:outline-2 focus-visible:outline-[#9a5967] transition-colors">
                   {labels.details}<ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
                 </a>
-                <a href={getServiceBookingUrl(service.id)} target="_blank" rel="noopener noreferrer"
+                <a href={getServiceBookingUrl(service.id)} 
                   className="inline-flex items-center gap-1.5 rounded-full px-3.5 py-2.5 bg-[#5b3239] text-white text-[11px] font-montserrat font-bold hover:bg-[#7a4753] focus-visible:outline-2 focus-visible:outline-[#9a5967] transition-colors">
                   <CalendarDays className="w-3.5 h-3.5" aria-hidden="true" />{typeof service.price === 'number' ? labels.book : labels.enquire}
                 </a>
@@ -234,7 +234,7 @@ export const ServicesView: React.FC<ServicesViewProps> = ({ initialServiceId, on
           <p className="font-montserrat text-sm text-[#675960] leading-relaxed mt-2 max-w-xl">{labels.helpText}</p>
           <p className="font-montserrat text-xs text-[#675960] flex items-center gap-1 mt-3"><MapPin className="w-3.5 h-3.5" aria-hidden="true" />Greenslopes · Brisbane Southside</p>
         </div>
-        <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer"
+        <a href={BOOKING_URL} 
           className="inline-flex items-center justify-center gap-2 bg-[#5b3239] hover:bg-[#7a4753] text-white uppercase tracking-wide text-xs font-montserrat font-bold rounded-full px-6 py-4 shrink-0 transition-colors">
           {labels.helpCta}<ArrowRight className="w-4 h-4" aria-hidden="true" />
         </a>
