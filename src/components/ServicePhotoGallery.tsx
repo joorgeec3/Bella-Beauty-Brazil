@@ -11,8 +11,6 @@ const browPhotos: TreatmentPhoto[] = [
 ];
 const nanoPhotos: TreatmentPhoto[] = [
   { src: siteImages.client.nanoStrokesProcedure, alt: 'Livia performing a Nano Strokes brow treatment', caption: 'Nano Strokes procedure' },
-  { src: siteImages.client.nanoStrokesMirror, alt: 'Nano Strokes client looking in a mirror', caption: 'Client experience' },
-  { src: siteImages.client.nanoStrokesFinishing, alt: 'Close-up of Nano Strokes brow appointment', caption: 'Finishing details' },
 ];
 const lipPhotos: TreatmentPhoto[] = [
   { src: siteImages.client.lipBlushProcedure, alt: 'Lip Blush procedure performed at Bella Beauty Brazil', caption: 'Lip Blush procedure' },
