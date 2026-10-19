@@ -30,6 +30,14 @@ export const clientGallery: BellaGalleryItem[] = [
 const uniqueImages = (items: BellaGalleryItem[]) => items.filter((item, index) => items.findIndex((candidate) => candidate.image === item.image) === index);
 
 export const bellaGallery: BellaGalleryItem[] = uniqueImages([
+  // New client-approved editorial photos, organised by the original filenames.
+  { id: 'brow-tools-2026', image: '/assets/bella/client-2026-10/brow-tools.webp', category: 'Brows', kind: 'editorial', alt: 'Professional brow styling tools at Bella Beauty Brazil' },
+  { id: 'brow-styling-2026', image: '/assets/bella/client-2026-10/brow-styling.webp', category: 'Brows', kind: 'editorial', alt: 'Livia Rego shaping eyebrows during an appointment' },
+  { id: 'nano-mirror-2026', image: '/assets/bella/client-2026-10/nano-strokes-mirror.webp', category: 'Brows', kind: 'editorial', alt: 'Client checking the brow appointment result in a hand mirror' },
+  { id: 'nano-finishing-2026', image: '/assets/bella/client-2026-10/nano-strokes-finishing.webp', category: 'Brows', kind: 'editorial', alt: 'Finishing details of a professional brow appointment' },
+  { id: 'lip-palette-2026', image: '/assets/bella/client-2026-10/lip-blush-palette.webp', category: 'Lips', kind: 'editorial', alt: 'Lip blush pigment colours selected during consultation' },
+  { id: 'lip-photography-2026', image: '/assets/bella/client-2026-10/lip-blush-photography.webp', category: 'Lips', kind: 'editorial', alt: 'Lip-blushing client photographed at the studio' },
+  { id: 'about-livia03-2026', image: '/assets/bella/client-2026-10/about-livia-03.webp', category: 'Livia', kind: 'livia', alt: 'Livia Rego, founder of Bella Beauty Brazil, in pink blazer' },
   { id: 'lips-editorial', image: '/assets/bella/cosmetic-tattooing.png', category: 'Lips', kind: 'editorial', alt: 'Bella Beauty Brazil individual lip cosmetic tattooing treatment' },
   { id: 'lashes-editorial', image: '/assets/bella/lashes.jpg', category: 'Lashes', kind: 'editorial', alt: 'Bella Beauty Brazil individual eyelash treatment' },
   { id: 'skin-editorial', image: '/assets/bella/dermaplaning-facial-treatment.webp', category: 'Skin', kind: 'editorial', alt: 'Professional facial skin treatment at Bella Beauty Brazil' },
