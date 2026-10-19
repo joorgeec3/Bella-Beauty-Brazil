@@ -18,6 +18,9 @@ const services = {
   microneedling: { title: 'Microneedling', description: 'A customised skin treatment to help improve the appearance of fine lines, uneven skin texture and acne scars.', image: '/assets/bella/dermaplaning-facial-treatment.webp', price: '185', duration: '1 hour' },
   'facial-spa': { title: 'Facial Spa', description: 'Relaxing facial cleansing, gentle exfoliation, serums, facial mask and massage.', image: '/assets/bella/dermaplaning-facial-treatment.webp', price: '150', duration: '1 hour, 20 mins' },
   'deluxe-facial': { title: 'Deluxe Facial', description: 'Two-hour personalised facial with cleansing, dermaplaning, microneedling, facial mask and LED light therapy when suitable.', image: '/assets/bella/dermaplaning-facial-treatment.webp', price: '360', duration: '2 hours' },
+  'lip-bliss-hydration': { title: 'Lip Bliss Hydration', description: 'Hydration treatment for dry lips without tattoo pigment or injectable volume.', image: '/assets/bella/gallery/studio-treatment-room.webp', price: '99' },
+  'grow-up-hair-brows': { title: 'Grow Up Hair – Brows', description: 'Personalised care for sparse or overplucked natural brows and the underlying skin.', image: '/assets/bella/gallery/studio-treatment-room.webp', price: '150' },
+  'grow-up-hair-scalp': { title: 'Grow Up Hair – Scalp', description: 'Individual scalp assessment and care for clients concerned about thinning hair.', image: '/assets/bella/gallery/studio-treatment-room.webp', price: '200' },
   'teeth-whitening': { title: 'Teeth Whitening', description: 'Teeth whitening service published by Bella Beauty Brazil in the official Timely catalogue; confirm suitability and aftercare with the studio.', image: '/assets/bella/gallery/studio-treatment-room.webp', price: '199', duration: '1 hour' },
   waxing: { title: 'Brazilian Waxing', description: 'Professional Brazilian waxing from Bella Beauty Brazil.', image: '/assets/bella/client-2026-10/waxing-treatment.webp', price: '82', duration: '30 mins' },
 };
@@ -58,7 +61,7 @@ for (const [slug, service] of Object.entries(services)) {
     }],
   } : null;
   const schemaGraph = faqSchema ? { '@context': 'https://schema.org', '@graph': [schema, faqSchema] } : schema;
-  const body = `<main><article><p>Bella Beauty Brazil · Greenslopes, Brisbane</p><h1>${escapeHtml(service.title)}</h1><p>${escapeHtml(service.description)}</p><img src="${publicAsset(service.image)}" alt="${escapeHtml(service.title)} at Bella Beauty Brazil in Greenslopes" /><h2>About this treatment</h2>${treatmentInfo}<h2>Book this service</h2>${service.price ? `<p>A$${service.price} · ${service.duration}</p>` : ''}<p><a href="https://book.gettimely.com/bellabrazil/book/embed?client-login=true">Book on Timely</a></p></article></main>`;
+  const body = `<main><article><p>Bella Beauty Brazil · Greenslopes, Brisbane</p><h1>${escapeHtml(service.title)}</h1><p>${escapeHtml(service.description)}</p><img src="${publicAsset(service.image)}" alt="${escapeHtml(service.title)} at Bella Beauty Brazil in Greenslopes" /><h2>About this treatment</h2>${treatmentInfo}<h2>Book this service</h2>${service.price ? `<p>A$${service.price}${service.duration ? ' · ' + service.duration : ''}</p>` : ''}<p><a href="https://book.gettimely.com/bellabrazil/book/embed?client-login=true">Book on Timely</a></p></article></main>`;
   const html = renderPage({ title, description, canonicalUrl: url, body, schema: schemaGraph });
   const target = join(buildDir, 'services', slug, 'index.html');
   await mkdir(dirname(target), { recursive: true });
