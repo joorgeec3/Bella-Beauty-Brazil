@@ -35,7 +35,59 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenAppointm
           <div className="absolute inset-0 p-6 flex flex-col justify-end text-white"><span className="text-[11px] font-bold tracking-widest text-amber-300 uppercase mb-1">{service.subtitle || 'Bella Beauty Treatment'}</span><h3 className="font-raleway text-xl font-bold uppercase tracking-wider text-white mb-2">{service.title}</h3><div className="w-8 h-0.5 bg-[#9a5967] mb-3 transition-all duration-300 group-hover:w-16" /><p className="font-montserrat text-xs text-neutral-300 line-clamp-3 leading-relaxed mb-4">{service.description}</p><span className="flex items-center text-xs font-semibold text-amber-200"><span>{language === 'en' ? 'View service' : language === 'pt' ? 'Ver serviço' : 'Ver servicio'}</span><ArrowRight className="w-3.5 h-3.5 ml-1" /></span></div>
         </a>)}
       </div>
-      <div className="relative rounded-3xl overflow-hidden shadow-2xl mb-16 reveal-from-right bg-[#181214] border border-[#9a5967]/30 text-white reveal-on-scroll"><div className="grid grid-cols-1 lg:grid-cols-12 items-center"><div className="lg:col-span-5 relative bg-black min-h-[380px] lg:min-h-[520px] overflow-hidden scroll-motion-layer" data-scroll-motion><img src={siteImages.aboutMe.treatmentRoom} alt="Bella Beauty Brazil treatment suite where personalised facials take place" className="service-editorial-image w-full h-full max-h-[540px] object-cover object-center" /><div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30" /><span className="absolute top-4 left-4 z-20 inline-flex items-center bg-black/70 text-amber-200 text-[11px] font-bold px-3 py-1 rounded-full border border-amber-200/30">{language === 'en' ? 'Skin-focused care' : language === 'pt' ? 'Cuidados para a pele' : 'Cuidado de la piel'}</span></div><div className="lg:col-span-7 p-8 sm:p-12 lg:p-14 z-10 space-y-6"><div><span className="text-xs font-bold uppercase tracking-widest text-[#efb7c8] mb-2 block">{language === 'en' ? 'Signature treatments' : language === 'pt' ? 'Tratamentos exclusivos' : 'Tratamientos exclusivos'}</span><h3 className="font-raleway text-3xl sm:text-4xl font-light uppercase tracking-wider text-white">{language === 'en' ? <>Skin <span className="font-bold text-[#9a5967]">Treatments</span></> : language === 'pt' ? <>Tratamentos de <span className="font-bold text-[#9a5967]">Pele</span></> : <>Tratamientos de <span className="font-bold text-[#9a5967]">Piel</span></>}</h3><div className="w-12 h-0.5 bg-[#9a5967] mt-3" /></div><p className="font-montserrat text-neutral-300 text-sm leading-relaxed max-w-xl">{language === 'en' ? 'Skin-focused treatments published in the official Timely catalogue, with service details, prices and durations available through the booking page.' : language === 'pt' ? 'Tratamentos para a pele publicados no catálogo oficial Timely, com detalhes, preços e durações disponíveis na página de reserva.' : 'Tratamientos para la piel publicados en el catálogo oficial de Timely, con detalles, precios y duración disponibles en la reserva.'}</p><a href="/services" onClick={(event) => { if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return; event.preventDefault(); onNavigateToServices('dermaplaning'); }} className="inline-flex items-center space-x-2 bg-[#9a5967] hover:bg-[#a96e2e] text-white text-xs font-bold uppercase tracking-widest px-8 py-3.5 rounded-full shadow-lg cursor-pointer"><span>{language === 'en' ? 'View treatments' : language === 'pt' ? 'Ver tratamentos' : 'Ver tratamientos'}</span><ArrowRight className="w-4 h-4" /></a></div></div></div>
+      {/* Skin Treatments — approved real procedure photo, with the lighter Bella Beauty palette. */}
+      <section aria-labelledby="skin-treatments-feature-heading" className="relative overflow-hidden rounded-[28px] border border-[#e6cdd3] bg-[#fbf3f3] shadow-xl mb-16 reveal-from-right">
+        <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch">
+          <div className="relative lg:col-span-6 min-h-[310px] sm:min-h-[410px] lg:min-h-[480px] overflow-hidden bg-[#e9d7d7]">
+            <img
+              src={siteImages.services.facialTreatment}
+              alt="Real dermaplaning facial skin-care treatment in progress at Bella Beauty Brazil"
+              className="service-editorial-image absolute inset-0 w-full h-full object-cover object-center"
+              loading="lazy"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#291c23]/45 via-transparent to-transparent pointer-events-none" />
+            <span className="absolute bottom-5 left-5 inline-flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 text-[11px] font-bold uppercase tracking-wider text-[#5b3239] shadow-sm">
+              {language === 'en' ? 'Real facial care' : language === 'pt' ? 'Cuidado facial real' : 'Cuidado facial real'}
+            </span>
+          </div>
+          <div className="lg:col-span-6 flex flex-col justify-center p-7 sm:p-10 lg:p-12 xl:p-14">
+            <span className="font-montserrat text-[11px] font-bold uppercase tracking-[0.18em] text-[#a15c70]">
+              {language === 'en' ? 'Feel cared for, from start to finish' : language === 'pt' ? 'Cuidado em cada detalhe' : 'Cuidado en cada detalle'}
+            </span>
+            <h3 id="skin-treatments-feature-heading" className="font-raleway text-3xl sm:text-4xl xl:text-5xl font-semibold tracking-tight text-[#5b3239] mt-3 leading-tight">
+              {language === 'en' ? 'Skin Treatments' : language === 'pt' ? 'Tratamentos de Pele' : 'Tratamientos de Piel'}
+            </h3>
+            <div className="w-14 h-0.5 bg-[#b77286] mt-5 mb-5" />
+            <p className="font-montserrat text-sm sm:text-base leading-relaxed text-[#66535b] max-w-lg">
+              {language === 'en'
+                ? 'Skin care tailored to you. Explore gentle exfoliation, targeted skin treatments and relaxing facials, with individual attention at every appointment.'
+                : language === 'pt'
+                  ? 'Cuidados para a pele feitos para você. Conheça esfoliação delicada, tratamentos personalizados e faciais relaxantes, sempre com atenção individual.'
+                  : 'Cuidados para tu piel. Descubre exfoliación suave, tratamientos personalizados y faciales relajantes, siempre con atención individual.'}
+            </p>
+            <div className="grid grid-cols-2 gap-2 sm:gap-3 mt-6" aria-label={language === 'en' ? 'Available skin treatments' : language === 'pt' ? 'Tratamentos disponíveis' : 'Tratamientos disponibles'}>
+              {['Dermaplaning', 'Microneedling', 'Facial Spa', 'Deluxe Facial'].map(name => (
+                <span key={name} className="flex items-center gap-2 rounded-lg border border-[#ead5da] bg-white/80 px-3 py-3 text-xs sm:text-sm font-medium text-[#694752]">
+                  <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-[#b77286] shrink-0" />
+                  {name}
+                </span>
+              ))}
+            </div>
+            <a
+              href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/services`}
+              onClick={(event) => {
+                if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
+                event.preventDefault();
+                onNavigateToServices('dermaplaning');
+              }}
+              className="inline-flex w-fit items-center justify-center gap-3 mt-7 rounded-full bg-[#9a5967] px-7 py-3.5 text-xs font-bold uppercase tracking-widest text-white shadow-md hover:bg-[#7a4753] transition-colors focus-visible:outline-2 focus-visible:outline-[#9a5967] cursor-pointer"
+            >
+              {language === 'en' ? 'Explore skin treatments' : language === 'pt' ? 'Ver tratamentos de pele' : 'Ver tratamientos de piel'}
+              <ArrowRight className="w-4 h-4" aria-hidden="true" />
+            </a>
+          </div>
+        </div>
+      </section>
       <div className="text-center"><button type="button" onClick={onOpenAppointment} className="inline-flex items-center space-x-2.5 bg-[#9a5967] hover:bg-[#a96e2e] text-white text-xs font-bold uppercase tracking-widest px-10 py-4 rounded-full shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer"><Calendar className="w-4 h-4 text-white" /><span>{language === 'en' ? 'BOOK NOW' : language === 'pt' ? 'AGENDAR' : 'RESERVAR'}</span></button></div>
     </div>
   </section>;
