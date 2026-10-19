@@ -102,7 +102,7 @@ try {
       assert.notEqual(await lipGallery.locator('img').first().getAttribute('src'), before, 'Gallery arrows must change the selected photo');
       assert((await lipGallery.getByRole('link', { name: /Open full photo|Abrir foto inteira|Abrir foto completa/ }).count()) > 0, 'Full photo access missing');
       await go('/services/shadow-brows');
-      assert((await page.locator('main').innerText()).includes('Shading creates a softly filled-in appearance'), 'Full PDF-approved Shadow Brows description is missing');
+      assert((await page.locator('#root main').first().innerText()).includes('Shading creates a softly filled-in appearance'), 'Full PDF-approved Shadow Brows description is missing');
       await go('/services/nano-strokes');
       assert.equal(await page.locator('#service-photos button[aria-pressed]').count(), 3, 'Nano Strokes needs the three correct treatment photos');
       assert(await page.locator('h1').first().innerText());
