@@ -35,7 +35,7 @@ export const ApprovedPriceList: React.FC<{language: Language}> = ({ language }) 
                   <div key={item.name} className="py-4 border-b border-[#f0e6e6]">
                     <div className="flex justify-between items-baseline gap-3">
                       <h3 className="font-montserrat font-semibold text-sm text-[#5b3239] leading-snug">{item.name}</h3>
-                      <span className="font-montserrat text-sm font-bold text-[#8b5462] tabular-nums shrink-0">A$${item.aud}</span>
+                      <span className="font-montserrat text-sm font-bold text-[#8b5462] tabular-nums shrink-0">A${item.aud}</span>
                     </div>
                     {item.description && <p className="font-montserrat text-xs sm:text-sm text-[#675960] leading-relaxed mt-2">{item.description}</p>}
                     {item.note && <p className="font-montserrat text-xs text-[#9a5967] font-semibold mt-2">{item.note}</p>}
