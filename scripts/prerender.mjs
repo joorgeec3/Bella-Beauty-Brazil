@@ -3,15 +3,15 @@ import { dirname, join } from 'node:path';
 import { SERVICE_GUIDES } from '../src/data/serviceGuides.ts';
 
 const services = {
-  'nano-strokes': { title: 'Nano Strokes / Microblading', description: 'Semi-permanent brow artistry designed to create realistic, natural-looking hair strokes.', image: '/assets/bella/cosmetic-tattooing.png', price: '615', duration: '2 hours, 30 mins' },
-  'shadow-hybrid': { title: 'Brow Sculpt & Hybrid Brow', description: 'Brow Sculpt & Hybrid Brow styling published in the official Timely catalogue.', image: '/assets/bella/gallery/studio-behind-scenes-01.webp', price: '79', duration: '40 mins' },
-  'lip-blush': { title: 'Lip Blush', description: 'Semi-permanent cosmetic tattooing to enhance the natural tone and shape of the lips.', image: '/assets/bella/cosmetic-tattooing.png', price: '615', duration: '2 hours, 30 mins' },
-  'brow-sculpt-tint': { title: 'Brow Sculpt & Tint', description: 'A personalised brow shape, sculpt and tint service tailored to your features.', image: '/assets/bella/gallery/studio-behind-scenes-01.webp', price: '76', duration: '35 mins' },
-  'brow-lamination': { title: 'Brow Lamination, Shape & Tint', description: 'A structured brow lamination, shape and tint service published in Timely.', image: '/assets/bella/gallery/studio-behind-scenes-01.webp', price: '133', duration: '1 hour' },
+  'nano-strokes': { title: 'Nano Strokes / Microblading', description: 'Semi-permanent brow artistry designed to create realistic, natural-looking hair strokes.', image: '/assets/bella/client-2026-10/nano-strokes-procedure.webp', price: '615', duration: '2 hours, 30 mins' },
+  'shadow-hybrid': { title: 'Brow Sculpt & Hybrid Brow', description: 'Brow Sculpt & Hybrid Brow styling published in the official Timely catalogue.', image: '/assets/bella/client-2026-10/brow-styling.webp', price: '79', duration: '40 mins' },
+  'lip-blush': { title: 'Lip Blush', description: 'Semi-permanent cosmetic tattooing to enhance the natural tone and shape of the lips.', image: '/assets/bella/client-2026-10/lip-blush-procedure.webp', price: '615', duration: '2 hours, 30 mins' },
+  'brow-sculpt-tint': { title: 'Brow Sculpt & Tint', description: 'A personalised brow shape, sculpt and tint service tailored to your features.', image: '/assets/bella/client-2026-10/brow-tools.webp', price: '76', duration: '35 mins' },
+  'brow-lamination': { title: 'Brow Lamination, Shape & Tint', description: 'A structured brow lamination, shape and tint service published in Timely.', image: '/assets/bella/client-2026-10/brow-styling.webp', price: '133', duration: '1 hour' },
   'lash-lift': { title: 'Lash Lift & Tint', description: 'Lift and tint services published in Timely.', image: '/assets/bella/lashes.jpg', price: '133', duration: '1 hour, 10 mins' },
   dermaplaning: { title: 'Dermaplaning', description: 'Skin-focused dermaplaning treatment published in Timely.', image: '/assets/bella/dermaplaning-facial-treatment.webp', price: '140', duration: '55 mins' },
-  'cosmetic-tattooing': { title: 'Cosmetic Tattooing', description: 'Cosmetic tattooing treatments from the Bella Beauty Brazil Timely catalogue.', image: '/assets/bella/cosmetic-tattooing.png' },
-  'brow-sculpt': { title: 'Brow Sculpt Signature', description: 'Personalised brow sculpting and shaping in Greenslopes.', image: '/assets/bella/gallery/studio-behind-scenes-01.webp', price: '56', duration: '25 mins' },
+  'cosmetic-tattooing': { title: 'Cosmetic Tattooing', description: 'Cosmetic tattooing treatments from the Bella Beauty Brazil Timely catalogue.', image: '/assets/bella/client-2026-10/lip-blush-procedure.webp' },
+  'brow-sculpt': { title: 'Brow Sculpt Signature', description: 'Personalised brow sculpting and shaping in Greenslopes.', image: '/assets/bella/client-2026-10/brow-styling.webp', price: '56', duration: '25 mins' },
   'classic-eyelashes': { title: 'Classic Eyelash Extensions', description: 'Classic eyelash extensions for an elegant natural look.', image: '/assets/bella/lashes.jpg', price: '145', duration: '1 hour, 30 mins' },
   'hybrid-eyelashes': { title: 'Hybrid Eyelash Extensions', description: 'Hybrid eyelash extension service at Bella Beauty Brazil.', image: '/assets/bella/lashes.jpg', price: '175', duration: '1 hour, 45 mins' },
   'russian-volume': { title: 'Russian Volume Extensions', description: 'Russian Volume eyelash extension service.', image: '/assets/bella/lashes.jpg', price: '200', duration: '2 hours, 50 mins' },
@@ -19,7 +19,7 @@ const services = {
   'facial-spa': { title: 'Facial Spa', description: 'Bella Beauty Brazil professional facial spa treatments.', image: '/assets/bella/dermaplaning-facial-treatment.webp', price: '150', duration: '1 hour, 20 mins' },
   'deluxe-facial': { title: 'Deluxe Facial', description: 'Deluxe facial treatment at Bella Beauty Brazil in Greenslopes.', image: '/assets/bella/dermaplaning-facial-treatment.webp', price: '360', duration: '1 hour, 50 mins' },
   'teeth-whitening': { title: 'Teeth Whitening', description: 'Teeth whitening service published by Bella Beauty Brazil in the official Timely catalogue; confirm suitability and aftercare with the studio.', image: '/assets/bella/gallery/studio-treatment-room.webp', price: '199', duration: '1 hour' },
-  waxing: { title: 'Brazilian Waxing', description: 'Professional Brazilian waxing from Bella Beauty Brazil.', image: '/assets/bella/waxing.png', price: '82', duration: '30 mins' },
+  waxing: { title: 'Brazilian Waxing', description: 'Professional Brazilian waxing from Bella Beauty Brazil.', image: '/assets/bella/client-2026-10/waxing-treatment.webp', price: '82', duration: '30 mins' },
 };
 
 const escapeHtml = (value) => value.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
