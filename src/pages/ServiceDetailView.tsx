@@ -170,12 +170,27 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
             <section className="bg-white rounded-2xl border border-[#e8d6d5] p-6 sm:p-10 shadow-sm scroll-rise">
               <h2 className="font-raleway text-2xl sm:text-3xl font-bold uppercase tracking-wider text-[#5b3239]">{translated(language, 'About this treatment', 'Sobre este tratamento', 'Sobre este tratamiento')}</h2>
               <p className="font-montserrat text-neutral-700 leading-relaxed mt-4">{language === 'en' ? (approvedDescriptionFor(base.id) || service.description) : service.description}</p>
-              {language === 'en' && approvedDescriptionFor(base.id) && <p className="font-montserrat text-xs text-[#846f75] mt-3">Treatment description provided by Bella Beauty Brazil.</p>}
+              {base.id !== 'nano-strokes' && language === 'en' && approvedDescriptionFor(base.id) && <p className="font-montserrat text-xs text-[#846f75] mt-3">Treatment description provided by Bella Beauty Brazil.</p>}
               {guide && <>
                 <h3 className="font-raleway text-xl font-bold text-[#5b3239] mt-8">{translated(language, 'Who may this treatment suit?', 'Para quem este tratamento pode ser indicado?', '¿Para quién puede ser adecuado este tratamiento?')}</h3>
                 <p className="font-montserrat text-neutral-700 leading-relaxed mt-3">{guide.idealFor}</p>
-                <h3 className="font-raleway text-xl font-bold text-[#5b3239] mt-8">{translated(language, 'How is it different?', 'Quais são as diferenças?', '¿En qué se diferencia?')}</h3>
-                <p className="font-montserrat text-neutral-700 leading-relaxed mt-3">{guide.comparison}</p>
+                {base.id === 'nano-strokes' ? (
+                  <>
+                    <h3 className="font-raleway text-xl font-bold text-[#5b3239] mt-8">{translated(language, 'How does it work?', 'Como funciona?', '¿Cómo funciona?')}</h3>
+                    <p className="font-montserrat text-neutral-700 leading-relaxed mt-3">
+                      {translated(language,
+                        'Using a manual Tebori tool, I create fine, hair-like strokes that blend with your natural brow hairs. Each brow pattern is individually designed to complement your features, add definition and fill sparse areas.',
+                        'Usando uma ferramenta manual Tebori, crio traços finos semelhantes a fios que se misturam aos pelos naturais das sobrancelhas. Cada desenho é criado individualmente para valorizar seus traços, trazer definição e preencher áreas com poucos fios.',
+                        'Con una herramienta manual Tebori, creo trazos finos similares al vello que se integran con tus cejas naturales. Cada diseño se crea individualmente para complementar tus rasgos, aportar definición y rellenar zonas poco pobladas.'
+                      )}
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <h3 className="font-raleway text-xl font-bold text-[#5b3239] mt-8">{translated(language, 'How is it different?', 'Quais são as diferenças?', '¿En qué se diferencia?')}</h3>
+                    <p className="font-montserrat text-neutral-700 leading-relaxed mt-3">{guide.comparison}</p>
+                  </>
+                )}
               </>}
               <h3 className="font-raleway text-xl font-bold text-[#5b3239] mt-8">{translated(language, 'Benefits and what to expect', 'Benefícios e o que esperar', 'Beneficios y qué esperar')}</h3>
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
@@ -189,18 +204,21 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
             <section className="space-y-3">
               <h2 className="font-raleway text-2xl font-bold uppercase tracking-wider text-[#5b3239]">FAQ</h2>
               <details className="bg-white border border-[#e8d6d5] rounded-xl p-5" open><summary className="font-montserrat font-bold text-[#5b3239] cursor-pointer">{translated(language, 'What should I know before booking?', 'O que devo saber antes de agendar?', '¿Qué debo saber antes de reservar?')}</summary><p className="font-montserrat text-sm text-neutral-700 leading-relaxed mt-3">{groupCopy.faq}</p></details>
-              {guide && <details className="bg-white border border-[#e8d6d5] rounded-xl p-5"><summary className="font-montserrat font-bold text-[#5b3239] cursor-pointer">{guide.question}</summary><p className="font-montserrat text-sm text-neutral-700 leading-relaxed mt-3">{guide.answer}</p></details>}
+              {guide && base.id !== 'nano-strokes' && <details className="bg-white border border-[#e8d6d5] rounded-xl p-5"><summary className="font-montserrat font-bold text-[#5b3239] cursor-pointer">{guide.question}</summary><p className="font-montserrat text-sm text-neutral-700 leading-relaxed mt-3">{guide.answer}</p></details>}
               <details className="bg-white border border-[#e8d6d5] rounded-xl p-5"><summary className="font-montserrat font-bold text-[#5b3239] cursor-pointer">{translated(language, 'Where can I confirm the latest price?', 'Onde confirmar o preço atual?', '¿Dónde puedo confirmar el precio actual?')}</summary><p className="font-montserrat text-sm text-neutral-700 leading-relaxed mt-3">{isPriceConfirmed ? translated(language, 'The price and duration shown reflect the service catalogue recorded for this website. Prices and availability may change; the official Timely page is the final reference when booking.', 'O preço e a duração apresentados refletem o catálogo registrado para este site. Eles podem mudar; consulte o Timely oficial para o valor e a disponibilidade atualizados.', 'El precio y la duración corresponden al catálogo registrado para este sitio. Pueden cambiar; consulta el Timely oficial para conocer el precio y la disponibilidad actual.') : translated(language, 'No price is displayed here because it was not confirmed in the available catalogue. Please enquire through Timely.', 'Nenhum preço é exibido porque não foi confirmado no catálogo disponível. Consulte pelo Timely.', 'No se muestra precio porque no fue confirmado en el catálogo disponible. Consulta por Timely.')}</p></details>
             </section>
           </div>
           <aside className="lg:col-span-4 space-y-5">
             <div className="bg-[#5b3239] text-white rounded-2xl p-6 sm:p-8 shadow-lg sticky top-28">
               <h2 className="font-raleway text-2xl font-bold uppercase tracking-wider">{translated(language, 'Book this service', 'Agende este serviço', 'Reserva este servicio')}</h2>
-              <div className="flex items-center gap-3 mt-5 text-[#efb7c8]"><Calendar className="w-5 h-5" /><strong className="font-montserrat text-xl">{isPriceConfirmed ? `A$${service.price}` : translated(language, 'Enquire', 'Consultar', 'Consultar')}</strong></div>
+              <div className="flex items-center gap-3 mt-5 text-[#efb7c8]"><Calendar className="w-5 h-5" /><strong className="font-montserrat text-xl">{isPriceConfirmed ? `A${service.price}` : translated(language, 'Enquire', 'Consultar', 'Consultar')}</strong></div>
+              {base.id === 'nano-strokes' && <p className="mt-3 font-montserrat text-sm font-medium leading-relaxed text-white/95">{translated(language, 'Touch-up after 45–60 days: $120.', 'Retoque após 45–60 dias: $120.', 'Retoque después de 45–60 días: $120.')}</p>}
               {service.duration && <div className="flex items-center gap-3 mt-3 text-neutral-200"><Clock className="w-5 h-5" /><span className="font-montserrat text-sm">{service.duration}</span></div>}
               <a href={getServiceBookingUrl(base.id)}  className="mt-7 inline-flex w-full items-center justify-center gap-2 bg-[#efb7c8] hover:bg-white text-[#5b3239] text-xs font-bold uppercase tracking-widest px-5 py-4 rounded-full cursor-pointer transition-colors"><Calendar className="w-4 h-4" />{SERVICE_BOOKING_LINKS[base.id]
                 ? translated(language, 'Book this treatment', 'Agendar este tratamento', 'Reservar este tratamiento')
-                : translated(language, 'Choose treatment on Timely', 'Selecionar tratamento no Timely', 'Elegir tratamiento en Timely')}</a>
+                : base.id === 'nano-strokes'
+                  ? translated(language, 'Book Your Appointment', 'Agende seu horário', 'Reserva tu cita')
+                  : translated(language, 'Choose treatment on Timely', 'Selecionar tratamento no Timely', 'Elegir tratamiento en Timely')}</a>
               <p className="font-montserrat text-xs text-neutral-300 mt-5 leading-relaxed">{translated(language, 'Bella Beauty Brazil · Suite 3, 412 Logan Road, Greenslopes, QLD 4120.', 'Bella Beauty Brazil · Suite 3, 412 Logan Road, Greenslopes, QLD 4120.', 'Bella Beauty Brazil · Suite 3, 412 Logan Road, Greenslopes, QLD 4120.')}</p>
             </div>
             <div className="bg-white rounded-2xl border border-[#e8d6d5] p-6">
