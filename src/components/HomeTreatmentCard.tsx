@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import { ArrowRight, ChevronLeft, ChevronRight, Images } from 'lucide-react';
 import type { Language, Service } from '../data/siteData';
 import { getServicePhotos } from './ServicePhotoGallery';
+import { siteImages } from '../data/siteImages';
 
 interface HomeTreatmentCardProps {
   service: Service;
@@ -19,7 +20,15 @@ const labels = {
 export const HomeTreatmentCard: React.FC<HomeTreatmentCardProps> = ({
   service, language, onNavigate, position,
 }) => {
-  const approvedPhotos = getServicePhotos(service.id);
+  // Keep the three previously approved lip photos on the homepage. The six new
+  // lip photos appear exclusively in the Lip Blush service page, avoiding repeats.
+  const approvedPhotos = service.id === 'lip-blush'
+    ? [
+        { src: siteImages.client.lipBlushProcedure, alt: 'Lip Blush treatment', caption: 'Lip Blush procedure' },
+        { src: siteImages.client.lipBlushPalette, alt: 'Lip Blush colour selection', caption: 'Pigment shades' },
+        { src: siteImages.client.lipBlushPhotography, alt: 'Lip Blush consultation photo', caption: 'Lip Blush appointment' },
+      ]
+    : getServicePhotos(service.id);
   const photos = approvedPhotos.length > 0
     ? approvedPhotos
     : [{ src: service.image, alt: service.title, caption: service.title }];
