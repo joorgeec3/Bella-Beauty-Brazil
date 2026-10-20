@@ -214,10 +214,10 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
               <div className="flex items-center gap-3 mt-5 text-[#efb7c8]"><Calendar className="w-5 h-5" /><strong className="font-montserrat text-xl">{isPriceConfirmed ? `A${service.price}` : translated(language, 'Enquire', 'Consultar', 'Consultar')}</strong></div>
               {base.id === 'nano-strokes' && <p className="mt-3 font-montserrat text-sm font-medium leading-relaxed text-white/95">{translated(language, 'Touch-up after 45–60 days: $120.', 'Retoque após 45–60 dias: $120.', 'Retoque después de 45–60 días: $120.')}</p>}
               {service.duration && <div className="flex items-center gap-3 mt-3 text-neutral-200"><Clock className="w-5 h-5" /><span className="font-montserrat text-sm">{service.duration}</span></div>}
-              <a href={getServiceBookingUrl(base.id)}  className="mt-7 inline-flex w-full items-center justify-center gap-2 bg-[#efb7c8] hover:bg-white text-[#5b3239] text-xs font-bold uppercase tracking-widest px-5 py-4 rounded-full cursor-pointer transition-colors"><Calendar className="w-4 h-4" />{SERVICE_BOOKING_LINKS[base.id]
-                ? translated(language, 'Book this treatment', 'Agendar este tratamento', 'Reservar este tratamiento')
-                : base.id === 'nano-strokes'
-                  ? translated(language, 'Book Your Appointment', 'Agende seu horário', 'Reserva tu cita')
+              <a href={getServiceBookingUrl(base.id)}  className="mt-7 inline-flex w-full items-center justify-center gap-2 bg-[#efb7c8] hover:bg-white text-[#5b3239] text-xs font-bold uppercase tracking-widest px-5 py-4 rounded-full cursor-pointer transition-colors"><Calendar className="w-4 h-4" />{base.id === 'nano-strokes'
+                ? translated(language, 'Book Your Appointment', 'Agende seu horário', 'Reserva tu cita')
+                : SERVICE_BOOKING_LINKS[base.id]
+                  ? translated(language, 'Book this treatment', 'Agendar este tratamento', 'Reservar este tratamiento')
                   : translated(language, 'Choose treatment on Timely', 'Selecionar tratamento no Timely', 'Elegir tratamiento en Timely')}</a>
               <p className="font-montserrat text-xs text-neutral-300 mt-5 leading-relaxed">{translated(language, 'Bella Beauty Brazil · Suite 3, 412 Logan Road, Greenslopes, QLD 4120.', 'Bella Beauty Brazil · Suite 3, 412 Logan Road, Greenslopes, QLD 4120.', 'Bella Beauty Brazil · Suite 3, 412 Logan Road, Greenslopes, QLD 4120.')}</p>
             </div>
