@@ -71,6 +71,23 @@ try {
         assert(topServicePhotos.some(src => src.includes(name)), 'Missing topic-matched homepage service photo ' + name);
       }
 
+      const founderSection = page.locator('.meet-livia-copy');
+      assert.equal(await founderSection.count(), 1, 'Meet Livia section should remain on the homepage');
+      const founderText = await founderSection.innerText();
+      for (const text of [
+        'A little about me',
+        'Hi, I’m Livia, founder of Bella Beauty Brazil, brow artist, cosmetic tattoo artist and beauty educator.',
+        'Originally from the Amazon region of Brazil',
+        'I take my time with every appointment',
+        'Personalised Care',
+        'Attention to Detail',
+        'Natural Results',
+      ]) {
+        assert(founderText.includes(text), 'Client-approved Meet Livia text missing: ' + text);
+      }
+      assert(!founderText.includes('Care with Purpose & Precision'), 'Old founder title still displayed');
+      assert(await page.locator('.meet-livia-image').count() === 1, 'Keep the existing approved photo of Livia');
+
       // The client supplied three different Lip Blush photos: they must all be accessible in the home card.
       const lipCard = page.locator('[data-home-treatment="lip-blush"]');
       assert.equal(await lipCard.count(), 1, 'Lip Blush featured card missing');
