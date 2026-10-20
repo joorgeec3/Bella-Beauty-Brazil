@@ -13,7 +13,7 @@ export const FeaturesRibbon: React.FC<FeaturesRibbonProps> = ({ language }) => {
       icon: <Sparkles className="w-3 h-3 text-[#efb7c8]" />,
       label: language === 'en' ? 'Cosmetic · Artistry' : language === 'pt' ? 'Tatuagem · Beleza' : 'Tatuaje · Belleza',
       title: 'Cosmetic Tattooing',
-      text: 'Nano Strokes • Powder Brows • Lip Blush • Cosmetic Tattoo Removal.',
+      text: language === 'en' ? 'Nano Strokes • Powder Brows • Lip Blush • Cosmetic Tattoo Removal.' : language === 'pt' ? 'Nano Strokes • Powder Brows • Lip Blush • Remoção de Tatuagem Cosmética.' : 'Nano Strokes • Powder Brows • Lip Blush • Eliminación de Tatuaje Cosmético.',
       footer: language === 'en' ? 'Cosmetic tattoo treatments' : language === 'pt' ? 'Tatuagem cosmética' : 'Tatuaje cosmético',
     },
     {
@@ -21,7 +21,7 @@ export const FeaturesRibbon: React.FC<FeaturesRibbonProps> = ({ language }) => {
       icon: <Sparkles className="w-3 h-3 text-[#efb7c8]" />,
       label: language === 'en' ? 'Brows · Technique' : language === 'pt' ? 'Sobrancelhas · Técnica' : 'Cejas · Técnica',
       title: 'Brow Artistry',
-      text: 'Brow Sculpting • Tinting • Brow Dye • Brow Lamination.',
+      text: language === 'en' ? 'Brow Sculpting • Tinting • Brow Dye • Brow Lamination.' : language === 'pt' ? 'Design de sobrancelhas • Tintura • Brow Dye • Laminação.' : 'Diseño de cejas • Tinte • Brow Dye • Laminado.',
       footer: language === 'en' ? 'Personalised brow care' : language === 'pt' ? 'Cuidado das sobrancelhas' : 'Cuidado de cejas',
     },
     {
@@ -29,7 +29,7 @@ export const FeaturesRibbon: React.FC<FeaturesRibbonProps> = ({ language }) => {
       icon: <Eye className="w-3 h-3 text-[#efb7c8]" />,
       label: language === 'en' ? 'Lashes · Definition' : language === 'pt' ? 'Cílios · Definição' : 'Pestañas · Definición',
       title: 'Lash Treatments',
-      text: 'Lash Lift & Tint • Lash Extensions.',
+      text: language === 'en' ? 'Lash Lift & Tint • Lash Extensions.' : language === 'pt' ? 'Lash Lift & Tint • Extensões de cílios.' : 'Lash Lift & Tint • Extensiones de pestañas.',
       footer: language === 'en' ? 'Natural lashes & extensions' : language === 'pt' ? 'Cílios naturais e extensões' : 'Pestañas naturales y extensiones',
     },
     {
@@ -37,7 +37,7 @@ export const FeaturesRibbon: React.FC<FeaturesRibbonProps> = ({ language }) => {
       icon: <Droplets className="w-3 h-3 text-[#efb7c8]" />,
       label: language === 'en' ? 'Skin · Care' : language === 'pt' ? 'Pele · Cuidado' : 'Piel · Cuidado',
       title: 'Skin Treatments',
-      text: 'Dermaplaning • Microneedling • Facial Spa.',
+      text: language === 'en' ? 'Dermaplaning • Microneedling • Facial Spa.' : language === 'pt' ? 'Dermaplaning • Microagulhamento • Facial Spa.' : 'Dermaplaning • Microneedling • Facial Spa.',
       footer: language === 'en' ? 'Facial skin care' : language === 'pt' ? 'Cuidados faciais' : 'Cuidado facial',
     },
     {
@@ -45,7 +45,7 @@ export const FeaturesRibbon: React.FC<FeaturesRibbonProps> = ({ language }) => {
       icon: <Smile className="w-3 h-3 text-[#efb7c8]" />,
       label: language === 'en' ? 'Smile · Care' : language === 'pt' ? 'Sorriso · Cuidado' : 'Sonrisa · Cuidado',
       title: 'Teeth Whitening',
-      text: 'A brighter smile with professional teeth whitening.',
+      text: language === 'en' ? 'A brighter smile with professional teeth whitening.' : language === 'pt' ? 'Um sorriso mais iluminado com clareamento dental profissional.' : 'Una sonrisa más luminosa con blanqueamiento dental profesional.',
       footer: language === 'en' ? 'Professional teeth whitening' : language === 'pt' ? 'Clareamento dental' : 'Blanqueamiento dental',
     },
     {
@@ -53,7 +53,7 @@ export const FeaturesRibbon: React.FC<FeaturesRibbonProps> = ({ language }) => {
       icon: <Heart className="w-3 h-3 text-[#efb7c8]" />,
       label: language === 'en' ? 'Waxing · Care' : language === 'pt' ? 'Depilação · Cuidado' : 'Depilación · Cuidado',
       title: 'Waxing',
-      text: 'Face & Body Waxing • Brazilian Waxing.',
+      text: language === 'en' ? 'Face & Body Waxing • Brazilian Waxing.' : language === 'pt' ? 'Depilação facial e corporal • Depilação brasileira.' : 'Depilación facial y corporal • Depilación brasileña.',
       footer: language === 'en' ? 'Face & body' : language === 'pt' ? 'Rosto e corpo' : 'Rostro y cuerpo',
     },
   ];
