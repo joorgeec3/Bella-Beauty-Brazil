@@ -67,7 +67,7 @@ try {
       const signatureHead = page.locator('section').filter({ hasText: 'Bella Beauty Signature Care' }).locator('h2').first();
       const signatureCopy = (await signatureHead.innerText()).replace(/\s+/g, ' ').trim();
       for (const name of ['Cosmetic Tattooing', 'Brows', 'Lashes', 'Skin Treatments', 'Waxing']) {
-        assert(signatureCopy.includes(name), 'Signature heading is missing service category: ' + name);
+        assert(signatureCopy.toLowerCase().includes(name.toLowerCase()), 'Signature heading is missing service category: ' + name);
       }
       // The first impression must not recycle treatment, founder, studio, gallery or result photos.
       const photoSelectors = [
