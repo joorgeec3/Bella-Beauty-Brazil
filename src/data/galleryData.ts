@@ -1,6 +1,6 @@
 /** Real images supplied by the client. Result comparisons stay exclusively in Before & After. */
-export type BellaGalleryCategory = 'Brows' | 'Lips' | 'Lashes' | 'Skin' | 'Studio' | 'Livia' | 'Waxing';
-export type BellaGalleryItem = { id: string; image: string; category: BellaGalleryCategory; kind: 'result' | 'studio' | 'livia' | 'editorial'; alt: string };
+export type BellaGalleryCategory = 'Brows' | 'Lips' | 'Lashes' | 'Skin' | 'Whitening' | 'Studio' | 'Livia' | 'Waxing';
+export type BellaGalleryItem = { id: string; image: string; category: BellaGalleryCategory; kind: 'result' | 'studio' | 'livia' | 'editorial'; alt: string; serviceName?: string };
 
 const withSiteBase = (item: BellaGalleryItem): BellaGalleryItem => ({
   ...item,
@@ -63,13 +63,68 @@ const homepageFeaturedImageNames = new Set([
   'lip-blush-photography.webp',
   'waxing-treatment.webp',
   'about-livia-02.webp',
+  'about-livia-03.webp',
   'salon-brand-wall.webp',
   'salon-details.webp',
   'salon-consultation.webp',
   'salon-client-experience.webp',
   'salon-celebration.webp',
 ]);
-export const homeGallery = bellaGallery.filter(({ image }) => !homepageFeaturedImageNames.has(image.split('/').pop() || ''));
+// Media from the client's categorised archive: 43 distinct original photographs.
+// Keep one photo in one service folder; do not clone photos to fill unrelated services.
+const newPhotoFolders: { slug: string; name: string; category: BellaGalleryCategory; count: number }[] = [
+  { slug: 'brow-sculpt', name: 'Brow Sculpt', category: 'Brows', count: 7 },
+  { slug: 'brow-sculpt-tint', name: 'Brow Sculpt & Tint', category: 'Brows', count: 2 },
+  { slug: 'male-brow-sculpt', name: 'Male Brow Sculpt', category: 'Brows', count: 1 },
+  { slug: 'shadow-brows', name: 'Shadow Brows', category: 'Brows', count: 5 },
+  { slug: 'brow-lamination', name: 'Brow Lamination & Lash Lift', category: 'Brows', count: 3 },
+  { slug: 'lash-lift', name: 'Lash Lift & Tint', category: 'Lashes', count: 9 },
+  { slug: 'lip-blush', name: 'Lip Blush', category: 'Lips', count: 6 },
+  { slug: 'lip-bliss-hydration', name: 'Lip Hydration', category: 'Lips', count: 3 },
+  { slug: 'dermaplaning', name: 'Dermaplaning', category: 'Skin', count: 2 },
+  { slug: 'facial-spa', name: 'Facial Spa', category: 'Skin', count: 2 },
+  { slug: 'teeth-whitening', name: 'Teeth Whitening', category: 'Whitening', count: 3 },
+];
+const mediaRoot = '/assets/bella/client-2026-10-v2';
+const photoGroups = newPhotoFolders.map(({ slug, name, category, count }) =>
+  Array.from({ length: count }, (_, index) => ({
+    id: `new-${slug}-${index + 1}`,
+    image: `${mediaRoot}/${slug}/${slug}-${String(index + 1).padStart(2, '0')}.webp`,
+    category, kind: 'editorial' as const, alt: `${name} at Bella Beauty Brazil — photo ${index + 1}`,
+    serviceName: name,
+  }))
+);
+// Mix the first image from each service before showing second images, so visitors
+// immediately see different categories rather than many consecutive brow photos.
+const photosInOrder = Array.from({ length: Math.max(...photoGroups.map(group => group.length)) }, (_, index) =>
+  photoGroups.flatMap(group => group[index] ? [group[index]] : [])
+).flat();
+
+export const newBellaServiceGallery: BellaGalleryItem[] = photosInOrder.map(item => withSiteBase(item));
+export const homeGallery = uniqueImages([
+  ...newBellaServiceGallery,
+  ...bellaGallery.filter(({ image }) => !homepageFeaturedImageNames.has(image.split('/').pop() || '')),
+]);
+
+export type BellaGalleryVideo = { id: string; src: string; category: BellaGalleryCategory; serviceName: string };
+const newVideoFolders: { slug: string; name: string; category: BellaGalleryCategory; count: number }[] = [
+  { slug: 'brow-sculpt', name: 'Brow Sculpt', category: 'Brows', count: 2 },
+  { slug: 'brow-lamination', name: 'Brow Lamination & Lash Lift', category: 'Brows', count: 5 },
+  { slug: 'dreamy-brows', name: 'Dreamy Brows — Massage', category: 'Brows', count: 1 },
+  { slug: 'shadow-brows', name: 'Shadow Brows', category: 'Brows', count: 1 },
+  { slug: 'facial-spa', name: 'Facial Spa', category: 'Skin', count: 2 },
+  { slug: 'lip-blush', name: 'Lip Blush', category: 'Lips', count: 1 },
+  { slug: 'lip-bliss-hydration', name: 'Lip Hydration', category: 'Lips', count: 1 },
+  { slug: 'teeth-whitening', name: 'Teeth Whitening', category: 'Whitening', count: 1 },
+];
+export const galleryVideos: BellaGalleryVideo[] = newVideoFolders.flatMap(({ slug, name, category, count }) =>
+  Array.from({ length: count }, (_, index) => ({
+    id: `gallery-video-${slug}-${index + 1}`,
+    src: `${import.meta.env.BASE_URL}assets/bella/client-2026-10-v2/${slug}/${slug}-video-${String(index + 1).padStart(2, '0')}.mp4`,
+    category,
+    serviceName: name,
+  }))
+);
 
 // The featured lash-lift comparison appears above; the other results remain available without repetition.
 export const bellaBeforeAfter = uniqueImages(clientGallery.filter((item) =>
