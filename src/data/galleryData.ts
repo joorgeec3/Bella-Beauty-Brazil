@@ -57,6 +57,8 @@ export const bellaGallery: BellaGalleryItem[] = uniqueImages([
 const homepageFeaturedImageNames = new Set([
   'nano-strokes-procedure.webp',
   'lip-blush-procedure.webp',
+  'lip-blush-palette.webp',
+  'lip-blush-photography.webp',
   'waxing-treatment.webp',
   'about-livia-02.webp',
   'salon-brand-wall.webp',
