@@ -64,6 +64,20 @@ try {
       for (const name of ['lips-result-01.webp', 'studio-behind-scenes-01.webp', 'lashes-result-05.webp', 'dermaplaning-facial-treatment.webp', 'waxing.png']) {
         assert(featurePhotos.some(src => src.includes(name)), 'Missing relevant signature image ' + name);
       }
+      // The Teeth Whitening card must show authentic visual treatment media, not a blank smile pictogram.
+      const whiteningMedia = page.locator('[data-whitening-treatment-media]');
+      assert.equal(await whiteningMedia.count(), 1, 'Teeth Whitening feature card must have real treatment media');
+      const whiteningSource = await whiteningMedia.getAttribute('src');
+      assert(whiteningSource?.includes('/teeth-whitening/teeth-whitening-video-01.mp4'), 'Whitening card must show its own verified real treatment clip');
+      const whiteningResponse = await page.request.head(base + whiteningSource);
+      assert.equal(whiteningResponse.status(), 200, 'Whitening visual asset must load successfully');
+      assert((whiteningResponse.headers()['content-type'] || '').startsWith('video/'), 'Whitening visual must be a playable video');
+      await page.waitForFunction(() => {
+        const video = document.querySelector('[data-whitening-treatment-media]');
+        return video instanceof HTMLVideoElement && video.videoWidth > 0 && video.readyState >= 2 && !video.error;
+      }, null, { timeout: 15000 });
+      const goldText = await page.locator('section').filter({ hasText: 'Bella Beauty Signature Care' }).first().locator('[class*="text-amber-"]').count();
+      assert.equal(goldText, 0, 'Signature Care text should use rose/nude, not yellow or gold');
       assert.equal(await page.locator('.service-editorial-image').count(), 0, 'Do not duplicate the Skin Treatments photo further down the homepage');
       const topServicePhotos = await page.locator('.service-card-image').evaluateAll(images => images.map(img => img.getAttribute('src') || ''));
       assert.equal(topServicePhotos.length, 4, 'Four topic-specific treatment cards are needed');
