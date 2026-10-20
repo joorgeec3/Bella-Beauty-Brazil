@@ -60,14 +60,14 @@ try {
         assert((await signatureCards.nth(i).innerText()).includes(sixCopy[i]), 'Signature copy differs from client-approved text for ' + sixNames[i]);
       }
       const featurePhotos = await page.locator('.feature-card-image').evaluateAll(images => images.map(img => img.getAttribute('src') || ''));
-      assert.equal(featurePhotos.length, 6, 'All six service categories now have topical visuals, including real teeth-whitening photos');
-      for (const name of ['lips-result-01.webp', 'studio-behind-scenes-01.webp', 'lashes-result-05.webp', 'dermaplaning-facial-treatment.webp', 'teeth-whitening-01.webp', 'waxing.png']) {
+      assert.equal(featurePhotos.length, 5, 'Reserve all three real whitening photos for the main Gallery instead of repeating a tile photograph');
+      for (const name of ['lips-result-01.webp', 'studio-behind-scenes-01.webp', 'lashes-result-05.webp', 'dermaplaning-facial-treatment.webp', 'waxing.png']) {
         assert(featurePhotos.some(src => src.includes(name)), 'Missing relevant signature image ' + name);
       }
       assert.equal(await page.locator('.service-editorial-image').count(), 0, 'Do not duplicate the Skin Treatments photo further down the homepage');
       const topServicePhotos = await page.locator('.service-card-image').evaluateAll(images => images.map(img => img.getAttribute('src') || ''));
       assert.equal(topServicePhotos.length, 4, 'Four topic-specific treatment cards are needed');
-      for (const name of ['nano-strokes-procedure.webp', 'lip-blush-procedure.webp', 'lash-lift-01.webp', 'brow-sculpt-01.webp']) {
+      for (const name of ['nano-strokes-procedure.webp', 'lip-blush-procedure.webp', 'lashes.jpg', 'brow-styling.webp']) {
         assert(topServicePhotos.some(src => src.includes(name)), 'Missing topic-matched homepage service photo ' + name);
       }
 
