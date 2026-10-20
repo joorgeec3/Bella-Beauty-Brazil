@@ -1,26 +1,17 @@
 import React from 'react';
 import { Calendar, ArrowRight } from 'lucide-react';
 import { SERVICES, Language, getLocalizedService } from '../data/siteData';
-import { siteAsset, siteImages } from '../data/siteImages';
+import { HomeTreatmentCard } from './HomeTreatmentCard';
+import { siteImages } from '../data/siteImages';
 
 interface ServicesSectionProps { onOpenAppointment: () => void; onNavigateToServices: (serviceId?: string) => void; language: Language; }
 
 export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenAppointment, onNavigateToServices, language }) => {
-  // Four distinct, topic-accurate treatment photos; the skin treatment is highlighted separately above.
-  const cardPhotos: Record<string, string> = {
-    'nano-strokes': siteImages.services.microblading,
-    'lip-blush': siteImages.services.lipBlush,
-    'lash-lift': siteImages.services.lashes,
-    waxing: siteImages.services.waxing,
-  };
-  const topServices = ['nano-strokes', 'lip-blush', 'lash-lift', 'waxing'].flatMap((id) => {
-    const service = SERVICES.find((item) => item.id === id);
-    return service ? [{
-      ...getLocalizedService(service, language),
-      image: cardPhotos[id],
-
-    }] : [];
-  });
+  // Each featured service uses its own approved gallery; never substitute images from another category.
+  const topServices = ['nano-strokes', 'lip-blush', 'lash-lift', 'waxing']
+    .map((id) => SERVICES.find((item) => item.id === id))
+    .filter((service): service is NonNullable<typeof service> => Boolean(service))
+    .map((service) => getLocalizedService(service, language));
   return <section className="relative bg-site py-16 lg:py-24 overflow-hidden border-b border-neutral-100">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16 reveal-on-scroll">
@@ -35,14 +26,12 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenAppointm
         <div className="w-16 h-0.5 bg-[#9a5967] mx-auto mt-4" />
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16 scroll-stagger">
-        {topServices.map((service, index) => <a key={service.id} href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/services/${service.id}`} onClick={(event) => { if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return; event.preventDefault(); onNavigateToServices(service.id); }} className={`group block relative h-96 rounded-2xl overflow-hidden reveal-scale shadow-lg cursor-pointer transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl reveal-on-scroll text-left ${index === 1 ? 'reveal-delay-1' : index === 2 ? 'reveal-delay-2' : index === 3 ? 'reveal-delay-3' : ''}`}>
-          <div className="absolute inset-0 overflow-hidden scroll-motion-layer" data-scroll-motion><img src={service.image} alt={service.title} className="service-card-image w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-110" loading="lazy" /></div>
-          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/20 group-hover:from-black/95 transition-all duration-300" />
-          <div className="absolute inset-0 p-6 flex flex-col justify-end text-white"><span className="text-[11px] font-bold tracking-widest text-amber-300 uppercase mb-1">{service.subtitle || 'Bella Beauty Treatment'}</span><h3 className="font-raleway text-xl font-bold uppercase tracking-wider text-white mb-2">{service.title}</h3><div className="w-8 h-0.5 bg-[#9a5967] mb-3 transition-all duration-300 group-hover:w-16" /><p className="font-montserrat text-xs text-neutral-300 line-clamp-3 leading-relaxed mb-4">{service.description}</p><span className="flex items-center text-xs font-semibold text-amber-200"><span>{language === 'en' ? 'View service' : language === 'pt' ? 'Ver serviço' : 'Ver servicio'}</span><ArrowRight className="w-3.5 h-3.5 ml-1" /></span></div>
-        </a>)}
+        {topServices.map((service, index) => (
+          <HomeTreatmentCard key={service.id} service={service} language={language} position={index} onNavigate={onNavigateToServices} />
+        ))}
       </div>
       {/* Skin Treatments — approved real procedure photo, with the lighter Bella Beauty palette. */}
-      <section aria-labelledby="skin-treatments-feature-heading" className="relative overflow-hidden rounded-[28px] border border-[#e6cdd3] bg-[#fbf3f3] shadow-xl mb-16 reveal-from-right">
+      <section id="skin-treatments-feature" aria-labelledby="skin-treatments-feature-heading" className="relative overflow-hidden rounded-[28px] border border-[#e6cdd3] bg-[#fbf3f3] shadow-xl mb-16 reveal-from-right">
         <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch">
           <div className="relative lg:col-span-6 min-h-[310px] sm:min-h-[410px] lg:min-h-[480px] overflow-hidden bg-[#e9d7d7]">
             <img
