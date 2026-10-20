@@ -43,25 +43,33 @@ try {
       assert.equal(await page.locator('.hero-cta-sequence button').count(), 3, 'Hero needs Book, Courses and Services');
       const banned = await page.locator('img').evaluateAll(images => images.map(image => image.getAttribute('src')).filter(src => /brows\.png|treatments\.png|brows-result-04|lashes-result-02/.test(src || '')));
       assert.deepEqual(banned, [], 'Client-requested removed photos remain in homepage/gallery');
-      const featurePhotos = await page.locator('.feature-card-image').evaluateAll(images => images.map(img => img.getAttribute('src') || ''));
-      assert.equal(featurePhotos.length, 2, 'The third feature is a non-photographic skin-care editorial, to avoid reusing the real procedure image');
-      assert(featurePhotos[0].includes('studio-behind-scenes-01.webp'), 'Brows feature should show an actual brow treatment');
-      assert(featurePhotos[1].includes('lashes-result-05.webp'), 'Lashes feature should show an actual lash treatment, not brows');
-      assert.equal(await page.locator('.service-editorial-image').count(), 1, 'Skin Treatments should have one hero photo');
-      assert((await page.locator('.service-editorial-image').getAttribute('src')).includes('dermaplaning-facial-treatment.webp'), 'Skin Treatments must show a real facial procedure rather than the empty treatment room');
-      const skinCard = page.locator('#skin-treatments-feature');
-      assert.equal(await skinCard.count(), 1, 'Premium Skin Treatments section is missing');
-      const treatmentNames = await skinCard.innerText();
-      for (const treatment of ['Dermaplaning', 'Microneedling', 'Facial Spa', 'Deluxe Facial']) {
-        assert(treatmentNames.includes(treatment), 'Skin Treatments should explain the service options: ' + treatment);
+      // Six concise signature services with client-approved English copy and relevant images.
+      const featureCards = page.locator('article').filter({ has: page.locator('.feature-card-image') });
+      const signatureCards = page.locator('section').filter({ hasText: 'Bella Beauty Signature Care' }).first().locator('article').filter({ hasText: /Cosmetic Tattooing|Brow Artistry|Lash Treatments|Skin Treatments|Teeth Whitening|Waxing/ });
+      assert.equal(await signatureCards.count(), 6, 'Signature Care must show all six requested service categories');
+      const sixNames = ['Cosmetic Tattooing', 'Brow Artistry', 'Lash Treatments', 'Skin Treatments', 'Teeth Whitening', 'Waxing'];
+      const sixCopy = [
+        'Nano Strokes • Powder Brows • Lip Blush • Cosmetic Tattoo Removal.',
+        'Brow Sculpting • Tinting • Brow Dye • Brow Lamination.',
+        'Lash Lift & Tint • Lash Extensions.',
+        'Dermaplaning • Microneedling • Facial Spa.',
+        'A brighter smile with professional teeth whitening.',
+        'Face & Body Waxing • Brazilian Waxing.',
+      ];
+      for (let i = 0; i < sixNames.length; i++) {
+        assert((await signatureCards.nth(i).innerText()).includes(sixCopy[i]), 'Signature copy differs from client-approved text for ' + sixNames[i]);
       }
-      assert(await skinCard.getByRole('link', { name: /Explore skin treatments|Ver tratamentos de pele|Ver tratamientos de piel/ }).isVisible(), 'Skin Treatments CTA unavailable');
+      const featurePhotos = await page.locator('.feature-card-image').evaluateAll(images => images.map(img => img.getAttribute('src') || ''));
+      assert.equal(featurePhotos.length, 5, 'Five real topical images, plus one photo-free whitening card');
+      for (const name of ['lips-result-01.webp', 'studio-behind-scenes-01.webp', 'lashes-result-05.webp', 'dermaplaning-facial-treatment.webp', 'waxing.png']) {
+        assert(featurePhotos.some(src => src.includes(name)), 'Missing relevant signature image ' + name);
+      }
+      assert.equal(await page.locator('.service-editorial-image').count(), 0, 'Do not duplicate the Skin Treatments photo further down the homepage');
       const topServicePhotos = await page.locator('.service-card-image').evaluateAll(images => images.map(img => img.getAttribute('src') || ''));
       assert.equal(topServicePhotos.length, 4, 'Four topic-specific treatment cards are needed');
-      for (const file of ['nano-strokes-procedure.webp', 'lip-blush-procedure.webp', 'lashes.jpg', 'waxing-treatment.webp']) {
-        assert(topServicePhotos.some(src => src.endsWith('/' + file)), 'Missing topic-matched homepage service photo: ' + file);
+      for (const name of ['nano-strokes-procedure.webp', 'lip-blush-procedure.webp', 'lashes.jpg', 'brow-styling.webp']) {
+        assert(topServicePhotos.some(src => src.includes(name)), 'Missing topic-matched homepage service photo ' + name);
       }
-      assert(!topServicePhotos.some(src => src.includes('dermaplaning-facial-treatment.webp')), 'Do not repeat facial treatment photo from featured section');
 
       // The client supplied three different Lip Blush photos: they must all be accessible in the home card.
       const lipCard = page.locator('[data-home-treatment="lip-blush"]');
@@ -89,7 +97,7 @@ try {
       // Full client-requested categories must be readable on phone, tablet and desktop.
       const signatureHead = page.locator('section').filter({ hasText: 'Bella Beauty Signature Care' }).locator('h2').first();
       const signatureCopy = (await signatureHead.innerText()).replace(/\s+/g, ' ').trim();
-      for (const name of ['Cosmetic Tattooing', 'Brows', 'Lashes', 'Skin Treatments', 'Waxing']) {
+      for (const name of ['Cosmetic Tattooing', 'Brows', 'Lashes', 'Skin Treatments', 'Teeth Whitening', 'Waxing']) {
         assert(signatureCopy.toLowerCase().includes(name.toLowerCase()), 'Signature heading is missing service category: ' + name);
       }
       // The first impression must not recycle treatment, founder, studio, gallery or result photos.
@@ -107,7 +115,7 @@ try {
       assert(homepagePhotos.length >= 25, 'Homepage photo selection is unexpectedly sparse');
       assert.equal(new Set(homepagePhotos).size, homepagePhotos.length, 'Homepage repeats photos between the first blocks or within a carousel: ' + homepagePhotos.filter((src, i) => homepagePhotos.indexOf(src) !== i).join(', '));
       assert.equal(await page.locator('#gallery [data-bella-gallery-card]').count(), await page.locator('#gallery [data-bella-gallery-card] img').count(), 'Gallery repeats cloned image cards');
-      assert.equal(await page.locator('#results .before-after-track img').count(), 10, 'All ten unique result photos should remain visible without cloned copies');
+      assert.equal(await page.locator('#results .before-after-track img').count(), 9, 'Nine unique results after reserving one Cosmetic Tattooing photo for the signature cards');
       await page.screenshot({ path: `qa-screenshots/${width}-home.png`, fullPage: true, animations: 'disabled', timeout: 15000 });
     });
 
