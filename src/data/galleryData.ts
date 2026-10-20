@@ -56,6 +56,8 @@ export const bellaGallery: BellaGalleryItem[] = uniqueImages([
  */
 const homepageFeaturedImageNames = new Set([
   'nano-strokes-procedure.webp',
+  'brow-styling.webp',
+  'brow-tools.webp',
   'lip-blush-procedure.webp',
   'lip-blush-palette.webp',
   'lip-blush-photography.webp',
