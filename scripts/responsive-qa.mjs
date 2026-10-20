@@ -205,6 +205,32 @@ try {
       await lipGallery.getByRole('button', { name: /Next photo|Próxima foto|Foto siguiente/ }).click();
       assert.notEqual(await lipGallery.locator('img').first().getAttribute('src'), before, 'Gallery arrows must change the selected photo');
       assert((await lipGallery.getByRole('link', { name: /Open full photo|Abrir foto inteira|Abrir foto completa/ }).count()) > 0, 'Full photo access missing');
+      // Client-approved Lip Blush copy, price and Timely CTA in all six responsive widths.
+      const lipMain = page.locator('#root main').first();
+      const lipText = await lipMain.innerText();
+      assert(lipText.includes('Enhance your natural lip colour and add definition with a shade selected especially for you.'), 'Preserve the original About this treatment intro');
+      assert(lipText.includes('Who may this treatment suit?'), 'Preserve the original suitability section');
+      assert(lipText.includes('For clients considering a softly enhanced lip tone'), 'Preserve the original suitability explanation');
+      assert(lipText.includes('A soft, natural finish'), 'Lip Blush replacement heading missing');
+      assert(lipText.includes('Lip Blush enhances your natural lip colour and gently defines the lip border. The shade is selected with you to suit your preferences. The healed result is a soft wash of colour rather than a full lipstick look.'), 'Exact Lip Blush description is missing');
+      assert(!lipText.includes('How is it different?'), 'Remove old Lip Blush difference section');
+      assert(!lipText.includes('Treatment description provided by Bella Beauty Brazil.'), 'Remove unwanted attribution from Lip Blush');
+      const lipBenefits = [
+        'Soft, natural-looking lip colour',
+        'More defined lip borders',
+        'Personalised shade selection',
+        'Colour appears stronger initially and softens as the lips heal',
+      ];
+      for (const benefit of lipBenefits) assert(lipText.includes(benefit), 'Missing approved Lip Blush benefit: ' + benefit);
+      const lipBooking = page.getByRole('heading', { name: 'Book this service', exact: true }).locator('..');
+      const lipBookingText = await lipBooking.innerText();
+      assert(lipBookingText.includes('A$630'), 'Keep Lip Blush price at A$630');
+      assert(lipBookingText.includes('Touch-up after 45–60 days: $120.'), 'Missing approved Lip Blush touch-up detail');
+      const lipBookingLink = lipBooking.getByRole('link', { name: /Book Your Appointment/i });
+      assert.equal(await lipBookingLink.count(), 1, 'Book Your Appointment button missing');
+      assert((await lipBookingLink.getAttribute('href'))?.includes('book.gettimely.com/bellabrazil/book/'), 'Timely booking destination changed');
+      assert(!lipBookingText.includes('Choose treatment on Timely'), 'Old Lip Blush booking label remains');
+
       await go('/services/shadow-brows');
       assert((await page.locator('#root main').first().innerText()).includes('Shading creates a softly filled-in appearance'), 'Full PDF-approved Shadow Brows description is missing');
       await go('/services/nano-strokes');
