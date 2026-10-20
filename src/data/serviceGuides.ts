@@ -19,9 +19,24 @@ export const SERVICE_GUIDES: Partial<Record<string, Record<Language, ServiceGuid
     es: { idealFor: 'Para quienes buscan tatuaje cosmético en cejas o labios y desean una consulta antes de elegir la técnica.', comparison: 'El tatuaje cosmético es una categoría, no un único procedimiento. Nano Strokes crea trazos similares al pelo en las cejas; Lip Blush es un servicio distinto de pigmentación de labios. Brow Sculpt & Hybrid Brow es diseño, no una cita de tatuaje confirmada.', question: '¿Qué servicio de tatuaje cosmético debo elegir?', answer: 'Consulta Nano Strokes y Lip Blush por separado y pregunta a Bella Beauty Brazil sobre idoneidad, color, preparación y cuidados. La disponibilidad aparece en Timely.' }
   },
   'brow-sculpt': {
-    en: { idealFor: 'For clients who want to refresh their natural brow outline through shaping without automatically adding a tint.', comparison: 'Brow Sculpt Signature is a shaping appointment. Brow Sculpt & Tint explicitly adds tint, while Brow Lamination, Shape & Tint is a separate lamination service.', question: 'Does Brow Sculpt Signature include tint?', answer: 'The published service title does not specify tint. Choose Brow Sculpt & Tint if tint is important, or confirm inclusions with Bella Beauty Brazil.' },
-    pt: { idealFor: 'Para quem quer renovar o formato das sobrancelhas naturais por meio de modelagem, sem incluir coloração automaticamente.', comparison: 'Brow Sculpt Signature é uma sessão de modelagem. Brow Sculpt & Tint inclui tintura no nome do serviço; Brow Lamination, Shape & Tint é um atendimento distinto.', question: 'Brow Sculpt Signature inclui tintura?', answer: 'A descrição publicada não especifica tintura. Considere Brow Sculpt & Tint se desejar coloração ou confirme os itens incluídos com o estúdio.' },
-    es: { idealFor: 'Para quienes quieren renovar la forma natural de sus cejas sin añadir tinte necesariamente.', comparison: 'Brow Sculpt Signature es una cita de diseño. Brow Sculpt & Tint indica tinte en el nombre; Brow Lamination, Shape & Tint es una cita distinta.', question: '¿Brow Sculpt Signature incluye tinte?', answer: 'El nombre publicado no especifica tinte. Elige Brow Sculpt & Tint si quieres color o consulta con el estudio.' }
+    en: {
+      idealFor: 'For anyone wanting tidier, more defined brows while keeping their natural colour and fullness.',
+      comparison: '',
+      question: 'Does Brow Sculpt include tint or dye?',
+      answer: 'No. Brow Sculpt focuses on shaping only. For added colour, please book Brow Sculpt & Tint or Brow Sculpt & Dye.'
+    },
+    pt: {
+      idealFor: 'Para quem deseja sobrancelhas mais alinhadas e definidas, mantendo a cor e o volume naturais.',
+      comparison: '',
+      question: 'Brow Sculpt inclui tintura ou dye?',
+      answer: 'Não. Brow Sculpt é apenas para modelagem. Se desejar cor, agende Brow Sculpt & Tint ou Brow Sculpt & Dye.'
+    },
+    es: {
+      idealFor: 'Para quienes desean unas cejas más cuidadas y definidas, manteniendo su color y densidad naturales.',
+      comparison: '',
+      question: '¿Brow Sculpt incluye tinte o dye?',
+      answer: 'No. Brow Sculpt se centra únicamente en el diseño. Para añadir color, reserva Brow Sculpt & Tint o Brow Sculpt & Dye.'
+    }
   },
   'classic-eyelashes': {
     en: { idealFor: 'For clients considering a more understated eyelash-extension appearance, subject to consultation about desired fullness and eye-area suitability.', comparison: 'Classic extensions apply a more subtle extension style than the denser Hybrid or Russian Volume options. Lash Lift & Tint instead works with natural lashes.', question: 'What is different about Classic eyelash extensions?', answer: 'Classic, Hybrid and Russian Volume are separately listed on Timely. Discuss the look you want, maintenance appointments and appropriate aftercare with the studio.' },

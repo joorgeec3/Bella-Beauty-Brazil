@@ -16,7 +16,7 @@ export const APPROVED_SERVICE_CATALOG: ApprovedCategory[] = [
   {
     id: 'brows', title: 'Brow Services',
     items: [
-      { name: 'Brow Sculpt Signature', aud: 56, description: "Personalised brow shaping with mapping, trimming, waxing and tweezing where needed. Defines your natural shape while preserving fullness. No colour included." },
+      { name: 'Brow Sculpt', aud: 56, description: "Personalised brow shaping with mapping, careful trimming, waxing and tweezing where needed. Each appointment enhances your natural shape while preserving fullness. Tint and dye are not included." },
       { name: 'Brow Sculpt & Tint', aud: 76, description: "Personalised shaping with traditional tint to enhance lighter brow hairs, creating a fuller-looking, naturally defined finish. Ideal for a subtle colour boost, with colour focused mainly on the hairs." },
       { name: 'Brow Sculpt & Hybrid Dye', aud: 79, description: "Personalised shaping with hybrid dye to colour the hairs and temporarily stain the skin, helping disguise gaps for a more defined, filled-in finish. Includes detailed colour application, with the intensity tailored to your preference." },
       { name: 'Brow Lamination, Shape & Tint', aud: 133, description: "Brow lamination softens and restructures your existing brow hairs, making them easier to reposition and style. By lifting and spreading the hairs, it can help narrow or uneven brows appear fuller and soften the appearance of small gaps where there is enough hair to work with. It also helps tame unruly or downward-growing hairs. Includes personalised shaping, tint and a conditioning treatment for a groomed finish. Fullness comes from repositioning your existing hairs; results depend on their length, density and condition." },
@@ -99,7 +99,7 @@ const APPROVED_NAMES_BY_SERVICE_ID: Record<string,string> = {
   "nano-strokes": "Microblading – Nano Strokes",
   "shadow-brows": "Shadow Brows",
   "lip-blush": "Lip Blush – Lip Tattooing",
-  "brow-sculpt": "Brow Sculpt Signature",
+  "brow-sculpt": "Brow Sculpt",
   "brow-sculpt-tint": "Brow Sculpt & Tint",
   "shadow-hybrid": "Brow Sculpt & Hybrid Dye",
   "brow-lamination": "Brow Lamination, Shape & Tint",

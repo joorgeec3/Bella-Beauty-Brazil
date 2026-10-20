@@ -231,6 +231,37 @@ try {
       assert((await lipBookingLink.getAttribute('href'))?.includes('book.gettimely.com/bellabrazil/book/'), 'Timely booking destination changed');
       assert(!lipBookingText.includes('Choose treatment on Timely'), 'Old Lip Blush booking label remains');
 
+      // Client-approved Brow Sculpt page: no Signature, no generic comparison, only requested benefits and FAQs.
+      await go('/services/brow-sculpt');
+      const browMain = page.locator('#root main').first();
+      const browText = await browMain.innerText();
+      assert((await page.getByRole('heading', { name: 'Brow Sculpt', exact: true }).count()) === 1, 'Service title must be Brow Sculpt, without Signature');
+      assert(!browText.includes('Brow Sculpt Signature'), 'Remove Signature throughout Brow Sculpt page');
+      const approvedBrowDescription = 'Personalised brow shaping with mapping, careful trimming, waxing and tweezing where needed. Each appointment enhances your natural shape while preserving fullness. Tint and dye are not included.';
+      assert(browText.includes(approvedBrowDescription), 'Brow Sculpt About this treatment copy differs from approved text');
+      assert(browText.includes('For anyone wanting tidier, more defined brows while keeping their natural colour and fullness.'), 'Brow Sculpt suitability copy differs from approved text');
+      assert(!browText.includes('Treatment description provided by Bella Beauty Brazil.'), 'Remove Brow Sculpt attribution');
+      assert(!browText.includes('How is it different?'), 'Remove generic comparison heading on Brow Sculpt');
+      for (const benefit of ['Personalised brow mapping', 'A tidy, defined shape', 'Natural fullness preserved']) {
+        assert(browText.includes(benefit), 'Missing approved Brow Sculpt benefit: ' + benefit);
+      }
+      assert(!browText.includes('Official Timely booking'), 'Remove irrelevant Brow Sculpt benefit');
+      const browFaq1 = browMain.locator('details').filter({ hasText: 'What should I avoid before my appointment?' });
+      assert.equal(await browFaq1.count(), 1, 'Brow Sculpt preparation FAQ missing');
+      assert((await browFaq1.innerText()).includes('Avoid applying retinol, AHAs, BHAs or other exfoliating acids around your brows before your appointment, as these can make the skin more sensitive to waxing. Please let me know if you use these products or any prescription skin treatments so I can advise on suitable timing.'), 'Brow Sculpt preparation FAQ answer must be exact');
+      const browFaq2 = browMain.locator('details').filter({ hasText: 'Does Brow Sculpt include tint or dye?' });
+      assert.equal(await browFaq2.count(), 1, 'Brow Sculpt dye FAQ missing');
+      await browFaq2.locator('summary').click();
+      assert(await browFaq2.locator('p').isVisible(), 'Opening the Brow Sculpt dye FAQ must reveal its answer');
+      assert((await browFaq2.locator('p').innerText()).includes('No. Brow Sculpt focuses on shaping only. For added colour, please book Brow Sculpt & Tint or Brow Sculpt & Dye.'), 'Brow Sculpt dye FAQ answer is not exact');
+      assert(!browText.includes('What should I know before booking?'), 'Remove generic FAQ on Brow Sculpt');
+      assert(!browText.includes('Where can I confirm the latest price?'), 'Remove redundant price FAQ on Brow Sculpt');
+      const browBooking = page.getByRole('heading', { name: 'Book this service', exact: true }).locator('..');
+      assert((await browBooking.innerText()).includes('A$56'), 'Keep the existing Brow Sculpt price A$56');
+      const browBookingButton = browBooking.getByRole('link', { name: /Book Your Appointment/i });
+      assert.equal(await browBookingButton.count(), 1, 'Brow Sculpt booking button must say Book Your Appointment');
+      assert((await browBookingButton.getAttribute('href'))?.includes('book.gettimely.com/bellabrazil/book/'), 'Brow Sculpt Timely destination must not change');
+
       await go('/services/shadow-brows');
       const shadowMain = page.locator('#root main').first();
       const shadowText = await shadowMain.innerText();

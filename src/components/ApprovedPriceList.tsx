@@ -10,7 +10,7 @@ const approvedServiceRoutes: Record<string,string> = {
   "Shadow Brows": "shadow-brows",
   "Lip Blush – Lip Tattooing": "lip-blush",
   "Cosmetic Tattoo Removal": "cosmetic-tattoo-removal",
-  "Brow Sculpt Signature": "brow-sculpt",
+  "Brow Sculpt": "brow-sculpt",
   "Brow Sculpt & Tint": "brow-sculpt-tint",
   "Brow Sculpt & Hybrid Dye": "shadow-hybrid",
   "Brow Lamination, Shape & Tint": "brow-lamination",
