@@ -170,7 +170,7 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
             <section className="bg-white rounded-2xl border border-[#e8d6d5] p-6 sm:p-10 shadow-sm scroll-rise">
               <h2 className="font-raleway text-2xl sm:text-3xl font-bold uppercase tracking-wider text-[#5b3239]">{translated(language, 'About this treatment', 'Sobre este tratamento', 'Sobre este tratamiento')}</h2>
               <p className="font-montserrat text-neutral-700 leading-relaxed mt-4">{language === 'en' ? (approvedDescriptionFor(base.id) || service.description) : service.description}</p>
-              {!['nano-strokes', 'lip-blush'].includes(base.id) && language === 'en' && approvedDescriptionFor(base.id) && <p className="font-montserrat text-xs text-[#846f75] mt-3">Treatment description provided by Bella Beauty Brazil.</p>}
+              {!['nano-strokes', 'lip-blush', 'shadow-brows'].includes(base.id) && language === 'en' && approvedDescriptionFor(base.id) && <p className="font-montserrat text-xs text-[#846f75] mt-3">Treatment description provided by Bella Beauty Brazil.</p>}
               {guide && <>
                 <h3 className="font-raleway text-xl font-bold text-[#5b3239] mt-8">{translated(language, 'Who may this treatment suit?', 'Para quem este tratamento pode ser indicado?', '¿Para quién puede ser adecuado este tratamiento?')}</h3>
                 <p className="font-montserrat text-neutral-700 leading-relaxed mt-3">{guide.idealFor}</p>
@@ -205,11 +205,15 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
               </>}
               <h3 className="font-raleway text-xl font-bold text-[#5b3239] mt-8">{translated(language, 'Benefits and what to expect', 'Benefícios e o que esperar', 'Beneficios y qué esperar')}</h3>
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
-                {(base.id === 'lip-blush' && language !== 'en'
+                {(base.id === 'shadow-brows' && language !== 'en'
                   ? (language === 'pt'
-                    ? ['Cor suave e natural para os lábios', 'Contorno dos lábios mais definido', 'Escolha personalizada do tom', 'A cor fica mais intensa no início e suaviza durante a cicatrização']
-                    : ['Color de labios suave y natural', 'Contorno de labios más definido', 'Elección personalizada del tono', 'El color se ve más intenso al principio y se suaviza durante la cicatrización'])
-                  : (service.benefits || [])).map((benefit) => <li key={benefit} className="flex items-start gap-2 text-sm font-montserrat text-neutral-700"><CheckCircle2 className="w-4 h-4 text-[#9a5967] shrink-0 mt-0.5" />{benefit}</li>)}
+                    ? ['Acabamento suave e sombreado', 'Formato e cor das sobrancelhas personalizados', 'A cor fica mais intensa no início e suaviza durante a cicatrização']
+                    : ['Acabado suave y sombreado', 'Forma y color de cejas personalizados', 'El color se ve más intenso al principio y se suaviza mientras las cejas cicatrizan'])
+                  : base.id === 'lip-blush' && language !== 'en'
+                    ? (language === 'pt'
+                      ? ['Cor suave e natural para os lábios', 'Contorno dos lábios mais definido', 'Escolha personalizada do tom', 'A cor fica mais intensa no início e suaviza durante a cicatrização']
+                      : ['Color de labios suave y natural', 'Contorno de labios más definido', 'Elección personalizada del tono', 'El color se ve más intenso al principio y se suaviza durante la cicatrización'])
+                    : (service.benefits || [])).map((benefit) => <li key={benefit} className="flex items-start gap-2 text-sm font-montserrat text-neutral-700"><CheckCircle2 className="w-4 h-4 text-[#9a5967] shrink-0 mt-0.5" />{benefit}</li>)}
               </ul>
             </section>
             <section className="bg-[#f3d9d0] rounded-2xl border border-[#e8c5c8] p-6 sm:p-10 scroll-rise">
@@ -218,18 +222,29 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
             </section>
             <section className="space-y-3">
               <h2 className="font-raleway text-2xl font-bold uppercase tracking-wider text-[#5b3239]">FAQ</h2>
-              <details className="bg-white border border-[#e8d6d5] rounded-xl p-5" open><summary className="font-montserrat font-bold text-[#5b3239] cursor-pointer">{translated(language, 'What should I know before booking?', 'O que devo saber antes de agendar?', '¿Qué debo saber antes de reservar?')}</summary><p className="font-montserrat text-sm text-neutral-700 leading-relaxed mt-3">{groupCopy.faq}</p></details>
+              <details className="bg-white border border-[#e8d6d5] rounded-xl p-5" open><summary className="font-montserrat font-bold text-[#5b3239] cursor-pointer">
+                {base.id === 'shadow-brows'
+                  ? translated(language, 'Is Shadow Brows the same as brow dye?', 'Shadow Brows é o mesmo que tintura para sobrancelhas?', '¿Shadow Brows es lo mismo que un tinte de cejas?')
+                  : translated(language, 'What should I know before booking?', 'O que devo saber antes de agendar?', '¿Qué debo saber antes de reservar?')}
+              </summary><p className="font-montserrat text-sm text-neutral-700 leading-relaxed mt-3">
+                {base.id === 'shadow-brows'
+                  ? translated(language,
+                      'No. Shadow Brows is a cosmetic tattooing treatment that creates a soft, shaded brow effect. Brow dye temporarily colours the existing hairs and can also stain the skin.',
+                      'Não. Shadow Brows é um tratamento de tatuagem cosmética que cria um efeito suave e sombreado nas sobrancelhas. A tintura colore temporariamente os fios existentes e também pode pigmentar a pele.',
+                      'No. Shadow Brows es un tratamiento de tatuaje cosmético que crea un efecto suave y sombreado en las cejas. El tinte colorea temporalmente los vellos existentes y también puede teñir la piel.')
+                  : groupCopy.faq}
+              </p></details>
               {guide && base.id !== 'nano-strokes' && <details className="bg-white border border-[#e8d6d5] rounded-xl p-5"><summary className="font-montserrat font-bold text-[#5b3239] cursor-pointer">{guide.question}</summary><p className="font-montserrat text-sm text-neutral-700 leading-relaxed mt-3">{guide.answer}</p></details>}
-              <details className="bg-white border border-[#e8d6d5] rounded-xl p-5"><summary className="font-montserrat font-bold text-[#5b3239] cursor-pointer">{translated(language, 'Where can I confirm the latest price?', 'Onde confirmar o preço atual?', '¿Dónde puedo confirmar el precio actual?')}</summary><p className="font-montserrat text-sm text-neutral-700 leading-relaxed mt-3">{isPriceConfirmed ? translated(language, 'The price and duration shown reflect the service catalogue recorded for this website. Prices and availability may change; the official Timely page is the final reference when booking.', 'O preço e a duração apresentados refletem o catálogo registrado para este site. Eles podem mudar; consulte o Timely oficial para o valor e a disponibilidade atualizados.', 'El precio y la duración corresponden al catálogo registrado para este sitio. Pueden cambiar; consulta el Timely oficial para conocer el precio y la disponibilidad actual.') : translated(language, 'No price is displayed here because it was not confirmed in the available catalogue. Please enquire through Timely.', 'Nenhum preço é exibido porque não foi confirmado no catálogo disponível. Consulte pelo Timely.', 'No se muestra precio porque no fue confirmado en el catálogo disponible. Consulta por Timely.')}</p></details>
+              {base.id !== 'shadow-brows' && <details className="bg-white border border-[#e8d6d5] rounded-xl p-5"><summary className="font-montserrat font-bold text-[#5b3239] cursor-pointer">{translated(language, 'Where can I confirm the latest price?', 'Onde confirmar o preço atual?', '¿Dónde puedo confirmar el precio actual?')}</summary><p className="font-montserrat text-sm text-neutral-700 leading-relaxed mt-3">{isPriceConfirmed ? translated(language, 'The price and duration shown reflect the service catalogue recorded for this website. Prices and availability may change; the official Timely page is the final reference when booking.', 'O preço e a duração apresentados refletem o catálogo registrado para este site. Eles podem mudar; consulte o Timely oficial para o valor e a disponibilidade atualizados.', 'El precio y la duración corresponden al catálogo registrado para este sitio. Pueden cambiar; consulta el Timely oficial para conocer el precio y la disponibilidad actual.') : translated(language, 'No price is displayed here because it was not confirmed in the available catalogue. Please enquire through Timely.', 'Nenhum preço é exibido porque não foi confirmado no catálogo disponível. Consulte pelo Timely.', 'No se muestra precio porque no fue confirmado en el catálogo disponible. Consulta por Timely.')}</p></details>}
             </section>
           </div>
           <aside className="lg:col-span-4 space-y-5">
             <div className="bg-[#5b3239] text-white rounded-2xl p-6 sm:p-8 shadow-lg sticky top-28">
               <h2 className="font-raleway text-2xl font-bold uppercase tracking-wider">{translated(language, 'Book this service', 'Agende este serviço', 'Reserva este servicio')}</h2>
               <div className="flex items-center gap-3 mt-5 text-[#efb7c8]"><Calendar className="w-5 h-5" /><strong className="font-montserrat text-xl">{isPriceConfirmed ? `A$${service.price}` : translated(language, 'Enquire', 'Consultar', 'Consultar')}</strong></div>
-              {(base.id === 'nano-strokes' || base.id === 'lip-blush') && <p className="mt-3 font-montserrat text-sm font-medium leading-relaxed text-white/95">{translated(language, 'Touch-up after 45–60 days: $120.', 'Retoque após 45–60 dias: $120.', 'Retoque después de 45–60 días: $120.')}</p>}
+              {['nano-strokes', 'lip-blush', 'shadow-brows'].includes(base.id) && <p className="mt-3 font-montserrat text-sm font-medium leading-relaxed text-white/95">{translated(language, 'Touch-up after 45–60 days: $120.', 'Retoque após 45–60 dias: $120.', 'Retoque después de 45–60 días: $120.')}</p>}
               {service.duration && <div className="flex items-center gap-3 mt-3 text-neutral-200"><Clock className="w-5 h-5" /><span className="font-montserrat text-sm">{service.duration}</span></div>}
-              <a href={getServiceBookingUrl(base.id)}  className="mt-7 inline-flex w-full items-center justify-center gap-2 bg-[#efb7c8] hover:bg-white text-[#5b3239] text-xs font-bold uppercase tracking-widest px-5 py-4 rounded-full cursor-pointer transition-colors"><Calendar className="w-4 h-4" />{(base.id === 'nano-strokes' || base.id === 'lip-blush')
+              <a href={getServiceBookingUrl(base.id)}  className="mt-7 inline-flex w-full items-center justify-center gap-2 bg-[#efb7c8] hover:bg-white text-[#5b3239] text-xs font-bold uppercase tracking-widest px-5 py-4 rounded-full cursor-pointer transition-colors"><Calendar className="w-4 h-4" />{['nano-strokes', 'lip-blush', 'shadow-brows'].includes(base.id)
                 ? translated(language, 'Book Your Appointment', 'Agende seu horário', 'Reserva tu cita')
                 : SERVICE_BOOKING_LINKS[base.id]
                   ? translated(language, 'Book this treatment', 'Agendar este tratamento', 'Reservar este tratamiento')
