@@ -211,7 +211,7 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
           <aside className="lg:col-span-4 space-y-5">
             <div className="bg-[#5b3239] text-white rounded-2xl p-6 sm:p-8 shadow-lg sticky top-28">
               <h2 className="font-raleway text-2xl font-bold uppercase tracking-wider">{translated(language, 'Book this service', 'Agende este serviço', 'Reserva este servicio')}</h2>
-              <div className="flex items-center gap-3 mt-5 text-[#efb7c8]"><Calendar className="w-5 h-5" /><strong className="font-montserrat text-xl">{isPriceConfirmed ? `A${service.price}` : translated(language, 'Enquire', 'Consultar', 'Consultar')}</strong></div>
+              <div className="flex items-center gap-3 mt-5 text-[#efb7c8]"><Calendar className="w-5 h-5" /><strong className="font-montserrat text-xl">{isPriceConfirmed ? `A$${service.price}` : translated(language, 'Enquire', 'Consultar', 'Consultar')}</strong></div>
               {base.id === 'nano-strokes' && <p className="mt-3 font-montserrat text-sm font-medium leading-relaxed text-white/95">{translated(language, 'Touch-up after 45–60 days: $120.', 'Retoque após 45–60 dias: $120.', 'Retoque después de 45–60 días: $120.')}</p>}
               {service.duration && <div className="flex items-center gap-3 mt-3 text-neutral-200"><Clock className="w-5 h-5" /><span className="font-montserrat text-sm">{service.duration}</span></div>}
               <a href={getServiceBookingUrl(base.id)}  className="mt-7 inline-flex w-full items-center justify-center gap-2 bg-[#efb7c8] hover:bg-white text-[#5b3239] text-xs font-bold uppercase tracking-widest px-5 py-4 rounded-full cursor-pointer transition-colors"><Calendar className="w-4 h-4" />{base.id === 'nano-strokes'
