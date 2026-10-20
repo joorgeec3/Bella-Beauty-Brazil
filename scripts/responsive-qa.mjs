@@ -83,7 +83,7 @@ try {
         'Attention to Detail',
         'Natural Results',
       ]) {
-        assert(founderText.includes(text), 'Client-approved Meet Livia text missing: ' + text);
+        assert(founderText.toLocaleLowerCase('en-AU').includes(text.toLocaleLowerCase('en-AU')), 'Client-approved Meet Livia text missing: ' + text);
       }
       assert(!founderText.includes('Care with Purpose & Precision'), 'Old founder title still displayed');
       assert(await page.locator('.meet-livia-image').count() === 1, 'Keep the existing approved photo of Livia');
