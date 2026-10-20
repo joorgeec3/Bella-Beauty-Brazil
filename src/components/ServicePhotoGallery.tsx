@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ArrowLeft, ArrowRight, ExternalLink, Images } from 'lucide-react';
 import { Language } from '../data/siteData';
 import { siteImages } from '../data/siteImages';
@@ -45,6 +45,9 @@ export const getServicePhotos = (serviceId: string): TreatmentPhoto[] => grouped
 export const ServicePhotoGallery: React.FC<{ serviceId: string; language: Language }> = ({ serviceId, language }) => {
   const photos = getServicePhotos(serviceId);
   const [index, setIndex] = useState(0);
+  // Switching between related services should always open at the first real photo.
+  // The router reuses this component, so local state otherwise leaks across treatments.
+  useEffect(() => setIndex(0), [serviceId]);
   if (!photos.length) return null;
   const labels = {
     en: { heading: 'Real photos from the studio', lead: 'Browse the photos supplied by Bella Beauty Brazil.', prev: 'Previous photo', next: 'Next photo', full: 'Open full photo', note: 'Brow styling photographs show the studio and technique, not a promised result for a particular tint or tattoo service.' },
