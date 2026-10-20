@@ -5,6 +5,7 @@ import { siteImages } from '../data/siteImages';
 import { SERVICE_GUIDES } from '../data/serviceGuides';
 import { approvedDescriptionFor } from '../data/approvedServiceCatalog';
 import { ServicePhotoGallery, getServicePhotos } from '../components/ServicePhotoGallery';
+import { ServiceVideoGallery } from '../components/ServiceVideoGallery';
 
 interface ServiceDetailViewProps {
   serviceId: string;
@@ -164,6 +165,7 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
       </section>
 
       <ServicePhotoGallery serviceId={base.id} language={language} />
+      <ServiceVideoGallery serviceId={base.id} language={language} />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
