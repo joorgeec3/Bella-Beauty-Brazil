@@ -225,7 +225,7 @@ try {
       assert((await nanoIntro.getByRole('heading', { name: 'How does it work?' }).count()) === 1, 'Rename Nano Strokes explanation section');
       assert(nanoText.includes('Using a manual Tebori tool, I create fine, hair-like strokes that blend with your natural brow hairs. Each brow pattern is individually designed to complement your features, add definition and fill sparse areas.'), 'Client-supplied How does it work? text is not exact');
       assert(!nanoText.includes('How is it different?') && !nanoText.includes('Brow Sculpt & Tint') && !nanoText.includes('Hybrid Brows') && !nanoText.includes('published Timely catalogue'), 'Remove the old comparison section and unrelated brow treatments');
-      const nanoBooking = nanoMain.locator('aside').first();
+      const nanoBooking = page.getByRole('heading', { name: 'Book this service', exact: true }).locator('..');
       const bookingText = await nanoBooking.innerText();
       assert(bookingText.includes('A$630'), 'Nano Strokes initial treatment price must remain A$630');
       assert(bookingText.includes('Touch-up after 45–60 days: $120.'), 'Missing 45–60 day touch-up price');
