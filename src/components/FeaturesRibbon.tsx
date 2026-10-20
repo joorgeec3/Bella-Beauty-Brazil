@@ -1,5 +1,5 @@
 import React from 'react';
-import { Award, Eye, ShieldCheck, Sparkles } from 'lucide-react';
+import { Award, Eye, ShieldCheck, Sparkles, Smile, Heart, Droplets } from 'lucide-react';
 import { Language } from '../data/siteData';
 import { siteImages } from '../data/siteImages';
 
@@ -9,31 +9,52 @@ interface FeatureCardData { image?: string; icon: React.ReactNode; label: string
 export const FeaturesRibbon: React.FC<FeaturesRibbonProps> = ({ language }) => {
   const cards: FeatureCardData[] = [
     {
+      image: `${import.meta.env.BASE_URL}assets/bella/gallery/lips-result-01.webp`,
+      icon: <Sparkles className="w-3 h-3 text-[#efb7c8]" />,
+      label: language === 'en' ? 'Cosmetic · Artistry' : language === 'pt' ? 'Tatuagem · Beleza' : 'Tatuaje · Belleza',
+      title: 'Cosmetic Tattooing',
+      text: language === 'en' ? 'Nano Strokes • Powder Brows • Lip Blush • Cosmetic Tattoo Removal.' : language === 'pt' ? 'Nano Strokes • Powder Brows • Lip Blush • Remoção de Tatuagem Cosmética.' : 'Nano Strokes • Powder Brows • Lip Blush • Eliminación de Tatuaje Cosmético.',
+      footer: language === 'en' ? 'Cosmetic tattoo treatments' : language === 'pt' ? 'Tatuagem cosmética' : 'Tatuaje cosmético',
+    },
+    {
       image: `${import.meta.env.BASE_URL}assets/bella/gallery/studio-behind-scenes-01.webp`,
-      icon: <Sparkles className="w-3 h-3 text-[#9a5967]" />,
+      icon: <Sparkles className="w-3 h-3 text-[#efb7c8]" />,
       label: language === 'en' ? 'Brows · Technique' : language === 'pt' ? 'Sobrancelhas · Técnica' : 'Cejas · Técnica',
-      title: language === 'en' ? 'Brow Artistry' : language === 'pt' ? 'Arte para sobrancelhas' : 'Arte para cejas',
-      text: language === 'en' ? 'Sculpting, tinting, lamination and hybrid brow styling tailored to your features.' : language === 'pt' ? 'Design, tintura, laminação e brow híbrida adaptados às suas características.' : 'Diseño, tinte, laminado y cejas híbridas adaptadas a tus rasgos.',
-      footer: language === 'en' ? 'Personalised care' : language === 'pt' ? 'Cuidado personalizado' : 'Cuidado personalizado',
+      title: 'Brow Artistry',
+      text: language === 'en' ? 'Brow Sculpting • Tinting • Brow Dye • Brow Lamination.' : language === 'pt' ? 'Design de sobrancelhas • Tintura • Brow Dye • Laminação.' : 'Diseño de cejas • Tinte • Brow Dye • Laminado.',
+      footer: language === 'en' ? 'Personalised brow care' : language === 'pt' ? 'Cuidado das sobrancelhas' : 'Cuidado de cejas',
     },
     {
-      // A dedicated lash-result photo is used here once, not repeated in the carousel below.
-      // Real lash-lift results, not a brow before/after photograph.
       image: `${import.meta.env.BASE_URL}assets/bella/gallery/lashes-result-05.webp`,
-      icon: <Eye className="w-3 h-3 text-[#9a5967]" />,
+      icon: <Eye className="w-3 h-3 text-[#efb7c8]" />,
       label: language === 'en' ? 'Lashes · Definition' : language === 'pt' ? 'Cílios · Definição' : 'Pestañas · Definición',
-      title: language === 'en' ? 'Lash Treatments' : language === 'pt' ? 'Tratamentos para cílios' : 'Tratamientos de pestañas',
-      text: language === 'en' ? 'Lash lift, tinting and extension services to frame the eyes.' : language === 'pt' ? 'Lash lift, tintura e extensões para realçar o olhar.' : 'Lash lift, tinte y extensiones para realzar la mirada.',
-      footer: language === 'en' ? 'Care for your eyes' : language === 'pt' ? 'Cuidado para o olhar' : 'Cuidado para la mirada',
+      title: 'Lash Treatments',
+      text: language === 'en' ? 'Lash Lift & Tint • Lash Extensions.' : language === 'pt' ? 'Lash Lift & Tint • Extensões de cílios.' : 'Lash Lift & Tint • Extensiones de pestañas.',
+      footer: language === 'en' ? 'Natural lashes & extensions' : language === 'pt' ? 'Cílios naturais e extensões' : 'Pestañas naturales y extensiones',
     },
     {
-      // Keep the one approved real facial-treatment photograph for the larger Skin Treatments section.
-      // This editorial visual is deliberately non-photographic so that no image repeats on the home page.
-      icon: <ShieldCheck className="w-3 h-3 text-[#9a5967]" />,
+      image: `${import.meta.env.BASE_URL}assets/bella/dermaplaning-facial-treatment.webp`,
+      icon: <Droplets className="w-3 h-3 text-[#efb7c8]" />,
       label: language === 'en' ? 'Skin · Care' : language === 'pt' ? 'Pele · Cuidado' : 'Piel · Cuidado',
-      title: language === 'en' ? 'Skin Treatments' : language === 'pt' ? 'Tratamentos para a pele' : 'Tratamientos para la piel',
-      text: language === 'en' ? 'Dermaplaning, microneedling, Facial Spa and Deluxe Facial services published in Timely.' : language === 'pt' ? 'Dermaplaning, microneedling, Facial Spa e Deluxe Facial publicados no Timely.' : 'Dermaplaning, microneedling, Facial Spa y Deluxe Facial publicados en Timely.',
-      footer: language === 'en' ? 'Professional protocols' : language === 'pt' ? 'Protocolos profissionais' : 'Protocolos profesionales',
+      title: 'Skin Treatments',
+      text: language === 'en' ? 'Dermaplaning • Microneedling • Facial Spa.' : language === 'pt' ? 'Dermaplaning • Microagulhamento • Facial Spa.' : 'Dermaplaning • Microneedling • Facial Spa.',
+      footer: language === 'en' ? 'Facial skin care' : language === 'pt' ? 'Cuidados faciais' : 'Cuidado facial',
+    },
+    {
+      // No verified whitening treatment photo has been supplied. Do not use another service's image.
+      icon: <Smile className="w-3 h-3 text-[#efb7c8]" />,
+      label: language === 'en' ? 'Smile · Care' : language === 'pt' ? 'Sorriso · Cuidado' : 'Sonrisa · Cuidado',
+      title: 'Teeth Whitening',
+      text: language === 'en' ? 'A brighter smile with professional teeth whitening.' : language === 'pt' ? 'Um sorriso mais iluminado com clareamento dental profissional.' : 'Una sonrisa más luminosa con blanqueamiento dental profesional.',
+      footer: language === 'en' ? 'Professional teeth whitening' : language === 'pt' ? 'Clareamento dental' : 'Blanqueamiento dental',
+    },
+    {
+      image: `${import.meta.env.BASE_URL}assets/bella/waxing.png`,
+      icon: <Heart className="w-3 h-3 text-[#efb7c8]" />,
+      label: language === 'en' ? 'Waxing · Care' : language === 'pt' ? 'Depilação · Cuidado' : 'Depilación · Cuidado',
+      title: 'Waxing',
+      text: language === 'en' ? 'Face & Body Waxing • Brazilian Waxing.' : language === 'pt' ? 'Depilação facial e corporal • Depilação brasileira.' : 'Depilación facial y corporal • Depilación brasileña.',
+      footer: language === 'en' ? 'Face & body' : language === 'pt' ? 'Rosto e corpo' : 'Rostro y cuerpo',
     },
   ];
 
@@ -42,15 +63,11 @@ export const FeaturesRibbon: React.FC<FeaturesRibbonProps> = ({ language }) => {
       <div className="text-center max-w-2xl mx-auto mb-10 reveal-on-scroll">
         <span className="text-xs font-bold uppercase tracking-widest text-[#efb7c8] block mb-1">{language === 'en' ? 'Bella Beauty Signature Care' : language === 'pt' ? 'Assinatura Bella Beauty' : 'Cuidado exclusivo Bella Beauty'}</span>
         <h2 className="font-raleway text-[21px] leading-snug sm:text-2xl lg:text-3xl font-light uppercase tracking-[0.04em] text-white max-w-5xl mx-auto">
-          {language === 'en'
-            ? <>Cosmetic Tattooing, Brows, Lashes,{' '}<span className="block font-semibold text-[#efb7c8] mt-1">Skin Treatments &amp; Waxing</span></>
-            : language === 'pt'
-              ? <>Tatuagem Cosmética, Sobrancelhas, Cílios,{' '}<span className="block font-semibold text-[#efb7c8] mt-1">Tratamentos de Pele e Depilação</span></>
-              : <>Tatuaje Cosmético, Cejas, Pestañas,{' '}<span className="block font-semibold text-[#efb7c8] mt-1">Tratamientos de Piel y Depilación</span></>}
+          {language === 'en' ? <>Cosmetic Tattooing, Brows, Lashes,<span className="block font-semibold text-[#efb7c8] mt-1">Skin Treatments, Teeth Whitening &amp; Waxing</span></> : language === 'pt' ? <>Tatuagem Cosmética, Sobrancelhas, Cílios,<span className="block font-semibold text-[#efb7c8] mt-1">Tratamentos de Pele, Clareamento Dental e Depilação</span></> : <>Tatuaje Cosmético, Cejas, Pestañas,<span className="block font-semibold text-[#efb7c8] mt-1">Tratamientos de Piel, Blanqueamiento Dental y Depilación</span></>}
         </h2>
         <div className="w-16 h-0.5 bg-[#9a5967] mx-auto mt-3" />
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto gap-6 lg:gap-8 items-stretch scroll-stagger">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto gap-4 sm:gap-6 lg:gap-7 items-stretch scroll-stagger">
         {cards.map((card) => <FeatureCard key={card.title} {...card} />)}
       </div>
       <div className="mt-14 pt-10 border-t border-[#9a5967]/25 reveal-from-left">
@@ -80,21 +97,26 @@ export const FeaturesRibbon: React.FC<FeaturesRibbonProps> = ({ language }) => {
   </section>;
 };
 
-const FeatureCard: React.FC<FeatureCardData> = ({ image, icon, label, title, text, footer }) => <article className="flex flex-col bg-[#22181b] reveal-scale rounded-3xl p-5 border border-[#9a5967]/30 shadow-xl transition-transform duration-300 hover:-translate-y-1">
-  <div className="relative w-full aspect-4/5 rounded-2xl overflow-hidden bg-[#181214] mb-5 shadow-lg border border-[#9a5967]/20 scroll-motion-layer" data-scroll-motion>
+const FeatureCard: React.FC<FeatureCardData> = ({ image, icon, label, title, text, footer }) => <article className="flex flex-row sm:flex-col min-h-[190px] sm:min-h-0 bg-[#22181b] reveal-scale rounded-2xl sm:rounded-3xl p-3 sm:p-4 border border-[#9a5967]/30 shadow-xl transition-transform duration-300 hover:-translate-y-1">
+  <div className="relative w-[43%] shrink-0 sm:w-full min-h-[160px] sm:min-h-0 sm:aspect-[5/4] rounded-xl sm:rounded-2xl overflow-hidden bg-[#181214] sm:mb-4 shadow-lg border border-[#9a5967]/20 scroll-motion-layer" data-scroll-motion>
     {image
       ? <img src={image} alt={title} className="feature-card-image w-full h-full object-cover object-center transition-transform duration-700 hover:scale-105" loading="lazy" />
-      : <div className="w-full h-full flex flex-col items-center justify-center gap-5 bg-gradient-to-br from-[#70424f] via-[#4e313d] to-[#21191d] px-6" role="img" aria-label={title}>
-          <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-full border border-[#efb7c8]/50 bg-white/10 flex items-center justify-center shadow-xl">
-            <ShieldCheck aria-hidden="true" className="w-14 h-14 sm:w-16 sm:h-16 text-[#f8d1dd]" strokeWidth={1.25} />
+      : <div className="w-full h-full min-h-[160px] flex flex-col items-center justify-center gap-3 bg-gradient-to-br from-[#70424f] via-[#4e313d] to-[#21191d] px-3" role="img" aria-label={title}>
+          <div className="w-20 h-20 rounded-full border border-[#efb7c8]/50 bg-white/10 flex items-center justify-center shadow-xl">
+            <Smile aria-hidden="true" className="w-10 h-10 text-[#f8d1dd]" strokeWidth={1.25} />
           </div>
-          <span className="font-raleway font-semibold text-center text-xl uppercase tracking-widest text-white/90">{title}</span>
-          <span className="h-px w-16 bg-[#efb7c8]/60" aria-hidden="true" />
+          <span className="font-raleway text-sm uppercase tracking-widest text-white/85">Bella Beauty</span>
         </div>}
-    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30" />
-    <span className="absolute top-3 left-3 inline-flex items-center gap-1.5 bg-black/75 text-amber-200 text-[10px] font-bold px-2.5 py-1 rounded-full border border-amber-300/30">{icon}{label}</span>
+    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
+    <span className="absolute top-2 left-2 inline-flex items-center gap-1 rounded-full border border-[#efb7c8]/20 bg-black/75 px-2 py-1 text-[9px] sm:text-[10px] font-semibold text-amber-100">{icon}<span>{label}</span></span>
   </div>
-  <div className="text-center flex-grow flex flex-col justify-between"><div><h3 className="font-raleway text-lg sm:text-xl font-bold tracking-wide uppercase text-white mb-2">{title}</h3><p className="font-montserrat text-neutral-300 text-xs sm:text-sm leading-relaxed">{text}</p></div><div className="mt-4 pt-3 border-t border-white/10"><span className="text-[11px] font-bold uppercase tracking-widest text-[#9a5967]">{footer}</span></div></div>
+  <div className="min-w-0 flex-1 px-3 py-2 sm:p-1 sm:text-center flex flex-col justify-between">
+    <div>
+      <h3 className="font-raleway text-base sm:text-xl font-bold tracking-wide uppercase text-white mb-2 leading-snug">{title}</h3>
+      <p className="font-montserrat text-[#e8d9dd] text-[12px] sm:text-sm leading-relaxed">{text}</p>
+    </div>
+    <div className="mt-3 pt-2 border-t border-white/10"><span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wide text-[#e5acbc]">{footer}</span></div>
+  </div>
 </article>;
 
 const Pillar: React.FC<{ icon: React.ReactNode; text: string }> = ({ icon, text }) => <div className="bg-[#1c1416] p-3.5 rounded-xl border border-[#9a5967]/20 text-center">{icon}<span className="text-xs font-bold uppercase tracking-wider text-amber-100 block">{text}</span></div>;
