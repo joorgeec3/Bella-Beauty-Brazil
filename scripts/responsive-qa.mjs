@@ -238,6 +238,39 @@ try {
           assert(await gallery.locator('img').first().isVisible(), 'Image inaccessible on phone: ' + serviceId);
         }
         assert.equal(total, 43, 'Every one of the 43 approved new photos must be mapped once');
+
+        // Check every one of the 14 real treatment videos, including response MIME and matching service folder.
+        const videoCounts = {
+          'brow-sculpt': 2,
+          'brow-lamination': 5,
+          'dreamy-brows': 1,
+          'facial-spa': 2,
+          'lip-blush': 1,
+          'lip-bliss-hydration': 1,
+          'shadow-brows': 1,
+          'teeth-whitening': 1,
+        };
+        const videoFiles = new Set();
+        let videoTotal = 0;
+        for (const [serviceId, expectedVideoCount] of Object.entries(videoCounts)) {
+          await go('/services/' + serviceId);
+          const videoSection = page.locator('#service-videos');
+          await videoSection.waitFor({ state: 'visible', timeout: 15000 });
+          const videos = await videoSection.locator('video').evaluateAll(elements =>
+            elements.map(video => video.getAttribute('src') || ''));
+          assert.equal(videos.length, expectedVideoCount, 'Incorrect video count for ' + serviceId);
+          for (const videoPath of videos) {
+            assert(videoPath.includes('/client-2026-10-v2/' + serviceId + '/'), 'Incorrect video category: ' + videoPath);
+            assert(videoPath.endsWith('.mp4'), 'Video file format should be MP4: ' + videoPath);
+            assert(!videoFiles.has(videoPath), 'Video repeated in multiple services: ' + videoPath);
+            videoFiles.add(videoPath);
+            const result = await page.request.head(base + videoPath);
+            assert.equal(result.status(), 200, 'Video returned HTTP error: ' + videoPath);
+            assert((result.headers()['content-type'] || '').includes('video/'), 'Invalid video MIME type: ' + videoPath);
+            videoTotal += 1;
+          }
+        }
+        assert.equal(videoTotal, 14, 'All fourteen approved video clips must be accessible');
         await go('/services/lip-blush');
       }
       // Client-approved Lip Blush copy, price and Timely CTA in all six responsive widths.
