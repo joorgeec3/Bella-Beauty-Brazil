@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Film, PlayCircle } from 'lucide-react';
 import type { Language } from '../data/siteData';
 
@@ -45,6 +45,14 @@ const labels = {
 
 export const ServiceVideoGallery: React.FC<{ serviceId: string; language: Language }> = ({ serviceId, language }) => {
   const [available, setAvailable] = useState<VideoItem[]>([]);
+  const videoGridRef = useRef<HTMLDivElement>(null);
+
+  const handleVideoPlay = (current: HTMLVideoElement) => {
+    // Only one treatment clip should produce sound at a time.
+    videoGridRef.current?.querySelectorAll('video').forEach((video) => {
+      if (video !== current && !video.paused) video.pause();
+    });
+  };
 
   useEffect(() => {
     const controller = new AbortController();
@@ -80,11 +88,11 @@ export const ServiceVideoGallery: React.FC<{ serviceId: string; language: Langua
         </div>
         <h2 id="service-videos-heading" className="font-raleway text-2xl sm:text-3xl font-semibold text-[#5b3239]">{copy.heading}</h2>
         <p className="font-montserrat text-sm text-[#675960] mt-2 mb-6">{copy.description}</p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 lg:gap-7">
+        <div ref={videoGridRef} className="grid grid-cols-1 sm:grid-cols-2 gap-5 lg:gap-7">
           {available.map((item, index) => (
             <div key={item.src} className="rounded-2xl border border-[#ead8db] overflow-hidden bg-white shadow-sm">
               <div className="relative aspect-[9/12] max-h-[470px] bg-[#261d21] flex items-center justify-center">
-                <video src={item.src} controls playsInline preload="metadata" aria-label={`${copy.video} ${index + 1}`} className="w-full h-full object-contain"/>
+                <video src={item.src} controls playsInline preload={index === 0 ? 'metadata' : 'none'} onPlay={(event)=>handleVideoPlay(event.currentTarget)} aria-label={`${copy.video} ${index + 1}`} className="w-full h-full object-contain"/>
               </div>
               <div className="flex items-center gap-2 px-4 py-3 text-sm font-montserrat text-[#5b3239]">
                 <PlayCircle className="w-4 h-4" aria-hidden="true"/>
