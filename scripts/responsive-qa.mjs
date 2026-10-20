@@ -215,6 +215,25 @@ try {
       assert(allRenderedPhotos.every(src => deletedPaths.every(file => !src.includes(file))), 'A photo marked for removal is still displayed');
 
       assert.equal(await page.locator('#service-photos button[aria-pressed]').count(), 0, 'Nano Strokes should show just the one approved procedure photo');
+      // Client-approved Nano Strokes changes: preserve the Tebori introduction and original Timely booking URL.
+      const nanoMain = page.locator('#root main').first();
+      const nanoIntro = nanoMain.locator('section').first();
+      assert((await nanoIntro.getByRole('heading', { name: 'About this treatment' }).count()) === 1, 'Keep the approved About this treatment introduction');
+      const nanoText = await nanoIntro.innerText();
+      assert(nanoText.includes('Nano Strokes is an advanced form of microblading'), 'Original approved Tebori introduction must remain');
+      assert(!nanoText.includes('Treatment description provided by Bella Beauty Brazil'), 'Remove the attribution sentence');
+      assert((await nanoIntro.getByRole('heading', { name: 'How does it work?' }).count()) === 1, 'Rename Nano Strokes explanation section');
+      assert(nanoText.includes('Using a manual Tebori tool, I create fine, hair-like strokes that blend with your natural brow hairs. Each brow pattern is individually designed to complement your features, add definition and fill sparse areas.'), 'Client-supplied How does it work? text is not exact');
+      assert(!nanoText.includes('How is it different?') && !nanoText.includes('Brow Sculpt & Tint') && !nanoText.includes('Hybrid Brows') && !nanoText.includes('published Timely catalogue'), 'Remove the old comparison section and unrelated brow treatments');
+      const nanoBooking = nanoMain.locator('aside').first();
+      const bookingText = await nanoBooking.innerText();
+      assert(bookingText.includes('A$630'), 'Nano Strokes initial treatment price must remain A$630');
+      assert(bookingText.includes('Touch-up after 45–60 days: $120.'), 'Missing 45–60 day touch-up price');
+      const nanoBookingButton = nanoBooking.getByRole('link', { name: /Book Your Appointment/i });
+      assert((await nanoBookingButton.count()) === 1, 'Nano Strokes booking CTA label is incorrect');
+      assert((await nanoBookingButton.getAttribute('href'))?.includes('book.gettimely.com/bellabrazil/book/'), 'Preserve the Timely booking destination');
+      assert(!bookingText.includes('Choose treatment on Timely'), 'Old booking label must not appear');
+
       assert(await page.locator('h1').first().innerText());
       assert((await page.locator('a[href*="book.gettimely.com"]').count()) > 0, 'Treatment booking link not found');
       await go('/courses');
