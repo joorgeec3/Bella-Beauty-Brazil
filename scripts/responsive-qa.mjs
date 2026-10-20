@@ -60,14 +60,14 @@ try {
         assert((await signatureCards.nth(i).innerText()).includes(sixCopy[i]), 'Signature copy differs from client-approved text for ' + sixNames[i]);
       }
       const featurePhotos = await page.locator('.feature-card-image').evaluateAll(images => images.map(img => img.getAttribute('src') || ''));
-      assert.equal(featurePhotos.length, 5, 'Five real topical images, plus one photo-free whitening card');
-      for (const name of ['lips-result-01.webp', 'studio-behind-scenes-01.webp', 'lashes-result-05.webp', 'dermaplaning-facial-treatment.webp', 'waxing.png']) {
+      assert.equal(featurePhotos.length, 6, 'All six service categories now have topical visuals, including real teeth-whitening photos');
+      for (const name of ['lips-result-01.webp', 'studio-behind-scenes-01.webp', 'lashes-result-05.webp', 'dermaplaning-facial-treatment.webp', 'teeth-whitening-01.webp', 'waxing.png']) {
         assert(featurePhotos.some(src => src.includes(name)), 'Missing relevant signature image ' + name);
       }
       assert.equal(await page.locator('.service-editorial-image').count(), 0, 'Do not duplicate the Skin Treatments photo further down the homepage');
       const topServicePhotos = await page.locator('.service-card-image').evaluateAll(images => images.map(img => img.getAttribute('src') || ''));
       assert.equal(topServicePhotos.length, 4, 'Four topic-specific treatment cards are needed');
-      for (const name of ['nano-strokes-procedure.webp', 'lip-blush-procedure.webp', 'lashes.jpg', 'brow-styling.webp']) {
+      for (const name of ['nano-strokes-procedure.webp', 'lip-blush-procedure.webp', 'lash-lift-01.webp', 'brow-sculpt-01.webp']) {
         assert(topServicePhotos.some(src => src.includes(name)), 'Missing topic-matched homepage service photo ' + name);
       }
 
@@ -200,11 +200,46 @@ try {
     await check(`${width}px treatment, courses, contact and 404 routes`, async () => {
       await go('/services/lip-blush');
       const lipGallery = page.locator('#service-photos');
-      assert.equal(await lipGallery.locator('button[aria-pressed]').count(), 3, 'Three client-supplied Lip Blush photos must be accessible');
+      assert.equal(await lipGallery.locator('button[aria-pressed]').count(), 6, 'Six new Lip Blush photos must be accessible in the service detail gallery');
+      assert((await lipGallery.locator('img').first().getAttribute('src')).includes('/client-2026-10-v2/lip-blush/lip-blush-01.webp'), 'Lip Blush must start with a real new photo from the client archive');
       const before = await lipGallery.locator('img').first().getAttribute('src');
       await lipGallery.getByRole('button', { name: /Next photo|Próxima foto|Foto siguiente/ }).click();
       assert.notEqual(await lipGallery.locator('img').first().getAttribute('src'), before, 'Gallery arrows must change the selected photo');
       assert((await lipGallery.getByRole('link', { name: /Open full photo|Abrir foto inteira|Abrir foto completa/ }).count()) > 0, 'Full photo access missing');
+      // Confirm photo categories, unique file paths and original assets at one representative mobile viewport.
+      if (width === 375) {
+        const categories = [
+          ['brow-sculpt', 7], ['brow-sculpt-tint', 2], ['male-brow-sculpt', 1],
+          ['shadow-brows', 5], ['brow-lamination', 3], ['lash-lift', 9],
+          ['lip-blush', 6], ['lip-bliss-hydration', 3], ['dermaplaning', 2],
+          ['facial-spa', 2], ['teeth-whitening', 3],
+        ];
+        const allPaths = new Set();
+        let total = 0;
+        for (const [serviceId, expectedCount] of categories) {
+          await go('/services/' + serviceId);
+          const gallery = page.locator('#service-photos');
+          assert.equal(await gallery.count(), 1, 'Missing new client gallery for ' + serviceId);
+          const images = await gallery.locator('button[aria-pressed] img').evaluateAll(list =>
+            list.map(img => img.getAttribute('src') || ''));
+          const galleryPaths = expectedCount > 1
+            ? images
+            : [await gallery.locator('img').first().getAttribute('src')];
+          assert.equal(galleryPaths.length, expectedCount, 'Wrong photo count in ' + serviceId);
+          for (const photoPath of galleryPaths) {
+            assert(photoPath.includes('/client-2026-10-v2/' + serviceId + '/'), 'Photo is in the wrong service: ' + photoPath);
+            assert(!allPaths.has(photoPath), 'Repeated photo in more than one service: ' + photoPath);
+            allPaths.add(photoPath);
+            total += 1;
+          }
+          const response = await page.request.get(base + galleryPaths[0]);
+          assert.equal(response.status(), 200, 'Service image returned 404: ' + serviceId);
+          assert((response.headers()['content-type'] || '').includes('image/'), 'Service image MIME type invalid: ' + serviceId);
+          assert(await gallery.locator('img').first().isVisible(), 'Image inaccessible on phone: ' + serviceId);
+        }
+        assert.equal(total, 43, 'Every one of the 43 approved new photos must be mapped once');
+        await go('/services/lip-blush');
+      }
       // Client-approved Lip Blush copy, price and Timely CTA in all six responsive widths.
       const lipMain = page.locator('#root main').first();
       const lipText = await lipMain.innerText();

@@ -77,7 +77,7 @@ const copy: Record<Language, {
 
 const featuredServiceIds = ['nano-strokes', 'shadow-brows', 'shadow-hybrid', 'brow-sculpt-tint', 'lip-blush', 'brow-lamination', 'lash-lift'];
 
-// Only use authentic, individually distinct images when a matching one exists.
+// All featured and client-submitted service photos are sourced from their own category folder.
 // The remaining treatments stay visible as text-rich cards until the studio provides photos.
 const cardPhotos: Record<string, string> = {
   'nano-strokes': siteImages.services.microblading,
@@ -92,12 +92,12 @@ const cardPhotos: Record<string, string> = {
   'brow-sculpt': siteImages.client.browStyling,
   'brow-lamination': siteImages.client.browTools,
 };
+const cardImageFor = (id: string): string | undefined =>
+  getServicePhotos(id)[0]?.src || cardPhotos[id];
 const imageAlt = (id: string, title: string) =>
-  id === 'teeth-whitening' ? 'Interior of the Bella Beauty Brazil studio in Greenslopes'
-    : id === 'brow-sculpt-tint' ? 'Livia Rego styling eyebrows at Bella Beauty Brazil'
-    : id === 'dermaplaning' ? 'Editorial photograph of a facial treatment at Bella Beauty Brazil'
-    : ['shadow-brows', 'shadow-hybrid', 'brow-sculpt', 'brow-lamination'].includes(id) ? 'Authentic brow styling or tools at Bella Beauty Brazil; not a specific treatment result'
-    : title + ' at Bella Beauty Brazil';
+  getServicePhotos(id).length > 0
+    ? `${title} — real photograph provided by Bella Beauty Brazil`
+    : `${title} at Bella Beauty Brazil`;
 const normalizeSearch = (value: string) => value.toLocaleLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 
 export const ServicesView: React.FC<ServicesViewProps> = ({ initialServiceId, onNavigateToService, language }) => {
@@ -192,9 +192,9 @@ export const ServicesView: React.FC<ServicesViewProps> = ({ initialServiceId, on
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
           {filteredServices.map((service) => <article key={service.id}
             className="bg-white border border-[#e8d6d5] rounded-2xl shadow-sm overflow-hidden flex flex-col sm:flex-row hover:shadow-lg transition-shadow">
-            {cardPhotos[service.id] && <a href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/services/${service.id}`} onClick={(event) => navigate(event, service.id)}
+            {cardImageFor(service.id) && <a href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/services/${service.id}`} onClick={(event) => navigate(event, service.id)}
               className="block sm:w-[165px] sm:shrink-0 overflow-hidden bg-[#eee2df] focus-visible:outline-2 focus-visible:outline-[#9a5967]">
-              <img src={cardPhotos[service.id]} alt={imageAlt(service.id, service.title)}
+              <img src={cardImageFor(service.id)} alt={imageAlt(service.id, service.title)}
                 loading="lazy" className="w-full h-44 sm:h-full max-h-[240px] sm:max-h-none object-cover hover:scale-[1.03] transition-transform duration-500" />
             </a>}
             <div className="min-w-0 p-4 sm:p-5 flex-1 flex flex-col">
