@@ -217,7 +217,7 @@ try {
       assert.equal(await page.locator('#service-photos button[aria-pressed]').count(), 0, 'Nano Strokes should show just the one approved procedure photo');
       // Client-approved Nano Strokes changes: preserve the Tebori introduction and original Timely booking URL.
       const nanoMain = page.locator('#root main').first();
-      const nanoIntro = nanoMain.locator('section').first();
+      const nanoIntro = page.getByRole('heading', { name: 'About this treatment', exact: true }).locator('..');
       assert((await nanoIntro.getByRole('heading', { name: 'About this treatment' }).count()) === 1, 'Keep the approved About this treatment introduction');
       const nanoText = await nanoIntro.innerText();
       assert(nanoText.includes('Nano Strokes is an advanced form of microblading'), 'Original approved Tebori introduction must remain');
