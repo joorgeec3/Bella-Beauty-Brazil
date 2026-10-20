@@ -232,7 +232,29 @@ try {
       assert(!lipBookingText.includes('Choose treatment on Timely'), 'Old Lip Blush booking label remains');
 
       await go('/services/shadow-brows');
-      assert((await page.locator('#root main').first().innerText()).includes('Shading creates a softly filled-in appearance'), 'Full PDF-approved Shadow Brows description is missing');
+      const shadowMain = page.locator('#root main').first();
+      const shadowText = await shadowMain.innerText();
+      assert(shadowText.includes('Shadow Brows creates a soft, shaded effect, similar to the look of freshly dyed brows. The shape, colour and intensity are tailored to your features and preferences, from subtle definition to a more defined finish.'), 'Client-approved Shadow Brows description is not exact');
+      assert(!shadowText.includes('Treatment description provided by Bella Beauty Brazil.'), 'Remove Shadow Brows attribution');
+      const shadowBenefits = [
+        'Soft, shaded finish',
+        'Personalised brow shape and colour',
+        'Colour appears stronger initially and softens as the brows heal',
+      ];
+      for (const benefit of shadowBenefits) assert(shadowText.includes(benefit), 'Shadow Brows benefit missing: ' + benefit);
+      const shadowFaq = shadowMain.locator('details').filter({ hasText: 'Is Shadow Brows the same as brow dye?' });
+      assert.equal(await shadowFaq.count(), 1, 'Missing client-approved Shadow Brows FAQ question');
+      assert((await shadowFaq.innerText()).includes('No. Shadow Brows is a cosmetic tattooing treatment that creates a soft, shaded brow effect. Brow dye temporarily colours the existing hairs and can also stain the skin.'), 'Shadow Brows FAQ answer differs from approved text');
+      assert(!shadowText.includes('What should I know before booking?'), 'Generic FAQ question must be replaced on Shadow Brows');
+      assert(!shadowText.includes('Where can I confirm the latest price?'), 'Remove redundant latest-price FAQ from Shadow Brows');
+      const shadowBooking = page.getByRole('heading', { name: 'Book this service', exact: true }).locator('..');
+      const shadowBookingText = await shadowBooking.innerText();
+      assert(shadowBookingText.includes('A$630'), 'Shadow Brows initial price must remain A$630');
+      assert(shadowBookingText.includes('Touch-up after 45–60 days: $120.'), 'Missing Shadow Brows touch-up details');
+      const shadowButton = shadowBooking.getByRole('link', { name: /Book Your Appointment/i });
+      assert.equal(await shadowButton.count(), 1, 'Shadow Brows Book Your Appointment button missing');
+      assert((await shadowButton.getAttribute('href'))?.includes('book.gettimely.com/bellabrazil/book/'), 'Shadow Brows original Timely booking link changed');
+      assert(!shadowBookingText.includes('Choose treatment on Timely'), 'Old Timely CTA remains on Shadow Brows');
       await go('/services/nano-strokes');
       const approvedNano = page.locator('#service-photos img').first();
       assert((await approvedNano.getAttribute('src'))?.includes('nano-strokes-procedure.webp'), 'Only approved Nano Strokes procedure photo should display');
