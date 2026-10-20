@@ -112,11 +112,11 @@ export const HomeTreatmentCard: React.FC<HomeTreatmentCardProps> = ({
         </div>
       </>}
       <div className="absolute inset-0 z-20 p-6 flex flex-col justify-end text-white pointer-events-none">
-        <span className="text-[11px] font-bold tracking-widest text-amber-300 uppercase mb-1">{service.subtitle || 'Bella Beauty Treatment'}</span>
+        <span className="text-[11px] font-bold tracking-widest text-[#f1c3d0] uppercase mb-1">{service.subtitle || 'Bella Beauty Treatment'}</span>
         <h3 className="font-raleway text-xl font-bold uppercase tracking-wider text-white mb-2">{service.title}</h3>
         <div className="w-8 h-0.5 bg-[#efb7c8] mb-3" />
         <p className="font-montserrat text-xs text-neutral-200 line-clamp-3 leading-relaxed mb-4">{service.description}</p>
-        <span className="inline-flex items-center text-xs font-semibold text-amber-200">
+        <span className="inline-flex items-center text-xs font-semibold text-[#f3c9d4]">
           {label.view}<ArrowRight className="w-3.5 h-3.5 ml-1.5" aria-hidden="true" />
         </span>
       </div>
