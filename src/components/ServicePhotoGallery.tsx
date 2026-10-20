@@ -5,29 +5,42 @@ import { siteImages } from '../data/siteImages';
 
 type TreatmentPhoto = { src: string; alt: string; caption: string };
 
-const browPhotos: TreatmentPhoto[] = [
-  { src: siteImages.client.browStyling, alt: 'Eyebrow styling appointment at Bella Beauty Brazil', caption: 'Brow styling at our studio' },
-  { src: siteImages.client.browTools, alt: 'Brow measuring and styling tools supplied by the studio', caption: 'Brow mapping and styling tools' },
-];
+// Each newly supplied photo belongs to exactly one service category.
+// Folder membership was verified against the supplied archive and the original-file mapping.
+const currentClientMedia = 'assets/bella/client-2026-10-v2';
+const newPhotoGroup = (slug: string, service: string, count: number): TreatmentPhoto[] =>
+  Array.from({ length: count }, (_, index) => ({
+    src: `${import.meta.env.BASE_URL}${currentClientMedia}/${slug}/${slug}-${String(index + 1).padStart(2, '0')}.webp`,
+    alt: `${service} — real client-supplied photo ${index + 1} of ${count} from Bella Beauty Brazil`,
+    caption: `${service} · Photo ${index + 1} of ${count}`,
+  }));
+
 const nanoPhotos: TreatmentPhoto[] = [
-  { src: siteImages.client.nanoStrokesProcedure, alt: 'Livia performing a Nano Strokes brow treatment', caption: 'Nano Strokes procedure' },
-];
-const lipPhotos: TreatmentPhoto[] = [
-  { src: siteImages.client.lipBlushProcedure, alt: 'Lip Blush procedure performed at Bella Beauty Brazil', caption: 'Lip Blush procedure' },
-  { src: siteImages.client.lipBlushPalette, alt: 'Lip Blush pigment shades shown during a consultation', caption: 'Pigment colour selection' },
-  { src: siteImages.client.lipBlushPhotography, alt: 'Lip Blush client photographed at the studio', caption: 'Documenting the appointment' },
+  { src: siteImages.client.nanoStrokesProcedure, alt: 'Livia performing an approved Nano Strokes brow treatment', caption: 'Nano Strokes procedure' },
 ];
 const waxPhotos: TreatmentPhoto[] = [
-  { src: siteImages.client.waxingTreatment, alt: 'Livia preparing waxing treatment in the studio', caption: 'Waxing at Bella Beauty Brazil' },
+  { src: siteImages.client.waxingTreatment, alt: 'Waxing treatment at Bella Beauty Brazil', caption: 'Waxing treatment' },
 ];
 
-export const getServicePhotos = (serviceId: string): TreatmentPhoto[] => {
-  if (serviceId === 'nano-strokes') return nanoPhotos;
-  if (serviceId === 'lip-blush') return lipPhotos;
-  if (serviceId === 'waxing') return waxPhotos;
-  if (['shadow-brows', 'shadow-hybrid', 'brow-sculpt', 'brow-sculpt-tint', 'brow-lamination'].includes(serviceId)) return browPhotos;
-  return [];
+// No photo from one group is reused in another service's gallery.
+// Nano Strokes retains only the one approved photo; do not restore the two removed images.
+const groupedPhotos: Record<string, TreatmentPhoto[]> = {
+  'nano-strokes': nanoPhotos,
+  'brow-sculpt': newPhotoGroup('brow-sculpt', 'Brow Sculpt', 7),
+  'brow-sculpt-tint': newPhotoGroup('brow-sculpt-tint', 'Brow Sculpt & Tint', 2),
+  'male-brow-sculpt': newPhotoGroup('male-brow-sculpt', 'Male Brow Sculpt', 1),
+  'shadow-brows': newPhotoGroup('shadow-brows', 'Shadow Brows', 5),
+  'brow-lamination': newPhotoGroup('brow-lamination', 'Brow Lamination', 3),
+  'lash-lift': newPhotoGroup('lash-lift', 'Lash Lift & Tint', 9),
+  'lip-blush': newPhotoGroup('lip-blush', 'Lip Blush', 6),
+  'lip-bliss-hydration': newPhotoGroup('lip-bliss-hydration', 'Lip Bliss Hydration', 3),
+  'dermaplaning': newPhotoGroup('dermaplaning', 'Dermaplaning', 2),
+  'facial-spa': newPhotoGroup('facial-spa', 'Facial Spa', 2),
+  'teeth-whitening': newPhotoGroup('teeth-whitening', 'Teeth Whitening', 3),
+  'waxing': waxPhotos,
 };
+
+export const getServicePhotos = (serviceId: string): TreatmentPhoto[] => groupedPhotos[serviceId] || [];
 
 export const ServicePhotoGallery: React.FC<{ serviceId: string; language: Language }> = ({ serviceId, language }) => {
   const photos = getServicePhotos(serviceId);
@@ -40,7 +53,7 @@ export const ServicePhotoGallery: React.FC<{ serviceId: string; language: Langua
   }[language];
   const current = photos[index % photos.length];
   const move = (direction: number) => setIndex((value) => (value + direction + photos.length) % photos.length);
-  const browEditorial = ['shadow-brows', 'shadow-hybrid', 'brow-sculpt', 'brow-sculpt-tint', 'brow-lamination'].includes(serviceId);
+  const browEditorial = serviceId === 'shadow-hybrid';
   return (
     <section id="service-photos" aria-labelledby="service-photos-heading" className="bg-[#fffaf9] px-4 sm:px-6 lg:px-8 py-10 sm:py-14 border-b border-[#e8d6d5]">
       <div className="max-w-6xl mx-auto">
@@ -63,7 +76,7 @@ export const ServicePhotoGallery: React.FC<{ serviceId: string; language: Langua
           <p className="font-montserrat text-sm text-[#675960]">{current.caption}</p>
           <a href={current.src} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-xs font-bold text-[#5b3239] underline underline-offset-2 shrink-0">{labels.full}<ExternalLink className="w-3.5 h-3.5" /></a>
         </div>
-        {photos.length > 1 && <div className="grid grid-cols-3 gap-2 sm:gap-4 mt-5">
+        {photos.length > 1 && <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-3 mt-5">
           {photos.map((photo, position) => <button type="button" key={photo.src} onClick={() => setIndex(position)} aria-label={photo.caption} aria-pressed={index === position} className={`overflow-hidden rounded-xl border-2 cursor-pointer focus-visible:outline-2 focus-visible:outline-[#9a5967] ${index === position ? 'border-[#9a5967]' : 'border-transparent'}`}>
             <img src={photo.src} alt={photo.alt} loading="lazy" className="w-full h-24 sm:h-36 object-cover" />
           </button>)}
