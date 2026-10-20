@@ -43,10 +43,10 @@ export const FeaturesRibbon: React.FC<FeaturesRibbonProps> = ({ language }) => {
         <span className="text-xs font-bold uppercase tracking-widest text-[#efb7c8] block mb-1">{language === 'en' ? 'Bella Beauty Signature Care' : language === 'pt' ? 'Assinatura Bella Beauty' : 'Cuidado exclusivo Bella Beauty'}</span>
         <h2 className="font-raleway text-[21px] leading-snug sm:text-2xl lg:text-3xl font-light uppercase tracking-[0.04em] text-white max-w-5xl mx-auto">
           {language === 'en'
-            ? <>Cosmetic Tattooing, Brows, Lashes,<span className="block font-semibold text-[#efb7c8] mt-1">Skin Treatments &amp; Waxing</span></>
+            ? <>Cosmetic Tattooing, Brows, Lashes,{' '}<span className="block font-semibold text-[#efb7c8] mt-1">Skin Treatments &amp; Waxing</span></>
             : language === 'pt'
-              ? <>Tatuagem Cosmética, Sobrancelhas, Cílios,<span className="block font-semibold text-[#efb7c8] mt-1">Tratamentos de Pele e Depilação</span></>
-              : <>Tatuaje Cosmético, Cejas, Pestañas,<span className="block font-semibold text-[#efb7c8] mt-1">Tratamientos de Piel y Depilación</span></>}
+              ? <>Tatuagem Cosmética, Sobrancelhas, Cílios,{' '}<span className="block font-semibold text-[#efb7c8] mt-1">Tratamentos de Pele e Depilação</span></>
+              : <>Tatuaje Cosmético, Cejas, Pestañas,{' '}<span className="block font-semibold text-[#efb7c8] mt-1">Tratamientos de Piel y Depilación</span></>}
         </h2>
         <div className="w-16 h-0.5 bg-[#9a5967] mx-auto mt-3" />
       </div>
