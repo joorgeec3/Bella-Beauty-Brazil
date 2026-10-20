@@ -63,6 +63,12 @@ try {
       }
       assert(!topServicePhotos.some(src => src.includes('dermaplaning-facial-treatment.webp')), 'Do not repeat facial treatment photo from featured section');
 
+      // Full client-requested categories must be readable on phone, tablet and desktop.
+      const signatureHead = page.locator('section').filter({ hasText: 'Bella Beauty Signature Care' }).locator('h2').first();
+      const signatureCopy = (await signatureHead.innerText()).replace(/\\s+/g, ' ').trim();
+      for (const name of ['Cosmetic Tattooing', 'Brows', 'Lashes', 'Skin Treatments', 'Waxing']) {
+        assert(signatureCopy.includes(name), 'Signature heading is missing service category: ' + name);
+      }
       // The first impression must not recycle treatment, founder, studio, gallery or result photos.
       const photoSelectors = [
         '.hero-image-drift',
