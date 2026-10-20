@@ -63,6 +63,29 @@ try {
       }
       assert(!topServicePhotos.some(src => src.includes('dermaplaning-facial-treatment.webp')), 'Do not repeat facial treatment photo from featured section');
 
+      // The client supplied three different Lip Blush photos: they must all be accessible in the home card.
+      const lipCard = page.locator('[data-home-treatment="lip-blush"]');
+      assert.equal(await lipCard.count(), 1, 'Lip Blush featured card missing');
+      assert.equal(await lipCard.locator('.service-card-image').count(), 1, 'Show one photo at a time, never repeated side-by-side');
+      const nextLip = lipCard.getByRole('button', { name: 'Next Lip Blush photo' });
+      const previousLip = lipCard.getByRole('button', { name: 'Previous Lip Blush photo' });
+      assert(await nextLip.isVisible(), 'Lip Blush gallery arrows must be visible on mobile and tablet');
+      assert((await lipCard.locator('.service-card-image').getAttribute('src')).includes('lip-blush-procedure.webp'));
+      await nextLip.click();
+      assert((await lipCard.locator('.service-card-image').getAttribute('src')).includes('lip-blush-palette.webp'), 'Second real Lip Blush photo not accessible');
+      await nextLip.click();
+      assert((await lipCard.locator('.service-card-image').getAttribute('src')).includes('lip-blush-photography.webp'), 'Third real Lip Blush photo not accessible');
+      await nextLip.click();
+      assert((await lipCard.locator('.service-card-image').getAttribute('src')).includes('lip-blush-procedure.webp'), 'Lip gallery should cycle back to the first photo');
+      await previousLip.click();
+      assert((await lipCard.locator('.service-card-image').getAttribute('src')).includes('lip-blush-photography.webp'), 'Previous photo control is not working');
+      await nextLip.click();
+      assert((await lipCard.locator('.service-card-image').getAttribute('src')).includes('lip-blush-procedure.webp'));
+      assert((await lipCard.getByRole('link', { name: /Lip Blush — View photos & service/ }).getAttribute('href'))?.endsWith('/services/lip-blush'), 'Lip Blush photo card should lead to the individual gallery');
+      const nanoCard = page.locator('[data-home-treatment="nano-strokes"]');
+      assert.equal(await nanoCard.locator('button').count(), 0, 'Do not put back the two photos the client requested to delete');
+      assert((await nanoCard.locator('.service-card-image').getAttribute('src')).includes('nano-strokes-procedure.webp'), 'Retain the approved Nano Strokes procedure photo');
+
       // Full client-requested categories must be readable on phone, tablet and desktop.
       const signatureHead = page.locator('section').filter({ hasText: 'Bella Beauty Signature Care' }).locator('h2').first();
       const signatureCopy = (await signatureHead.innerText()).replace(/\s+/g, ' ').trim();
