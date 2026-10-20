@@ -81,13 +81,31 @@ export const FeaturesRibbon: React.FC<FeaturesRibbonProps> = ({ language }) => {
               </div>
             </div>
             <div className="meet-livia-copy lg:col-span-7 flex flex-col justify-center">
-              <div className="inline-flex items-center gap-2 mb-3"><span className="w-6 h-0.5 bg-[#9a5967]" /><span className="text-xs font-bold uppercase tracking-widest text-[#efb7c8]">{language === 'pt' ? 'Sobre mim' : language === 'es' ? 'Sobre mí' : 'Meet Livia'}</span></div>
-              <h3 className="font-raleway text-2xl sm:text-3xl font-light uppercase tracking-wider text-white mb-4">{language === 'pt' ? <>Cuidado com <span className="font-bold text-[#9a5967]">propósito &amp; precisão</span></> : language === 'es' ? <>Cuidado con <span className="font-bold text-[#9a5967]">propósito y precisión</span></> : <>Care with <span className="font-bold text-[#9a5967]">purpose &amp; precision</span></>}</h3>
-              <p className="font-montserrat text-neutral-300 text-sm leading-relaxed mb-4">{language === 'pt' ? 'Bella Beauty Brazil foi criada por Livia Rego para oferecer atendimentos de beleza com cuidado individual, técnica e precisão.' : language === 'es' ? 'Bella Beauty Brazil fue creada por Livia Rego para ofrecer belleza con cuidado individual, técnica y precisión.' : 'Bella Beauty Brazil was created by Livia Rego to offer beauty services with individual care, technique and precision.'}</p>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
-                <Pillar icon={<Sparkles className="w-4 h-4 text-[#9a5967] mx-auto mb-1.5" />} text={language === 'pt' ? 'Técnica profissional' : language === 'es' ? 'Técnica profesional' : 'Professional technique'} />
-                <Pillar icon={<ShieldCheck className="w-4 h-4 text-[#9a5967] mx-auto mb-1.5" />} text={language === 'pt' ? 'Cuidado personalizado' : language === 'es' ? 'Cuidado personalizado' : 'Personalised care'} />
-                <Pillar icon={<Award className="w-4 h-4 text-[#9a5967] mx-auto mb-1.5" />} text={language === 'pt' ? 'Ambiente acolhedor' : language === 'es' ? 'Espacio acogedor' : 'Welcoming space'} />
+              <div className="inline-flex items-center gap-2 mb-3"><span className="w-6 h-0.5 bg-[#9a5967]" /><span className="text-xs font-bold uppercase tracking-widest text-[#efb7c8]">{language === 'pt' ? 'Conheça Livia' : language === 'es' ? 'Conoce a Livia' : 'Meet Livia'}</span></div>
+              <h3 className="font-raleway text-2xl sm:text-3xl font-semibold tracking-wide text-white mb-5">
+                {language === 'pt' ? 'Um pouco sobre mim' : language === 'es' ? 'Un poco sobre mí' : 'A little about me'}
+              </h3>
+              <div className="font-montserrat text-[#eee1e4] text-sm sm:text-[15px] leading-relaxed space-y-3 mb-5 max-w-2xl">
+                <p>{language === 'pt'
+                  ? 'Oi, sou Livia, fundadora da Bella Beauty Brazil, designer de sobrancelhas, especialista em tatuagem cosmética e educadora na área da beleza.'
+                  : language === 'es'
+                    ? 'Hola, soy Livia, fundadora de Bella Beauty Brazil, especialista en cejas, artista de tatuaje cosmético y educadora de belleza.'
+                    : 'Hi, I’m Livia, founder of Bella Beauty Brazil, brow artist, cosmetic tattoo artist and beauty educator.'}</p>
+                <p>{language === 'pt'
+                  ? 'Sou da região amazônica do Brasil e construí meu negócio aqui em Brisbane em torno do que mais importa para mim: qualidade, cuidado e os relacionamentos que crio com minhas clientes.'
+                  : language === 'es'
+                    ? 'Soy originaria de la región amazónica de Brasil y construí mi negocio aquí en Brisbane alrededor de lo que más me importa: la calidad, el cuidado y las relaciones que creo con mis clientas.'
+                    : 'Originally from the Amazon region of Brazil, I’ve built my business here in Brisbane around what matters most to me: quality, care and the relationships I create with my clients.'}</p>
+                <p>{language === 'pt'
+                  ? 'Dedico tempo a cada atendimento, escutando o que você deseja e valorizando seus traços naturais. Seja para um simples design de sobrancelhas ou uma tatuagem cosmética, quero que você se sinta à vontade, ouvida e bem cuidada.'
+                  : language === 'es'
+                    ? 'Dedico tiempo a cada cita, escuchando lo que deseas y trabajando con tus rasgos naturales. Ya sea para un sencillo arreglo de cejas o un tatuaje cosmético, quiero que te sientas cómoda, escuchada y bien cuidada.'
+                    : 'I take my time with every appointment, listening to what you want and working with your natural features. Whether you’re visiting for a simple brow tidy or cosmetic tattooing, I want you to feel comfortable, heard and well looked after.'}</p>
+              </div>
+              <div className="grid grid-cols-1 min-[380px]:grid-cols-3 gap-3 pt-2">
+                <Pillar icon={<ShieldCheck className="w-4 h-4 text-[#e5acbc] mx-auto mb-1.5" />} text={language === 'pt' ? 'Cuidado personalizado' : language === 'es' ? 'Atención personalizada' : 'Personalised Care'} />
+                <Pillar icon={<Sparkles className="w-4 h-4 text-[#e5acbc] mx-auto mb-1.5" />} text={language === 'pt' ? 'Atenção aos detalhes' : language === 'es' ? 'Atención al detalle' : 'Attention to Detail'} />
+                <Pillar icon={<Award className="w-4 h-4 text-[#e5acbc] mx-auto mb-1.5" />} text={language === 'pt' ? 'Resultados naturais' : language === 'es' ? 'Resultados naturales' : 'Natural Results'} />
               </div>
             </div>
           </div>
