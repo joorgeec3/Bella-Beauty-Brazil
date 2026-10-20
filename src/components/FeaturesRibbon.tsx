@@ -9,7 +9,7 @@ interface FeatureCardData { image?: string; icon: React.ReactNode; label: string
 export const FeaturesRibbon: React.FC<FeaturesRibbonProps> = ({ language }) => {
   const cards: FeatureCardData[] = [
     {
-      image: `${import.meta.env.BASE_URL}assets/bella/cosmetic-tattooing.png`,
+      image: `${import.meta.env.BASE_URL}assets/bella/gallery/lips-result-01.webp`,
       icon: <Sparkles className="w-3 h-3 text-[#efb7c8]" />,
       label: language === 'en' ? 'Cosmetic · Artistry' : language === 'pt' ? 'Tatuagem · Beleza' : 'Tatuaje · Belleza',
       title: 'Cosmetic Tattooing',
