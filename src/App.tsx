@@ -15,6 +15,7 @@ import { SalonGallery } from './components/SalonGallery';
 import { GalleryMarquee } from './components/GalleryMarquee';
 import { BeforeAfterSection } from './components/BeforeAfterSection';
 import { SmoothScrollController } from './components/SmoothScrollController';
+import { LiveMotionDiagnostics } from './components/LiveMotionDiagnostics';
 import { TestimonialsSection } from './components/TestimonialsSection';
 import { InstagramSection } from './components/InstagramSection';
 import { Footer } from './components/Footer';
@@ -238,6 +239,7 @@ export default function App() {
   return (
     <div className="min-h-screen flex flex-col bg-site text-neutral-800 font-sans selection:bg-[#9a5967] selection:text-white">
       <SmoothScrollController />
+      {typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('bella-debug') === '1' && <LiveMotionDiagnostics />}
       
       {/* Primary Navigation Header */}
       <Header
