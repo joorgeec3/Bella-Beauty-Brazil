@@ -71,5 +71,5 @@ export const homeGallery = bellaGallery.filter(({ image }) => !homepageFeaturedI
 
 // The featured lash-lift comparison appears above; the other results remain available without repetition.
 export const bellaBeforeAfter = uniqueImages(clientGallery.filter((item) =>
-  item.kind === 'result' && !item.image.endsWith('/lashes-result-05.webp')
+  item.kind === 'result' && !item.image.endsWith('/lashes-result-05.webp') && !item.image.endsWith('/lips-result-01.webp')
 ));
