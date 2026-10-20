@@ -251,6 +251,8 @@ try {
       assert((await browFaq1.innerText()).includes('Avoid applying retinol, AHAs, BHAs or other exfoliating acids around your brows before your appointment, as these can make the skin more sensitive to waxing. Please let me know if you use these products or any prescription skin treatments so I can advise on suitable timing.'), 'Brow Sculpt preparation FAQ answer must be exact');
       const browFaq2 = browMain.locator('details').filter({ hasText: 'Does Brow Sculpt include tint or dye?' });
       assert.equal(await browFaq2.count(), 1, 'Brow Sculpt dye FAQ missing');
+      await browFaq2.locator('summary').click();
+      assert(await browFaq2.locator('p').isVisible(), 'Opening the Brow Sculpt dye FAQ must reveal its answer');
       assert((await browFaq2.locator('p').innerText()).includes('No. Brow Sculpt focuses on shaping only. For added colour, please book Brow Sculpt & Tint or Brow Sculpt & Dye.'), 'Brow Sculpt dye FAQ answer is not exact');
       assert(!browText.includes('What should I know before booking?'), 'Remove generic FAQ on Brow Sculpt');
       assert(!browText.includes('Where can I confirm the latest price?'), 'Remove redundant price FAQ on Brow Sculpt');
