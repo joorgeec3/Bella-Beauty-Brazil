@@ -101,7 +101,8 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
   const service = getLocalizedService(base, language);
   // A dedicated service photo is used only when it depicts the correct treatment family.
   // Never show dermaplaning as Microneedling, or an empty room as Teeth Whitening.
-  const noMatchingTreatmentPhoto = [
+  const verifiedServicePhotos = getServicePhotos(base.id);
+  const noMatchingTreatmentPhoto = !verifiedServicePhotos.length && [
     'teeth-whitening', 'cosmetic-tattoo-removal', 'lip-bliss-hydration',
     'grow-up-hair-brows', 'grow-up-hair-scalp',
     'microneedling', 'facial-spa', 'deluxe-facial',
@@ -154,8 +155,8 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
                       {translated(language, 'Personalised treatment and consultation', 'Tratamento e consulta personalizados', 'Tratamiento y consulta personalizados')}
                     </p>
                   </div>
-                : <img src={service.image}
-                    alt={['shadow-brows', 'shadow-hybrid', 'brow-lamination'].includes(base.id) ? 'Brow styling tools and treatment imagery from Bella Beauty Brazil' : `${service.title} at Bella Beauty Brazil in Greenslopes`}
+                : <img src={verifiedServicePhotos[0]?.src || service.image}
+                    alt={verifiedServicePhotos.length ? `${service.title} — real client photo from Bella Beauty Brazil` : `${service.title} at Bella Beauty Brazil in Greenslopes`}
                     className="w-full aspect-[4/3] object-cover rounded-2xl shadow-2xl border border-white/20" />}
             </div>
           </div>
