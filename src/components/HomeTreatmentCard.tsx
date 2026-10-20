@@ -20,15 +20,19 @@ const labels = {
 export const HomeTreatmentCard: React.FC<HomeTreatmentCardProps> = ({
   service, language, onNavigate, position,
 }) => {
-  // Keep the three previously approved lip photos on the homepage. The six new
-  // lip photos appear exclusively in the Lip Blush service page, avoiding repeats.
+  // Keep previously approved older editorial photos on the homepage treatment tiles.
+  // All 43 fresh originals now live in the main Gallery and service-detail pages, with no photo copied between homepage blocks.
   const approvedPhotos = service.id === 'lip-blush'
     ? [
         { src: siteImages.client.lipBlushProcedure, alt: 'Lip Blush treatment', caption: 'Lip Blush procedure' },
         { src: siteImages.client.lipBlushPalette, alt: 'Lip Blush colour selection', caption: 'Pigment shades' },
         { src: siteImages.client.lipBlushPhotography, alt: 'Lip Blush consultation photo', caption: 'Lip Blush appointment' },
       ]
-    : getServicePhotos(service.id);
+    : service.id === 'lash-lift'
+      ? [{ src: siteImages.services.lashes, alt: 'Bella Beauty Brazil lash treatments', caption: 'Lash treatments' }]
+      : service.id === 'brow-sculpt'
+        ? [{ src: siteImages.services.brows, alt: 'Bella Beauty Brazil brow shaping', caption: 'Brow sculpting' }]
+        : getServicePhotos(service.id);
   const photos = approvedPhotos.length > 0
     ? approvedPhotos
     : [{ src: service.image, alt: service.title, caption: service.title }];
