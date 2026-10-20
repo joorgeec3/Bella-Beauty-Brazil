@@ -60,14 +60,14 @@ try {
         assert((await signatureCards.nth(i).innerText()).includes(sixCopy[i]), 'Signature copy differs from client-approved text for ' + sixNames[i]);
       }
       const featurePhotos = await page.locator('.feature-card-image').evaluateAll(images => images.map(img => img.getAttribute('src') || ''));
-      assert.equal(featurePhotos.length, 6, 'All six service categories now have topical visuals, including real teeth-whitening photos');
-      for (const name of ['lips-result-01.webp', 'studio-behind-scenes-01.webp', 'lashes-result-05.webp', 'dermaplaning-facial-treatment.webp', 'teeth-whitening-01.webp', 'waxing.png']) {
+      assert.equal(featurePhotos.length, 5, 'Reserve all three real whitening photos for the main Gallery instead of repeating a tile photograph');
+      for (const name of ['lips-result-01.webp', 'studio-behind-scenes-01.webp', 'lashes-result-05.webp', 'dermaplaning-facial-treatment.webp', 'waxing.png']) {
         assert(featurePhotos.some(src => src.includes(name)), 'Missing relevant signature image ' + name);
       }
       assert.equal(await page.locator('.service-editorial-image').count(), 0, 'Do not duplicate the Skin Treatments photo further down the homepage');
       const topServicePhotos = await page.locator('.service-card-image').evaluateAll(images => images.map(img => img.getAttribute('src') || ''));
       assert.equal(topServicePhotos.length, 4, 'Four topic-specific treatment cards are needed');
-      for (const name of ['nano-strokes-procedure.webp', 'lip-blush-procedure.webp', 'lash-lift-01.webp', 'brow-sculpt-01.webp']) {
+      for (const name of ['nano-strokes-procedure.webp', 'lip-blush-procedure.webp', 'lashes.jpg', 'brow-styling.webp']) {
         assert(topServicePhotos.some(src => src.includes(name)), 'Missing topic-matched homepage service photo ' + name);
       }
 
@@ -132,6 +132,28 @@ try {
       assert(homepagePhotos.length >= 25, 'Homepage photo selection is unexpectedly sparse');
       assert.equal(new Set(homepagePhotos).size, homepagePhotos.length, 'Homepage repeats photos between the first blocks or within a carousel: ' + homepagePhotos.filter((src, i) => homepagePhotos.indexOf(src) !== i).join(', '));
       assert.equal(await page.locator('#gallery [data-bella-gallery-card]').count(), await page.locator('#gallery [data-bella-gallery-card] img').count(), 'Gallery repeats cloned image cards');
+      const newFounderPortrait = await page.locator('.meet-livia-image').getAttribute('src');
+      assert(newFounderPortrait?.includes('/about-livia-03.webp'), 'Meet Livia should use the approved curtain-background portrait rather than the kitchen photograph');
+      const homepageVideos = await page.locator('#gallery [data-bella-gallery-video] video').evaluateAll(elements =>
+        elements.map(video => video.getAttribute('src') || ''));
+      assert.equal(homepageVideos.length, 14, 'All fourteen treatment videos must appear in the homepage Gallery');
+      assert.equal(new Set(homepageVideos).size, 14, 'No gallery video should be repeated');
+      for (const videoPath of homepageVideos) {
+        assert(videoPath.includes('/client-2026-10-v2/') && videoPath.endsWith('.mp4'), 'Gallery video is from an incorrect folder: ' + videoPath);
+      }
+      const photoExpand = page.locator('#gallery').getByRole('button', { name: /^Show More$/ });
+      for (let i = 0; i < 5 && (await photoExpand.count()) > 0; i++) await photoExpand.click();
+      const galleryPhotos = await page.locator('#gallery [data-bella-gallery-card] img').evaluateAll(elements =>
+        elements.map(img => img.getAttribute('src') || ''));
+      const newMediaPhotos = galleryPhotos.filter(src => src.includes('/client-2026-10-v2/'));
+      assert.equal(newMediaPhotos.length, 43, 'Every one of the 43 photos must be reachable in the homepage Gallery');
+      assert.equal(new Set(newMediaPhotos).size, 43, 'Do not duplicate client photos in the main Gallery');
+      const whiteningFilter = page.locator('#gallery [role="tablist"]').getByRole('button', { name: 'Teeth Whitening', exact: true });
+      await whiteningFilter.click();
+      assert.equal(await page.locator('#gallery [data-bella-gallery-card] img').count(), 3, 'Whitening category must show its three original photos');
+      assert.equal(await page.locator('#gallery [data-bella-gallery-video] video').count(), 1, 'Whitening category must show its dedicated treatment video');
+      await page.locator('#gallery [role="tablist"]').getByRole('button', { name: 'All', exact: true }).click();
+
       assert.equal(await page.locator('#results .before-after-track img').count(), 9, 'Nine unique results after reserving one Cosmetic Tattooing photo for the signature cards');
       await page.screenshot({ path: `qa-screenshots/${width}-home.png`, fullPage: true, animations: 'disabled', timeout: 15000 });
     });

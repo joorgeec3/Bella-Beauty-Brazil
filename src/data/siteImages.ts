@@ -21,7 +21,7 @@ export const siteImages = {
   },
   aboutMe: {
     liviaPhoto: siteAsset('assets/bella/client-2026-10/about-livia-01.webp'),
-    liviaFeaturePhoto: siteAsset('assets/bella/client-2026-10/about-livia-02.webp'),
+    liviaFeaturePhoto: siteAsset('assets/bella/client-2026-10/about-livia-03.webp'),
     clinicSpace: siteAsset('assets/bella/gallery/studio-mirror-area.webp'),
     treatmentRoom: siteAsset('assets/bella/gallery/studio-treatment-room.webp'),
   },

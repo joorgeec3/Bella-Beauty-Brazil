@@ -41,8 +41,7 @@ export const FeaturesRibbon: React.FC<FeaturesRibbonProps> = ({ language }) => {
       footer: language === 'en' ? 'Facial skin care' : language === 'pt' ? 'Cuidados faciais' : 'Cuidado facial',
     },
     {
-      // Real whitening photo supplied in the latest client archive.
-      image: `${import.meta.env.BASE_URL}assets/bella/client-2026-10-v2/teeth-whitening/teeth-whitening-01.webp`,
+      // All three original whitening photos appear exclusively in the main Gallery; use the existing smile illustration here to avoid cloning the same picture.
       icon: <Smile className="w-3 h-3 text-[#efb7c8]" />,
       label: language === 'en' ? 'Smile · Care' : language === 'pt' ? 'Sorriso · Cuidado' : 'Sonrisa · Cuidado',
       title: 'Teeth Whitening',

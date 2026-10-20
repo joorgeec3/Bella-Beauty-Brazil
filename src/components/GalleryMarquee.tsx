@@ -1,19 +1,19 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react';
 import { Language } from '../data/siteData';
-import { homeGallery, BellaGalleryCategory } from '../data/galleryData';
+import { homeGallery, galleryVideos, BellaGalleryCategory } from '../data/galleryData';
 import { GalleryLightbox } from './GalleryLightbox';
 
 type Filter = 'All' | BellaGalleryCategory;
 const labels: Record<Language, Record<Filter, string>> = {
-  en: { All:'All', Brows:'Brows', Lips:'Lips', Lashes:'Lashes', Skin:'Skin', Studio:'Studio', Livia:'Meet Livia', Waxing:'Waxing' },
-  pt: { All:'Todas', Brows:'Sobrancelhas', Lips:'Lábios', Lashes:'Cílios', Skin:'Pele', Studio:'Estúdio', Livia:'Conheça Livia', Waxing:'Depilação' },
-  es: { All:'Todas', Brows:'Cejas', Lips:'Labios', Lashes:'Pestañas', Skin:'Piel', Studio:'Estudio', Livia:'Conoce a Livia', Waxing:'Depilación' },
+  en: { All:'All', Brows:'Brows', Lips:'Lips', Lashes:'Lashes', Skin:'Skin', Whitening:'Teeth Whitening', Studio:'Studio', Livia:'Meet Livia', Waxing:'Waxing' },
+  pt: { All:'Todas', Brows:'Sobrancelhas', Lips:'Lábios', Lashes:'Cílios', Skin:'Pele', Whitening:'Clareamento Dental', Studio:'Estúdio', Livia:'Conheça Livia', Waxing:'Depilação' },
+  es: { All:'Todas', Brows:'Cejas', Lips:'Labios', Lashes:'Pestañas', Skin:'Piel', Whitening:'Blanqueamiento Dental', Studio:'Estudio', Livia:'Conoce a Livia', Waxing:'Depilación' },
 };
 
 export const GalleryMarquee: React.FC<{language:Language}> = ({ language }) => {
   const [filter,setFilter] = useState<Filter>('All');
-  const [limit,setLimit] = useState(10);
+  const [limit,setLimit] = useState(16);
   const [lightboxIndex,setLightboxIndex] = useState<number|null>(null);
   const [paused,setPaused] = useState(false);
   const viewportRef = useRef<HTMLDivElement>(null);
@@ -22,9 +22,10 @@ export const GalleryMarquee: React.FC<{language:Language}> = ({ language }) => {
   const driftDirectionRef = useRef(1);
   const hoveredRef = useRef(false);
   const resumeTimerRef = useRef<number | null>(null);
-  const categories = useMemo(() => (['All', 'Brows', 'Lips', 'Lashes', 'Skin', 'Studio', 'Livia', 'Waxing'] as Filter[]).filter(c => c==='All' || homeGallery.some(item=>item.category===c)),[]);
+  const categories = useMemo(() => (['All', 'Brows', 'Lips', 'Lashes', 'Skin', 'Whitening', 'Studio', 'Livia', 'Waxing'] as Filter[]).filter(c => c==='All' || homeGallery.some(item=>item.category===c) || galleryVideos.some(item=>item.category===c)),[]);
   const current = useMemo(() => homeGallery.filter(item=>filter==='All'||item.category===filter),[filter]);
   const shown = filter==='All' ? current.slice(0,limit) : current;
+  const currentVideos = galleryVideos.filter(item => filter === 'All' || item.category === filter);
   // Render each customer photograph exactly once, even on wide screens.
   const autoScrollEnabled = shown.length >= 2;
 
@@ -57,7 +58,7 @@ export const GalleryMarquee: React.FC<{language:Language}> = ({ language }) => {
 
   const changeFilter = (category:Filter) => {
     setFilter(category);
-    setLimit(10);
+    setLimit(16);
     setLightboxIndex(null);
     setPaused(false);
     lastTimeRef.current = null;
@@ -88,8 +89,9 @@ export const GalleryMarquee: React.FC<{language:Language}> = ({ language }) => {
       <button type="button" onClick={()=>move(-1)} aria-label={language==='en'?'Previous gallery photos':language==='pt'?'Fotos anteriores':'Fotos anteriores'} className="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-[#5b3239]/90 text-white shadow-lg transition hover:bg-[#7a4753] focus-visible:outline focus-visible:outline-4 focus-visible:outline-[#efb7c8] cursor-pointer"><ChevronLeft className="h-5 w-5" /></button>
       <div ref={viewportRef} className="gallery-marquee-viewport overflow-x-auto px-12 sm:px-16 pb-3" onMouseEnter={()=>{hoveredRef.current=true;setPaused(true);}} onMouseLeave={()=>{hoveredRef.current=false;setPaused(false);}} onFocus={()=>setPaused(true)} onBlur={()=>setPaused(false)} onTouchStart={()=>setPaused(true)} onTouchEnd={()=>setPaused(false)} tabIndex={0} aria-label={language==='en'?'Automatically scrolling gallery':language==='pt'?'Galeria com rolagem automática':'Galería con desplazamiento automático'}>
         <div className="flex w-max gap-4">
-          {shown.map((item,index)=><button key={`${filter}-${item.id}-${index}`} type="button" onClick={()=>{setPaused(true);setLightboxIndex(index % shown.length);}} data-bella-gallery-card className="group shrink-0 w-[min(58vw,208px)] sm:w-[250px] lg:w-[270px] aspect-[4/5] rounded-xl overflow-hidden shadow-lg border border-[#d8be9b]/60 cursor-pointer bg-[#eae0da] focus-visible:outline focus-visible:outline-4 focus-visible:outline-[#9a5967]" aria-hidden={undefined} aria-label={`${item.alt} - ${language==='pt'?'ampliar':language==='es'?'ampliar':'expand'}`} tabIndex={0}>
+          {shown.map((item,index)=><button key={`${filter}-${item.id}-${index}`} type="button" onClick={()=>{setPaused(true);setLightboxIndex(index % shown.length);}} data-bella-gallery-card className="group relative shrink-0 w-[min(58vw,208px)] sm:w-[250px] lg:w-[270px] aspect-[4/5] rounded-xl overflow-hidden shadow-lg border border-[#d8be9b]/60 cursor-pointer bg-[#eae0da] focus-visible:outline focus-visible:outline-4 focus-visible:outline-[#9a5967]" aria-hidden={undefined} aria-label={`${item.alt} - ${language==='pt'?'ampliar':language==='es'?'ampliar':'expand'}`} tabIndex={0}>
             <img src={item.image} alt={item.alt} loading="lazy" draggable={false} className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105" />
+            {item.serviceName && <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent px-3 pb-3 pt-10 text-left text-xs font-semibold text-white">{item.serviceName}</span>}
           </button>)}
         </div>
       </div>
@@ -99,7 +101,29 @@ export const GalleryMarquee: React.FC<{language:Language}> = ({ language }) => {
       {autoScrollEnabled && <button type="button" onClick={()=>setPaused(value=>!value)} className="inline-flex items-center gap-1.5 rounded-full border border-[#9a5967]/40 px-3 py-1.5 hover:bg-[#f3d9d0] cursor-pointer" aria-pressed={paused}>{paused ? <Play className="h-3 w-3" /> : <Pause className="h-3 w-3" />}{paused ? (language==='en'?'Play':language==='pt'?'Reproduzir':'Reproducir') : (language==='en'?'Pause':language==='pt'?'Pausar':'Pausar')}</button>}
       <span>{autoScrollEnabled ? (language==='en'?'Auto-scroll · Hover or focus to pause · Swipe to browse':language==='pt'?'Rolagem automática · Passe o mouse ou foque para pausar · Deslize para navegar':'Desplazamiento automático · Pase el cursor o enfoque para pausar · Deslice para navegar') : (language==='en'?'Swipe or use arrows to browse':language==='pt'?'Deslize ou use as setas para navegar':'Deslice o use las flechas para navegar')}</span>
     </div>
-    {filter==='All'&&limit<current.length&&<div className="text-center mt-9"><button type="button" onClick={()=>{setLimit(v=>v+10);setPaused(false);}} className="rounded-full px-8 py-3 bg-[#5b3239] text-white text-xs font-bold tracking-widest uppercase hover:bg-[#7a4753] cursor-pointer">{language==='en'?'Show More':language==='pt'?'Ver Mais':'Ver Más'}</button></div>}
+    {filter==='All'&&limit<current.length&&<div className="text-center mt-9"><button type="button" onClick={()=>{setLimit(v=>v+16);setPaused(false);}} className="rounded-full px-8 py-3 bg-[#5b3239] text-white text-xs font-bold tracking-widest uppercase hover:bg-[#7a4753] cursor-pointer">{language==='en'?'Show More':language==='pt'?'Ver Mais':'Ver Más'}</button></div>}
+    {currentVideos.length > 0 && <div id="gallery-videos" className="max-w-7xl mx-auto mt-12 px-4 sm:px-6 lg:px-8">
+      <div className="flex flex-wrap gap-3 items-end justify-between mb-5">
+        <div>
+          <span className="font-montserrat text-xs font-bold uppercase tracking-[0.18em] text-[#9a5967]">{language==='en'?'Behind the scenes':language==='pt'?'Nos bastidores':'Tras las cámaras'}</span>
+          <h3 className="font-raleway text-2xl sm:text-3xl font-semibold text-[#5b3239] mt-2">{language==='en'?'Treatment Videos':language==='pt'?'Vídeos dos tratamentos':'Vídeos de tratamientos'}</h3>
+          <p className="text-sm text-[#675960] mt-2">{language==='en'?'Real treatment videos, organised by service. Press play to watch.':language==='pt'?'Vídeos reais, separados por serviço. Toque para reproduzir.':'Vídeos reales, organizados por servicio. Pulsa para reproducir.'}</p>
+        </div>
+        <span className="font-montserrat text-xs rounded-full bg-[#f3d9d0] px-3 py-2 text-[#5b3239]">{currentVideos.length} {language==='pt'?'vídeos':language==='es'?'vídeos':'videos'}</span>
+      </div>
+      <div className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory" aria-label={language==='pt'?'Galeria de vídeos dos serviços':'Treatment video gallery'}>
+        {currentVideos.map((item,index)=><article key={item.id} data-bella-gallery-video data-service={item.serviceName} className="shrink-0 w-[min(75vw,240px)] sm:w-[270px] overflow-hidden rounded-2xl border border-[#d8be9b]/60 bg-white shadow-md snap-start">
+          <div className="aspect-[3/4] bg-[#22181b]">
+            <video src={item.src} controls playsInline preload="metadata" aria-label={`${item.serviceName} — ${language==='pt'?'vídeo':language==='es'?'vídeo':'video'} ${index+1}`} onPlay={()=>setPaused(true)} className="h-full w-full object-contain" />
+          </div>
+          <div className="px-3 py-3">
+            <p className="font-montserrat text-xs font-semibold text-[#5b3239]">{item.serviceName}</p>
+            <p className="text-[11px] text-[#846f75] mt-1">{language==='pt'?'Vídeo real do serviço':language==='es'?'Vídeo real del servicio':'Real treatment video'}</p>
+          </div>
+        </article>)}
+      </div>
+      <p className="text-xs text-[#846f75] mt-2">{language==='pt'?'Deslize horizontalmente para ver todos os vídeos.':language==='es'?'Desliza horizontalmente para ver todos los vídeos.':'Scroll sideways to see every video.'}</p>
+    </div>}
     <GalleryLightbox images={shown} index={lightboxIndex} onClose={()=>{setLightboxIndex(null);setPaused(false);}} onIndexChange={setLightboxIndex} language={language}/>
   </section>;
 };
