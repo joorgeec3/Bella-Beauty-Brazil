@@ -4,7 +4,7 @@ import { Language } from '../data/siteData';
 import { siteImages } from '../data/siteImages';
 
 interface FeaturesRibbonProps { language: Language; }
-interface FeatureCardData { image?: string; icon: React.ReactNode; label: string; title: string; text: string; footer: string; }
+interface FeatureCardData { image?: string; video?: string; icon: React.ReactNode; label: string; title: string; text: string; footer: string; }
 
 export const FeaturesRibbon: React.FC<FeaturesRibbonProps> = ({ language }) => {
   const cards: FeatureCardData[] = [
@@ -41,7 +41,9 @@ export const FeaturesRibbon: React.FC<FeaturesRibbonProps> = ({ language }) => {
       footer: language === 'en' ? 'Facial skin care' : language === 'pt' ? 'Cuidados faciais' : 'Cuidado facial',
     },
     {
-      // All three original whitening photos appear exclusively in the main Gallery; use the existing smile illustration here to avoid cloning the same picture.
+      // Real client-supplied whitening footage illustrates the treatment itself.
+      // The three client photos stay available in the Gallery without duplicating them in this card.
+      video: `${import.meta.env.BASE_URL}assets/bella/client-2026-10-v2/teeth-whitening/teeth-whitening-video-01.mp4`,
       icon: <Smile className="w-3 h-3 text-[#efb7c8]" />,
       label: language === 'en' ? 'Smile · Care' : language === 'pt' ? 'Sorriso · Cuidado' : 'Sonrisa · Cuidado',
       title: 'Teeth Whitening',
@@ -77,7 +79,7 @@ export const FeaturesRibbon: React.FC<FeaturesRibbonProps> = ({ language }) => {
               <div className="relative w-full max-w-[340px] aspect-4/5 rounded-2xl overflow-hidden shadow-2xl border border-[#9a5967]/30 bg-[#181214] scroll-motion-layer" data-scroll-motion>
                 <img src={siteImages.aboutMe.liviaFeaturePhoto} alt="Livia Rego - Bella Beauty Brazil" className="meet-livia-image w-full h-full object-cover object-top transition-transform duration-700 hover:scale-105" loading="lazy" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20" />
-                <div className="absolute bottom-4 left-4 right-4 text-center"><span className="text-xs uppercase tracking-widest text-amber-200 font-bold block mb-0.5">{language === 'pt' ? 'Fundadora · Bella Beauty' : language === 'es' ? 'Fundadora · Bella Beauty' : 'Founder · Bella Beauty'}</span><h4 className="font-raleway text-lg font-bold text-white uppercase tracking-wider">Livia Rego</h4></div>
+                <div className="absolute bottom-4 left-4 right-4 text-center"><span className="text-xs uppercase tracking-widest text-[#f3c9d4] font-bold block mb-0.5">{language === 'pt' ? 'Fundadora · Bella Beauty' : language === 'es' ? 'Fundadora · Bella Beauty' : 'Founder · Bella Beauty'}</span><h4 className="font-raleway text-lg font-bold text-white uppercase tracking-wider">Livia Rego</h4></div>
               </div>
             </div>
             <div className="meet-livia-copy lg:col-span-7 flex flex-col justify-center">
@@ -115,18 +117,20 @@ export const FeaturesRibbon: React.FC<FeaturesRibbonProps> = ({ language }) => {
   </section>;
 };
 
-const FeatureCard: React.FC<FeatureCardData> = ({ image, icon, label, title, text, footer }) => <article className="flex flex-row sm:flex-col min-h-[190px] sm:min-h-0 bg-[#22181b] reveal-scale rounded-2xl sm:rounded-3xl p-3 sm:p-4 border border-[#9a5967]/30 shadow-xl transition-transform duration-300 hover:-translate-y-1">
+const FeatureCard: React.FC<FeatureCardData> = ({ image, video, icon, label, title, text, footer }) => <article className="flex flex-row sm:flex-col min-h-[190px] sm:min-h-0 bg-[#22181b] reveal-scale rounded-2xl sm:rounded-3xl p-3 sm:p-4 border border-[#9a5967]/30 shadow-xl transition-transform duration-300 hover:-translate-y-1">
   <div className="relative w-[43%] shrink-0 sm:w-full min-h-[160px] sm:min-h-0 sm:aspect-[5/4] rounded-xl sm:rounded-2xl overflow-hidden bg-[#181214] sm:mb-4 shadow-lg border border-[#9a5967]/20 scroll-motion-layer" data-scroll-motion>
-    {image
-      ? <img src={image} alt={title} className="feature-card-image w-full h-full object-cover object-center transition-transform duration-700 hover:scale-105" loading="lazy" />
-      : <div className="w-full h-full min-h-[160px] flex flex-col items-center justify-center gap-3 bg-gradient-to-br from-[#70424f] via-[#4e313d] to-[#21191d] px-3" role="img" aria-label={title}>
+    {video
+      ? <video src={video} muted autoPlay loop playsInline preload="auto" data-whitening-treatment-media aria-label="Real Teeth Whitening treatment at Bella Beauty Brazil" className="w-full h-full object-cover object-center" />
+      : image
+        ? <img src={image} alt={title} className="feature-card-image w-full h-full object-cover object-center transition-transform duration-700 hover:scale-105" loading="lazy" />
+        : <div className="w-full h-full min-h-[160px] flex flex-col items-center justify-center gap-3 bg-gradient-to-br from-[#70424f] via-[#4e313d] to-[#21191d] px-3" role="img" aria-label={title}>
           <div className="w-20 h-20 rounded-full border border-[#efb7c8]/50 bg-white/10 flex items-center justify-center shadow-xl">
             <Smile aria-hidden="true" className="w-10 h-10 text-[#f8d1dd]" strokeWidth={1.25} />
           </div>
           <span className="font-raleway text-sm uppercase tracking-widest text-white/85">Bella Beauty</span>
         </div>}
     <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
-    <span className="absolute top-2 left-2 inline-flex items-center gap-1 rounded-full border border-[#efb7c8]/20 bg-black/75 px-2 py-1 text-[9px] sm:text-[10px] font-semibold text-amber-100">{icon}<span>{label}</span></span>
+    <span className="absolute top-2 left-2 inline-flex items-center gap-1 rounded-full border border-[#efb7c8]/20 bg-black/75 px-2 py-1 text-[9px] sm:text-[10px] font-semibold text-[#f4e0e4]">{icon}<span>{label}</span></span>
   </div>
   <div className="min-w-0 flex-1 px-3 py-2 sm:p-1 sm:text-center flex flex-col justify-between">
     <div>
@@ -137,4 +141,4 @@ const FeatureCard: React.FC<FeatureCardData> = ({ image, icon, label, title, tex
   </div>
 </article>;
 
-const Pillar: React.FC<{ icon: React.ReactNode; text: string }> = ({ icon, text }) => <div className="bg-[#1c1416] p-3.5 rounded-xl border border-[#9a5967]/20 text-center">{icon}<span className="text-xs font-bold uppercase tracking-wider text-amber-100 block">{text}</span></div>;
+const Pillar: React.FC<{ icon: React.ReactNode; text: string }> = ({ icon, text }) => <div className="bg-[#1c1416] p-3.5 rounded-xl border border-[#9a5967]/20 text-center">{icon}<span className="text-xs font-bold uppercase tracking-wider text-[#f4e0e4] block">{text}</span></div>;

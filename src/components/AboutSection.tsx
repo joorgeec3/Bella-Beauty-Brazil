@@ -54,7 +54,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onOpenAppointment, l
               {/* Specialist Team Badge on Image */}
               <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between z-10">
                 <div>
-                  <span className="inline-flex items-center gap-1.5 text-[11px] font-bold tracking-widest text-amber-300 uppercase bg-black/60 backdrop-blur-md px-3 py-1 rounded-full mb-1 border border-amber-300/30">
+                  <span className="inline-flex items-center gap-1.5 text-[11px] font-bold tracking-widest text-[#f3c9d4] uppercase bg-black/60 backdrop-blur-md px-3 py-1 rounded-full mb-1 border border-[#f3c9d4]/30">
                     <Award className="w-3.5 h-3.5 text-[#9a5967]" />
                     {language === 'en' ? 'Certified Specialists' : language === 'pt' ? 'Terapeutas Certificadas' : 'Terapeutas Certificadas'}
                   </span>

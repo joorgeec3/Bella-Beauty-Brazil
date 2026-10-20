@@ -103,7 +103,7 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           {/* Quick Clinic Info (Desktop) */}
           <div className="hidden sm:flex items-center space-x-3 text-[11px] text-[#5c4943]">
-            <span className="inline-flex items-center gap-1.5 font-medium text-[#7d5830]">
+            <span className="inline-flex items-center gap-1.5 font-medium text-[#5b3239]">
               <span className="w-1.5 h-1.5 rounded-full bg-[#9a5967] animate-pulse"></span>
               Greenslopes, Brisbane
             </span>
@@ -247,7 +247,7 @@ export const Header: React.FC<HeaderProps> = ({
                   >
                     <span>{loc.name}</span>
                     {loc.isComingSoon && (
-                      <span className="text-[9px] bg-[#9a5967]/15 text-[#8b6031] border border-[#9a5967]/30 px-1.5 py-0.5 rounded-sm font-semibold">{labels.soon}</span>
+                      <span className="text-[9px] bg-[#9a5967]/15 text-[#5b3239] border border-[#9a5967]/30 px-1.5 py-0.5 rounded-sm font-semibold">{labels.soon}</span>
                     )}
                   </button>
                 ))}
