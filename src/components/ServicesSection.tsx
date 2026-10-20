@@ -24,7 +24,13 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenAppointm
   return <section className="relative bg-site py-16 lg:py-24 overflow-hidden border-b border-neutral-100">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16 reveal-on-scroll">
-        <p className="font-raleway text-3xl sm:text-4xl text-neutral-800 font-light uppercase tracking-wider mb-1">{language === 'en' ? <>Brows, Lashes &amp; <span className="font-bold">Skin Care</span></> : language === 'pt' ? <>Sobrancelhas, Cílios &amp; <span className="font-bold">Pele</span></> : <>Cejas, Pestañas y <span className="font-bold">Piel</span></>}</p>
+        <p className="font-raleway text-xl sm:text-2xl lg:text-3xl text-neutral-800 font-light uppercase tracking-[0.04em] leading-snug mb-2">
+          {language === 'en'
+            ? <>Cosmetic Tattooing, Brows, Lashes,{' '}<span className="block font-semibold text-[#9a5967] mt-1">Skin Treatments &amp; Waxing</span></>
+            : language === 'pt'
+              ? <>Tatuagem Cosmética, Sobrancelhas, Cílios,{' '}<span className="block font-semibold text-[#9a5967] mt-1">Tratamentos de Pele e Depilação</span></>
+              : <>Tatuaje Cosmético, Cejas, Pestañas,{' '}<span className="block font-semibold text-[#9a5967] mt-1">Tratamientos de Piel y Depilación</span></>}
+        </p>
         <p className="font-raleway text-2xl sm:text-3xl text-[#9a5967] font-normal uppercase tracking-widest">{language === 'en' ? 'beauty treatments' : language === 'pt' ? 'tratamentos de beleza' : 'tratamientos de belleza'}</p>
         <div className="w-16 h-0.5 bg-[#9a5967] mx-auto mt-4" />
       </div>

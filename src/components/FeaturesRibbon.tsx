@@ -41,7 +41,13 @@ export const FeaturesRibbon: React.FC<FeaturesRibbonProps> = ({ language }) => {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="text-center max-w-2xl mx-auto mb-10 reveal-on-scroll">
         <span className="text-xs font-bold uppercase tracking-widest text-[#efb7c8] block mb-1">{language === 'en' ? 'Bella Beauty Signature Care' : language === 'pt' ? 'Assinatura Bella Beauty' : 'Cuidado exclusivo Bella Beauty'}</span>
-        <h2 className="font-raleway text-2xl sm:text-3xl lg:text-4xl font-light uppercase tracking-wider text-white">{language === 'en' ? <>Brows, Lashes &amp; <span className="font-bold text-[#9a5967]">Skin Care</span></> : language === 'pt' ? <>Sobrancelhas, Cílios &amp; <span className="font-bold text-[#9a5967]">Pele</span></> : <>Cejas, Pestañas y <span className="font-bold text-[#9a5967]">Piel</span></>}</h2>
+        <h2 className="font-raleway text-[21px] leading-snug sm:text-2xl lg:text-3xl font-light uppercase tracking-[0.04em] text-white max-w-5xl mx-auto">
+          {language === 'en'
+            ? <>Cosmetic Tattooing, Brows, Lashes,{' '}<span className="block font-semibold text-[#efb7c8] mt-1">Skin Treatments &amp; Waxing</span></>
+            : language === 'pt'
+              ? <>Tatuagem Cosmética, Sobrancelhas, Cílios,{' '}<span className="block font-semibold text-[#efb7c8] mt-1">Tratamentos de Pele e Depilação</span></>
+              : <>Tatuaje Cosmético, Cejas, Pestañas,{' '}<span className="block font-semibold text-[#efb7c8] mt-1">Tratamientos de Piel y Depilación</span></>}
+        </h2>
         <div className="w-16 h-0.5 bg-[#9a5967] mx-auto mt-3" />
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto gap-6 lg:gap-8 items-stretch scroll-stagger">
