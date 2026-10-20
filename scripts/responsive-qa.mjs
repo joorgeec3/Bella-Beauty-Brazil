@@ -65,7 +65,7 @@ try {
 
       // Full client-requested categories must be readable on phone, tablet and desktop.
       const signatureHead = page.locator('section').filter({ hasText: 'Bella Beauty Signature Care' }).locator('h2').first();
-      const signatureCopy = (await signatureHead.innerText()).replace(/\\s+/g, ' ').trim();
+      const signatureCopy = (await signatureHead.innerText()).replace(/\s+/g, ' ').trim();
       for (const name of ['Cosmetic Tattooing', 'Brows', 'Lashes', 'Skin Treatments', 'Waxing']) {
         assert(signatureCopy.includes(name), 'Signature heading is missing service category: ' + name);
       }
