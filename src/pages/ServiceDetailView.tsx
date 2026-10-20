@@ -170,7 +170,7 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
             <section className="bg-white rounded-2xl border border-[#e8d6d5] p-6 sm:p-10 shadow-sm scroll-rise">
               <h2 className="font-raleway text-2xl sm:text-3xl font-bold uppercase tracking-wider text-[#5b3239]">{translated(language, 'About this treatment', 'Sobre este tratamento', 'Sobre este tratamiento')}</h2>
               <p className="font-montserrat text-neutral-700 leading-relaxed mt-4">{language === 'en' ? (approvedDescriptionFor(base.id) || service.description) : service.description}</p>
-              {base.id !== 'nano-strokes' && language === 'en' && approvedDescriptionFor(base.id) && <p className="font-montserrat text-xs text-[#846f75] mt-3">Treatment description provided by Bella Beauty Brazil.</p>}
+              {!['nano-strokes', 'lip-blush'].includes(base.id) && language === 'en' && approvedDescriptionFor(base.id) && <p className="font-montserrat text-xs text-[#846f75] mt-3">Treatment description provided by Bella Beauty Brazil.</p>}
               {guide && <>
                 <h3 className="font-raleway text-xl font-bold text-[#5b3239] mt-8">{translated(language, 'Who may this treatment suit?', 'Para quem este tratamento pode ser indicado?', '¿Para quién puede ser adecuado este tratamiento?')}</h3>
                 <p className="font-montserrat text-neutral-700 leading-relaxed mt-3">{guide.idealFor}</p>
@@ -185,6 +185,17 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
                       )}
                     </p>
                   </>
+                ) : base.id === 'lip-blush' ? (
+                  <>
+                    <h3 className="font-raleway text-xl font-bold text-[#5b3239] mt-8">{translated(language, 'A soft, natural finish', 'Um acabamento suave e natural', 'Un acabado suave y natural')}</h3>
+                    <p className="font-montserrat text-neutral-700 leading-relaxed mt-3">
+                      {translated(language,
+                        'Lip Blush enhances your natural lip colour and gently defines the lip border. The shade is selected with you to suit your preferences. The healed result is a soft wash of colour rather than a full lipstick look.',
+                        'Lip Blush realça a cor natural dos lábios e define suavemente seu contorno. O tom é escolhido com você, de acordo com suas preferências. Depois de cicatrizado, o resultado é uma cor suave, e não um efeito de batom intenso.',
+                        'Lip Blush realza el color natural de tus labios y define suavemente su contorno. El tono se elige contigo según tus preferencias. Una vez cicatrizado, el resultado es un toque suave de color, no un efecto de pintalabios intenso.'
+                      )}
+                    </p>
+                  </>
                 ) : (
                   <>
                     <h3 className="font-raleway text-xl font-bold text-[#5b3239] mt-8">{translated(language, 'How is it different?', 'Quais são as diferenças?', '¿En qué se diferencia?')}</h3>
@@ -194,7 +205,11 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
               </>}
               <h3 className="font-raleway text-xl font-bold text-[#5b3239] mt-8">{translated(language, 'Benefits and what to expect', 'Benefícios e o que esperar', 'Beneficios y qué esperar')}</h3>
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
-                {(service.benefits || []).map((benefit) => <li key={benefit} className="flex items-start gap-2 text-sm font-montserrat text-neutral-700"><CheckCircle2 className="w-4 h-4 text-[#9a5967] shrink-0 mt-0.5" />{benefit}</li>)}
+                {(base.id === 'lip-blush' && language !== 'en'
+                  ? (language === 'pt'
+                    ? ['Cor suave e natural para os lábios', 'Contorno dos lábios mais definido', 'Escolha personalizada do tom', 'A cor fica mais intensa no início e suaviza durante a cicatrização']
+                    : ['Color de labios suave y natural', 'Contorno de labios más definido', 'Elección personalizada del tono', 'El color se ve más intenso al principio y se suaviza durante la cicatrización'])
+                  : (service.benefits || [])).map((benefit) => <li key={benefit} className="flex items-start gap-2 text-sm font-montserrat text-neutral-700"><CheckCircle2 className="w-4 h-4 text-[#9a5967] shrink-0 mt-0.5" />{benefit}</li>)}
               </ul>
             </section>
             <section className="bg-[#f3d9d0] rounded-2xl border border-[#e8c5c8] p-6 sm:p-10 scroll-rise">
@@ -212,9 +227,9 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
             <div className="bg-[#5b3239] text-white rounded-2xl p-6 sm:p-8 shadow-lg sticky top-28">
               <h2 className="font-raleway text-2xl font-bold uppercase tracking-wider">{translated(language, 'Book this service', 'Agende este serviço', 'Reserva este servicio')}</h2>
               <div className="flex items-center gap-3 mt-5 text-[#efb7c8]"><Calendar className="w-5 h-5" /><strong className="font-montserrat text-xl">{isPriceConfirmed ? `A$${service.price}` : translated(language, 'Enquire', 'Consultar', 'Consultar')}</strong></div>
-              {base.id === 'nano-strokes' && <p className="mt-3 font-montserrat text-sm font-medium leading-relaxed text-white/95">{translated(language, 'Touch-up after 45–60 days: $120.', 'Retoque após 45–60 dias: $120.', 'Retoque después de 45–60 días: $120.')}</p>}
+              {(base.id === 'nano-strokes' || base.id === 'lip-blush') && <p className="mt-3 font-montserrat text-sm font-medium leading-relaxed text-white/95">{translated(language, 'Touch-up after 45–60 days: $120.', 'Retoque após 45–60 dias: $120.', 'Retoque después de 45–60 días: $120.')}</p>}
               {service.duration && <div className="flex items-center gap-3 mt-3 text-neutral-200"><Clock className="w-5 h-5" /><span className="font-montserrat text-sm">{service.duration}</span></div>}
-              <a href={getServiceBookingUrl(base.id)}  className="mt-7 inline-flex w-full items-center justify-center gap-2 bg-[#efb7c8] hover:bg-white text-[#5b3239] text-xs font-bold uppercase tracking-widest px-5 py-4 rounded-full cursor-pointer transition-colors"><Calendar className="w-4 h-4" />{base.id === 'nano-strokes'
+              <a href={getServiceBookingUrl(base.id)}  className="mt-7 inline-flex w-full items-center justify-center gap-2 bg-[#efb7c8] hover:bg-white text-[#5b3239] text-xs font-bold uppercase tracking-widest px-5 py-4 rounded-full cursor-pointer transition-colors"><Calendar className="w-4 h-4" />{(base.id === 'nano-strokes' || base.id === 'lip-blush')
                 ? translated(language, 'Book Your Appointment', 'Agende seu horário', 'Reserva tu cita')
                 : SERVICE_BOOKING_LINKS[base.id]
                   ? translated(language, 'Book this treatment', 'Agendar este tratamento', 'Reservar este tratamiento')
