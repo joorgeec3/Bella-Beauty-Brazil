@@ -192,10 +192,17 @@ export const ServicesView: React.FC<ServicesViewProps> = ({ initialServiceId, on
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
           {filteredServices.map((service) => <article key={service.id}
             className="bg-white border border-[#e8d6d5] rounded-2xl shadow-sm overflow-hidden flex flex-col sm:flex-row hover:shadow-lg transition-shadow">
-            {cardImageFor(service.id) && <a href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/services/${service.id}`} onClick={(event) => navigate(event, service.id)}
+            {cardImageFor(service.id) ? <a href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/services/${service.id}`} onClick={(event) => navigate(event, service.id)}
               className="block sm:w-[165px] sm:shrink-0 overflow-hidden bg-[#eee2df] focus-visible:outline-2 focus-visible:outline-[#9a5967]">
               <img src={cardImageFor(service.id)} alt={imageAlt(service.id, service.title)}
                 loading="lazy" className="w-full h-44 sm:h-full max-h-[240px] sm:max-h-none object-cover hover:scale-[1.03] transition-transform duration-500" />
+            </a> : <a href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/services/${service.id}`} onClick={(event) => navigate(event, service.id)}
+              aria-label={`${service.title} — ${labels.details}`}
+              className="flex sm:w-[165px] sm:shrink-0 min-h-32 items-center justify-center overflow-hidden bg-gradient-to-br from-[#f4e5e8] via-[#eddae0] to-[#d6bac3] text-[#5b3239] border-b sm:border-b-0 sm:border-r border-[#e8d6d5] focus-visible:outline-2 focus-visible:outline-[#9a5967]">
+              <span className="flex flex-col gap-2 items-center justify-center text-center px-4 py-5">
+                <span aria-hidden="true" className="w-12 h-12 rounded-full border border-[#9a5967]/40 flex items-center justify-center font-raleway text-2xl font-semibold">{service.title.trim().charAt(0)}</span>
+                <span className="font-montserrat text-[10px] font-bold uppercase tracking-wide">{categoryLabels[language][service.category as Category] || service.category}</span>
+              </span>
             </a>}
             <div className="min-w-0 p-4 sm:p-5 flex-1 flex flex-col">
               <span className="font-montserrat text-[10px] font-bold uppercase tracking-[0.14em] text-[#9a5967]">{categoryLabels[language][service.category as Category] || service.category}</span>
