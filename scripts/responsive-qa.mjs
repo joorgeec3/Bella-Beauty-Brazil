@@ -474,6 +474,107 @@ try {
       assert.equal(await dialog.count(), 0, 'Gallery did not close on Escape');
     });
 
+    await check(`${width}px full service deep-link audit and card image uniqueness`, async () => {
+      // A shared link or page refresh must work for every treatment; Shadow Brows
+      // previously returned 404 because it was omitted from prerender output.
+      if (width !== 375 && width !== 1440) return;
+      await go('/services');
+      const servicePaths = await page.locator('main article a[href*="/services/"]').evaluateAll(links =>
+        [...new Set(links.map(link => new URL(link.href).pathname))]);
+      assert.equal(servicePaths.length, 27, 'All 27 treatments must have a deep link');
+      for (const path of servicePaths) {
+        const response = await page.request.get(base + path);
+        assert.equal(response.status(), 200, 'Direct URL or refresh would fail: ' + path);
+        assert((await response.text()).includes('id="root"'), 'HTML app shell missing on ' + path);
+      }
+      const cardPhotos = await page.locator('main article img').evaluateAll(images =>
+        images.map(image => image.getAttribute('src') || ''));
+      assert.equal(cardPhotos.length, new Set(cardPhotos).size, 'Different service cards must not reuse the same photo');
+      assert.equal(await page.locator('main article').count(), 27, 'All service cards must remain visible and consistent');
+      const photoFree = await page.locator('main article').evaluateAll(cards =>
+        cards.filter(card => !card.querySelector('img')).map(card => ({
+          placeholder: Boolean(card.querySelector('a[aria-label] span[aria-hidden="true"]')),
+          title: card.querySelector('h2')?.textContent || '',
+        })));
+      assert(photoFree.every(card => card.placeholder), 'Cards without a genuine photo must use the branded non-photo visual: ' + JSON.stringify(photoFree));
+    });
+
+    await check(`${width}px decode authentic photographs and prevent broken assets`, async () => {
+      if (width !== 375) return;
+      await go('/');
+      const gallery = page.locator('#gallery');
+      for (let i = 0; i < 8; i++) {
+        const more = gallery.getByRole('button', { name: /^Show More$/ });
+        if (!(await more.count())) break;
+        await more.click();
+      }
+      const homepageImagePaths = await page.locator('img').evaluateAll(images =>
+        [...new Set(images.map(img => img.getAttribute('src') || '').filter(src => src.startsWith('/assets/')))]);
+      assert(homepageImagePaths.length >= 60, 'The homepage no longer exposes the approved photo collection');
+      // Image decoding, unlike a HEAD request, detects corrupted image bytes.
+      const badImages = await page.evaluate(async (paths) => {
+        const failures = [];
+        for (let i = 0; i < paths.length; i += 8) {
+          const batch = paths.slice(i, i + 8);
+          const results = await Promise.all(batch.map(async path => {
+            const image = new Image();
+            image.src = path;
+            try { await image.decode(); return null; }
+            catch { return path; }
+          }));
+          failures.push(...results.filter(Boolean));
+        }
+        return failures;
+      }, homepageImagePaths);
+      assert.deepEqual(badImages, [], 'Broken images on homepage: ' + badImages.join(', '));
+      await go('/services');
+      const serviceCards = await page.locator('main article img').evaluateAll(images =>
+        [...new Set(images.map(img => img.getAttribute('src') || '').filter(Boolean))]);
+      const badServiceImages = await page.evaluate(async paths =>
+        (await Promise.all(paths.map(async path => {
+          const image = new Image(); image.src = path;
+          try { await image.decode(); return null; } catch { return path; }
+        }))).filter(Boolean), serviceCards);
+      assert.deepEqual(badServiceImages, [], 'Broken thumbnail images on service cards: ' + badServiceImages.join(', '));
+    });
+
+    await check(`${width}px gallery manual Pause remains paused and treatment videos cannot overlap`, async () => {
+      if (width !== 375) return;
+      await go('/');
+      const gallery = page.locator('#gallery');
+      await gallery.getByRole('button', { name: /^Pause$/ }).click();
+      const playButton = gallery.getByRole('button', { name: /^Play$/ });
+      assert(await playButton.isVisible(), 'Manual Pause button must become Play');
+      await page.mouse.move(0, 0);
+      await gallery.getByRole('button', { name: 'Next gallery photos' }).click();
+      await page.waitForTimeout(1850);
+      assert(await playButton.isVisible(), 'Manual Pause must survive mouse-leave and arrow timeout');
+      // Programmatic muted playback is allowed in Chromium without a user gesture.
+      const videos = gallery.locator('[data-bella-gallery-video] video');
+      assert((await videos.count()) >= 2, 'Gallery needs at least two real treatment videos');
+      await videos.nth(0).evaluate(async video => { video.muted = true; await video.play(); });
+      await videos.nth(1).evaluate(async video => { video.muted = true; await video.play(); });
+      assert(await videos.nth(0).evaluate(video => video.paused), 'First treatment video must pause when another plays');
+      assert(!(await videos.nth(1).evaluate(video => video.paused)), 'Second treatment video should remain playing');
+      await videos.nth(1).evaluate(video => video.pause());
+      assert(await playButton.isVisible(), 'Video playback must not override explicit gallery Pause');
+    });
+
+    await check(`${width}px language selectors and translated mobile navigation`, async () => {
+      if (width !== 375) return;
+      await go('/');
+      const languageButtons = page.locator('button[title="Português"], button[title="Español"], button[title="English"]');
+      assert.equal(await languageButtons.count(), 3, 'English, Spanish and Portuguese selectors should exist');
+      await page.locator('button[title="Português"]').click();
+      assert.equal(await page.locator('html').getAttribute('lang'), 'pt');
+      assert.equal(await page.locator('#gallery').getByRole('heading', { name: 'Galeria' }).count(), 1);
+      await page.locator('button[title="Español"]').click();
+      assert.equal(await page.locator('html').getAttribute('lang'), 'es');
+      assert.equal(await page.locator('#gallery').getByRole('heading', { name: 'Galería' }).count(), 1);
+      await page.locator('button[title="English"]').click();
+      assert.equal(await page.locator('html').getAttribute('lang'), 'en-AU');
+    });
+
     await check(`${width}px browser runtime exceptions`, async () => {
       assert.equal(jsErrors.length, 0, jsErrors.join('; '));
     });
