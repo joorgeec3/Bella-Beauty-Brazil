@@ -3,6 +3,14 @@ import { dirname, join } from 'node:path';
 import { SERVICE_GUIDES } from '../src/data/serviceGuides.ts';
 
 const services = {
+  'shadow-brows': { title: 'Shadow Brows', description: 'Shadow Brows creates a soft, shaded effect, similar to the look of freshly dyed brows. The shape, colour and intensity are tailored to your features and preferences, from subtle definition to a more defined finish.', image: '/assets/bella/client-2026-10/brow-tools.webp', price: '630' },
+  'cosmetic-tattoo-removal': { title: 'Cosmetic Tattoo Removal', description: 'Non-laser pigment lightening with THink Pigment Remover after an individual suitability assessment.', image: '/assets/bella/gallery/studio-treatment-room.webp', price: '150' },
+  'male-brow-sculpt': { title: 'Male Brow Sculpt', description: 'Natural brow grooming, trimming, waxing and tweezing tailored to the existing shape.', image: '/assets/bella/client-2026-10/brow-styling.webp', price: '42' },
+  'dreamy-brows': { title: 'Dreamy Brows – Brow Sculpt & Relaxing Massage', description: 'Personalised brow sculpt with a relaxing facial massage and scalp massage.', image: '/assets/bella/client-2026-10/brow-styling.webp', price: '156' },
+  'lash-lift-only': { title: 'Lash Lift Only', description: 'A lift and curl for natural eyelashes without tint or extensions.', image: '/assets/bella/lashes.jpg', price: '119' },
+  'wet-look-lashes': { title: 'Wet Look Lash Extensions', description: 'Textured lash extensions with darker, denser wet-look definition.', image: '/assets/bella/lashes.jpg', price: '150' },
+  'lash-tint': { title: 'Lash Tint', description: 'Tint natural lashes for deeper colour and definition without extensions.', image: '/assets/bella/lashes.jpg', price: '45' },
+  'lash-extension-removal': { title: 'Lash Extension Removal', description: 'Careful professional removal of existing lash extensions.', image: '/assets/bella/lashes.jpg', price: '40' },
   'nano-strokes': { title: 'Microblading – Nano Strokes', description: 'Manual Tebori eyebrow tattooing with delicate hair-like strokes, designed around natural hair flow.', image: '/assets/bella/client-2026-10/nano-strokes-procedure.webp', price: '630', duration: '2 hours, 30 mins' },
   'shadow-hybrid': { title: 'Brow Sculpt & Hybrid Dye', description: 'Personalised brow shaping with hybrid dye to tint hairs and temporarily stain the skin.', image: '/assets/bella/client-2026-10/brow-styling.webp', price: '79', duration: '40 mins' },
   'lip-blush': { title: 'Lip Blush – Lip Tattooing', description: 'Cosmetic lip tattoo to enhance the natural colour and definition of the lips. Colour softens as lips heal.', image: '/assets/bella/client-2026-10/lip-blush-procedure.webp', price: '630', duration: '2 hours, 30 mins' },
@@ -10,7 +18,6 @@ const services = {
   'brow-lamination': { title: 'Brow Lamination, Shape & Tint', description: 'A structured brow lamination, shape and tint service published in Timely.', image: '/assets/bella/client-2026-10/brow-styling.webp', price: '133', duration: '1 hour' },
   'lash-lift': { title: 'Lash Lift & Tint', description: 'Lift and tint services published in Timely.', image: '/assets/bella/lashes.jpg', price: '133', duration: '1 hour, 10 mins' },
   dermaplaning: { title: 'Dermaplaning', description: 'Gentle skin exfoliation, removing dead cells and fine facial hair. Includes cleansing, skin assessment, skincare, moisturiser and SPF.', image: '/assets/bella/dermaplaning-facial-treatment.webp', price: '140', duration: '55 mins' },
-  'cosmetic-tattooing': { title: 'Cosmetic Tattooing', description: 'Cosmetic tattooing treatments from the Bella Beauty Brazil Timely catalogue.', image: '/assets/bella/client-2026-10/lip-blush-procedure.webp' },
   'brow-sculpt': { title: 'Brow Sculpt Signature', description: 'Personalised brow sculpting and shaping in Greenslopes.', image: '/assets/bella/client-2026-10/brow-styling.webp', price: '56', duration: '25 mins' },
   'classic-eyelashes': { title: 'Classic Eyelash Extensions', description: 'Classic eyelash extensions for an elegant natural look.', image: '/assets/bella/lashes.jpg', price: '145', duration: '1 hour, 30 mins' },
   'hybrid-eyelashes': { title: 'Hybrid Lash Extensions', description: 'A combination of classic extensions and volume fans, designed for a fuller lash line.', image: '/assets/bella/lashes.jpg', price: '180', duration: '1 hour, 45 mins' },
@@ -24,6 +31,20 @@ const services = {
   'teeth-whitening': { title: 'Teeth Whitening', description: 'Teeth whitening service published by Bella Beauty Brazil in the official Timely catalogue; confirm suitability and aftercare with the studio.', image: '/assets/bella/gallery/studio-treatment-room.webp', price: '199', duration: '1 hour' },
   waxing: { title: 'Brazilian Waxing', description: 'Professional Brazilian waxing from Bella Beauty Brazil.', image: '/assets/bella/client-2026-10/waxing-treatment.webp', price: '82', duration: '30 mins' },
 };
+
+// All published treatment paths must exist in the same catalogue as the client-side router.
+// Missing paths caused direct links such as /services/shadow-brows to return Vercel 404.
+const appServicesSource = await readFile('src/data/siteData.ts', 'utf8');
+const appServicesStart = appServicesSource.indexOf('export const SERVICES: Service[] = [');
+const appServicesEnd = appServicesSource.indexOf('\n];', appServicesStart);
+if (appServicesStart === -1 || appServicesEnd === -1) throw new Error('Cannot locate the application service routes in siteData.ts');
+const appServicesBlock = appServicesSource.slice(appServicesStart, appServicesEnd);
+const appServiceIds = [...appServicesBlock.matchAll(/^\s*\{\s*id:\s*'([^']+)'/gm)].map((m) => m[1]);
+const missingServicePages = appServiceIds.filter((id) => !Object.hasOwn(services, id));
+const staleServicePages = Object.keys(services).filter((id) => !appServiceIds.includes(id));
+if (new Set(appServiceIds).size !== appServiceIds.length || missingServicePages.length || staleServicePages.length) {
+  throw new Error('Service pre-render map differs from app routes. Missing: ' + missingServicePages.join(', ') + '; Stale: ' + staleServicePages.join(', '));
+}
 
 const escapeHtml = (value) => value.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
 const isGitHubPages = process.env.GITHUB_PAGES === 'true';
