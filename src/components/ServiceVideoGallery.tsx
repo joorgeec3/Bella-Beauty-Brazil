@@ -11,6 +11,7 @@ const videoCounts: Record<string, number> = {
   'brow-sculpt': 2,
   'brow-lamination': 5,
   'dreamy-brows': 1,
+  'dermaplaning': 1,
   'facial-spa': 2,
   'lip-blush': 1,
   'lip-bliss-hydration': 1,
