@@ -20,7 +20,6 @@ import { InstagramSection } from './components/InstagramSection';
 import { Footer } from './components/Footer';
 import { SideHoursDrawer } from './components/SideHoursDrawer';
 import { JoinChatButton } from './components/JoinChatButton';
-import { BackToTopButton } from './components/BackToTopButton';
 import { ProductQuickviewModal } from './components/ProductQuickviewModal';
 import { AboutUsView } from './pages/AboutUsView';
 import { ServicesView } from './pages/ServicesView';
@@ -362,7 +361,6 @@ export default function App() {
 
       {/* WhatsApp JoinChat Bubble */}
       <JoinChatButton language={language} />
-      <BackToTopButton language={language} />
 
       {/* Modals & Drawers */}
       <ProductQuickviewModal
