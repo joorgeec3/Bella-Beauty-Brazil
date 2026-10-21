@@ -14,6 +14,9 @@ const labels: Record<Language, Record<Filter, string>> = {
 export const GalleryMarquee: React.FC<{language:Language}> = ({ language }) => {
   const [filter,setFilter] = useState<Filter>('All');
   const [limit,setLimit] = useState(16);
+  // Hide a pending service video until its real MP4 has been uploaded and responds.
+  // This avoids a blank/broken video card while preserving the existing gallery.
+  const [dermaplaningReelAvailable,setDermaplaningReelAvailable] = useState(false);
   const [lightboxIndex,setLightboxIndex] = useState<number|null>(null);
   // Manual Pause must not be undone by mouse-leave, focus loss or video controls.
   const [manualPaused,setManualPaused] = useState(false);
@@ -33,7 +36,23 @@ export const GalleryMarquee: React.FC<{language:Language}> = ({ language }) => {
   const categories = useMemo(() => (['All', 'Brows', 'Lips', 'Lashes', 'Skin', 'Whitening', 'Studio', 'Livia', 'Waxing'] as Filter[]).filter(c => c==='All' || homeGallery.some(item=>item.category===c) || galleryVideos.some(item=>item.category===c)),[]);
   const current = useMemo(() => homeGallery.filter(item=>filter==='All'||item.category===filter),[filter]);
   const shown = filter==='All' ? current.slice(0,limit) : current;
-  const currentVideos = galleryVideos.filter(item => filter === 'All' || item.category === filter);
+  const currentVideos = galleryVideos.filter(item =>
+    (item.id !== 'gallery-video-dermaplaning-1' || dermaplaningReelAvailable) &&
+    (filter === 'All' || item.category === filter)
+  );
+
+  useEffect(() => {
+    const item = galleryVideos.find(video => video.id === 'gallery-video-dermaplaning-1');
+    if (!item) return;
+    const controller = new AbortController();
+    fetch(item.src, { method: 'HEAD', signal: controller.signal })
+      .then(response => {
+        if (!controller.signal.aborted && response.ok && (response.headers.get('content-type') || '').includes('video/')) {
+          setDermaplaningReelAvailable(true);
+        }
+      }).catch(() => {});
+    return () => controller.abort();
+  }, []);
   // Render each customer photograph exactly once, even on wide screens.
   const autoScrollEnabled = shown.length >= 2;
 
