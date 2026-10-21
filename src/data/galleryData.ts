@@ -112,6 +112,7 @@ const newVideoFolders: { slug: string; name: string; category: BellaGalleryCateg
   { slug: 'brow-lamination', name: 'Brow Lamination & Lash Lift', category: 'Brows', count: 5 },
   { slug: 'dreamy-brows', name: 'Dreamy Brows — Massage', category: 'Brows', count: 1 },
   { slug: 'shadow-brows', name: 'Shadow Brows', category: 'Brows', count: 1 },
+  { slug: 'dermaplaning', name: 'Dermaplaning', category: 'Skin', count: 1 },
   { slug: 'facial-spa', name: 'Facial Spa', category: 'Skin', count: 2 },
   { slug: 'lip-blush', name: 'Lip Blush', category: 'Lips', count: 1 },
   { slug: 'lip-bliss-hydration', name: 'Lip Hydration', category: 'Lips', count: 1 },
