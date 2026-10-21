@@ -14,7 +14,7 @@ export const JoinChatButton: React.FC<JoinChatButtonProps> = ({ language }) => {
   const whatsappUrl = `https://wa.me/${phone}?text=${textMsg}`;
 
   return (
-    <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end">
+    <div data-floating-whatsapp className="fixed right-4 bottom-[calc(1rem+env(safe-area-inset-bottom,0px))] z-40 flex flex-col items-end">
       
       {/* Expanded WhatsApp Chatbox */}
       {chatOpen && (
@@ -34,7 +34,7 @@ export const JoinChatButton: React.FC<JoinChatButtonProps> = ({ language }) => {
             </div>
             <button
               onClick={() => setChatOpen(false)}
-              className="p-1 hover:bg-black/10 rounded-full transition-colors cursor-pointer"
+              className="p-1 hover:bg-black/10 rounded-full transition-colors cursor-pointer" aria-label={language === 'en' ? 'Close WhatsApp panel' : language === 'pt' ? 'Fechar painel do WhatsApp' : 'Cerrar panel de WhatsApp'}
             >
               <X className="w-4 h-4" />
             </button>
@@ -71,18 +71,11 @@ export const JoinChatButton: React.FC<JoinChatButtonProps> = ({ language }) => {
 
       {/* Floating Circle Button */}
       <div className="flex items-center space-x-2">
-        {!chatOpen && (
-          <div
-            onClick={() => setChatOpen(true)}
-            className="hidden sm:block bg-white text-neutral-800 text-xs font-semibold px-3 py-1.5 rounded-full shadow-md border border-neutral-100 cursor-pointer hover:bg-neutral-50 transition-colors"
-          >
-            {language === 'en' ? 'Need help?' : language === 'pt' ? 'Precisa de ajuda?' : '¿Necesitas ayuda?'}
-          </div>
-        )}
-
         <button
+          type="button"
           onClick={() => setChatOpen(!chatOpen)}
-          className="w-14 h-14 rounded-full bg-[#25D366] hover:bg-[#20ba5a] text-white flex items-center justify-center shadow-lg transition-transform hover:scale-105 cursor-pointer relative"
+          aria-expanded={chatOpen}
+          className="w-[52px] h-[52px] sm:w-14 sm:h-14 rounded-full bg-[#25D366] hover:bg-[#20ba5a] text-white flex items-center justify-center shadow-lg transition-transform hover:scale-105 cursor-pointer relative"
           aria-label={language === 'en' ? 'WhatsApp Chat' : language === 'pt' ? 'Abrir WhatsApp' : 'Abrir WhatsApp'}
         >
           {chatOpen ? (
