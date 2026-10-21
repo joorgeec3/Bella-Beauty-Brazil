@@ -187,8 +187,15 @@ try {
       assert(newFounderPortrait?.includes('/about-livia-03.webp'), 'Meet Livia should use the approved curtain-background portrait rather than the kitchen photograph');
       const homepageVideos = await page.locator('#gallery [data-bella-gallery-video] video').evaluateAll(elements =>
         elements.map(video => video.getAttribute('src') || ''));
-      assert.equal(homepageVideos.length, 14, 'All fourteen treatment videos must appear in the homepage Gallery');
-      assert.equal(new Set(homepageVideos).size, 14, 'No gallery video should be repeated');
+      const dermaplaningPath = '/assets/bella/client-2026-10-v2/dermaplaning/dermaplaning-video-01.mp4';
+      const dermaResponse = await page.request.head(base + dermaplaningPath);
+      const dermaplaningUploaded = dermaResponse.ok() && (dermaResponse.headers()['content-type'] || '').includes('video/');
+      const expectedVideoCount = 14 + (dermaplaningUploaded ? 1 : 0);
+      await page.waitForFunction(count => document.querySelectorAll('#gallery [data-bella-gallery-video] video').length === count, expectedVideoCount, { timeout: 10000 });
+      const verifiedVideos = await page.locator('#gallery [data-bella-gallery-video] video').evaluateAll(elements => elements.map(video => video.getAttribute('src') || ''));
+      assert.equal(verifiedVideos.length, expectedVideoCount, 'All uploaded video assets must show in the homepage Gallery');
+      assert.equal(new Set(verifiedVideos).size, expectedVideoCount, 'No gallery video should be repeated');
+      assert.equal(verifiedVideos.some(path => path.includes('/dermaplaning/dermaplaning-video-01.mp4')), dermaplaningUploaded, 'Dermaplaning reel must display only if the real MP4 is present');
       for (const videoPath of homepageVideos) {
         assert(videoPath.includes('/client-2026-10-v2/') && videoPath.endsWith('.mp4'), 'Gallery video is from an incorrect folder: ' + videoPath);
       }
@@ -312,12 +319,15 @@ try {
         }
         assert.equal(total, 43, 'Every one of the 43 approved new photos must be mapped once');
 
-        // Check every one of the 14 real treatment videos, including response MIME and matching service folder.
+        // Check all existing clips and the Dermaplaning reel once its actual binary is committed.
+        const dermaResponse = await page.request.head(base + '/assets/bella/client-2026-10-v2/dermaplaning/dermaplaning-video-01.mp4');
+        const dermaplaningUploaded = dermaResponse.ok() && (dermaResponse.headers()['content-type'] || '').includes('video/');
         const videoCounts = {
           'brow-sculpt': 2,
           'brow-lamination': 5,
           'dreamy-brows': 1,
           'facial-spa': 2,
+          ...(dermaplaningUploaded ? { dermaplaning: 1 } : {}),
           'lip-blush': 1,
           'lip-bliss-hydration': 1,
           'shadow-brows': 1,
@@ -343,7 +353,7 @@ try {
             videoTotal += 1;
           }
         }
-        assert.equal(videoTotal, 14, 'All fourteen approved video clips must be accessible');
+        assert.equal(videoTotal, 14 + (dermaplaningUploaded ? 1 : 0), 'Every uploaded treatment video must be accessible');
         await go('/services/lip-blush');
       }
       // Client-approved Lip Blush copy, price and Timely CTA in all six responsive widths.
