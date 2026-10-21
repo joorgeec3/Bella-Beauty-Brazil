@@ -76,22 +76,23 @@ html { scroll-behavior: smooth; scroll-padding-top: 82px; }
   animation-play-state: paused;
 }
 
-/* Floating Appointment Button */
+/* Keep the two essential actions in a compact, coordinated bottom row.
+   No button covers the Meet Livia cards from the middle of the screen. */
 #boton-flotante {
   background-color: #5b3239 !important;
   color: #ffffff !important;
   position: fixed;
-  right: 0;
-  bottom: 107px;
-  border-radius: 50px 0px 0px 50px;
-  z-index: 99;
+  right: 5.5rem;
+  bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+  min-height: 3.25rem;
+  border-radius: 9999px;
+  z-index: 39;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
-  transition: transform 0.2s ease, background-color 0.2s ease;
+  transition: opacity .2s ease, transform .2s ease, background-color .2s ease;
 }
-
 #boton-flotante:hover {
   background-color: #7a4753 !important;
-  transform: translateX(-3px);
+  transform: translateY(-2px);
 }
 
 /* Shape divider styling */
@@ -309,15 +310,16 @@ html { scroll-behavior: smooth; scroll-padding-top: 82px; }
 
 @media (max-width: 640px) {
   #boton-flotante {
-    bottom: 96px;
-    width: 3.25rem;
-    height: 3.25rem;
-    padding: 0;
+    left: 1rem;
+    right: auto;
+    bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+    min-height: 3.25rem;
+    padding: 0 1rem;
     justify-content: center;
-    border-radius: 9999px;
   }
-
   #boton-flotante .floating-appointment-label {
-    display: none;
+    display: inline;
+    font-size: 10px;
+    letter-spacing: .04em;
   }
 }

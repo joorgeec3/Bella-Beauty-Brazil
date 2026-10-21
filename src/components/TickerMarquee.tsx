@@ -62,8 +62,16 @@ export const TickerMarquee: React.FC<{ language: Language }> = ({ language }) =>
         </svg>
       </div>
 
-      {/* Marquee Track — duas faixas idênticas criam loop sem salto. */}
-      <div className="flex overflow-hidden py-3" aria-label={`${prefix} — GREENSLOPES`}>
+      {/* On phones show the complete phrase in two readable centered lines.
+          Continuous marquee lettering looked permanently cut off at mobile widths. */}
+      <div className="sm:hidden relative z-10 flex flex-col items-center justify-center gap-1 px-5 py-4 text-center" data-testid="bella-visit-us-mobile">
+        <span className="font-montserrat text-[clamp(17px,5vw,22px)] uppercase tracking-[0.12em] leading-snug text-[#efb7c8]">{prefix}</span>
+        <span className="font-montserrat text-[clamp(24px,7.2vw,32px)] uppercase font-semibold tracking-[0.07em] leading-tight text-white">GREENSLOPES</span>
+        <span className="font-montserrat text-xs uppercase tracking-[0.24em] text-[#efb7c8]">Brisbane · QLD</span>
+      </div>
+
+      {/* Desktop marquee keeps the original aesthetic and continuous animation. */}
+      <div className="hidden sm:flex overflow-hidden py-3" aria-label={`${prefix} — GREENSLOPES`}>
         <div className="bella-visit-us-track" data-testid="bella-visit-us-track">
           {[0, 1].map((copy) => (
             <div className="bella-visit-us-group" key={copy} aria-hidden={copy === 1}>

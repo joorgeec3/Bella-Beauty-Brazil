@@ -89,7 +89,7 @@ try {
       assert.equal(await founderSection.count(), 1, 'Meet Livia section should remain on the homepage');
       const founderText = await founderSection.innerText();
       for (const text of [
-        'A little about me',
+        'Meet Livia',
         'Hi, I’m Livia, founder of Bella Beauty Brazil, brow artist, cosmetic tattoo artist and beauty educator.',
         'Originally from the Amazon region of Brazil',
         'I take my time with every appointment',
@@ -99,7 +99,44 @@ try {
       ]) {
         assert(founderText.toLocaleLowerCase('en-AU').includes(text.toLocaleLowerCase('en-AU')), 'Client-approved Meet Livia text missing: ' + text);
       }
-      assert(!founderText.includes('Care with Purpose & Precision'), 'Old founder title still displayed');
+      assert(!founderText.includes('Care with Purpose & Precision') && !founderText.includes('A little about me'), 'No redundant founder title should be visible');
+      assert.equal(await founderSection.getByRole('heading', { name: 'Meet Livia', exact: true }).count(), 1, 'Meet Livia must be the unique, prominent section heading');
+      const founderHeading = founderSection.getByRole('heading', { name: 'Meet Livia', exact: true });
+      const headingFont = await founderHeading.evaluate(element => parseFloat(getComputedStyle(element).fontSize));
+      assert(headingFont >= 29, 'Meet Livia should be visually prominent on every screen');
+      const pictureCaption = await page.locator('.meet-livia-image').locator('..').innerText();
+      assert(pictureCaption.includes('FOUNDER · BELLA BEAUTY BRAZIL'), 'Photo caption must name the complete brand');
+      assert(pictureCaption.includes('LIVIA REGO'), 'Photo must retain the founder name');
+      for (const value of ['Personalised Care', 'Attention to Detail', 'Natural Results']) {
+        assert(founderText.toLocaleLowerCase('en-AU').includes(value.toLocaleLowerCase('en-AU')), 'Preserve founder value: ' + value);
+      }
+
+      const smallTicker = page.getByTestId('bella-visit-us-mobile');
+      if (width < 640) {
+        assert(await smallTicker.isVisible(), 'Mobile Greenslopes message must be clearly visible');
+        const tickerText = await smallTicker.innerText();
+        assert(tickerText.includes('VISIT US IN') && tickerText.includes('GREENSLOPES'), 'Mobile message must read Visit us in Greenslopes in full');
+        const tickerWidth = await smallTicker.evaluate(el => el.scrollWidth - el.clientWidth);
+        assert(tickerWidth <= 2, 'The mobile Greenslopes phrase is clipped horizontally');
+        assert(!(await page.getByTestId('bella-visit-us-track').isVisible()), 'Scrolling text must not hide or crop the mobile message');
+      } else {
+        assert(await page.getByTestId('bella-visit-us-track').isVisible(), 'Maintain original desktop Greenslopes marquee');
+      }
+      // Only two floating actions: booking and WhatsApp, aligned without colliding.
+      assert.equal(await page.locator('[data-floating-whatsapp]').count(), 1, 'Keep one WhatsApp floating control');
+      assert.equal(await page.locator('#boton-flotante').count(), 1, 'Keep one booking floating control');
+      assert.equal(await page.getByRole('button', { name: /Back to top/i }).count(), 0, 'Remove third floating back-to-top button');
+      assert.equal(await page.getByText('Need help?', { exact: true }).count(), 0, 'Remove redundant floating help bubble');
+      await founderSection.scrollIntoViewIfNeeded();
+      await page.waitForTimeout(120);
+      const floatingBooking = page.locator('#boton-flotante');
+      const floatingWhatsApp = page.locator('[data-floating-whatsapp] button[aria-expanded]');
+      assert(await floatingBooking.isVisible() && await floatingWhatsApp.isVisible(), 'Booking and WhatsApp should be accessible after scrolling');
+      const [bookRect, whatsappRect] = await Promise.all([floatingBooking.boundingBox(), floatingWhatsApp.boundingBox()]);
+      assert(bookRect && whatsappRect, 'Floating buttons must have visible dimensions');
+      assert(bookRect.x + bookRect.width < whatsappRect.x || whatsappRect.x + whatsappRect.width < bookRect.x, 'Booking and WhatsApp buttons overlap');
+      assert(bookRect.y > 720 && whatsappRect.y > 720, 'Floating buttons must remain near the bottom, away from the founder heading and text');
+
       assert(await page.locator('.meet-livia-image').count() === 1, 'Keep the existing approved photo of Livia');
 
       // The client supplied three different Lip Blush photos: they must all be accessible in the home card.
