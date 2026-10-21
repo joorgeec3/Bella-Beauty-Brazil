@@ -79,13 +79,13 @@ export const FeaturesRibbon: React.FC<FeaturesRibbonProps> = ({ language }) => {
               <div className="relative w-full max-w-[340px] aspect-4/5 rounded-2xl overflow-hidden shadow-2xl border border-[#9a5967]/30 bg-[#181214] scroll-motion-layer" data-scroll-motion>
                 <img src={siteImages.aboutMe.liviaFeaturePhoto} alt="Livia Rego - Bella Beauty Brazil" className="meet-livia-image w-full h-full object-cover object-top transition-transform duration-700 hover:scale-105" loading="lazy" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20" />
-                <div className="absolute bottom-4 left-4 right-4 text-center"><span className="text-xs uppercase tracking-widest text-[#f3c9d4] font-bold block mb-0.5">{language === 'pt' ? 'Fundadora · Bella Beauty' : language === 'es' ? 'Fundadora · Bella Beauty' : 'Founder · Bella Beauty'}</span><h4 className="font-raleway text-lg font-bold text-white uppercase tracking-wider">Livia Rego</h4></div>
+                <div className="absolute bottom-4 left-4 right-4 text-center"><span className="text-xs uppercase tracking-widest text-[#f3c9d4] font-bold block mb-0.5">{'Founder · Bella Beauty Brazil'}</span><h4 className="font-raleway text-lg font-bold text-white uppercase tracking-wider">Livia Rego</h4></div>
               </div>
             </div>
             <div className="meet-livia-copy lg:col-span-7 flex flex-col justify-center">
-              <div className="inline-flex items-center gap-2 mb-3"><span className="w-6 h-0.5 bg-[#9a5967]" /><span className="text-xs font-bold uppercase tracking-widest text-[#efb7c8]">{language === 'pt' ? 'Conheça Livia' : language === 'es' ? 'Conoce a Livia' : 'Meet Livia'}</span></div>
-              <h3 className="font-raleway text-2xl sm:text-3xl font-semibold tracking-wide text-white mb-5">
-                {language === 'pt' ? 'Um pouco sobre mim' : language === 'es' ? 'Un poco sobre mí' : 'A little about me'}
+              <div className="flex items-center gap-2 mb-3" aria-hidden="true"><span className="w-9 h-0.5 bg-[#9a5967]" /></div>
+              <h3 className="font-raleway text-3xl sm:text-4xl lg:text-[42px] leading-tight font-semibold tracking-wide text-white mb-6">
+                {language === 'pt' ? 'Conheça Livia' : language === 'es' ? 'Conoce a Livia' : 'Meet Livia'}
               </h3>
               <div className="font-montserrat text-[#eee1e4] text-sm sm:text-[15px] leading-relaxed space-y-3 mb-5 max-w-2xl">
                 <p>{language === 'pt'
