@@ -48,8 +48,10 @@ export const FeaturesRibbon: React.FC<FeaturesRibbonProps> = ({ language }) => {
   ];
 
   return <section data-floating-clearance className="relative bg-[#181214] text-white pt-14 pb-20 overflow-hidden border-t border-[#9a5967]/25">
-    <img src={siteImages.editorial.rosePortrait} alt="" aria-hidden="true" loading="lazy" className="pointer-events-none absolute right-0 top-10 h-64 w-44 sm:h-[340px] sm:w-[240px] object-cover opacity-[0.10] sm:opacity-[0.14] [mask-image:linear-gradient(to_left,black,transparent)]" />
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    {/* Decorative brand pair only; not client treatment result photographs. */}
+    <img src={siteImages.editorial.skinPortrait} alt="" aria-hidden="true" loading="lazy" className="pointer-events-none absolute left-0 top-10 h-64 w-44 sm:h-[340px] sm:w-[240px] object-cover object-center opacity-[0.11] sm:opacity-[0.14] [mask-image:linear-gradient(to_right,black,transparent)]" />
+    <img src={siteImages.editorial.rosePortrait} alt="" aria-hidden="true" loading="lazy" className="pointer-events-none absolute right-0 top-10 h-64 w-44 sm:h-[340px] sm:w-[240px] object-cover object-center opacity-[0.11] sm:opacity-[0.14] [mask-image:linear-gradient(to_left,black,transparent)]" />
+    <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="text-center max-w-2xl mx-auto mb-10 reveal-on-scroll">
         <span className="text-xs font-bold uppercase tracking-widest text-[#efb7c8] block mb-1">{language === 'en' ? 'Bella Beauty Signature Care' : language === 'pt' ? 'Assinatura Bella Beauty' : 'Cuidado exclusivo Bella Beauty'}</span>
         <h2 className="font-raleway text-[21px] leading-snug sm:text-2xl lg:text-3xl font-light uppercase tracking-[0.04em] text-white max-w-5xl mx-auto">
