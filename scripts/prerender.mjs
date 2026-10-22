@@ -18,10 +18,9 @@ const services = {
   'brow-lamination': { title: 'Brow Lamination, Shape & Tint', description: 'A structured brow lamination, shape and tint service published in Timely.', image: '/assets/bella/client-2026-10/brow-styling.webp', price: '133', duration: '1 hour' },
   'lash-lift': { title: 'Lash Lift & Tint', description: 'Lift and tint services published in Timely.', image: '/assets/bella/lashes.jpg', price: '133', duration: '1 hour, 10 mins' },
   dermaplaning: { title: 'Dermaplaning', description: 'Gentle skin exfoliation, removing dead cells and fine facial hair. Includes cleansing, skin assessment, skincare, moisturiser and SPF.', image: '/assets/bella/dermaplaning-facial-treatment.webp', price: '140', duration: '55 mins' },
-  'brow-sculpt': { title: 'Brow Sculpt', description: 'Personalised brow shaping with mapping, careful trimming, waxing and tweezing where needed. Each appointment enhances your natural shape while preserving fullness. Tint and dye are not included.', image: '/assets/bella/client-2026-10/brow-styling.webp', price: '56', duration: '25 mins' },
-  'classic-eyelashes': { title: 'Classic Eyelash Extensions', description: 'Classic eyelash extensions for an elegant natural look.', image: '/assets/bella/lashes.jpg', price: '145', duration: '1 hour, 30 mins' },
+  'brow-sculpt': { title: 'Brow Sculpt Signature', description: 'Personalised brow shaping with mapping, careful trimming, waxing and tweezing where needed. Each appointment enhances your natural shape while preserving fullness. Tint and dye are not included.', image: '/assets/bella/client-2026-10/brow-styling.webp', price: '56', duration: '25 mins' },
+  'classic-eyelashes': { title: 'Classic Lash Extensions', description: 'Classic eyelash extensions for an elegant natural look.', image: '/assets/bella/lashes.jpg', price: '145', duration: '1 hour, 30 mins' },
   'hybrid-eyelashes': { title: 'Hybrid Lash Extensions', description: 'A combination of classic extensions and volume fans, designed for a fuller lash line.', image: '/assets/bella/lashes.jpg', price: '180', duration: '1 hour, 45 mins' },
-  'russian-volume': { title: 'Russian Volume Extensions', description: 'For older service listings, consult Bella Beauty Brazil directly about current Russian Volume availability and pricing.', image: '/assets/bella/lashes.jpg', duration: '2 hours, 50 mins' },
   microneedling: { title: 'Microneedling', description: 'A customised skin treatment to help improve the appearance of fine lines, uneven skin texture and acne scars.', image: '/assets/bella/dermaplaning-facial-treatment.webp', price: '185', duration: '1 hour' },
   'facial-spa': { title: 'Facial Spa', description: 'Relaxing facial cleansing, gentle exfoliation, serums, facial mask and massage.', image: '/assets/bella/dermaplaning-facial-treatment.webp', price: '150', duration: '1 hour, 20 mins' },
   'deluxe-facial': { title: 'Deluxe Facial', description: 'Two-hour personalised facial with cleansing, dermaplaning, microneedling, facial mask and LED light therapy when suitable.', image: '/assets/bella/dermaplaning-facial-treatment.webp', price: '360', duration: '2 hours' },
@@ -31,6 +30,31 @@ const services = {
   'teeth-whitening': { title: 'Teeth Whitening', description: 'Teeth whitening service published by Bella Beauty Brazil in the official Timely catalogue; confirm suitability and aftercare with the studio.', image: '/assets/bella/gallery/studio-treatment-room.webp', price: '199', duration: '1 hour' },
   waxing: { title: 'Brazilian Waxing', description: 'Professional Brazilian waxing from Bella Beauty Brazil.', image: '/assets/bella/client-2026-10/waxing-treatment.webp', price: '82', duration: '30 mins' },
 };
+
+// Keep server-rendered service images consistent with the original client folders.
+// When no matching treatment photo exists, display brand artwork rather than
+// borrowing an unrelated treatment's result.
+const actualMediaFolder = {
+  'nano-strokes':'nano-strokes',
+  'shadow-brows':'shadow-brows',
+  'lip-blush':'lip-blush',
+  'cosmetic-tattoo-removal':'cosmetic-tattoo-removal',
+  'brow-sculpt':'brow-sculpt',
+  'brow-sculpt-tint':'brow-tint',
+  'shadow-hybrid':'brow-dye',
+  'brow-lamination':'brow-lamination',
+  'lash-lift':'lash-lift',
+  'classic-eyelashes':'lash-extensions',
+  'hybrid-eyelashes':'lash-extensions',
+  'wet-look-lashes':'lash-extensions',
+  'teeth-whitening':'teeth-whitening',
+};
+for (const [id,item] of Object.entries(services)) {
+  const folder = actualMediaFolder[id];
+  item.image = folder
+    ? `/assets/bella/media-alinhada-2026-10/${folder}/01.webp`
+    : id==='waxing' ? '/assets/bella/client-2026-10/waxing-treatment.webp' : '/assets/bella/logo.png';
+}
 
 // All published treatment paths must exist in the same catalogue as the client-side router.
 // Missing paths caused direct links such as /services/shadow-brows to return Vercel 404.
