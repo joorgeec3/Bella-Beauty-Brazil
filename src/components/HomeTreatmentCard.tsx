@@ -59,7 +59,7 @@ export const HomeTreatmentCard: React.FC<HomeTreatmentCardProps> = ({
   return (
     <article
       data-home-treatment={service.id}
-      className={`group relative h-96 rounded-2xl overflow-hidden reveal-scale shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl reveal-on-scroll text-left bg-[#3c3033] ${position === 1 ? 'reveal-delay-1' : position === 2 ? 'reveal-delay-2' : position === 3 ? 'reveal-delay-3' : ''}`}
+      className={`group relative h-[22rem] sm:h-[24rem] lg:h-[22rem] rounded-2xl overflow-hidden reveal-scale shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl reveal-on-scroll text-left bg-[#3c3033] ${position === 1 ? 'reveal-delay-1' : position === 2 ? 'reveal-delay-2' : position === 3 ? 'reveal-delay-3' : ''}`}
       onTouchStart={(event) => {
         if (photos.length < 2) return;
         startTouch.current = { x: event.touches[0].clientX, y: event.touches[0].clientY };
@@ -111,11 +111,11 @@ export const HomeTreatmentCard: React.FC<HomeTreatmentCardProps> = ({
           ><ChevronRight className="w-5 h-5" aria-hidden="true" /></button>
         </div>
       </>}
-      <div className="absolute inset-0 z-20 p-6 flex flex-col justify-end text-white pointer-events-none">
-        <span className="text-[11px] font-bold tracking-widest text-[#f1c3d0] uppercase mb-1">{service.subtitle || 'Bella Beauty Treatment'}</span>
-        <h3 className="font-raleway text-xl font-bold uppercase tracking-wider text-white mb-2">{service.title}</h3>
-        <div className="w-8 h-0.5 bg-[#efb7c8] mb-3" />
-        <p className="font-montserrat text-xs text-neutral-200 line-clamp-3 leading-relaxed mb-4">{service.description}</p>
+      <div className="absolute inset-0 z-20 p-4 sm:p-5 flex flex-col justify-end text-white pointer-events-none">
+        
+        <h3 className="font-raleway text-lg sm:text-xl font-bold uppercase tracking-wider text-white mb-1.5">{service.title}</h3>
+        <div className="w-8 h-0.5 bg-[#efb7c8] mb-2" />
+        <p className="font-montserrat text-xs text-neutral-200 line-clamp-3 leading-relaxed mb-2">{service.description}</p>
         <span className="inline-flex items-center text-xs font-semibold text-[#f3c9d4]">
           {label.view}<ArrowRight className="w-3.5 h-3.5 ml-1.5" aria-hidden="true" />
         </span>
