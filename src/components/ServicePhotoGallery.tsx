@@ -1,96 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { ArrowLeft, ArrowRight, ExternalLink, Images } from 'lucide-react';
 import { Language } from '../data/siteData';
-import { siteImages } from '../data/siteImages';
 
-type TreatmentPhoto = { src: string; alt: string; caption: string };
 
-// Each newly supplied photo belongs to exactly one service category.
-// Folder membership was verified against the supplied archive and the original-file mapping.
-const currentClientMedia = 'assets/bella/client-2026-10-v2';
-const newPhotoGroup = (slug: string, service: string, count: number): TreatmentPhoto[] =>
-  Array.from({ length: count }, (_, index) => ({
-    src: `${import.meta.env.BASE_URL}${currentClientMedia}/${slug}/${slug}-${String(index + 1).padStart(2, '0')}.webp`,
-    alt: `${service} — real client-supplied photo ${index + 1} of ${count} from Bella Beauty Brazil`,
-    caption: `${service} · Photo ${index + 1} of ${count}`,
-  }));
-
-const nanoPhotos: TreatmentPhoto[] = [
-  { src: siteImages.client.nanoStrokesProcedure, alt: 'Livia performing an approved Nano Strokes brow treatment', caption: 'Nano Strokes procedure' },
-];
-const waxPhotos: TreatmentPhoto[] = [
-  { src: siteImages.client.waxingTreatment, alt: 'Waxing treatment at Bella Beauty Brazil', caption: 'Waxing treatment' },
-];
-
-// No photo from one group is reused in another service's gallery.
-// Nano Strokes retains only the one approved photo; do not restore the two removed images.
-const groupedPhotos: Record<string, TreatmentPhoto[]> = {
-  'nano-strokes': nanoPhotos,
-  'cosmetic-tattoo-removal': [{ src: `${import.meta.env.BASE_URL}assets/bella/client-2026-10-v3/tattoo-removal/tattoo-removal-cover.webp`, alt: 'Real before-and-after brow pigment removal photograph supplied by Bella Beauty Brazil', caption: 'Cosmetic tattoo removal — client-supplied photo' }],
-  'brow-sculpt': newPhotoGroup('brow-sculpt', 'Brow Sculpt', 7),
-  'brow-sculpt-tint': newPhotoGroup('brow-sculpt-tint', 'Brow Sculpt & Tint', 2),
-  'male-brow-sculpt': newPhotoGroup('male-brow-sculpt', 'Male Brow Sculpt', 1),
-  'shadow-brows': newPhotoGroup('shadow-brows', 'Shadow Brows', 5),
-  'brow-lamination': newPhotoGroup('brow-lamination', 'Brow Lamination', 3),
-  'lash-lift': newPhotoGroup('lash-lift', 'Lash Lift & Tint', 9),
-  'lip-blush': newPhotoGroup('lip-blush', 'Lip Blush', 6),
-  'lip-bliss-hydration': newPhotoGroup('lip-bliss-hydration', 'Lip Bliss Hydration', 3),
-  'dermaplaning': newPhotoGroup('dermaplaning', 'Dermaplaning', 2),
-  'facial-spa': newPhotoGroup('facial-spa', 'Facial Spa', 2),
-  'teeth-whitening': newPhotoGroup('teeth-whitening', 'Teeth Whitening', 3),
-  'waxing': waxPhotos,
-};
-
-export const getServicePhotos = (serviceId: string): TreatmentPhoto[] => groupedPhotos[serviceId] || [];
-
-/** The approved archive has no specific result for these related treatments.
- * The photographs below MUST be explicitly identified as illustrative. */
-const fromRelatedService = (slug: string, count: number, title: string): TreatmentPhoto[] =>
-  newPhotoGroup(slug, title, count).map((photo) => ({
-    ...photo,
-    alt: title + ' at Bella Beauty Brazil — related treatment photograph, not a result of this specific service',
-    caption: title + ' · Related studio photo (illustrative)',
-  }));
-const extensionsExample: TreatmentPhoto = {
-  src: import.meta.env.BASE_URL + 'assets/bella/client-2026-10-v3/lash-extensions/lash-extensions-cover.webp',
-  alt: 'Photo of lash extensions provided by Bella Beauty Brazil; exact extension style not verified',
-  caption: 'Lash extensions · Specific style not confirmed (illustrative)',
-};
-const hybridDyeExample: TreatmentPhoto = {
-  src: import.meta.env.BASE_URL + 'assets/bella/client-2026-10-v3/brow-dye/brow-dye-cover.webp',
-  alt: 'Photo of Brow Dye supplied by Bella Beauty Brazil — related to but not proof of Hybrid Dye service',
-  caption: 'Brow Dye · Related to Hybrid Dye (illustrative)',
-};
-const scalpStudioExample: TreatmentPhoto = {
-  src: siteImages.aboutMe.clinicSpace,
-  alt: 'Bella Beauty Brazil studio interior; not a scalp treatment result',
-  caption: 'Bella Beauty Brazil studio · No scalp treatment results supplied',
-};
-const illustrativeServicePhotos: Record<string, TreatmentPhoto[]> = {
-  'shadow-hybrid': [hybridDyeExample, ...fromRelatedService('brow-sculpt-tint', 2, 'Brow Sculpt & Tint')],
-  'dreamy-brows': fromRelatedService('brow-sculpt', 2, 'Brow Sculpt'),
-  'lash-lift-only': fromRelatedService('lash-lift', 3, 'Lash Lift & Tint'),
-  'lash-tint': fromRelatedService('lash-lift', 2, 'Lash Lift & Tint'),
-  'classic-eyelashes': [extensionsExample],
-  'hybrid-eyelashes': [extensionsExample],
-  'wet-look-lashes': [extensionsExample],
-  'russian-volume': [extensionsExample],
-  'lash-extension-removal': [extensionsExample],
-  'microneedling': fromRelatedService('facial-spa', 2, 'Facial Spa'),
-  'deluxe-facial': [
-    ...fromRelatedService('facial-spa', 2, 'Facial Spa'),
-    ...fromRelatedService('dermaplaning', 2, 'Dermaplaning'),
-  ],
-  'grow-up-hair-brows': fromRelatedService('brow-sculpt', 2, 'Brow Sculpt'),
-  'grow-up-hair-scalp': [scalpStudioExample],
-};
-export const getServiceGallery = (serviceId: string): { photos: TreatmentPhoto[]; illustrative: boolean } => {
-  const exact = getServicePhotos(serviceId);
-  return exact.length
-    ? { photos: exact, illustrative: false }
-    : { photos: illustrativeServicePhotos[serviceId] ?? [], illustrative: true };
-};
-
+// All treatment imagery is sourced from the exact client folder in one registry.
+import { servicePhotosFor, serviceGalleryFor } from '../data/bellaApprovedMedia';
+export const getServicePhotos = servicePhotosFor;
+export const getServiceGallery = serviceGalleryFor;
 
 export const ServicePhotoGallery: React.FC<{ serviceId: string; language: Language }> = ({ serviceId, language }) => {
   const { photos, illustrative } = getServiceGallery(serviceId);

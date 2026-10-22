@@ -6,9 +6,9 @@ export const APPROVED_SERVICE_CATALOG: ApprovedCategory[] = [
     id: 'cosmetic', title: 'Cosmetic Tattooing',
     intro: 'Enhance your brows and lips with colour and definition designed around you. Every treatment starts with a consultation to understand your preferences and plan a result that complements your features.',
     items: [
-      { name: 'Microblading – Nano Strokes', aud: 630, note: 'Initial treatment · Touch-up after 45–60 days A$120', description: "Nano Strokes is an advanced form of microblading focused on creating delicate, realistic hair-like strokes. Using a manual tool called a Tebori, I design each pattern to follow the natural flow of your brow hairs, adding definition and filling gaps while respecting your individual features." },
-      { name: 'Shadow Brows', aud: 630, note: 'Initial treatment · Touch-up after 45–60 days A$120', description: "Shadow Brows creates a soft, shaded effect, similar to the look of freshly dyed brows. The shape, colour and intensity are tailored to your features and preferences, from subtle definition to a more defined finish." },
-      { name: 'Lip Blush – Lip Tattooing', aud: 630, note: 'Initial treatment · Touch-up after 45–60 days A$120', description: "Enhance your natural lip colour and add definition with a shade selected especially for you. Lip Blush uses a cosmetic tattoo machine to introduce pigment into the lips. The colour looks stronger immediately after treatment and softens as the lips heal." },
+      { name: 'Microblading – Nano Strokes', aud: 630, note: 'Initial treatment · Touch-up at 45 days A$120', description: "Nano Strokes is an advanced form of microblading focused on creating delicate, realistic hair-like strokes. Using a manual tool called a Tebori, I design each pattern to follow the natural flow of your brow hairs, adding definition and filling gaps while respecting your individual features." },
+      { name: 'Shadow Brows', aud: 630, note: 'Initial treatment · Touch-up at 45 days A$120', description: "Shading creates a softly filled-in appearance, similar to brow powder. The shape, colour and intensity are tailored to your features and preferences, from gentle definition to a more noticeable makeup effect." },
+      { name: 'Lip Blush – Lip Tattooing', aud: 630, note: 'Initial treatment · Touch-up at 50–60 days A$120', description: "Enhance your natural lip colour and add definition with a shade selected especially for you. Lip Blush uses a cosmetic tattoo machine to introduce pigment into the lips. The colour looks stronger immediately after treatment and softens as the lips heal." },
       { name: 'Cosmetic Tattoo Removal', aud: 150, description: "Looking to lighten unwanted cosmetic tattoo pigment? I use THink Pigment Remover as a non-laser removal treatment, with suitability assessed before we begin. The number of sessions needed varies depending on the existing tattoo and how your skin responds. Multiple sessions may be required." },
     ],
     footer: 'Nano Strokes, Shadow Brows and Lip Blush are A$750 each including touch-up. A consultation is available if you are unsure which treatment to book.',
@@ -16,7 +16,7 @@ export const APPROVED_SERVICE_CATALOG: ApprovedCategory[] = [
   {
     id: 'brows', title: 'Brow Services',
     items: [
-      { name: 'Brow Sculpt', aud: 56, description: "Personalised brow shaping with mapping, careful trimming, waxing and tweezing where needed. Each appointment enhances your natural shape while preserving fullness. Tint and dye are not included." },
+      { name: 'Brow Sculpt Signature', aud: 56, description: "Personalised brow shaping with mapping, careful trimming, waxing and tweezing where needed. Each appointment enhances your natural shape while preserving fullness. Tint and dye are not included." },
       { name: 'Brow Sculpt & Tint', aud: 76, description: "Personalised shaping with traditional tint to enhance lighter brow hairs, creating a fuller-looking, naturally defined finish. Ideal for a subtle colour boost, with colour focused mainly on the hairs." },
       { name: 'Brow Sculpt & Hybrid Dye', aud: 79, description: "Personalised shaping with hybrid dye to colour the hairs and temporarily stain the skin, helping disguise gaps for a more defined, filled-in finish. Includes detailed colour application, with the intensity tailored to your preference." },
       { name: 'Brow Lamination, Shape & Tint', aud: 133, description: "Brow lamination softens and restructures your existing brow hairs, making them easier to reposition and style. By lifting and spreading the hairs, it can help narrow or uneven brows appear fuller and soften the appearance of small gaps where there is enough hair to work with. It also helps tame unruly or downward-growing hairs. Includes personalised shaping, tint and a conditioning treatment for a groomed finish. Fullness comes from repositioning your existing hairs; results depend on their length, density and condition." },
@@ -99,7 +99,7 @@ const APPROVED_NAMES_BY_SERVICE_ID: Record<string,string> = {
   "nano-strokes": "Microblading – Nano Strokes",
   "shadow-brows": "Shadow Brows",
   "lip-blush": "Lip Blush – Lip Tattooing",
-  "brow-sculpt": "Brow Sculpt",
+  "brow-sculpt": "Brow Sculpt Signature",
   "brow-sculpt-tint": "Brow Sculpt & Tint",
   "shadow-hybrid": "Brow Sculpt & Hybrid Dye",
   "brow-lamination": "Brow Lamination, Shape & Tint",

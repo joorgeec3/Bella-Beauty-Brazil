@@ -6,6 +6,7 @@ import { ApprovedPriceList } from '../components/ApprovedPriceList';
 import { approvedDescriptionFor } from '../data/approvedServiceCatalog';
 import { getServiceGallery } from '../components/ServicePhotoGallery';
 import { serviceCoverFor } from '../data/serviceCoverPhotos';
+import { categoryPhotosFor } from '../data/bellaApprovedMedia';
 
 interface ServicesViewProps {
   initialServiceId?: string;
@@ -224,6 +225,37 @@ export const ServicesView: React.FC<ServicesViewProps> = ({ initialServiceId, on
           <p className="font-montserrat text-sm text-neutral-600 mt-2 mb-5">{labels.noResultsText}</p>
           <button type="button" onClick={clearFilters} className="rounded-full bg-[#5b3239] text-white text-xs font-semibold px-5 py-3 cursor-pointer">{labels.clear}</button>
         </div>}
+
+
+      {/* The source ZIP has separate, general Skin Treatments and Lip Treatments folders.
+          Keep these studio images at category level; do not claim they depict a named procedure. */}
+      {!search.trim() && (category === 'All' || category === 'Skin' || category === 'Lips') &&
+        <section aria-labelledby="category-studio-heading" className="mt-12 space-y-8">
+          <div>
+            <h2 id="category-studio-heading" className="font-raleway text-xl sm:text-2xl font-semibold text-[#5b3239]">
+              {language === 'en' ? 'More real photos, organised by category' : language === 'pt' ? 'Mais fotos reais, organizadas por categoria' : 'Más fotos reales, organizadas por categoría'}
+            </h2>
+            <p className="font-montserrat text-xs sm:text-sm text-[#675960] mt-2">
+              {language === 'en' ? 'These photographs were provided in general skin and lip treatment folders. They are not labelled as results of a specific treatment.' : language === 'pt' ? 'Essas fotos foram enviadas nas pastas gerais de tratamentos de pele e lábios, sem identificação de procedimento específico.' : 'Estas imágenes proceden de las carpetas generales de tratamientos de piel y labios; no identifican un procedimiento específico.'}
+            </p>
+          </div>
+          {([
+            {folder:'skin-treatments-geral' as const, title:language==='en'?'Skin treatments · general photos':language==='pt'?'Tratamentos de pele · fotos gerais':'Tratamientos de piel · fotos generales'},
+            {folder:'lip-treatments-geral' as const, title:language==='en'?'Lip treatments · general photos':language==='pt'?'Tratamentos de lábios · fotos gerais':'Tratamientos de labios · fotos generales'},
+          ]).filter(v=>category==='All'||category==='Skin'||(category==='Lips'&&v.folder==='lip-treatments-geral')).map(({folder,title})=>(
+            <div key={folder} className="bg-white border border-[#e8d6d5] rounded-2xl p-4 sm:p-6">
+              <h3 className="font-raleway text-base sm:text-lg font-semibold text-[#5b3239] mb-4">{title}</h3>
+              <div className="grid grid-cols-3 gap-2 sm:gap-4">
+                {categoryPhotosFor(folder).map(photo=>(
+                  <a key={photo.src} href={photo.src} target="_blank" rel="noopener noreferrer" aria-label={photo.alt}
+                    className="overflow-hidden rounded-xl border border-[#ead8db] bg-[#eee2df] aspect-[4/5]">
+                    <img src={photo.src} alt={photo.alt} loading="lazy" className="w-full h-full object-contain"/>
+                  </a>
+                ))}
+              </div>
+            </div>
+          ))}
+        </section>}
 
       <ApprovedPriceList language={language} />
 

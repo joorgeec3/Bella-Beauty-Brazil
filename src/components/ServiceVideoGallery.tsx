@@ -7,18 +7,12 @@ type VideoItem = { src: string; title: string };
 // Each clip is assigned to exactly one service based on the client's original folders.
 // Video files live alongside the 43 approved service photos in public/assets/bella/client-2026-10-v2.
 // Never load or show a video until its MP4 is actually available in the live deployment.
+// Only video groups with a matching original folder are allowed.
 const videoCounts: Record<string, number> = {
-  'brow-sculpt': 2,
-  'brow-lamination': 5,
-  'dreamy-brows': 1,
-  'dermaplaning': 1,
-  'facial-spa': 2,
+  'brow-sculpt': 1,
   'lip-blush': 1,
-  'lip-bliss-hydration': 1,
   'shadow-brows': 1,
-  'teeth-whitening': 1,
 };
-
 const currentClientMedia = 'assets/bella/client-2026-10-v2';
 const videoCandidates = (serviceId: string): VideoItem[] =>
   Array.from({ length: videoCounts[serviceId] ?? 0 }, (_, index) => ({

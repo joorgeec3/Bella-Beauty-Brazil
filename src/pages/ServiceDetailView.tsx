@@ -53,7 +53,7 @@ const GROUPS: Record<string, { related: string[]; difference: string; care: stri
   },
   'lash-lift': {
     related: ['classic-eyelashes', 'hybrid-eyelashes', 'brow-lamination'],
-    difference: 'Lash Lift & Tint works with the natural lashes. Classic, Hybrid and Russian Volume Extensions add applied extensions and create different levels of density.',
+    difference: 'Lash Lift & Tint works with the natural lashes. Classic and Hybrid Lash Extensions add applied extensions and create different levels of density.',
     care: 'Follow the eye-area preparation and aftercare instructions supplied by Bella Beauty Brazil. Confirm suitability and appointment requirements before booking.',
     faq: 'What is the difference between a Lash Lift and extensions? A Lash Lift curls and tints natural lashes; extensions add individual or volume lashes according to the selected set.',
   },

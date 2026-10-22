@@ -3,6 +3,7 @@ import { Award, ShieldCheck, Sparkles, Smile } from 'lucide-react';
 import { Language } from '../data/siteData';
 import { siteImages } from '../data/siteImages';
 import { getServicePhotos } from './ServicePhotoGallery';
+import { categoryPhotosFor } from '../data/bellaApprovedMedia';
 
 interface FeaturesRibbonProps { language: Language; }
 interface FeatureCardData { image?: string; video?: string; title: string; text: string; footer: string; }
@@ -28,7 +29,7 @@ export const FeaturesRibbon: React.FC<FeaturesRibbonProps> = ({ language }) => {
       footer: language === 'en' ? 'Natural lashes & extensions' : language === 'pt' ? 'Cílios naturais e extensões' : 'Pestañas naturales y extensiones',
     },
     {
-      image: getServicePhotos('dermaplaning')[0]?.src,
+      image: categoryPhotosFor('skin-treatments-geral')[0]?.src,
       title: 'Skin Treatments',
       text: language === 'en' ? 'Dermaplaning • Microneedling • Facial Spa.' : language === 'pt' ? 'Dermaplaning • Microagulhamento • Facial Spa.' : 'Dermaplaning • Microneedling • Facial Spa.',
       footer: language === 'en' ? 'Facial skin care' : language === 'pt' ? 'Cuidados faciais' : 'Cuidado facial',

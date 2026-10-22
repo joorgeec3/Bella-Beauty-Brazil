@@ -4,6 +4,7 @@ import { APPROVED_SERVICE_CATALOG } from '../data/approvedServiceCatalog';
 import { BOOKING_URL, Language } from '../data/siteData';
 import { getServiceGallery } from './ServicePhotoGallery';
 import { serviceCoverFor } from '../data/serviceCoverPhotos';
+import { categoryPhotosFor } from '../data/bellaApprovedMedia';
 
 /** Matching PDF entries open a full service page with the correct client photos, when available. */
 const approvedServiceRoutes: Record<string,string> = {
@@ -11,7 +12,7 @@ const approvedServiceRoutes: Record<string,string> = {
   "Shadow Brows": "shadow-brows",
   "Lip Blush – Lip Tattooing": "lip-blush",
   "Cosmetic Tattoo Removal": "cosmetic-tattoo-removal",
-  "Brow Sculpt": "brow-sculpt",
+  "Brow Sculpt Signature": "brow-sculpt",
   "Brow Sculpt & Tint": "brow-sculpt-tint",
   "Brow Sculpt & Hybrid Dye": "shadow-hybrid",
   "Brow Lamination, Shape & Tint": "brow-lamination",
@@ -39,7 +40,7 @@ const approvedServiceRoutes: Record<string,string> = {
 const menuGroupCover: Record<string,string> = {
   cosmetic: 'nano-strokes',
   brows: 'brow-sculpt',
-  skin: 'facial-spa',
+  skin: 'dermaplaning',
   lashes: 'lash-lift',
   'women-waxing': 'waxing',
   'men-waxing': 'waxing',
@@ -51,7 +52,7 @@ const infillCover: Record<string,string> = {
   'Hybrid Lash Infill – 2 weeks': 'hybrid-eyelashes',
   'Hybrid Lash Infill – 3 weeks': 'hybrid-eyelashes',
 };
-const groupCoverFor = (groupId:string) => serviceCoverFor(menuGroupCover[groupId]);
+const groupCoverFor = (groupId:string) => groupId === 'skin' ? {src:categoryPhotosFor('skin-treatments-geral')[0].src,specific:false} : serviceCoverFor(menuGroupCover[groupId]);
 const detailLabels = {
   en: { details: 'See photos & details', photos: 'real photos', related: 'related photos' },
   pt: { details: 'Ver fotos e detalhes', photos: 'fotos reais', related: 'fotos relacionadas' },
