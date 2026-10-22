@@ -257,6 +257,24 @@ export const ServicesView: React.FC<ServicesViewProps> = ({ initialServiceId, on
           ))}
         </section>}
 
+
+      {!search.trim() && (category === 'All' || category === 'Lashes' || category === 'Lips' || category === 'Skin') &&
+        <section aria-label={language === 'en' ? 'General treatment category videos' : 'Vídeos gerais das categorias'} className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-5">
+          {(category === 'All' || category === 'Lashes') &&
+            <div className="bg-white border border-[#e8d6d5] rounded-2xl p-4 sm:p-5">
+              <h3 className="font-raleway font-semibold text-lg text-[#5b3239] mb-2">{language === 'en' ? 'Lash Extensions · general demonstration' : language === 'pt' ? 'Extensões de cílios · demonstração geral' : 'Extensiones de pestañas · demostración general'}</h3>
+              <p className="text-xs font-montserrat text-[#675960] mb-3">{language === 'en' ? 'Original folder: Lash Extensions. Specific extension style not identified.' : language === 'pt' ? 'Pasta original: Lash Extensions. O estilo específico não foi identificado.' : 'Carpeta original: Lash Extensions. El estilo específico no está identificado.'}</p>
+              <video src={import.meta.env.BASE_URL + 'assets/bella/media-alinhada-2026-10/lash-extensions/01.mp4'} controls playsInline preload="metadata"
+                poster={import.meta.env.BASE_URL + 'assets/bella/media-alinhada-2026-10/lash-extensions/01.webp'} className="w-full max-h-80 rounded-xl object-contain bg-[#251a21]" />
+            </div>}
+          {(category === 'All' || category === 'Lips' || category === 'Skin') &&
+            <div className="bg-white border border-[#e8d6d5] rounded-2xl p-4 sm:p-5">
+              <h3 className="font-raleway font-semibold text-lg text-[#5b3239] mb-2">{language === 'en' ? 'Lip Treatments · general demonstration' : language === 'pt' ? 'Tratamentos de lábios · demonstração geral' : 'Tratamientos de labios · demostración general'}</h3>
+              <p className="text-xs font-montserrat text-[#675960] mb-3">{language === 'en' ? 'General lip-treatment footage, not Lip Blush tattoo results.' : language === 'pt' ? 'Vídeo geral de tratamento labial, não é resultado de tatuagem Lip Blush.' : 'Vídeo general de labios, no es resultado de tatuaje Lip Blush.'}</p>
+              <video src={import.meta.env.BASE_URL + 'assets/bella/media-alinhada-2026-10/lip-treatments-geral/01.mp4'} controls playsInline preload="metadata"
+                poster={categoryPhotosFor('lip-treatments-geral')[0]?.src} className="w-full max-h-80 rounded-xl object-contain bg-[#251a21]" />
+            </div>}
+        </section>}
       <ApprovedPriceList language={language} />
 
       <aside className="mt-11 sm:mt-14 rounded-2xl bg-[#f3d9d0] border border-[#e8c5c8] p-6 sm:p-9 flex flex-col md:flex-row md:items-center md:justify-between gap-5">

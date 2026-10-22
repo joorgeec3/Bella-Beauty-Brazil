@@ -4,20 +4,18 @@ import type { Language } from '../data/siteData';
 
 type VideoItem = { src: string; title: string };
 
-// Each clip is assigned to exactly one service based on the client's original folders.
-// Video files live alongside the 43 approved service photos in public/assets/bella/client-2026-10-v2.
-// Never load or show a video until its MP4 is actually available in the live deployment.
-// Only video groups with a matching original folder are allowed.
-const videoCounts: Record<string, number> = {
-  'brow-sculpt': 1,
-  'lip-blush': 1,
-  'shadow-brows': 1,
+// Source: precisely named folders in Site Bella.zip.
+// No generic or unrelated clip may appear as proof of a specific treatment.
+const approvedVideoClips: Record<string, string[]> = {
+  'nano-strokes': ['nano-strokes/01.mp4','nano-strokes/02.mp4','nano-strokes/03.mp4'],
+  'shadow-brows': ['shadow-brows/01.mp4','shadow-brows/02.mp4'],
+  'lip-blush': ['lip-blush/01.mp4'],
+  'brow-sculpt': ['brow-sculpt/01.mp4'],
 };
-const currentClientMedia = 'assets/bella/client-2026-10-v2';
 const videoCandidates = (serviceId: string): VideoItem[] =>
-  Array.from({ length: videoCounts[serviceId] ?? 0 }, (_, index) => ({
-    src: `${import.meta.env.BASE_URL}${currentClientMedia}/${serviceId}/${serviceId}-video-${String(index + 1).padStart(2, '0')}.mp4`,
-    title: `${serviceId.replaceAll('-', ' ')} · Video ${index + 1}`,
+  (approvedVideoClips[serviceId] ?? []).map((relative,index)=>({
+    src: `${import.meta.env.BASE_URL}assets/bella/media-alinhada-2026-10/${relative}`,
+    title: `${serviceId} — video ${index+1}`,
   }));
 
 const labels = {
