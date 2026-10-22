@@ -74,6 +74,35 @@ export default function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // On narrow screens, the floating CTAs withdraw when service cards are visible.
+  // This prevents WhatsApp and booking controls from covering photos and copy.
+  React.useEffect(() => {
+    const targets = document.querySelectorAll('[data-floating-clearance]');
+    const visibleSections = new Set<Element>();
+    const narrowScreen = window.matchMedia('(max-width: 640px)');
+    const refresh = () => {
+      if (narrowScreen.matches && visibleSections.size > 0) {
+        document.body.dataset.floatingClearance = 'true';
+      } else {
+        delete document.body.dataset.floatingClearance;
+      }
+    };
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) visibleSections.add(entry.target);
+        else visibleSections.delete(entry.target);
+      });
+      refresh();
+    });
+    targets.forEach((section) => observer.observe(section));
+    window.addEventListener('resize', refresh, { passive: true });
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', refresh);
+      delete document.body.dataset.floatingClearance;
+    };
+  }, [currentTab]);
+
   React.useEffect(() => {
     const metadata: Record<string, { title: string; description: string }> = {
       home: {

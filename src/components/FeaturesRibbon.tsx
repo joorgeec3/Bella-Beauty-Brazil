@@ -1,41 +1,33 @@
 import React from 'react';
-import { Award, Eye, ShieldCheck, Sparkles, Smile, Heart, Droplets } from 'lucide-react';
+import { Award, ShieldCheck, Sparkles, Smile } from 'lucide-react';
 import { Language } from '../data/siteData';
 import { siteImages } from '../data/siteImages';
 
 interface FeaturesRibbonProps { language: Language; }
-interface FeatureCardData { image?: string; video?: string; icon: React.ReactNode; label: string; title: string; text: string; footer: string; }
+interface FeatureCardData { image?: string; video?: string; title: string; text: string; footer: string; }
 
 export const FeaturesRibbon: React.FC<FeaturesRibbonProps> = ({ language }) => {
   const cards: FeatureCardData[] = [
     {
       image: `${import.meta.env.BASE_URL}assets/bella/gallery/lips-result-01.webp`,
-      icon: <Sparkles className="w-3 h-3 text-[#efb7c8]" />,
-      label: language === 'en' ? 'Cosmetic · Artistry' : language === 'pt' ? 'Tatuagem · Beleza' : 'Tatuaje · Belleza',
       title: 'Cosmetic Tattooing',
-      text: language === 'en' ? 'Nano Strokes • Powder Brows • Lip Blush • Cosmetic Tattoo Removal.' : language === 'pt' ? 'Nano Strokes • Powder Brows • Lip Blush • Remoção de Tatuagem Cosmética.' : 'Nano Strokes • Powder Brows • Lip Blush • Eliminación de Tatuaje Cosmético.',
+      text: language === 'en' ? 'Nano Strokes • Shadow Brows • Lip Blush • Cosmetic Tattoo Removal.' : language === 'pt' ? 'Nano Strokes • Shadow Brows • Lip Blush • Remoção de Tatuagem Cosmética.' : 'Nano Strokes • Shadow Brows • Lip Blush • Eliminación de Tatuaje Cosmético.',
       footer: language === 'en' ? 'Cosmetic tattoo treatments' : language === 'pt' ? 'Tatuagem cosmética' : 'Tatuaje cosmético',
     },
     {
       image: `${import.meta.env.BASE_URL}assets/bella/gallery/studio-behind-scenes-01.webp`,
-      icon: <Sparkles className="w-3 h-3 text-[#efb7c8]" />,
-      label: language === 'en' ? 'Brows · Technique' : language === 'pt' ? 'Sobrancelhas · Técnica' : 'Cejas · Técnica',
       title: 'Brow Artistry',
       text: language === 'en' ? 'Brow Sculpting • Tinting • Brow Dye • Brow Lamination.' : language === 'pt' ? 'Design de sobrancelhas • Tintura • Brow Dye • Laminação.' : 'Diseño de cejas • Tinte • Brow Dye • Laminado.',
       footer: language === 'en' ? 'Personalised brow care' : language === 'pt' ? 'Cuidado das sobrancelhas' : 'Cuidado de cejas',
     },
     {
       image: `${import.meta.env.BASE_URL}assets/bella/gallery/lashes-result-05.webp`,
-      icon: <Eye className="w-3 h-3 text-[#efb7c8]" />,
-      label: language === 'en' ? 'Lashes · Definition' : language === 'pt' ? 'Cílios · Definição' : 'Pestañas · Definición',
       title: 'Lash Treatments',
       text: language === 'en' ? 'Lash Lift & Tint • Lash Extensions.' : language === 'pt' ? 'Lash Lift & Tint • Extensões de cílios.' : 'Lash Lift & Tint • Extensiones de pestañas.',
       footer: language === 'en' ? 'Natural lashes & extensions' : language === 'pt' ? 'Cílios naturais e extensões' : 'Pestañas naturales y extensiones',
     },
     {
       image: `${import.meta.env.BASE_URL}assets/bella/dermaplaning-facial-treatment.webp`,
-      icon: <Droplets className="w-3 h-3 text-[#efb7c8]" />,
-      label: language === 'en' ? 'Skin · Care' : language === 'pt' ? 'Pele · Cuidado' : 'Piel · Cuidado',
       title: 'Skin Treatments',
       text: language === 'en' ? 'Dermaplaning • Microneedling • Facial Spa.' : language === 'pt' ? 'Dermaplaning • Microagulhamento • Facial Spa.' : 'Dermaplaning • Microneedling • Facial Spa.',
       footer: language === 'en' ? 'Facial skin care' : language === 'pt' ? 'Cuidados faciais' : 'Cuidado facial',
@@ -44,23 +36,19 @@ export const FeaturesRibbon: React.FC<FeaturesRibbonProps> = ({ language }) => {
       // Real client-supplied whitening footage illustrates the treatment itself.
       // The three client photos stay available in the Gallery without duplicating them in this card.
       video: `${import.meta.env.BASE_URL}assets/bella/client-2026-10-v2/teeth-whitening/teeth-whitening-video-01.mp4`,
-      icon: <Smile className="w-3 h-3 text-[#efb7c8]" />,
-      label: language === 'en' ? 'Smile · Care' : language === 'pt' ? 'Sorriso · Cuidado' : 'Sonrisa · Cuidado',
       title: 'Teeth Whitening',
       text: language === 'en' ? 'A brighter smile with professional teeth whitening.' : language === 'pt' ? 'Um sorriso mais iluminado com clareamento dental profissional.' : 'Una sonrisa más luminosa con blanqueamiento dental profesional.',
       footer: language === 'en' ? 'Professional teeth whitening' : language === 'pt' ? 'Clareamento dental' : 'Blanqueamiento dental',
     },
     {
       image: `${import.meta.env.BASE_URL}assets/bella/waxing.png`,
-      icon: <Heart className="w-3 h-3 text-[#efb7c8]" />,
-      label: language === 'en' ? 'Waxing · Care' : language === 'pt' ? 'Depilação · Cuidado' : 'Depilación · Cuidado',
       title: 'Waxing',
       text: language === 'en' ? 'Face & Body Waxing • Brazilian Waxing.' : language === 'pt' ? 'Depilação facial e corporal • Depilação brasileira.' : 'Depilación facial y corporal • Depilación brasileña.',
       footer: language === 'en' ? 'Face & body' : language === 'pt' ? 'Rosto e corpo' : 'Rostro y cuerpo',
     },
   ];
 
-  return <section className="relative bg-[#181214] text-white pt-14 pb-20 overflow-hidden border-t border-[#9a5967]/25">
+  return <section data-floating-clearance className="relative bg-[#181214] text-white pt-14 pb-20 overflow-hidden border-t border-[#9a5967]/25">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="text-center max-w-2xl mx-auto mb-10 reveal-on-scroll">
         <span className="text-xs font-bold uppercase tracking-widest text-[#efb7c8] block mb-1">{language === 'en' ? 'Bella Beauty Signature Care' : language === 'pt' ? 'Assinatura Bella Beauty' : 'Cuidado exclusivo Bella Beauty'}</span>
@@ -117,27 +105,25 @@ export const FeaturesRibbon: React.FC<FeaturesRibbonProps> = ({ language }) => {
   </section>;
 };
 
-const FeatureCard: React.FC<FeatureCardData> = ({ image, video, icon, label, title, text, footer }) => <article className="flex flex-row sm:flex-col min-h-[190px] sm:min-h-0 bg-[#22181b] reveal-scale rounded-2xl sm:rounded-3xl p-3 sm:p-4 border border-[#9a5967]/30 shadow-xl transition-transform duration-300 hover:-translate-y-1">
-  <div className="relative w-[43%] shrink-0 sm:w-full min-h-[160px] sm:min-h-0 sm:aspect-[5/4] rounded-xl sm:rounded-2xl overflow-hidden bg-[#181214] sm:mb-4 shadow-lg border border-[#9a5967]/20 scroll-motion-layer" data-scroll-motion>
+const FeatureCard: React.FC<FeatureCardData> = ({ image, video, title, text, footer }) => <article className="flex flex-row sm:flex-col min-h-0 bg-[#22181b] reveal-scale rounded-2xl sm:rounded-3xl p-3 sm:p-4 border border-[#9a5967]/30 shadow-xl transition-transform duration-300 hover:-translate-y-1">
+  <div className="relative w-[40%] shrink-0 sm:w-full aspect-[4/5] sm:aspect-[5/4] rounded-xl sm:rounded-2xl overflow-hidden bg-[#181214] sm:mb-4 shadow-lg border border-[#9a5967]/20 scroll-motion-layer" data-scroll-motion>
     {video
-      ? <video src={video} muted autoPlay loop playsInline preload="auto" data-whitening-treatment-media aria-label="Real Teeth Whitening treatment at Bella Beauty Brazil" className="w-full h-full object-cover object-center" />
+      ? <video src={video} muted autoPlay loop playsInline preload="auto" data-whitening-treatment-media aria-label="Real Teeth Whitening treatment at Bella Beauty Brazil" className="w-full h-full object-contain object-center" />
       : image
-        ? <img src={image} alt={title} className="feature-card-image w-full h-full object-cover object-center transition-transform duration-700 hover:scale-105" loading="lazy" />
+        ? <img src={image} alt={title} className="feature-card-image w-full h-full object-contain object-center transition-transform duration-700 hover:scale-105" loading="lazy" />
         : <div className="w-full h-full min-h-[160px] flex flex-col items-center justify-center gap-3 bg-gradient-to-br from-[#70424f] via-[#4e313d] to-[#21191d] px-3" role="img" aria-label={title}>
           <div className="w-20 h-20 rounded-full border border-[#efb7c8]/50 bg-white/10 flex items-center justify-center shadow-xl">
             <Smile aria-hidden="true" className="w-10 h-10 text-[#f8d1dd]" strokeWidth={1.25} />
           </div>
           <span className="font-raleway text-sm uppercase tracking-widest text-white/85">Bella Beauty</span>
         </div>}
-    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
-    <span className="absolute top-2 left-2 inline-flex items-center gap-1 rounded-full border border-[#efb7c8]/20 bg-black/75 px-2 py-1 text-[9px] sm:text-[10px] font-semibold text-[#f4e0e4]">{icon}<span>{label}</span></span>
   </div>
-  <div className="min-w-0 flex-1 px-3 py-2 sm:p-1 sm:text-center flex flex-col justify-between">
+  <div className="min-w-0 flex-1 px-3 py-1.5 sm:p-1 sm:text-center flex flex-col justify-start">
     <div>
-      <h3 className="font-raleway text-base sm:text-xl font-bold tracking-wide uppercase text-white mb-2 leading-snug">{title}</h3>
+      <h3 className="font-raleway text-base sm:text-xl font-bold tracking-wide uppercase text-white mb-1.5 leading-snug">{title}</h3>
       <p className="font-montserrat text-[#e8d9dd] text-[12px] sm:text-sm leading-relaxed">{text}</p>
     </div>
-    <div className="mt-3 pt-2 border-t border-white/10"><span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wide text-[#e5acbc]">{footer}</span></div>
+    <div className="mt-2 pt-1.5 border-t border-white/10"><span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wide text-[#e5acbc]">{footer}</span></div>
   </div>
 </article>;
 

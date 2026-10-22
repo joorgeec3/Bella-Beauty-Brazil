@@ -12,7 +12,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenAppointm
     .map((id) => SERVICES.find((item) => item.id === id))
     .filter((service): service is NonNullable<typeof service> => Boolean(service))
     .map((service) => getLocalizedService(service, language));
-  return <section className="relative bg-site py-16 lg:py-24 overflow-hidden border-b border-neutral-100">
+  return <section data-floating-clearance className="relative bg-site py-16 lg:py-24 overflow-hidden border-b border-neutral-100">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16 reveal-on-scroll">
         <p className="font-raleway text-xl sm:text-2xl lg:text-3xl text-neutral-800 font-light uppercase tracking-[0.04em] leading-snug mb-2">

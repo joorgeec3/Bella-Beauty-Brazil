@@ -323,3 +323,17 @@ html { scroll-behavior: smooth; scroll-padding-top: 82px; }
     letter-spacing: .04em;
   }
 }
+
+/* Real treatment photographs must retain their original colours and full framing. */
+.feature-card-image { filter: none !important; transform: none !important; }
+.service-card-image { filter: none !important; }
+
+/* Keep service photography and text unobstructed by floating actions on mobile. */
+@media (max-width: 640px) {
+  body[data-floating-clearance="true"] #boton-flotante,
+  body[data-floating-clearance="true"] [data-floating-whatsapp],
+  body[data-floating-clearance="true"] [data-floating-back-to-top] {
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+}
