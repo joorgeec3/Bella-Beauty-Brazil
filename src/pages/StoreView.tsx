@@ -35,33 +35,40 @@ export const StoreView: React.FC<StoreViewProps> = ({ language }) => {
   const t = TRAINING_COPY[language];
   return (
     <main className="bg-site">
-      <header className="relative bg-[#5b3239] text-white py-14 lg:py-20 text-center px-4">
-        <p className="font-montserrat text-xs uppercase tracking-widest text-[#efb7c8] mb-2 font-bold">Bella Beauty Brazil</p>
-        <h1 className="font-raleway text-3xl sm:text-5xl font-light uppercase tracking-wider">{language === 'en' ? 'Courses' : 'Cursos'}</h1>
-        <div className="w-16 h-0.5 bg-[#efb7c8] mx-auto mt-4" />
-      </header>
-
-      <section aria-labelledby="training-heading" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 sm:pt-14">
-        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,0.75fr)_minmax(0,1fr)] overflow-hidden rounded-3xl bg-[#21181c] border border-[#9a5967]/30 shadow-xl">
-          <figure className="relative bg-[#35272c] flex flex-col justify-center p-4 sm:p-6">
-            <div className="overflow-hidden rounded-2xl bg-[#1b1417] h-[360px] sm:h-[470px] lg:h-[420px]">
-              <img src={siteImages.training.practicePhoto} alt={t.caption}
-                loading="lazy" className="w-full h-full object-contain object-center" />
-            </div>
-            <figcaption className="font-montserrat text-[11px] text-[#efced7] leading-relaxed mt-3 text-center">{t.caption}</figcaption>
-          </figure>
-          <div className="flex flex-col justify-center px-6 sm:px-10 lg:px-12 py-10 sm:py-12 text-white">
-            <p className="font-montserrat uppercase tracking-[0.2em] text-[#e5acbc] text-xs font-bold">{t.eyebrow}</p>
-            <h2 id="training-heading" className="font-raleway text-3xl sm:text-4xl lg:text-[42px] font-semibold mt-3">{t.heading}</h2>
-            <span aria-hidden="true" className="h-0.5 w-16 bg-[#9a5967] my-6" />
-            <p className="font-montserrat text-sm sm:text-base leading-relaxed text-[#f2e4e8]">{t.description}</p>
-            <a href="#available-courses" className="mt-8 inline-flex self-start items-center gap-2 rounded-full bg-[#9a5967] hover:bg-[#af7080] px-6 py-3.5 font-montserrat text-xs uppercase tracking-wider font-bold text-white transition-colors">
-              <GraduationCap className="w-4 h-4" aria-hidden="true" />{language === 'en' ? 'Explore courses' : language === 'pt' ? 'Ver cursos' : 'Ver cursos'}
+      <header className="relative isolate overflow-hidden bg-[#21171c] text-white border-b border-[#9a5967]/30">
+        <div aria-hidden="true" className="pointer-events-none absolute -left-20 top-0 w-72 h-72 bg-[#9a5967]/20 rounded-full blur-3xl" />
+        <div aria-hidden="true" className="pointer-events-none absolute -right-20 bottom-4 w-80 h-80 bg-[#7a4753]/30 rounded-full blur-3xl" />
+        <div className="relative max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] gap-8 lg:gap-16 items-center px-4 sm:px-6 lg:px-8 py-10 sm:py-14 lg:py-20">
+          <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
+            <p className="font-montserrat text-[11px] sm:text-xs uppercase tracking-[0.22em] text-[#efb7c8] font-bold mb-4">Bella Beauty Brazil · Livia Rego</p>
+            <h1 className="font-raleway text-4xl sm:text-5xl lg:text-6xl font-light uppercase tracking-[0.08em] leading-tight">{language === 'en' ? 'Courses' : 'Cursos'}</h1>
+            <div className="w-16 h-0.5 bg-[#efb7c8] my-6" aria-hidden="true" />
+            <p className="font-montserrat uppercase tracking-[0.16em] text-[#e5acbc] text-xs sm:text-sm font-bold">{t.eyebrow}</p>
+            <h2 className="font-raleway text-2xl sm:text-3xl lg:text-4xl leading-tight font-semibold mt-3 mb-5">{t.heading}</h2>
+            <p className="font-montserrat text-sm sm:text-base leading-relaxed text-[#f2e4e8] max-w-lg">{t.description}</p>
+            <a href="#available-courses" className="mt-8 inline-flex items-center justify-center gap-2 rounded-full bg-[#9a5967] hover:bg-[#af7080] px-6 py-3.5 font-montserrat text-xs uppercase tracking-wider font-bold text-white transition-colors focus-visible:outline-2 focus-visible:outline-offset-2">
+              <GraduationCap className="w-4 h-4" aria-hidden="true" />{language === 'en' ? 'Explore courses' : 'Ver cursos'}
               <ArrowRight className="w-4 h-4" aria-hidden="true" />
             </a>
           </div>
+          <figure className="w-full max-w-[305px] sm:max-w-[360px] lg:max-w-[390px] justify-self-center">
+            <div className="relative rounded-[28px] overflow-hidden p-1.5 bg-gradient-to-br from-[#e6b3c3] via-[#8f5968] to-[#442a34] shadow-[0_25px_65px_rgba(0,0,0,0.45)]">
+              <div className="rounded-[23px] overflow-hidden bg-[#281d23] aspect-[9/16]">
+                <video
+                  src={siteImages.training.highlightVideo}
+                  poster={siteImages.training.highlightPoster}
+                  aria-label={t.caption}
+                  autoPlay muted loop playsInline controls preload="metadata"
+                  className="block h-full w-full object-contain"
+                >
+                  {language === 'en' ? 'Training video from Bella Beauty Brazil' : 'Vídeo das formações Bella Beauty Brazil'}
+                </video>
+              </div>
+            </div>
+            <figcaption className="font-montserrat text-xs text-center leading-relaxed text-[#eeced8] mt-3">{t.caption}</figcaption>
+          </figure>
         </div>
-      </section>
+      </header>
 
       <section id="available-courses" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20" aria-label={language === 'en' ? 'Available courses' : 'Cursos disponíveis'}>
         <p className="font-montserrat text-sm text-neutral-600 text-center max-w-3xl mx-auto mb-10">
