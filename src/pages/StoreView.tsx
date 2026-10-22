@@ -54,15 +54,9 @@ export const StoreView: React.FC<StoreViewProps> = ({ language }) => {
           <figure className="w-full max-w-[330px] sm:max-w-[370px] lg:max-w-[420px] justify-self-center">
             <div className="relative rounded-[28px] overflow-hidden p-1.5 bg-gradient-to-br from-[#e6b3c3] via-[#8f5968] to-[#442a34] shadow-[0_25px_65px_rgba(0,0,0,0.45)]">
               <div className="rounded-[23px] overflow-hidden bg-[#281d23] aspect-[9/16]">
-                <video
-                  src={siteImages.training.highlightVideo}
-                  poster={siteImages.training.highlightPoster}
-                  aria-label={t.caption}
-                  autoPlay muted loop playsInline controls preload="metadata"
-                  className="block h-full w-full object-contain"
-                >
-                  {language === 'en' ? 'Training video from Bella Beauty Brazil' : 'Vídeo das formações Bella Beauty Brazil'}
-                </video>
+                <img src={siteImages.training.heroPhoto}
+                  alt={language === 'en' ? 'Livia guiding a student during practical beauty training' : language === 'pt' ? 'Livia orientando uma aluna durante a formação prática' : 'Livia guiando a una alumna durante la formación'}
+                  loading="eager" decoding="async" className="block h-full w-full object-cover object-center" />
               </div>
             </div>
             <figcaption className="font-montserrat text-xs text-center leading-relaxed text-[#eeced8] mt-3">{t.caption}</figcaption>
@@ -81,29 +75,12 @@ export const StoreView: React.FC<StoreViewProps> = ({ language }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {COURSES.map((course) => (
             <article key={course.id} className="bg-white rounded-2xl overflow-hidden shadow-lg border border-[#e8d6d5] flex flex-col">
-              {/* Training footage belongs in the course cover, never between the details and price. */}
-              <figure className="relative h-72 sm:h-80 overflow-hidden bg-[#281d23] border-b border-[#e8d6d5]">
+              <figure className="relative h-72 sm:h-80 bg-[#f4e8ea] border-b border-[#e8d6d5] overflow-hidden">
                 <img
-                  src={siteImages.training.courseCovers[course.id as keyof typeof siteImages.training.courseCovers]?.poster || course.image}
-                  alt=""
-                  aria-hidden="true"
-                  loading="lazy"
-                  className="absolute inset-0 h-full w-full object-cover blur-xl scale-110 opacity-30"
+                  src={siteImages.training.coursePhotos[course.id as keyof typeof siteImages.training.coursePhotos] || course.image}
+                  alt={`${course.title} — Bella Beauty Brazil`}
+                  loading="lazy" decoding="async" className="w-full h-full object-contain object-center"
                 />
-                {siteImages.training.courseCovers[course.id as keyof typeof siteImages.training.courseCovers] ? (
-                  <video
-                    key={course.id}
-                    src={siteImages.training.courseCovers[course.id as keyof typeof siteImages.training.courseCovers].video}
-                    poster={siteImages.training.courseCovers[course.id as keyof typeof siteImages.training.courseCovers].poster}
-                    aria-label={`Bella Beauty Brazil training footage associated with ${course.title}`}
-                    autoPlay muted loop playsInline
-                    preload="metadata"
-                    controls
-                    className="relative z-10 h-full w-full object-contain"
-                  />
-                ) : (
-                  <img src={course.image} alt={course.title} loading="lazy" className="relative z-10 h-full w-full object-contain" />
-                )}
               </figure>
               <div className="p-6 flex flex-col grow">
                 <span className="font-montserrat text-[11px] font-bold tracking-widest text-[#9a5967] uppercase">{course.duration}</span>
@@ -123,6 +100,42 @@ export const StoreView: React.FC<StoreViewProps> = ({ language }) => {
             </article>
           ))}
         </div>
+        <section aria-labelledby="course-videos-title" className="mt-14 sm:mt-20">
+          <div className="text-center max-w-2xl mx-auto mb-8">
+            <p className="font-montserrat text-xs text-[#9a5967] font-bold uppercase tracking-[0.17em]">Bella Beauty Brazil</p>
+            <h2 id="course-videos-title" className="font-raleway text-2xl sm:text-3xl text-[#5b3239] font-semibold mt-2">
+              {language === 'en' ? 'Inside our training studio' : language === 'pt' ? 'Por dentro dos nossos cursos' : 'Dentro de nuestras formaciones'}
+            </h2>
+            <p className="font-montserrat text-sm text-[#675960] mt-3 leading-relaxed">
+              {language === 'en' ? 'Real moments from our classes. Select a video to watch.' : language === 'pt' ? 'Momentos reais das nossas formações. Escolha um vídeo para assistir.' : 'Momentos reales de nuestras formaciones. Elige un vídeo para verlo.'}
+            </p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 lg:gap-7">
+            {siteImages.training.videos.map((clip, index) => {
+              const titles = {
+                en: ['Hands-on training', 'Lash treatment practice', 'Training moments'],
+                pt: ['Formação prática', 'Prática em cílios', 'Momentos da formação'],
+                es: ['Formación práctica', 'Práctica de pestañas', 'Momentos de formación'],
+              };
+              return (
+                <figure key={clip.id} className="bg-white rounded-2xl overflow-hidden shadow-sm border border-[#e8d6d5]">
+                  <div className="aspect-[3/4] bg-[#281d23]">
+                    <video src={clip.src} poster={clip.poster} controls playsInline preload="none"
+                      aria-label={titles[language][index]}
+                      onPlay={(event) => {
+                        const current = event.currentTarget;
+                        current.closest('section')?.querySelectorAll('video').forEach(other => {
+                          if (other !== current && !other.paused) other.pause();
+                        });
+                      }}
+                      className="w-full h-full object-contain" />
+                  </div>
+                  <figcaption className="text-center font-raleway font-semibold text-[#5b3239] p-4">{titles[language][index]}</figcaption>
+                </figure>
+              );
+            })}
+          </div>
+        </section>
       </section>
     </main>
   );
