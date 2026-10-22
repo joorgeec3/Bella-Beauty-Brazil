@@ -2,6 +2,7 @@ const siteAsset = (path: string) => `${import.meta.env.BASE_URL}${path.replace(/
 
 export const siteImages = {
   editorial: { skinPortrait: siteAsset('assets/bella/editorial/skin-portrait.webp'), rosePortrait: siteAsset('assets/bella/editorial/roses-portrait.webp') },
+  training: { practicePhoto: siteAsset('assets/bella/training/client-training-photo.webp') },
   hero: { mainBella: siteAsset('assets/bella/hero.png'), thumbProcedure1: siteAsset('assets/bella/gallery/studio-behind-scenes-01.webp'), thumbProcedure2: siteAsset('assets/bella/lashes.jpg') },
   client: {
     browTools: siteAsset('assets/bella/client-2026-10/brow-tools.webp'),
