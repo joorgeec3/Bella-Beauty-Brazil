@@ -21,8 +21,9 @@ export const siteImages = {
     aboutLivia03: siteAsset('assets/bella/client-2026-10/about-livia-03.webp'),
   },
   aboutMe: {
-    liviaPhoto: siteAsset('assets/bella/client-2026-10/about-livia-01.webp'),
-    liviaFeaturePhoto: siteAsset('assets/bella/client-2026-10/about-livia-03.webp'),
+    // October 22 portrait provided by Livia, reused for both founder presentations.
+    liviaPhoto: siteAsset('assets/bella/client-2026-10-v4/livia-standing-pink-blazer.webp'),
+    liviaFeaturePhoto: siteAsset('assets/bella/client-2026-10-v4/livia-standing-pink-blazer.webp'),
     clinicSpace: siteAsset('assets/bella/gallery/studio-mirror-area.webp'),
     treatmentRoom: siteAsset('assets/bella/gallery/studio-treatment-room.webp'),
   },

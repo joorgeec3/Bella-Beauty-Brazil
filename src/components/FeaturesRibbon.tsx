@@ -65,7 +65,7 @@ export const FeaturesRibbon: React.FC<FeaturesRibbonProps> = ({ language }) => {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             <div className="lg:col-span-5 flex justify-center">
               <div className="relative w-full max-w-[340px] aspect-4/5 rounded-2xl overflow-hidden shadow-2xl border border-[#9a5967]/30 bg-[#181214] scroll-motion-layer" data-scroll-motion>
-                <img src={siteImages.aboutMe.liviaFeaturePhoto} alt="Livia Rego - Bella Beauty Brazil" className="meet-livia-image w-full h-full object-cover object-top transition-transform duration-700 hover:scale-105" loading="lazy" />
+                <img src={siteImages.aboutMe.liviaFeaturePhoto} alt="Livia Rego - Bella Beauty Brazil" className="meet-livia-image w-full h-full object-contain object-center transition-transform duration-700 hover:scale-105" loading="lazy" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20" />
                 <div className="absolute bottom-4 left-4 right-4 text-center"><span className="text-[10px] sm:text-xs uppercase tracking-[0.12em] text-[#f3c9d4] font-bold block mb-0.5">{'FOUNDER · BELLA BEAUTY BRAZIL'}</span><h4 className="font-raleway text-lg font-bold text-white uppercase tracking-wider">Livia Rego</h4></div>
               </div>
