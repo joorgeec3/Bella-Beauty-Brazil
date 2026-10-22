@@ -4,7 +4,7 @@ import { Language, SERVICES, getLocalizedService, getServiceBookingUrl, SERVICE_
 import { siteImages } from '../data/siteImages';
 import { SERVICE_GUIDES } from '../data/serviceGuides';
 import { approvedDescriptionFor } from '../data/approvedServiceCatalog';
-import { ServicePhotoGallery, getServicePhotos } from '../components/ServicePhotoGallery';
+import { ServicePhotoGallery, getServiceGallery } from '../components/ServicePhotoGallery';
 import { ServiceVideoGallery } from '../components/ServiceVideoGallery';
 import { serviceCoverFor } from '../data/serviceCoverPhotos';
 
@@ -102,7 +102,7 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
   const base = SERVICES.find((service) => service.id === serviceId) || SERVICES[0];
   const service = getLocalizedService(base, language);
   // Exact client photos are separated from representative category photography.
-  const verifiedServicePhotos = getServicePhotos(base.id);
+  const gallery = getServiceGallery(base.id);
   const cover = serviceCoverFor(base.id);
   const noMatchingTreatmentPhoto = !cover;
   // A service without a dedicated comparison must never inherit the Nano Strokes FAQ.
@@ -120,7 +120,7 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
   const related = group.related.map((id) => SERVICES.find((item) => item.id === id)).filter(Boolean) as typeof SERVICES;
   const isPriceConfirmed = typeof service.price === 'number';
   const guide = SERVICE_GUIDES[base.id]?.[language];
-  const hasClientPhotos = getServicePhotos(base.id).length > 0;
+  const hasGalleryPhotos = gallery.photos.length > 0;
 
 
   return (
@@ -139,7 +139,7 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
                 <a href={getServiceBookingUrl(base.id)}  className="inline-flex items-center gap-2 bg-[#efb7c8] hover:bg-white text-[#5b3239] text-xs font-bold uppercase tracking-widest px-7 py-4 rounded-full cursor-pointer transition-colors">
                   <Calendar className="w-4 h-4" /> {translated(language, 'Book now', 'Agendar agora', 'Reservar ahora')}
                 </a>
-                {hasClientPhotos && <a href="#service-photos" className="inline-flex items-center gap-1.5 bg-white/15 hover:bg-white/25 text-white text-xs font-bold px-5 py-4 rounded-full transition-colors">{translated(language, 'See real photos', 'Ver fotos reais', 'Ver fotos reales')}<ArrowRight className="w-4 h-4" /></a>}
+                {hasGalleryPhotos && <a href="#service-photos" className="inline-flex items-center gap-1.5 bg-white/15 hover:bg-white/25 text-white text-xs font-bold px-5 py-4 rounded-full transition-colors">{gallery.illustrative ? translated(language, 'View related photos', 'Ver fotos relacionadas', 'Ver fotos relacionadas') : translated(language, 'See real photos', 'Ver fotos reais', 'Ver fotos reales')}<ArrowRight className="w-4 h-4" /></a>}
                 <span className="inline-flex items-center gap-2 text-xs uppercase tracking-wider text-neutral-200"><MapPin className="w-4 h-4 text-[#efb7c8]" /> Greenslopes, QLD 4120</span>
               </div>
             </div>

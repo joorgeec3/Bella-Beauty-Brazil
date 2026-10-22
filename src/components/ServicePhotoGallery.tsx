@@ -43,17 +43,66 @@ const groupedPhotos: Record<string, TreatmentPhoto[]> = {
 
 export const getServicePhotos = (serviceId: string): TreatmentPhoto[] => groupedPhotos[serviceId] || [];
 
+/** The approved archive has no specific result for these related treatments.
+ * The photographs below MUST be explicitly identified as illustrative. */
+const fromRelatedService = (slug: string, count: number, title: string): TreatmentPhoto[] =>
+  newPhotoGroup(slug, title, count).map((photo) => ({
+    ...photo,
+    alt: title + ' at Bella Beauty Brazil — related treatment photograph, not a result of this specific service',
+    caption: title + ' · Related studio photo (illustrative)',
+  }));
+const extensionsExample: TreatmentPhoto = {
+  src: import.meta.env.BASE_URL + 'assets/bella/client-2026-10-v3/lash-extensions/lash-extensions-cover.webp',
+  alt: 'Photo of lash extensions provided by Bella Beauty Brazil; exact extension style not verified',
+  caption: 'Lash extensions · Specific style not confirmed (illustrative)',
+};
+const hybridDyeExample: TreatmentPhoto = {
+  src: import.meta.env.BASE_URL + 'assets/bella/client-2026-10-v3/brow-dye/brow-dye-cover.webp',
+  alt: 'Photo of Brow Dye supplied by Bella Beauty Brazil — related to but not proof of Hybrid Dye service',
+  caption: 'Brow Dye · Related to Hybrid Dye (illustrative)',
+};
+const scalpStudioExample: TreatmentPhoto = {
+  src: siteImages.aboutMe.clinicSpace,
+  alt: 'Bella Beauty Brazil studio interior; not a scalp treatment result',
+  caption: 'Bella Beauty Brazil studio · No scalp treatment results supplied',
+};
+const illustrativeServicePhotos: Record<string, TreatmentPhoto[]> = {
+  'shadow-hybrid': [hybridDyeExample, ...fromRelatedService('brow-sculpt-tint', 2, 'Brow Sculpt & Tint')],
+  'dreamy-brows': fromRelatedService('brow-sculpt', 2, 'Brow Sculpt'),
+  'lash-lift-only': fromRelatedService('lash-lift', 3, 'Lash Lift & Tint'),
+  'lash-tint': fromRelatedService('lash-lift', 2, 'Lash Lift & Tint'),
+  'classic-eyelashes': [extensionsExample],
+  'hybrid-eyelashes': [extensionsExample],
+  'wet-look-lashes': [extensionsExample],
+  'russian-volume': [extensionsExample],
+  'lash-extension-removal': [extensionsExample],
+  'microneedling': fromRelatedService('facial-spa', 2, 'Facial Spa'),
+  'deluxe-facial': [
+    ...fromRelatedService('facial-spa', 2, 'Facial Spa'),
+    ...fromRelatedService('dermaplaning', 2, 'Dermaplaning'),
+  ],
+  'grow-up-hair-brows': fromRelatedService('brow-sculpt', 2, 'Brow Sculpt'),
+  'grow-up-hair-scalp': [scalpStudioExample],
+};
+export const getServiceGallery = (serviceId: string): { photos: TreatmentPhoto[]; illustrative: boolean } => {
+  const exact = getServicePhotos(serviceId);
+  return exact.length
+    ? { photos: exact, illustrative: false }
+    : { photos: illustrativeServicePhotos[serviceId] ?? [], illustrative: true };
+};
+
+
 export const ServicePhotoGallery: React.FC<{ serviceId: string; language: Language }> = ({ serviceId, language }) => {
-  const photos = getServicePhotos(serviceId);
+  const { photos, illustrative } = getServiceGallery(serviceId);
   const [index, setIndex] = useState(0);
   // Switching between related services should always open at the first real photo.
   // The router reuses this component, so local state otherwise leaks across treatments.
   useEffect(() => setIndex(0), [serviceId]);
   if (!photos.length) return null;
   const labels = {
-    en: { heading: 'Real photos from the studio', lead: 'Browse the photos supplied by Bella Beauty Brazil.', prev: 'Previous photo', next: 'Next photo', full: 'Open full photo', note: 'Brow styling photographs show the studio and technique, not a promised result for a particular tint or tattoo service.' },
-    pt: { heading: 'Fotos reais do estúdio', lead: 'Veja as fotografias enviadas pela Bella Beauty Brazil.', prev: 'Foto anterior', next: 'Próxima foto', full: 'Abrir foto inteira', note: 'As fotografias de sobrancelhas mostram o atendimento e a técnica, não um resultado prometido de uma coloração ou tatuagem específica.' },
-    es: { heading: 'Fotos reales del estudio', lead: 'Explora las fotografías proporcionadas por Bella Beauty Brazil.', prev: 'Foto anterior', next: 'Foto siguiente', full: 'Abrir foto completa', note: 'Las fotos de cejas muestran el estudio y la técnica, no un resultado prometido de un tinte o tatuaje específico.' },
+    en: { heading: 'Real photos from the studio', lead: 'Browse the photos supplied by Bella Beauty Brazil.', illustrativeHeading: 'Related studio photos', illustrativeLead: 'Photographs from related treatments or the studio, not results of this particular service.', prev: 'Previous photo', next: 'Next photo', full: 'Open full photo', note: 'Brow styling photographs show the studio and technique, not a promised result for a particular tint or tattoo service.' },
+    pt: { heading: 'Fotos reais do estúdio', lead: 'Veja as fotografias enviadas pela Bella Beauty Brazil.', illustrativeHeading: 'Fotos de serviços relacionados', illustrativeLead: 'Fotografias de outros tratamentos relacionados ou do estúdio, não resultados deste serviço específico.', prev: 'Foto anterior', next: 'Próxima foto', full: 'Abrir foto inteira', note: 'As fotografias de sobrancelhas mostram o atendimento e a técnica, não um resultado prometido de uma coloração ou tatuagem específica.' },
+    es: { heading: 'Fotos reales del estudio', lead: 'Explora las fotografías proporcionadas por Bella Beauty Brazil.', illustrativeHeading: 'Fotos de tratamientos relacionados', illustrativeLead: 'Fotografías de otros tratamientos relacionados o del estudio, no resultados de este servicio específico.', prev: 'Foto anterior', next: 'Foto siguiente', full: 'Abrir foto completa', note: 'Las fotos de cejas muestran el estudio y la técnica, no un resultado prometido de un tinte o tatuaje específico.' },
   }[language];
   const current = photos[index % photos.length];
   const move = (direction: number) => setIndex((value) => (value + direction + photos.length) % photos.length);
@@ -64,8 +113,8 @@ export const ServicePhotoGallery: React.FC<{ serviceId: string; language: Langua
         <div className="flex flex-wrap items-end justify-between gap-3 mb-6">
           <div>
             <div className="flex items-center gap-2 text-[#9a5967] mb-2"><Images className="w-4 h-4" /><span className="text-[11px] uppercase tracking-widest font-bold">Bella Beauty Brazil</span></div>
-            <h2 id="service-photos-heading" className="font-raleway text-2xl sm:text-3xl font-semibold text-[#5b3239]">{labels.heading}</h2>
-            <p className="font-montserrat text-sm text-[#675960] mt-2">{labels.lead}</p>
+            <h2 id="service-photos-heading" className="font-raleway text-2xl sm:text-3xl font-semibold text-[#5b3239]">{illustrative ? labels.illustrativeHeading : labels.heading}</h2>
+            <p className="font-montserrat text-sm text-[#675960] mt-2">{illustrative ? labels.illustrativeLead : labels.lead}</p>
           </div>
           <span className="font-montserrat text-sm tabular-nums text-[#75525c]">{index + 1} / {photos.length}</span>
         </div>
@@ -85,7 +134,7 @@ export const ServicePhotoGallery: React.FC<{ serviceId: string; language: Langua
             <img src={photo.src} alt={photo.alt} loading="lazy" className="w-full h-24 sm:h-36 object-cover" />
           </button>)}
         </div>}
-        {browEditorial && <p className="font-montserrat text-xs text-[#846f75] leading-relaxed mt-4">{labels.note}</p>}
+        {browEditorial && !illustrative && <p className="font-montserrat text-xs text-[#846f75] leading-relaxed mt-4">{labels.note}</p>}
       </div>
     </section>
   );
