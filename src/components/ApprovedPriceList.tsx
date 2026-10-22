@@ -2,7 +2,8 @@ import React from 'react';
 import { ArrowRight, CalendarDays, ChevronDown } from 'lucide-react';
 import { APPROVED_SERVICE_CATALOG } from '../data/approvedServiceCatalog';
 import { BOOKING_URL, Language } from '../data/siteData';
-import { getServicePhotos } from './ServicePhotoGallery';
+import { getServiceGallery } from './ServicePhotoGallery';
+import { serviceCoverFor } from '../data/serviceCoverPhotos';
 
 /** Matching PDF entries open a full service page with the correct client photos, when available. */
 const approvedServiceRoutes: Record<string,string> = {
@@ -34,9 +35,9 @@ const approvedServiceRoutes: Record<string,string> = {
   "Teeth Whitening": "teeth-whitening"
 };
 const detailLabels = {
-  en: { details: 'Read full description', photos: 'photos' },
-  pt: { details: 'Ler descrição completa', photos: 'fotos' },
-  es: { details: 'Leer descripción completa', photos: 'fotos' },
+  en: { details: 'See photos & details', photos: 'real photos', related: 'related photos' },
+  pt: { details: 'Ver fotos e detalhes', photos: 'fotos reais', related: 'fotos relacionadas' },
+  es: { details: 'Ver fotos y detalles', photos: 'fotos reales', related: 'fotos relacionadas' },
 };
 
 /** October 2026 copy and AUD prices supplied and approved by Bella Beauty Brazil. */
@@ -68,7 +69,15 @@ export const ApprovedPriceList: React.FC<{language: Language}> = ({ language }) 
               {group.intro && <p className="text-sm font-montserrat text-[#675960] leading-relaxed mb-5 mt-4 max-w-3xl">{group.intro}</p>}
               <div className="grid md:grid-cols-2 gap-x-8">
                 {group.items.map((item) => (
-                  <div key={item.name} className="py-4 border-b border-[#f0e6e6]">
+                  <div key={item.name} className="flex gap-3 sm:gap-4 items-start py-4 border-b border-[#f0e6e6]">
+                    {approvedServiceRoutes[item.name] && serviceCoverFor(approvedServiceRoutes[item.name]) && <a
+                      href={import.meta.env.BASE_URL + 'services/' + approvedServiceRoutes[item.name]}
+                      aria-label={`${item.name} — ${detailLabels[language].details}`}
+                      className="block w-[76px] h-[88px] sm:w-24 sm:h-24 shrink-0 overflow-hidden rounded-xl border border-[#ead8db] bg-[#f7eef0] focus-visible:outline-2 focus-visible:outline-[#9a5967]">
+                      <img src={serviceCoverFor(approvedServiceRoutes[item.name])?.src} alt={serviceCoverFor(approvedServiceRoutes[item.name])?.specific ? `${item.name} at Bella Beauty Brazil` : `${item.name} — representative beauty category photo`}
+                        loading="lazy" className="h-full w-full object-contain" />
+                    </a>}
+                    <div className="min-w-0 flex-1">
                     <div className="flex justify-between items-baseline gap-3">
                       <h3 className="font-montserrat font-semibold text-sm text-[#5b3239] leading-snug">{item.name}</h3>
                       <span className="font-montserrat text-sm font-bold text-[#8b5462] tabular-nums shrink-0">A${item.aud}</span>
@@ -79,9 +88,10 @@ export const ApprovedPriceList: React.FC<{language: Language}> = ({ language }) 
                       href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/services/${approvedServiceRoutes[item.name]}`}
                       className="inline-flex items-center gap-1.5 mt-3 text-xs font-semibold text-[#8b5462] underline underline-offset-4 hover:text-[#5b3239] focus-visible:outline-2 focus-visible:outline-[#9a5967]">
                       {detailLabels[language].details}
-                      {getServicePhotos(approvedServiceRoutes[item.name]).length > 0 && ` · ${getServicePhotos(approvedServiceRoutes[item.name]).length} ${detailLabels[language].photos}`}
+                      {getServiceGallery(approvedServiceRoutes[item.name]).photos.length > 0 && ` · ${getServiceGallery(approvedServiceRoutes[item.name]).photos.length} ${getServiceGallery(approvedServiceRoutes[item.name]).illustrative ? detailLabels[language].related : detailLabels[language].photos}`}
                       <ArrowRight aria-hidden="true" className="w-3.5 h-3.5"/>
                     </a>}
+                    </div>
                   </div>
                 ))}
               </div>
