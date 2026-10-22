@@ -49,6 +49,7 @@ export const FeaturesRibbon: React.FC<FeaturesRibbonProps> = ({ language }) => {
   ];
 
   return <section data-floating-clearance className="relative bg-[#181214] text-white pt-14 pb-20 overflow-hidden border-t border-[#9a5967]/25">
+    <img src={siteImages.editorial.rosePortrait} alt="" aria-hidden="true" loading="lazy" className="pointer-events-none absolute right-0 top-10 h-64 w-44 sm:h-[340px] sm:w-[240px] object-cover opacity-[0.10] sm:opacity-[0.14] [mask-image:linear-gradient(to_left,black,transparent)]" />
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="text-center max-w-2xl mx-auto mb-10 reveal-on-scroll">
         <span className="text-xs font-bold uppercase tracking-widest text-[#efb7c8] block mb-1">{language === 'en' ? 'Bella Beauty Signature Care' : language === 'pt' ? 'Assinatura Bella Beauty' : 'Cuidado exclusivo Bella Beauty'}</span>
@@ -67,14 +68,14 @@ export const FeaturesRibbon: React.FC<FeaturesRibbonProps> = ({ language }) => {
               <div className="relative w-full max-w-[340px] aspect-4/5 rounded-2xl overflow-hidden shadow-2xl border border-[#9a5967]/30 bg-[#181214] scroll-motion-layer" data-scroll-motion>
                 <img src={siteImages.aboutMe.liviaFeaturePhoto} alt="Livia Rego - Bella Beauty Brazil" className="meet-livia-image w-full h-full object-cover object-top transition-transform duration-700 hover:scale-105" loading="lazy" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20" />
-                <div className="absolute bottom-4 left-4 right-4 text-center"><span className="text-xs uppercase tracking-widest text-[#f3c9d4] font-bold block mb-0.5">{'Founder · Bella Beauty Brazil'}</span><h4 className="font-raleway text-lg font-bold text-white uppercase tracking-wider">Livia Rego</h4></div>
+                <div className="absolute bottom-4 left-4 right-4 text-center"><span className="text-[10px] sm:text-xs uppercase tracking-[0.12em] text-[#f3c9d4] font-bold block mb-0.5">{'FOUNDER · BELLA BEAUTY BRAZIL'}</span><h4 className="font-raleway text-lg font-bold text-white uppercase tracking-wider">Livia Rego</h4></div>
               </div>
             </div>
             <div className="meet-livia-copy lg:col-span-7 flex flex-col justify-center">
               <div className="flex items-center gap-2 mb-3" aria-hidden="true"><span className="w-9 h-0.5 bg-[#9a5967]" /></div>
-              <h3 className="font-raleway text-3xl sm:text-4xl lg:text-[42px] leading-tight font-semibold tracking-wide text-white mb-6">
+              <h2 className="font-raleway text-4xl sm:text-5xl lg:text-[52px] leading-tight font-semibold tracking-wide text-white mb-5">
                 {language === 'pt' ? 'Conheça Livia' : language === 'es' ? 'Conoce a Livia' : 'Meet Livia'}
-              </h3>
+              </h2>
               <div className="font-montserrat text-[#eee1e4] text-sm sm:text-[15px] leading-relaxed space-y-3 mb-5 max-w-2xl">
                 <p>{language === 'pt'
                   ? 'Oi, sou Livia, fundadora da Bella Beauty Brazil, designer de sobrancelhas, especialista em tatuagem cosmética e educadora na área da beleza.'
@@ -92,7 +93,7 @@ export const FeaturesRibbon: React.FC<FeaturesRibbonProps> = ({ language }) => {
                     ? 'Dedico tiempo a cada cita, escuchando lo que deseas y trabajando con tus rasgos naturales. Ya sea para un sencillo arreglo de cejas o un tatuaje cosmético, quiero que te sientas cómoda, escuchada y bien cuidada.'
                     : 'I take my time with every appointment, listening to what you want and working with your natural features. Whether you’re visiting for a simple brow tidy or cosmetic tattooing, I want you to feel comfortable, heard and well looked after.'}</p>
               </div>
-              <div className="grid grid-cols-1 min-[380px]:grid-cols-3 gap-3 pt-2">
+              <div className="grid grid-cols-3 gap-2 sm:gap-3 pt-2" aria-label="Bella Beauty Brazil values">
                 <Pillar icon={<ShieldCheck className="w-4 h-4 text-[#e5acbc] mx-auto mb-1.5" />} text={language === 'pt' ? 'Cuidado personalizado' : language === 'es' ? 'Atención personalizada' : 'Personalised Care'} />
                 <Pillar icon={<Sparkles className="w-4 h-4 text-[#e5acbc] mx-auto mb-1.5" />} text={language === 'pt' ? 'Atenção aos detalhes' : language === 'es' ? 'Atención al detalle' : 'Attention to Detail'} />
                 <Pillar icon={<Award className="w-4 h-4 text-[#e5acbc] mx-auto mb-1.5" />} text={language === 'pt' ? 'Resultados naturais' : language === 'es' ? 'Resultados naturales' : 'Natural Results'} />
@@ -127,4 +128,4 @@ const FeatureCard: React.FC<FeatureCardData> = ({ image, video, title, text, foo
   </div>
 </article>;
 
-const Pillar: React.FC<{ icon: React.ReactNode; text: string }> = ({ icon, text }) => <div className="bg-[#1c1416] p-3.5 rounded-xl border border-[#9a5967]/20 text-center">{icon}<span className="text-xs font-bold uppercase tracking-wider text-[#f4e0e4] block">{text}</span></div>;
+const Pillar: React.FC<{ icon: React.ReactNode; text: string }> = ({ icon, text }) => <div className="min-w-0 bg-[#1c1416] px-1 py-3 sm:p-3.5 rounded-xl border border-[#9a5967]/20 text-center">{icon}<span className="text-[9px] min-[390px]:text-[10px] sm:text-xs font-bold uppercase tracking-normal sm:tracking-wider leading-tight text-[#f4e0e4] block break-words">{text}</span></div>;

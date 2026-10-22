@@ -13,7 +13,8 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenAppointm
     .filter((service): service is NonNullable<typeof service> => Boolean(service))
     .map((service) => getLocalizedService(service, language));
   return <section data-floating-clearance className="relative bg-site py-16 lg:py-24 overflow-hidden border-b border-neutral-100">
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <img src={siteImages.editorial.skinPortrait} alt="" aria-hidden="true" loading="lazy" className="pointer-events-none absolute left-0 top-16 h-60 w-36 object-cover opacity-[0.10] [mask-image:linear-gradient(to_right,black,transparent)]" />
+    <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16 reveal-on-scroll">
         <p className="font-raleway text-xl sm:text-2xl lg:text-3xl text-neutral-800 font-light uppercase tracking-[0.04em] leading-snug mb-2">
           {language === 'en'

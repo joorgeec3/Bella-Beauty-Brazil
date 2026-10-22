@@ -130,13 +130,16 @@ export const ServicesView: React.FC<ServicesViewProps> = ({ initialServiceId, on
   };
 
   return <div className="bg-site">
-    <header className="bg-[#5b3239] text-center text-white px-4 py-12 sm:py-16">
+    <header className="relative overflow-hidden bg-[#5b3239] text-center text-white px-4 py-12 sm:py-16">
+      <img src={siteImages.editorial.skinPortrait} alt="" aria-hidden="true" className="pointer-events-none absolute left-0 top-0 h-full w-[40%] max-w-[240px] object-cover opacity-20 [mask-image:linear-gradient(to_right,black,transparent)]" />
+      <div className="relative z-10">
       <p className="font-montserrat text-[11px] uppercase tracking-[0.22em] text-[#efb7c8] font-bold mb-3">
         Bella Beauty Brazil · Greenslopes, Brisbane
       </p>
       <h1 className="font-raleway text-3xl sm:text-5xl uppercase font-light tracking-wider">{labels.title}</h1>
       <div className="w-16 h-0.5 bg-[#efb7c8] mx-auto mt-4" />
       <p className="font-montserrat text-sm text-neutral-200 max-w-2xl mx-auto mt-5 leading-relaxed">{labels.intro}</p>
+      </div>
     </header>
 
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">

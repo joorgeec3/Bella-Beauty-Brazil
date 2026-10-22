@@ -59,6 +59,7 @@ export const AboutUsView: React.FC<AboutUsViewProps> = ({ onOpenAppointment, lan
             className="w-full h-full object-cover"
           />
         </div>
+        <img src={siteImages.editorial.rosePortrait} alt="" aria-hidden="true" loading="lazy" className="pointer-events-none absolute right-0 bottom-0 h-full w-[42%] max-w-[260px] object-cover opacity-20 sm:opacity-30 [mask-image:linear-gradient(to_left,black,transparent)]" />
         <div className="relative max-w-4xl mx-auto px-4 z-10">
           <div className="w-16 h-16 mx-auto mb-4">
             <img src={siteImages.brand.goldEmblemStamp} alt="Emblem" className="w-full h-full object-contain" />

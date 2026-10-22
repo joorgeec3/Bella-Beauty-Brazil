@@ -64,9 +64,9 @@ export const TickerMarquee: React.FC<{ language: Language }> = ({ language }) =>
 
       {/* On phones show the complete phrase in two readable centered lines.
           Continuous marquee lettering looked permanently cut off at mobile widths. */}
-      <div className="sm:hidden relative z-10 flex flex-col items-center justify-center gap-1 px-5 py-4 text-center" data-testid="bella-visit-us-mobile">
+      <div className="sm:hidden relative z-10 flex w-full min-w-0 flex-col items-center justify-center gap-1 px-4 py-4 text-center" data-testid="bella-visit-us-mobile">
         <span className="font-montserrat text-[clamp(17px,5vw,22px)] uppercase tracking-[0.12em] leading-snug text-[#efb7c8]">{prefix}</span>
-        <span className="font-montserrat text-[clamp(24px,7.2vw,32px)] uppercase font-semibold tracking-[0.07em] leading-tight text-white">GREENSLOPES</span>
+        <span className="font-montserrat max-w-full text-[clamp(22px,6.8vw,30px)] uppercase font-semibold tracking-[0.035em] leading-snug text-white break-words">GREENSLOPES</span>
         <span className="font-montserrat text-xs uppercase tracking-[0.24em] text-[#efb7c8]">Brisbane · QLD</span>
       </div>
 

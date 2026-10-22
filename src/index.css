@@ -337,3 +337,10 @@ html { scroll-behavior: smooth; scroll-padding-top: 82px; }
     pointer-events: none !important;
   }
 }
+
+/* Keep the two mobile contact actions compact and away from the page edges. */
+@media (max-width: 640px) {
+  #boton-flotante { left: max(0.75rem, env(safe-area-inset-left, 0px)); right: auto; bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px)); padding: 0 0.85rem; min-height: 3rem; }
+  [data-floating-whatsapp] { right: max(0.75rem, env(safe-area-inset-right, 0px)); bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px)); }
+  [data-floating-whatsapp] > div:last-child button { width: 3rem; height: 3rem; }
+}
