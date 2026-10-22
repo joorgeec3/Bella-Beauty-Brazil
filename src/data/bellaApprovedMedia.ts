@@ -51,14 +51,20 @@ const lashIllustrationByService: Record<string,TreatmentPhoto[]> = {
   'hybrid-eyelashes': [PHOTO_FOLDERS['lash-extensions'][1]],
   'wet-look-lashes': [PHOTO_FOLDERS['lash-extensions'][2]],
 };
+const labelledPhotos = (photos: TreatmentPhoto[], treatment: string): TreatmentPhoto[] =>
+  photos.map((photo, index) => ({
+    ...photo,
+    alt: `${treatment} — real Bella Beauty Brazil photograph ${index + 1}`,
+    caption: `${treatment} · ${index + 1} / ${photos.length}`,
+  }));
 const newerFolderLabels: Record<string,TreatmentPhoto[]> = {
-  // The new RAR explicitly names "Lip Hydration treatment", matching these
-  // existing photos from the old generic "lip tretments" folder (no reuploads).
-  'lip-bliss-hydration': PHOTO_FOLDERS['lip-treatments-geral'],
-  // The original general skin folder contains two verified dermaplaning
-  // procedure close-ups and one separate facial-treatment collage.
-  'dermaplaning': PHOTO_FOLDERS['skin-treatments-geral'].slice(1, 3),
-  'facial-spa': [PHOTO_FOLDERS['skin-treatments-geral'][0]],
+  // The new RAR explicitly names "Lip Hydration treatment"; only rename
+  // captions here. Source images are unchanged, not copied or repeated.
+  'lip-bliss-hydration': labelledPhotos(PHOTO_FOLDERS['lip-treatments-geral'], 'Lip Bliss Hydration'),
+  // The RAR labels this folder Facial/Dermaplaning; individual source photos
+  // were visually checked before assigning the procedure-specific ones.
+  'dermaplaning': labelledPhotos(PHOTO_FOLDERS['skin-treatments-geral'].slice(1, 3), 'Dermaplaning'),
+  'facial-spa': labelledPhotos([PHOTO_FOLDERS['skin-treatments-geral'][0]], 'Facial Spa'),
   // This real screenshot is from the uniquely labelled DREAM BROW massage video,
   // not a generic Brow Sculpt photo and not a cosmetic tattoo result.
   'dreamy-brows': [{
