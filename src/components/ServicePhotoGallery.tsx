@@ -26,6 +26,7 @@ const waxPhotos: TreatmentPhoto[] = [
 // Nano Strokes retains only the one approved photo; do not restore the two removed images.
 const groupedPhotos: Record<string, TreatmentPhoto[]> = {
   'nano-strokes': nanoPhotos,
+  'cosmetic-tattoo-removal': [{ src: `${import.meta.env.BASE_URL}assets/bella/client-2026-10-v3/tattoo-removal/tattoo-removal-cover.webp`, alt: 'Real before-and-after brow pigment removal photograph supplied by Bella Beauty Brazil', caption: 'Cosmetic tattoo removal — client-supplied photo' }],
   'brow-sculpt': newPhotoGroup('brow-sculpt', 'Brow Sculpt', 7),
   'brow-sculpt-tint': newPhotoGroup('brow-sculpt-tint', 'Brow Sculpt & Tint', 2),
   'male-brow-sculpt': newPhotoGroup('male-brow-sculpt', 'Male Brow Sculpt', 1),

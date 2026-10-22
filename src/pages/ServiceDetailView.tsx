@@ -6,6 +6,7 @@ import { SERVICE_GUIDES } from '../data/serviceGuides';
 import { approvedDescriptionFor } from '../data/approvedServiceCatalog';
 import { ServicePhotoGallery, getServicePhotos } from '../components/ServicePhotoGallery';
 import { ServiceVideoGallery } from '../components/ServiceVideoGallery';
+import { serviceCoverFor } from '../data/serviceCoverPhotos';
 
 interface ServiceDetailViewProps {
   serviceId: string;
@@ -100,14 +101,10 @@ const translated = (language: Language, en: string, pt: string, es: string) => l
 export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId, language, onNavigate }) => {
   const base = SERVICES.find((service) => service.id === serviceId) || SERVICES[0];
   const service = getLocalizedService(base, language);
-  // A dedicated service photo is used only when it depicts the correct treatment family.
-  // Never show dermaplaning as Microneedling, or an empty room as Teeth Whitening.
+  // Exact client photos are separated from representative category photography.
   const verifiedServicePhotos = getServicePhotos(base.id);
-  const noMatchingTreatmentPhoto = !verifiedServicePhotos.length && [
-    'teeth-whitening', 'cosmetic-tattoo-removal', 'lip-bliss-hydration',
-    'grow-up-hair-brows', 'grow-up-hair-scalp',
-    'microneedling', 'facial-spa', 'deluxe-facial',
-  ].includes(base.id);
+  const cover = serviceCoverFor(base.id);
+  const noMatchingTreatmentPhoto = !cover;
   // A service without a dedicated comparison must never inherit the Nano Strokes FAQ.
   const categoryRelated = SERVICES.filter((item) => item.category === base.category && item.id !== base.id).slice(0, 3);
   const group = GROUPS[base.id] || {
@@ -156,9 +153,12 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
                       {translated(language, 'Personalised treatment and consultation', 'Tratamento e consulta personalizados', 'Tratamiento y consulta personalizados')}
                     </p>
                   </div>
-                : <img src={verifiedServicePhotos[0]?.src || service.image}
-                    alt={verifiedServicePhotos.length ? `${service.title} — real client photo from Bella Beauty Brazil` : `${service.title} at Bella Beauty Brazil in Greenslopes`}
-                    className="w-full aspect-[4/3] object-contain bg-[#261d21] rounded-2xl shadow-2xl border border-white/20" />}
+                : <div className="space-y-2">
+                    <img src={cover?.src || service.image}
+                      alt={cover?.specific ? `${service.title} — real client photo from Bella Beauty Brazil` : `${service.title} — representative category photo from Bella Beauty Brazil`}
+                      className="w-full aspect-[4/3] object-contain bg-[#261d21] rounded-2xl shadow-2xl border border-white/20" />
+                    {!cover?.specific && <p className="font-montserrat text-xs text-[#efb7c8] text-right">{translated(language, 'Representative category photo — not a result of this particular service', 'Foto representativa da categoria — não é resultado deste serviço específico', 'Foto representativa de la categoría — no es resultado de este servicio específico')}</p>}
+                  </div>}
             </div>
           </div>
         </div>

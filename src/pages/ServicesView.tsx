@@ -5,6 +5,7 @@ import { siteImages } from '../data/siteImages';
 import { ApprovedPriceList } from '../components/ApprovedPriceList';
 import { approvedDescriptionFor } from '../data/approvedServiceCatalog';
 import { getServicePhotos } from '../components/ServicePhotoGallery';
+import { serviceCoverFor } from '../data/serviceCoverPhotos';
 
 interface ServicesViewProps {
   initialServiceId?: string;
@@ -77,20 +78,12 @@ const copy: Record<Language, {
 
 const featuredServiceIds = ['nano-strokes', 'shadow-brows', 'shadow-hybrid', 'brow-sculpt-tint', 'lip-blush', 'brow-lamination', 'lash-lift'];
 
-// All featured and client-submitted service photos are sourced from their own category folder.
-// The remaining treatments stay visible as text-rich cards until the studio provides photos.
-// Specific services use their exact treatment folder first (getServicePhotos).
-// No generic brow photo is substituted for hybrid dye or a lash-lift image for extensions.
-const cardPhotos: Record<string, string> = {
-  'nano-strokes': siteImages.client.nanoStrokesProcedure,
-  waxing: siteImages.client.waxingTreatment,
-};
-const cardImageFor = (id: string): string | undefined =>
-  getServicePhotos(id)[0]?.src || cardPhotos[id];
+// All 27 service covers use matching supplied photos or clearly marked same-family editorial photos.
+const cardImageFor = (id: string): string | undefined => serviceCoverFor(id)?.src;
 const imageAlt = (id: string, title: string) =>
-  getServicePhotos(id).length > 0
+  serviceCoverFor(id)?.specific
     ? `${title} — real photograph provided by Bella Beauty Brazil`
-    : `${title} at Bella Beauty Brazil`;
+    : `${title} — representative photo from the related beauty category, not this specific treatment result`;
 const normalizeSearch = (value: string) => value.toLocaleLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 
 export const ServicesView: React.FC<ServicesViewProps> = ({ initialServiceId, onNavigateToService, language }) => {
@@ -204,6 +197,7 @@ export const ServicesView: React.FC<ServicesViewProps> = ({ initialServiceId, on
               <span className="font-montserrat text-[10px] font-bold uppercase tracking-[0.14em] text-[#9a5967]">{categoryLabels[language][service.category as Category] || service.category}</span>
               <h2 className="font-raleway text-lg sm:text-xl font-semibold text-[#5b3239] mt-1 leading-snug">{service.title}</h2>
               <p className="font-montserrat text-xs text-neutral-600 leading-relaxed line-clamp-3 mt-2">{language === 'en' ? (approvedDescriptionFor(service.id) || service.description) : service.description}</p>
+              {serviceCoverFor(service.id) && !serviceCoverFor(service.id)?.specific && <p className="font-montserrat text-[10px] leading-snug text-[#846f75] mt-2">{language === 'en' ? 'Representative beauty category photo' : language === 'pt' ? 'Foto representativa da categoria' : 'Foto representativa de la categoría'}</p>}
               {getServicePhotos(service.id).length > 0 && <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#9a5967] mt-2">{language === 'en' ? `See ${getServicePhotos(service.id).length} real photos` : language === 'pt' ? `Ver ${getServicePhotos(service.id).length} fotos reais` : `Ver ${getServicePhotos(service.id).length} fotos reales`}</span>}
               <div className="flex flex-wrap gap-x-4 gap-y-1 mt-3 text-xs text-[#675960] font-montserrat">
                 <span className="font-bold text-[#5b3239]">{typeof service.price === 'number' ? 'A$' + service.price : labels.enquire}</span>
