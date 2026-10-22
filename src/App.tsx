@@ -114,8 +114,8 @@ export default function App() {
         description: 'Meet Livia Rego and learn about Bella Beauty Brazil, a beauty studio at Suite 3, 412 Logan Road, Greenslopes, Brisbane.',
       },
       services: {
-        title: 'Beauty Services | Nano Strokes, Brows, Lashes & Skin',
-        description: 'Explore confirmed Bella Beauty Brazil services, prices and durations for brows, cosmetic tattooing, lashes, skin treatments and waxing.',
+        title: 'Beauty Treatments in Greenslopes, Brisbane | Bella Beauty Brazil',
+        description: 'Personalised beauty treatments in Greenslopes, Brisbane. Explore brows, lashes, cosmetic tattooing and skin treatments, with care tailored to you.',
       },
       locations: {
         title: 'Location & Opening Hours | Bella Beauty Brazil Greenslopes',

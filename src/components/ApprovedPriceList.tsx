@@ -23,8 +23,8 @@ const approvedServiceRoutes: Record<string,string> = {
   "Lip Bliss Hydration": "lip-bliss-hydration",
   "Facial Spa": "facial-spa",
   "Deluxe Facial": "deluxe-facial",
-  "Grow Up Hair – Brows": "grow-up-hair-brows",
-  "Grow Up Hair – Scalp": "grow-up-hair-scalp",
+  "Exos Hair Brows": "grow-up-hair-brows",
+  "Exos Hair Scalp": "grow-up-hair-scalp",
   "Lash Lift & Tint": "lash-lift",
   "Lash Lift Only": "lash-lift-only",
   "Classic Lash Extensions": "classic-eyelashes",
@@ -66,9 +66,9 @@ const detailLabels = {
 /** October 2026 copy and AUD prices supplied and approved by Bella Beauty Brazil. */
 export const ApprovedPriceList: React.FC<{language: Language}> = ({ language }) => {
   const labels = {
-    en: { eyebrow: 'Bella Beauty Brazil · Approved Service Menu', heading: 'All Treatments & Prices', intro: 'Explore every service and price from our updated studio menu. All amounts are in Australian dollars (AUD).', services: 'options', book: 'Select appointment on Timely', note: 'The booking system confirms availability and final service selection.' },
-    pt: { eyebrow: 'Bella Beauty Brazil · Menu atualizado', heading: 'Todos os tratamentos e valores', intro: 'Confira todos os serviços e preços do menu atualizado do estúdio. Todos os valores estão em dólares australianos (AUD).', services: 'opções', book: 'Agendar pelo Timely', note: 'Consulte disponibilidade e escolha o procedimento no Timely.' },
-    es: { eyebrow: 'Bella Beauty Brazil · Servicios actualizados', heading: 'Todos los tratamientos y precios', intro: 'Consulta los servicios y precios actualizados del estudio. Importes en dólares australianos (AUD).', services: 'opciones', book: 'Reservar en Timely', note: 'Confirma disponibilidad y selección del servicio en Timely.' },
+    en: { eyebrow: 'Bella Beauty Brazil · Treatment Menu', heading: 'Treatment Prices', intro: 'Explore every service and price from our updated studio menu. All amounts are in Australian dollars (AUD).', services: 'options', book: 'Book now', note: 'The booking system confirms availability and final service selection.' },
+    pt: { eyebrow: 'Bella Beauty Brazil · Menu atualizado', heading: 'Todos os tratamentos e valores', intro: 'Confira todos os serviços e preços do menu atualizado do estúdio. Todos os valores estão em dólares australianos (AUD).', services: 'opções', book: 'Agendar agora', note: 'Consulte disponibilidade e escolha o procedimento no Timely.' },
+    es: { eyebrow: 'Bella Beauty Brazil · Servicios actualizados', heading: 'Todos los tratamientos y precios', intro: 'Consulta los servicios y precios actualizados del estudio. Importes en dólares australianos (AUD).', services: 'opciones', book: 'Reservar ahora', note: 'Confirma disponibilidad y selección del servicio en Timely.' },
   }[language];
 
   return (
@@ -80,7 +80,7 @@ export const ApprovedPriceList: React.FC<{language: Language}> = ({ language }) 
       </header>
       <div className="grid gap-3 sm:gap-4">
         {APPROVED_SERVICE_CATALOG.map((group) => (
-          <details key={group.id} id={`prices-${group.id}`} open={group.id === 'skin'} className="group overflow-hidden rounded-2xl border border-[#e8d6d5] bg-white shadow-sm" >
+          <details key={group.id} id={`prices-${group.id}`} className="group overflow-hidden rounded-2xl border border-[#e8d6d5] bg-white shadow-sm" >
             <summary className="cursor-pointer flex items-center justify-between gap-3 sm:gap-4 px-5 sm:px-7 py-5 sm:py-6 text-[#5b3239] focus-visible:outline-2 focus-visible:outline-[#9a5967] list-none [&::-webkit-details-marker]:hidden">
               {groupCoverFor(group.id) && <img src={groupCoverFor(group.id)?.src} loading="lazy" alt="" aria-hidden="true" className="w-14 h-14 sm:w-16 sm:h-16 shrink-0 rounded-xl border border-[#ead8db] bg-[#f7eef0] object-contain" />}
               <span className="flex flex-col gap-1 text-left min-w-0 flex-1">
@@ -106,7 +106,6 @@ export const ApprovedPriceList: React.FC<{language: Language}> = ({ language }) 
                       <h3 className="font-montserrat font-semibold text-sm text-[#5b3239] leading-snug">{item.name}</h3>
                       <span className="font-montserrat text-sm font-bold text-[#8b5462] tabular-nums shrink-0">A${item.aud}</span>
                     </div>
-                    {item.description && <p className="font-montserrat text-xs sm:text-sm text-[#675960] leading-relaxed mt-2">{item.description}</p>}
                     {item.note && <p className="font-montserrat text-xs text-[#9a5967] font-semibold mt-2">{item.note}</p>}
                     {approvedServiceRoutes[item.name] && <a
                       href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/services/${approvedServiceRoutes[item.name]}`}

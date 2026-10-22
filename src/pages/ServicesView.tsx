@@ -30,45 +30,45 @@ const copy: Record<Language, {
   helpTitle: string; helpText: string; helpCta: string;
 }> = {
   en: {
-    title: 'Our Services',
-    intro: 'Choose a category, open a service to read the approved description and browse our real photos, then book through Timely.',
+    title: 'Beauty Treatments in Greenslopes, Brisbane',
+    intro: 'Personalised beauty treatments in Greenslopes, Brisbane. Explore brows, lashes, cosmetic tattooing and skin treatments, with care tailored to you.',
     search: 'Search treatments, e.g. nano strokes or lash lift',
     quick: 'Quick access',
     explore: 'Explore treatments',
     result: 'service', results: 'services', clear: 'Clear filters',
     noResults: 'No treatments found',
     noResultsText: 'Try a different word or choose another category.',
-    details: 'Photos & details', book: 'Choose on Timely', enquire: 'Ask the studio',
+    details: 'Photos & details', book: 'Book now', enquire: 'Ask the studio',
     from: 'Prices and availability may change. Confirm on Timely.',
     helpTitle: 'Not sure which treatment to book?',
     helpText: 'Our studio can help you choose a suitable appointment and explain preparation and aftercare.',
     helpCta: 'Check appointments on Timely',
   },
   pt: {
-    title: 'Nossos serviços',
-    intro: 'Escolha uma categoria, abra o serviço para ler a descrição e passar as fotos reais, depois agende pelo Timely.',
+    title: 'Tratamentos de beleza em Greenslopes, Brisbane',
+    intro: 'Tratamentos de beleza personalizados em Greenslopes, Brisbane. Conheça sobrancelhas, cílios, tatuagem cosmética e tratamentos de pele.',
     search: 'Buscar tratamentos: nano strokes, cílios...',
     quick: 'Acesso rápido',
     explore: 'Explore os tratamentos',
     result: 'serviço', results: 'serviços', clear: 'Limpar filtros',
     noResults: 'Nenhum tratamento encontrado',
     noResultsText: 'Tente outra palavra ou escolha outra categoria.',
-    details: 'Ver fotos e detalhes', book: 'Escolher no Timely', enquire: 'Consultar o estúdio',
+    details: 'Ver fotos e detalhes', book: 'Agendar agora', enquire: 'Consultar o estúdio',
     from: 'Preços e horários podem mudar. Confirme no Timely.',
     helpTitle: 'Não sabe qual tratamento escolher?',
     helpText: 'O estúdio pode orientar sobre o atendimento adequado, preparo e cuidados após o procedimento.',
     helpCta: 'Ver horários no Timely',
   },
   es: {
-    title: 'Nuestros servicios',
-    intro: 'Elige una categoría, abre un servicio para leer su descripción y ver las fotos reales, y reserva por Timely.',
+    title: 'Tratamientos de belleza en Greenslopes, Brisbane',
+    intro: 'Tratamientos de belleza personalizados en Greenslopes, Brisbane. Descubre cejas, pestañas, tatuaje cosmético y cuidado de la piel.',
     search: 'Buscar tratamientos: nano strokes, pestañas...',
     quick: 'Acceso rápido',
     explore: 'Explorar tratamientos',
     result: 'servicio', results: 'servicios', clear: 'Limpiar filtros',
     noResults: 'No se encontraron tratamientos',
     noResultsText: 'Prueba otra palabra o elige otra categoría.',
-    details: 'Fotos y detalles', book: 'Elegir en Timely', enquire: 'Consultar al estudio',
+    details: 'Fotos y detalles', book: 'Reservar ahora', enquire: 'Consultar al estudio',
     from: 'Los precios y horarios pueden cambiar. Confirma en Timely.',
     helpTitle: '¿No sabes qué tratamiento elegir?',
     helpText: 'El estudio puede orientarte sobre la cita adecuada, la preparación y los cuidados.',
@@ -78,13 +78,21 @@ const copy: Record<Language, {
 
 const featuredServiceIds = ['nano-strokes', 'shadow-brows', 'shadow-hybrid', 'brow-sculpt-tint', 'lip-blush', 'brow-lamination', 'lash-lift'];
 
-// All 27 service covers use matching supplied photos or clearly marked same-family editorial photos.
+// Individual service covers use only correctly identified source media.
 const cardImageFor = (id: string): string | undefined => serviceCoverFor(id)?.src;
 const imageAlt = (id: string, title: string) =>
   serviceCoverFor(id)?.specific
     ? `${title} — real photograph provided by Bella Beauty Brazil`
     : `${title} — representative photo from the related beauty category, not this specific treatment result`;
 const normalizeSearch = (value: string) => value.toLocaleLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+const cardSummary = (value: string): string => {
+  const text = value.trim();
+  if (text.length <= 145) return text;
+  const first = text.match(/^[^.!?]+[.!?]/)?.[0];
+  if (first && first.length <= 155) return first;
+  const words = text.slice(0, 144).replace(/\s+\S*$/, '').trim();
+  return (words || text.slice(0, 144).trim()) + '…';
+};
 
 export const ServicesView: React.FC<ServicesViewProps> = ({ initialServiceId, onNavigateToService, language }) => {
   const [category, setCategory] = useState<Category>(() => {
@@ -178,7 +186,7 @@ export const ServicesView: React.FC<ServicesViewProps> = ({ initialServiceId, on
       </div>
 
       {filteredServices.length > 0 ?
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
+        <div data-floating-clearance className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
           {filteredServices.map((service) => <article key={service.id}
             className="bg-white border border-[#e8d6d5] rounded-2xl shadow-sm overflow-hidden flex flex-col sm:flex-row hover:shadow-lg transition-shadow">
             {cardImageFor(service.id) ? <a href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/services/${service.id}`} onClick={(event) => navigate(event, service.id)}
@@ -196,7 +204,7 @@ export const ServicesView: React.FC<ServicesViewProps> = ({ initialServiceId, on
             <div className="min-w-0 p-4 sm:p-5 flex-1 flex flex-col">
               <span className="font-montserrat text-[10px] font-bold uppercase tracking-[0.14em] text-[#9a5967]">{categoryLabels[language][service.category as Category] || service.category}</span>
               <h2 className="font-raleway text-lg sm:text-xl font-semibold text-[#5b3239] mt-1 leading-snug">{service.title}</h2>
-              <p className="font-montserrat text-xs text-neutral-600 leading-relaxed line-clamp-3 mt-2">{language === 'en' ? (approvedDescriptionFor(service.id) || service.description) : service.description}</p>
+              <p className="font-montserrat text-xs text-neutral-600 leading-relaxed line-clamp-2 mt-2">{cardSummary(language === 'en' ? (approvedDescriptionFor(service.id) || service.description) : service.description)}</p>
               {serviceCoverFor(service.id) && !serviceCoverFor(service.id)?.specific && <p className="font-montserrat text-[10px] leading-snug text-[#846f75] mt-2">{language === 'en' ? 'Representative beauty category photo' : language === 'pt' ? 'Foto representativa da categoria' : 'Foto representativa de la categoría'}</p>}
               {getServiceGallery(service.id).photos.length > 1 && <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#9a5967] mt-2">{getServiceGallery(service.id).illustrative
                 ? (language === 'en' ? `View ${getServiceGallery(service.id).photos.length} related photos` : language === 'pt' ? `Ver ${getServiceGallery(service.id).photos.length} fotos relacionadas` : `Ver ${getServiceGallery(service.id).photos.length} fotos relacionadas`)
@@ -234,7 +242,7 @@ export const ServicesView: React.FC<ServicesViewProps> = ({ initialServiceId, on
           {(category === 'All' || category === 'Lashes') &&
             <div className="bg-white border border-[#e8d6d5] rounded-2xl p-4 sm:p-5">
               <h3 className="font-raleway font-semibold text-lg text-[#5b3239] mb-2">{language === 'en' ? 'Lash Extensions · general demonstration' : language === 'pt' ? 'Extensões de cílios · demonstração geral' : 'Extensiones de pestañas · demostración general'}</h3>
-              <p className="text-xs font-montserrat text-[#675960] mb-3">{language === 'en' ? 'Original folder: Lash Extensions. Specific extension style not identified.' : language === 'pt' ? 'Pasta original: Lash Extensions. O estilo específico não foi identificado.' : 'Carpeta original: Lash Extensions. El estilo específico no está identificado.'}</p>
+              <p className="text-xs font-montserrat text-[#675960] mb-3">{language === 'en' ? 'Real lash extension footage from our studio. Each application is personalised.' : language === 'pt' ? 'Vídeo real de extensões de cílios do estúdio. Cada aplicação é personalizada.' : 'Vídeo real de extensiones de pestañas en nuestro estudio.'}</p>
               <video src={import.meta.env.BASE_URL + 'assets/bella/media-alinhada-2026-10/lash-extensions/01.mp4'} controls playsInline preload="metadata"
                 poster={import.meta.env.BASE_URL + 'assets/bella/media-alinhada-2026-10/lash-extensions/01.webp'} className="w-full max-h-80 rounded-xl object-contain bg-[#251a21]" />
             </div>}

@@ -33,8 +33,8 @@ export const APPROVED_SERVICE_CATALOG: ApprovedCategory[] = [
       { name: 'Lip Bliss Hydration', aud: 99, description: "Give dry lips some extra care with a treatment designed to hydrate and soften, leaving them feeling smoother and looking refreshed. Enhances your natural lips without adding tattoo colour or injectable volume." },
       { name: 'Facial Spa', aud: 150, description: "A moment to unwind while caring for your skin. Enjoy facial cleansing, gentle exfoliation, personalised serums, a facial mask and relaxing massage movements, leaving your skin feeling soft, hydrated and refreshed." },
       { name: 'Deluxe Facial', aud: 360, note: '2 hours', description: "Enjoy a personalised combination of facial cleansing, dermaplaning and microneedling, with each step selected according to your skin’s needs and suitability. Finished with a facial mask and LED light therapy for a complete skin-care experience." },
-      { name: 'Grow Up Hair – Brows', aud: 150, description: "Targeted care for sparse or overplucked brows, with a personalised assessment and treatment plan focused on your natural brow hair and the skin beneath it. Ideal for those working towards fuller-looking brows." },
-      { name: 'Grow Up Hair – Scalp', aud: 200, description: "Personalised scalp care for those concerned about thinning hair. Treatment focuses on scalp condition, with an individual plan and aftercare guidance based on your needs." },
+      { name: 'Exos Hair Brows', aud: 150, description: "Targeted care for sparse or overplucked brows, with a personalised assessment and treatment plan focused on your natural brow hair and the skin beneath it. Ideal for those working towards fuller-looking brows." },
+      { name: 'Exos Hair Scalp', aud: 200, description: "Personalised scalp care for those concerned about thinning hair. Treatment focuses on scalp condition, with an individual plan and aftercare guidance based on your needs." },
     ],
   },
   {
@@ -111,8 +111,8 @@ const APPROVED_NAMES_BY_SERVICE_ID: Record<string,string> = {
   "facial-spa": "Facial Spa",
   "deluxe-facial": "Deluxe Facial",
   "lip-bliss-hydration": "Lip Bliss Hydration",
-  "grow-up-hair-brows": "Grow Up Hair – Brows",
-  "grow-up-hair-scalp": "Grow Up Hair – Scalp",
+  "grow-up-hair-brows": "Exos Hair Brows",
+  "grow-up-hair-scalp": "Exos Hair Scalp",
   "teeth-whitening": "Teeth Whitening",
   "waxing": "Brazilian"
 };

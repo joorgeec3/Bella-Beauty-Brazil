@@ -25,8 +25,8 @@ const services = {
   'facial-spa': { title: 'Facial Spa', description: 'Relaxing facial cleansing, gentle exfoliation, serums, facial mask and massage.', image: '/assets/bella/dermaplaning-facial-treatment.webp', price: '150', duration: '1 hour, 20 mins' },
   'deluxe-facial': { title: 'Deluxe Facial', description: 'Two-hour personalised facial with cleansing, dermaplaning, microneedling, facial mask and LED light therapy when suitable.', image: '/assets/bella/dermaplaning-facial-treatment.webp', price: '360', duration: '2 hours' },
   'lip-bliss-hydration': { title: 'Lip Bliss Hydration', description: 'Hydration treatment for dry lips without tattoo pigment or injectable volume.', image: '/assets/bella/gallery/studio-treatment-room.webp', price: '99' },
-  'grow-up-hair-brows': { title: 'Grow Up Hair – Brows', description: 'Personalised care for sparse or overplucked natural brows and the underlying skin.', image: '/assets/bella/gallery/studio-treatment-room.webp', price: '150' },
-  'grow-up-hair-scalp': { title: 'Grow Up Hair – Scalp', description: 'Individual scalp assessment and care for clients concerned about thinning hair.', image: '/assets/bella/gallery/studio-treatment-room.webp', price: '200' },
+  'grow-up-hair-brows': { title: 'Exos Hair Brows', description: 'Personalised care for sparse or overplucked natural brows and the underlying skin.', image: '/assets/bella/gallery/studio-treatment-room.webp', price: '150' },
+  'grow-up-hair-scalp': { title: 'Exos Hair Scalp', description: 'Individual scalp assessment and care for clients concerned about thinning hair.', image: '/assets/bella/gallery/studio-treatment-room.webp', price: '200' },
   'teeth-whitening': { title: 'Teeth Whitening', description: 'Teeth whitening service published by Bella Beauty Brazil in the official Timely catalogue; confirm suitability and aftercare with the studio.', image: '/assets/bella/gallery/studio-treatment-room.webp', price: '199', duration: '1 hour' },
   waxing: { title: 'Brazilian Waxing', description: 'Professional Brazilian waxing from Bella Beauty Brazil.', image: '/assets/bella/client-2026-10/waxing-treatment.webp', price: '82', duration: '30 mins' },
 };
@@ -115,7 +115,7 @@ for (const [slug, service] of Object.entries(services)) {
 // Keep all public entry pages crawlable as well; React takes over after hydration.
 const simplePages = {
   about: ['Meet Livia Rego', 'Discover Bella Beauty Brazil, a personalised beauty studio in Greenslopes, Brisbane.'],
-  services: ['Beauty Services', 'Explore brow, lash, lip and skin treatments at Bella Beauty Brazil in Greenslopes.'],
+  services: ['Beauty Treatments in Greenslopes, Brisbane', 'Personalised beauty treatments in Greenslopes, Brisbane. Explore brows, lashes, cosmetic tattooing and skin treatments, with care tailored to you.'],
   courses: ['Professional Beauty Courses', 'Explore one-on-one Lash Lift & Tint, Brow Lamination and Bella Nano Strokes training in Brisbane.'],
   locations: ['Find Us & Opening Hours', 'Visit Bella Beauty Brazil at Suite 3, 412 Logan Road, Greenslopes QLD 4120.'],
   contact: ['Contact & Book', 'Contact Bella Beauty Brazil or book an appointment via the official Timely booking page.'],
