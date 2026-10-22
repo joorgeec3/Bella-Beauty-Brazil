@@ -158,7 +158,7 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
                   </div>
                 : <img src={verifiedServicePhotos[0]?.src || service.image}
                     alt={verifiedServicePhotos.length ? `${service.title} — real client photo from Bella Beauty Brazil` : `${service.title} at Bella Beauty Brazil in Greenslopes`}
-                    className="w-full aspect-[4/3] object-cover rounded-2xl shadow-2xl border border-white/20" />}
+                    className="w-full aspect-[4/3] object-contain bg-[#261d21] rounded-2xl shadow-2xl border border-white/20" />}
             </div>
           </div>
         </div>

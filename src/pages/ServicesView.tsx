@@ -79,18 +79,11 @@ const featuredServiceIds = ['nano-strokes', 'shadow-brows', 'shadow-hybrid', 'br
 
 // All featured and client-submitted service photos are sourced from their own category folder.
 // The remaining treatments stay visible as text-rich cards until the studio provides photos.
+// Specific services use their exact treatment folder first (getServicePhotos).
+// No generic brow photo is substituted for hybrid dye or a lash-lift image for extensions.
 const cardPhotos: Record<string, string> = {
-  'nano-strokes': siteImages.services.microblading,
-  'lip-blush': siteImages.services.lipBlush,
-  'lash-lift': siteImages.services.lashes,
-  dermaplaning: siteImages.services.facialTreatment,
-  'brow-sculpt-tint': siteImages.services.browTreatment,
-  // Teeth whitening has no client-approved treatment photo yet; do not use a random room photo.
-  waxing: siteImages.services.waxing,
-  'shadow-brows': siteImages.client.browTools,
-  'shadow-hybrid': siteImages.client.browStyling,
-  'brow-sculpt': siteImages.client.browStyling,
-  'brow-lamination': siteImages.client.browTools,
+  'nano-strokes': siteImages.client.nanoStrokesProcedure,
+  waxing: siteImages.client.waxingTreatment,
 };
 const cardImageFor = (id: string): string | undefined =>
   getServicePhotos(id)[0]?.src || cardPhotos[id];
@@ -198,7 +191,7 @@ export const ServicesView: React.FC<ServicesViewProps> = ({ initialServiceId, on
             {cardImageFor(service.id) ? <a href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/services/${service.id}`} onClick={(event) => navigate(event, service.id)}
               className="block sm:w-[165px] sm:shrink-0 overflow-hidden bg-[#eee2df] focus-visible:outline-2 focus-visible:outline-[#9a5967]">
               <img src={cardImageFor(service.id)} alt={imageAlt(service.id, service.title)}
-                loading="lazy" className="w-full h-44 sm:h-full max-h-[240px] sm:max-h-none object-cover hover:scale-[1.03] transition-transform duration-500" />
+                loading="lazy" className="w-full h-44 sm:h-full max-h-[240px] sm:max-h-none object-contain bg-[#eee2df] transition-transform duration-500" />
             </a> : <a href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/services/${service.id}`} onClick={(event) => navigate(event, service.id)}
               aria-label={`${service.title} — ${labels.details}`}
               className="flex sm:w-[165px] sm:shrink-0 min-h-32 items-center justify-center overflow-hidden bg-gradient-to-br from-[#f4e5e8] via-[#eddae0] to-[#d6bac3] text-[#5b3239] border-b sm:border-b-0 sm:border-r border-[#e8d6d5] focus-visible:outline-2 focus-visible:outline-[#9a5967]">

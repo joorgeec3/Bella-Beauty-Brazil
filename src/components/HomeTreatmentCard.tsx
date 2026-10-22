@@ -2,7 +2,6 @@ import React, { useRef, useState } from 'react';
 import { ArrowRight, ChevronLeft, ChevronRight, Images } from 'lucide-react';
 import type { Language, Service } from '../data/siteData';
 import { getServicePhotos } from './ServicePhotoGallery';
-import { siteImages } from '../data/siteImages';
 
 interface HomeTreatmentCardProps {
   service: Service;
@@ -20,21 +19,11 @@ const labels = {
 export const HomeTreatmentCard: React.FC<HomeTreatmentCardProps> = ({
   service, language, onNavigate, position,
 }) => {
-  // Keep previously approved older editorial photos on the homepage treatment tiles.
-  // All 43 fresh originals now live in the main Gallery and service-detail pages, with no photo copied between homepage blocks.
-  const approvedPhotos = service.id === 'lip-blush'
-    ? [
-        { src: siteImages.client.lipBlushProcedure, alt: 'Lip Blush treatment', caption: 'Lip Blush procedure' },
-        { src: siteImages.client.lipBlushPalette, alt: 'Lip Blush colour selection', caption: 'Pigment shades' },
-        { src: siteImages.client.lipBlushPhotography, alt: 'Lip Blush consultation photo', caption: 'Lip Blush appointment' },
-      ]
-    : service.id === 'lash-lift'
-      ? [{ src: siteImages.services.lashes, alt: 'Bella Beauty Brazil lash treatments', caption: 'Lash treatments' }]
-      : service.id === 'brow-sculpt'
-        ? [{ src: siteImages.services.brows, alt: 'Bella Beauty Brazil brow shaping', caption: 'Brow sculpting' }]
-        : getServicePhotos(service.id);
-  const photos = approvedPhotos.length > 0
-    ? approvedPhotos
+  // Show each treatment's own photos supplied by the client, never another category.
+  // The Nano Strokes gallery keeps its single previously approved procedure photo.
+  const servicePhotos = getServicePhotos(service.id);
+  const photos = servicePhotos.length > 0
+    ? servicePhotos
     : [{ src: service.image, alt: service.title, caption: service.title }];
   const [activeIndex, setActiveIndex] = useState(0);
   const startTouch = useRef<{ x: number; y: number } | null>(null);
@@ -77,15 +66,15 @@ export const HomeTreatmentCard: React.FC<HomeTreatmentCardProps> = ({
         }
       }}
     >
-      <div className="absolute inset-0 overflow-hidden scroll-motion-layer" data-scroll-motion>
+      <div className="absolute inset-0 overflow-hidden scroll-motion-layer bg-[#261d21]" data-scroll-motion>
         <img
           src={active.src}
           alt={active.alt}
-          className="service-card-image w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
+          className="service-card-image w-full h-full object-contain object-center transition-transform duration-700"
           loading="lazy"
         />
       </div>
-      <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/45 to-black/15 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/30 to-transparent pointer-events-none" />
       <a
         href={serviceUrl}
         onClick={onLinkClick}

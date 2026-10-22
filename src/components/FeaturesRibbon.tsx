@@ -2,6 +2,7 @@ import React from 'react';
 import { Award, ShieldCheck, Sparkles, Smile } from 'lucide-react';
 import { Language } from '../data/siteData';
 import { siteImages } from '../data/siteImages';
+import { getServicePhotos } from './ServicePhotoGallery';
 
 interface FeaturesRibbonProps { language: Language; }
 interface FeatureCardData { image?: string; video?: string; title: string; text: string; footer: string; }
@@ -9,39 +10,37 @@ interface FeatureCardData { image?: string; video?: string; title: string; text:
 export const FeaturesRibbon: React.FC<FeaturesRibbonProps> = ({ language }) => {
   const cards: FeatureCardData[] = [
     {
-      image: `${import.meta.env.BASE_URL}assets/bella/gallery/lips-result-01.webp`,
+      image: getServicePhotos('shadow-brows')[0]?.src,
       title: 'Cosmetic Tattooing',
       text: language === 'en' ? 'Nano Strokes • Shadow Brows • Lip Blush • Cosmetic Tattoo Removal.' : language === 'pt' ? 'Nano Strokes • Shadow Brows • Lip Blush • Remoção de Tatuagem Cosmética.' : 'Nano Strokes • Shadow Brows • Lip Blush • Eliminación de Tatuaje Cosmético.',
       footer: language === 'en' ? 'Cosmetic tattoo treatments' : language === 'pt' ? 'Tatuagem cosmética' : 'Tatuaje cosmético',
     },
     {
-      image: `${import.meta.env.BASE_URL}assets/bella/gallery/studio-behind-scenes-01.webp`,
+      image: getServicePhotos('brow-sculpt')[0]?.src,
       title: 'Brow Artistry',
       text: language === 'en' ? 'Brow Sculpting • Tinting • Brow Dye • Brow Lamination.' : language === 'pt' ? 'Design de sobrancelhas • Tintura • Brow Dye • Laminação.' : 'Diseño de cejas • Tinte • Brow Dye • Laminado.',
       footer: language === 'en' ? 'Personalised brow care' : language === 'pt' ? 'Cuidado das sobrancelhas' : 'Cuidado de cejas',
     },
     {
-      image: `${import.meta.env.BASE_URL}assets/bella/gallery/lashes-result-05.webp`,
+      image: getServicePhotos('lash-lift')[0]?.src,
       title: 'Lash Treatments',
       text: language === 'en' ? 'Lash Lift & Tint • Lash Extensions.' : language === 'pt' ? 'Lash Lift & Tint • Extensões de cílios.' : 'Lash Lift & Tint • Extensiones de pestañas.',
       footer: language === 'en' ? 'Natural lashes & extensions' : language === 'pt' ? 'Cílios naturais e extensões' : 'Pestañas naturales y extensiones',
     },
     {
-      image: `${import.meta.env.BASE_URL}assets/bella/dermaplaning-facial-treatment.webp`,
+      image: getServicePhotos('dermaplaning')[0]?.src,
       title: 'Skin Treatments',
       text: language === 'en' ? 'Dermaplaning • Microneedling • Facial Spa.' : language === 'pt' ? 'Dermaplaning • Microagulhamento • Facial Spa.' : 'Dermaplaning • Microneedling • Facial Spa.',
       footer: language === 'en' ? 'Facial skin care' : language === 'pt' ? 'Cuidados faciais' : 'Cuidado facial',
     },
     {
-      // Real client-supplied whitening footage illustrates the treatment itself.
-      // The three client photos stay available in the Gallery without duplicating them in this card.
-      video: `${import.meta.env.BASE_URL}assets/bella/client-2026-10-v2/teeth-whitening/teeth-whitening-video-01.mp4`,
+      image: getServicePhotos('teeth-whitening')[0]?.src,
       title: 'Teeth Whitening',
       text: language === 'en' ? 'A brighter smile with professional teeth whitening.' : language === 'pt' ? 'Um sorriso mais iluminado com clareamento dental profissional.' : 'Una sonrisa más luminosa con blanqueamiento dental profesional.',
       footer: language === 'en' ? 'Professional teeth whitening' : language === 'pt' ? 'Clareamento dental' : 'Blanqueamiento dental',
     },
     {
-      image: `${import.meta.env.BASE_URL}assets/bella/waxing.png`,
+      image: siteImages.client.waxingTreatment,
       title: 'Waxing',
       text: language === 'en' ? 'Face & Body Waxing • Brazilian Waxing.' : language === 'pt' ? 'Depilação facial e corporal • Depilação brasileira.' : 'Depilación facial y corporal • Depilación brasileña.',
       footer: language === 'en' ? 'Face & body' : language === 'pt' ? 'Rosto e corpo' : 'Rostro y cuerpo',
