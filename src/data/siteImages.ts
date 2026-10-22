@@ -2,7 +2,25 @@ const siteAsset = (path: string) => `${import.meta.env.BASE_URL}${path.replace(/
 
 export const siteImages = {
   editorial: { skinPortrait: siteAsset('assets/bella/editorial/skin-portrait.webp'), rosePortrait: siteAsset('assets/bella/editorial/roses-portrait.webp') },
-  training: { highlightVideo: siteAsset('assets/bella/training/courses-highlights.mp4'), highlightPoster: siteAsset('assets/bella/training/courses-highlight-poster.jpg') },
+  training: {
+    // Five client-supplied recordings edited into four short, silent course covers.
+    highlightVideo: siteAsset('assets/bella/training/courses-v2/training-intro.mp4'),
+    highlightPoster: siteAsset('assets/bella/training/courses-v2/training-intro.webp'),
+    courseCovers: {
+      'lash-lift-course': {
+        video: siteAsset('assets/bella/training/courses-v2/lash-lift-course.mp4'),
+        poster: siteAsset('assets/bella/training/courses-v2/lash-lift-course.webp'),
+      },
+      'brow-lamination-course': {
+        video: siteAsset('assets/bella/training/courses-v2/brow-lamination-course.mp4'),
+        poster: siteAsset('assets/bella/training/courses-v2/brow-lamination-course.webp'),
+      },
+      'nano-strokes-course': {
+        video: siteAsset('assets/bella/training/courses-v2/nano-strokes-course.mp4'),
+        poster: siteAsset('assets/bella/training/courses-v2/nano-strokes-course.webp'),
+      },
+    },
+  },
   hero: { mainBella: siteAsset('assets/bella/hero.png'), thumbProcedure1: siteAsset('assets/bella/gallery/studio-behind-scenes-01.webp'), thumbProcedure2: siteAsset('assets/bella/lashes.jpg') },
   client: {
     browTools: siteAsset('assets/bella/client-2026-10/brow-tools.webp'),

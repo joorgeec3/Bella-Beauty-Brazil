@@ -51,7 +51,7 @@ export const StoreView: React.FC<StoreViewProps> = ({ language }) => {
               <ArrowRight className="w-4 h-4" aria-hidden="true" />
             </a>
           </div>
-          <figure className="w-full max-w-[305px] sm:max-w-[360px] lg:max-w-[390px] justify-self-center">
+          <figure className="w-full max-w-[330px] sm:max-w-[370px] lg:max-w-[420px] justify-self-center">
             <div className="relative rounded-[28px] overflow-hidden p-1.5 bg-gradient-to-br from-[#e6b3c3] via-[#8f5968] to-[#442a34] shadow-[0_25px_65px_rgba(0,0,0,0.45)]">
               <div className="rounded-[23px] overflow-hidden bg-[#281d23] aspect-[9/16]">
                 <video
@@ -81,7 +81,30 @@ export const StoreView: React.FC<StoreViewProps> = ({ language }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {COURSES.map((course) => (
             <article key={course.id} className="bg-white rounded-2xl overflow-hidden shadow-lg border border-[#e8d6d5] flex flex-col">
-              <img src={course.image} alt={course.title} loading="lazy" className="w-full aspect-[4/3] object-contain bg-[#f6eded]" />
+              {/* Training footage belongs in the course cover, never between the details and price. */}
+              <figure className="relative h-72 sm:h-80 overflow-hidden bg-[#281d23] border-b border-[#e8d6d5]">
+                <img
+                  src={siteImages.training.courseCovers[course.id as keyof typeof siteImages.training.courseCovers]?.poster || course.image}
+                  alt=""
+                  aria-hidden="true"
+                  loading="lazy"
+                  className="absolute inset-0 h-full w-full object-cover blur-xl scale-110 opacity-30"
+                />
+                {siteImages.training.courseCovers[course.id as keyof typeof siteImages.training.courseCovers] ? (
+                  <video
+                    key={course.id}
+                    src={siteImages.training.courseCovers[course.id as keyof typeof siteImages.training.courseCovers].video}
+                    poster={siteImages.training.courseCovers[course.id as keyof typeof siteImages.training.courseCovers].poster}
+                    aria-label={`Bella Beauty Brazil training footage associated with ${course.title}`}
+                    autoPlay muted loop playsInline
+                    preload="metadata"
+                    controls
+                    className="relative z-10 h-full w-full object-contain"
+                  />
+                ) : (
+                  <img src={course.image} alt={course.title} loading="lazy" className="relative z-10 h-full w-full object-contain" />
+                )}
+              </figure>
               <div className="p-6 flex flex-col grow">
                 <span className="font-montserrat text-[11px] font-bold tracking-widest text-[#9a5967] uppercase">{course.duration}</span>
                 <h3 className="font-raleway text-xl font-bold text-[#5b3239] mt-2">{course.title}</h3>
