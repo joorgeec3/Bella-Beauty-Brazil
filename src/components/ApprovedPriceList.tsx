@@ -46,13 +46,17 @@ const menuGroupCover: Record<string,string> = {
   'men-waxing': 'waxing',
   smile: 'teeth-whitening',
 };
-const infillCover: Record<string,string> = {
-  'Classic Lash Infill – 2 weeks': 'classic-eyelashes',
-  'Classic Lash Infill – 3 weeks': 'classic-eyelashes',
-  'Hybrid Lash Infill – 2 weeks': 'hybrid-eyelashes',
-  'Hybrid Lash Infill – 3 weeks': 'hybrid-eyelashes',
+// Category header uses another photograph from its category, not its first card.
+const groupCoverFor = (groupId: string) => {
+  // No extra verified photo for waxing; general skin images already appear below.
+  if (groupId === 'skin' || groupId === 'women-waxing' || groupId === 'men-waxing') return undefined;
+  const serviceId = menuGroupCover[groupId];
+  const gallery = serviceId ? getServiceGallery(serviceId) : undefined;
+  const photos = gallery?.photos ?? [];
+  return photos.length > 1
+    ? { src: photos[photos.length - 1].src, specific: !gallery?.illustrative }
+    : undefined;
 };
-const groupCoverFor = (groupId:string) => groupId === 'skin' ? {src:categoryPhotosFor('skin-treatments-geral')[0].src,specific:false} : serviceCoverFor(menuGroupCover[groupId]);
 const detailLabels = {
   en: { details: 'See photos & details', photos: 'real photos', related: 'related photos' },
   pt: { details: 'Ver fotos e detalhes', photos: 'fotos reais', related: 'fotos relacionadas' },
@@ -97,7 +101,6 @@ export const ApprovedPriceList: React.FC<{language: Language}> = ({ language }) 
                       <img src={serviceCoverFor(approvedServiceRoutes[item.name])?.src} alt={serviceCoverFor(approvedServiceRoutes[item.name])?.specific ? `${item.name} at Bella Beauty Brazil` : `${item.name} — representative beauty category photo`}
                         loading="lazy" className="h-full w-full object-contain" />
                     </a>}
-                    {!approvedServiceRoutes[item.name] && infillCover[item.name] && <img src={serviceCoverFor(infillCover[item.name])?.src} loading="lazy" alt={`${item.name} — related extensions photo, not a result from the infill`} className="w-[76px] h-[88px] sm:w-24 sm:h-24 shrink-0 rounded-xl border border-[#ead8db] bg-[#f7eef0] object-contain" />}
                     <div className="min-w-0 flex-1">
                     <div className="flex justify-between items-baseline gap-3">
                       <h3 className="font-montserrat font-semibold text-sm text-[#5b3239] leading-snug">{item.name}</h3>

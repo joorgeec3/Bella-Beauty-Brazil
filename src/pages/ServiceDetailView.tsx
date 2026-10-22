@@ -120,7 +120,7 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
   const related = group.related.map((id) => SERVICES.find((item) => item.id === id)).filter(Boolean) as typeof SERVICES;
   const isPriceConfirmed = typeof service.price === 'number';
   const guide = SERVICE_GUIDES[base.id]?.[language];
-  const hasGalleryPhotos = gallery.photos.length > 0;
+  const hasGalleryPhotos = gallery.photos.some(photo => photo.src !== cover?.src);
 
 
   return (
@@ -164,7 +164,7 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
         </div>
       </section>
 
-      <ServicePhotoGallery serviceId={base.id} language={language} />
+      <ServicePhotoGallery serviceId={base.id} language={language} excludeSrc={cover?.src} />
       <ServiceVideoGallery serviceId={base.id} language={language} />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20">

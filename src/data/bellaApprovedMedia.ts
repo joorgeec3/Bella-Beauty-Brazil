@@ -40,9 +40,14 @@ const exactFolderByService: Record<string, keyof typeof PHOTO_FOLDERS> = {
   'lash-lift':'lash-lift',
   'teeth-whitening':'teeth-whitening',
 };
-const lashFamily = new Set(['classic-eyelashes','hybrid-eyelashes','wet-look-lashes']);
-// Source photos are labelled only "Lash Extensions"; the exact classic/hybrid/wet-look
-// technique cannot be determined from the folder, so disclose the distinction.
+// The source folder only says "Lash Extensions". Its three photographs cannot
+// verify a particular Classic, Hybrid, or Wet Look technique. Reserve a distinct
+// representative photo per page, instead of repeating all three on every page.
+const lashIllustrationByService: Record<string,TreatmentPhoto[]> = {
+  'classic-eyelashes': [PHOTO_FOLDERS['lash-extensions'][0]],
+  'hybrid-eyelashes': [PHOTO_FOLDERS['lash-extensions'][1]],
+  'wet-look-lashes': [PHOTO_FOLDERS['lash-extensions'][2]],
+};
 const supplementary: Record<string,TreatmentPhoto[]> = {
   waxing: [{
     src:siteImages.client.waxingTreatment,
@@ -53,7 +58,7 @@ const supplementary: Record<string,TreatmentPhoto[]> = {
 export const serviceGalleryFor = (serviceId: string): TreatmentGallery => {
   const folder = exactFolderByService[serviceId];
   if(folder)return {photos:PHOTO_FOLDERS[folder],illustrative:serviceId==='shadow-hybrid'};
-  if(lashFamily.has(serviceId))return {photos:PHOTO_FOLDERS['lash-extensions'],illustrative:true};
+  if(lashIllustrationByService[serviceId])return {photos:lashIllustrationByService[serviceId],illustrative:true};
   return {photos:supplementary[serviceId]||[],illustrative:false};
 };
 export const servicePhotosFor=(serviceId:string):TreatmentPhoto[] => serviceGalleryFor(serviceId).photos;

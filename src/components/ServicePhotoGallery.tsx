@@ -8,8 +8,10 @@ import { servicePhotosFor, serviceGalleryFor } from '../data/bellaApprovedMedia'
 export const getServicePhotos = servicePhotosFor;
 export const getServiceGallery = serviceGalleryFor;
 
-export const ServicePhotoGallery: React.FC<{ serviceId: string; language: Language }> = ({ serviceId, language }) => {
-  const { photos, illustrative } = getServiceGallery(serviceId);
+export const ServicePhotoGallery: React.FC<{ serviceId: string; language: Language; excludeSrc?: string }> = ({ serviceId, language, excludeSrc }) => {
+  const { photos: allPhotos, illustrative } = getServiceGallery(serviceId);
+  // Hide the main cover photograph from the gallery immediately below it.
+  const photos = allPhotos.filter(photo => photo.src !== excludeSrc);
   const [index, setIndex] = useState(0);
   // Switching between related services should always open at the first real photo.
   // The router reuses this component, so local state otherwise leaks across treatments.

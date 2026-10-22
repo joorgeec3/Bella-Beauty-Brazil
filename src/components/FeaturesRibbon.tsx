@@ -11,19 +11,19 @@ interface FeatureCardData { image?: string; video?: string; title: string; text:
 export const FeaturesRibbon: React.FC<FeaturesRibbonProps> = ({ language }) => {
   const cards: FeatureCardData[] = [
     {
-      image: getServicePhotos('shadow-brows')[0]?.src,
+      image: getServicePhotos('shadow-brows')[1]?.src,
       title: 'Cosmetic Tattooing',
       text: language === 'en' ? 'Nano Strokes • Shadow Brows • Lip Blush • Cosmetic Tattoo Removal.' : language === 'pt' ? 'Nano Strokes • Shadow Brows • Lip Blush • Remoção de Tatuagem Cosmética.' : 'Nano Strokes • Shadow Brows • Lip Blush • Eliminación de Tatuaje Cosmético.',
       footer: language === 'en' ? 'Cosmetic tattoo treatments' : language === 'pt' ? 'Tatuagem cosmética' : 'Tatuaje cosmético',
     },
     {
-      image: getServicePhotos('brow-sculpt')[0]?.src,
+      image: getServicePhotos('brow-sculpt')[1]?.src,
       title: 'Brow Artistry',
       text: language === 'en' ? 'Brow Sculpting • Tinting • Brow Dye • Brow Lamination.' : language === 'pt' ? 'Design de sobrancelhas • Tintura • Brow Dye • Laminação.' : 'Diseño de cejas • Tinte • Brow Dye • Laminado.',
       footer: language === 'en' ? 'Personalised brow care' : language === 'pt' ? 'Cuidado das sobrancelhas' : 'Cuidado de cejas',
     },
     {
-      image: getServicePhotos('lash-lift')[0]?.src,
+      image: getServicePhotos('lash-lift')[1]?.src,
       title: 'Lash Treatments',
       text: language === 'en' ? 'Lash Lift & Tint • Lash Extensions.' : language === 'pt' ? 'Lash Lift & Tint • Extensões de cílios.' : 'Lash Lift & Tint • Extensiones de pestañas.',
       footer: language === 'en' ? 'Natural lashes & extensions' : language === 'pt' ? 'Cílios naturais e extensões' : 'Pestañas naturales y extensiones',
@@ -35,7 +35,7 @@ export const FeaturesRibbon: React.FC<FeaturesRibbonProps> = ({ language }) => {
       footer: language === 'en' ? 'Facial skin care' : language === 'pt' ? 'Cuidados faciais' : 'Cuidado facial',
     },
     {
-      image: getServicePhotos('teeth-whitening')[0]?.src,
+      image: getServicePhotos('teeth-whitening')[1]?.src,
       title: 'Teeth Whitening',
       text: language === 'en' ? 'A brighter smile with professional teeth whitening.' : language === 'pt' ? 'Um sorriso mais iluminado com clareamento dental profissional.' : 'Una sonrisa más luminosa con blanqueamiento dental profesional.',
       footer: language === 'en' ? 'Professional teeth whitening' : language === 'pt' ? 'Clareamento dental' : 'Blanqueamiento dental',
