@@ -34,6 +34,24 @@ const approvedServiceRoutes: Record<string,string> = {
   "Brazilian": "waxing",
   "Teeth Whitening": "teeth-whitening"
 };
+// A single illustrative cover per category prevents dozens of identical images
+// in the waxing price lists, while giving every category a clear visual reference.
+const menuGroupCover: Record<string,string> = {
+  cosmetic: 'nano-strokes',
+  brows: 'brow-sculpt',
+  skin: 'facial-spa',
+  lashes: 'lash-lift',
+  'women-waxing': 'waxing',
+  'men-waxing': 'waxing',
+  smile: 'teeth-whitening',
+};
+const infillCover: Record<string,string> = {
+  'Classic Lash Infill – 2 weeks': 'classic-eyelashes',
+  'Classic Lash Infill – 3 weeks': 'classic-eyelashes',
+  'Hybrid Lash Infill – 2 weeks': 'hybrid-eyelashes',
+  'Hybrid Lash Infill – 3 weeks': 'hybrid-eyelashes',
+};
+const groupCoverFor = (groupId:string) => serviceCoverFor(menuGroupCover[groupId]);
 const detailLabels = {
   en: { details: 'See photos & details', photos: 'real photos', related: 'related photos' },
   pt: { details: 'Ver fotos e detalhes', photos: 'fotos reais', related: 'fotos relacionadas' },
@@ -58,8 +76,9 @@ export const ApprovedPriceList: React.FC<{language: Language}> = ({ language }) 
       <div className="grid gap-3 sm:gap-4">
         {APPROVED_SERVICE_CATALOG.map((group) => (
           <details key={group.id} id={`prices-${group.id}`} open={group.id === 'skin'} className="group overflow-hidden rounded-2xl border border-[#e8d6d5] bg-white shadow-sm" >
-            <summary className="cursor-pointer flex items-center justify-between gap-4 px-5 sm:px-7 py-5 sm:py-6 text-[#5b3239] focus-visible:outline-2 focus-visible:outline-[#9a5967] list-none [&::-webkit-details-marker]:hidden">
-              <span className="flex flex-col gap-1 text-left">
+            <summary className="cursor-pointer flex items-center justify-between gap-3 sm:gap-4 px-5 sm:px-7 py-5 sm:py-6 text-[#5b3239] focus-visible:outline-2 focus-visible:outline-[#9a5967] list-none [&::-webkit-details-marker]:hidden">
+              {groupCoverFor(group.id) && <img src={groupCoverFor(group.id)?.src} loading="lazy" alt="" aria-hidden="true" className="w-14 h-14 sm:w-16 sm:h-16 shrink-0 rounded-xl border border-[#ead8db] bg-[#f7eef0] object-contain" />}
+              <span className="flex flex-col gap-1 text-left min-w-0 flex-1">
                 <span className="font-raleway text-lg sm:text-2xl font-semibold">{group.title}</span>
                 <span className="text-xs text-[#886b74] font-montserrat">{group.items.length} {labels.services}</span>
               </span>
@@ -77,6 +96,7 @@ export const ApprovedPriceList: React.FC<{language: Language}> = ({ language }) 
                       <img src={serviceCoverFor(approvedServiceRoutes[item.name])?.src} alt={serviceCoverFor(approvedServiceRoutes[item.name])?.specific ? `${item.name} at Bella Beauty Brazil` : `${item.name} — representative beauty category photo`}
                         loading="lazy" className="h-full w-full object-contain" />
                     </a>}
+                    {!approvedServiceRoutes[item.name] && infillCover[item.name] && <img src={serviceCoverFor(infillCover[item.name])?.src} loading="lazy" alt={`${item.name} — related extensions photo, not a result from the infill`} className="w-[76px] h-[88px] sm:w-24 sm:h-24 shrink-0 rounded-xl border border-[#ead8db] bg-[#f7eef0] object-contain" />}
                     <div className="min-w-0 flex-1">
                     <div className="flex justify-between items-baseline gap-3">
                       <h3 className="font-montserrat font-semibold text-sm text-[#5b3239] leading-snug">{item.name}</h3>
