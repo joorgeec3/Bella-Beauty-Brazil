@@ -11,12 +11,27 @@ const approvedVideoClips: Record<string, string[]> = {
   'shadow-brows': ['shadow-brows/01.mp4','shadow-brows/02.mp4'],
   'lip-blush': ['lip-blush/01.mp4'],
   'brow-sculpt': ['brow-sculpt/01.mp4'],
+  // Formerly shown as a generic lip-treatment video; RAR names it Lip Hydration.
+  'lip-bliss-hydration': ['lip-treatments-geral/01.mp4'],
 };
-const videoCandidates = (serviceId: string): VideoItem[] =>
-  (approvedVideoClips[serviceId] ?? []).map((relative,index)=>({
+// Additional, previously uploaded clips from strictly named folders in the RAR.
+ // The misleading "dermaplaning-video-01" is intentionally excluded because
+ // its Git blob SHA matches the Lip Hydration clip, not Dermaplaning.
+const correctlyLabelledClips: Record<string,string[]> = {
+  'dreamy-brows': ['dreamy-brows/dreamy-brows-video-01.mp4'],
+  'facial-spa': ['facial-spa/facial-spa-video-01.mp4', 'facial-spa/facial-spa-video-02.mp4'],
+  'teeth-whitening': ['teeth-whitening/teeth-whitening-video-01.mp4'],
+};
+const videoCandidates = (serviceId: string): VideoItem[] => [
+  ...(approvedVideoClips[serviceId] ?? []).map((relative,index)=>({
     src: `${import.meta.env.BASE_URL}assets/bella/media-alinhada-2026-10/${relative}`,
     title: `${serviceId} — video ${index+1}`,
-  }));
+  })),
+  ...(correctlyLabelledClips[serviceId] ?? []).map((relative,index)=>({
+    src: `${import.meta.env.BASE_URL}assets/bella/client-2026-10-v2/${relative}`,
+    title: `${serviceId} — recorded treatment ${index+1}`,
+  })),
+];
 
 const labels = {
   en: {

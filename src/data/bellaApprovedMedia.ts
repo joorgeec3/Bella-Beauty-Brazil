@@ -1,7 +1,10 @@
 import { siteImages } from './siteImages';
 
-// Approved source: Site Bella.zip, preserving each original folder exactly.
-// Generic folders never become evidence of a named procedure.
+// Sources: Site Bella.zip and the client's later "fotos site bella.rar".
+ // RAR review (2026-10-22) explicitly identifies the previously generic lip
+ // photos as Lip Hydration and the facial folder as Facial/Dermaplaning.
+ // Keep all previously verified, correctly assigned treatment collections intact.
+ // Do not copy assets, fabricate results, or reuse a photo in multiple services.
 export type TreatmentPhoto = { src: string; alt: string; caption: string };
 export type TreatmentGallery = { photos: TreatmentPhoto[]; illustrative: boolean };
 const root = `${import.meta.env.BASE_URL}assets/bella/media-alinhada-2026-10`;
@@ -48,6 +51,22 @@ const lashIllustrationByService: Record<string,TreatmentPhoto[]> = {
   'hybrid-eyelashes': [PHOTO_FOLDERS['lash-extensions'][1]],
   'wet-look-lashes': [PHOTO_FOLDERS['lash-extensions'][2]],
 };
+const newerFolderLabels: Record<string,TreatmentPhoto[]> = {
+  // The new RAR explicitly names "Lip Hydration treatment", matching these
+  // existing photos from the old generic "lip tretments" folder (no reuploads).
+  'lip-bliss-hydration': PHOTO_FOLDERS['lip-treatments-geral'],
+  // The original general skin folder contains two verified dermaplaning
+  // procedure close-ups and one separate facial-treatment collage.
+  'dermaplaning': PHOTO_FOLDERS['skin-treatments-geral'].slice(1, 3),
+  'facial-spa': [PHOTO_FOLDERS['skin-treatments-geral'][0]],
+  // This real screenshot is from the uniquely labelled DREAM BROW massage video,
+  // not a generic Brow Sculpt photo and not a cosmetic tattoo result.
+  'dreamy-brows': [{
+    src: `${import.meta.env.BASE_URL}assets/bella/media-rar-review-2026-10/dreamy-brows-cover.webp`,
+    alt: 'Dreamy Brows head and face massage — still from the client-supplied Dream Brow video',
+    caption: 'Dreamy Brows · Treatment demonstration',
+  }],
+};
 const supplementary: Record<string,TreatmentPhoto[]> = {
   waxing: [{
     src:siteImages.client.waxingTreatment,
@@ -59,6 +78,7 @@ export const serviceGalleryFor = (serviceId: string): TreatmentGallery => {
   const folder = exactFolderByService[serviceId];
   if(folder)return {photos:PHOTO_FOLDERS[folder],illustrative:serviceId==='shadow-hybrid'};
   if(lashIllustrationByService[serviceId])return {photos:lashIllustrationByService[serviceId],illustrative:true};
+  if(newerFolderLabels[serviceId])return {photos:newerFolderLabels[serviceId],illustrative:false};
   return {photos:supplementary[serviceId]||[],illustrative:false};
 };
 export const servicePhotosFor=(serviceId:string):TreatmentPhoto[] => serviceGalleryFor(serviceId).photos;
