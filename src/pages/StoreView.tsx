@@ -31,41 +31,21 @@ const TRAINING_COPY: Record<Language, { eyebrow: string; heading: string; descri
   },
 };
 
-// Use only existing approved assets. Keep videos with their respective course,
-// and do not label general class footage as footage of an unverified technique.
-// Course media are shown in their respective programmes. The original
-// "Brow Lamination & Lash Lift" folder contains a *joint class*; titles below
-// describe training moments without claiming an unverified treatment result.
-const jointClassClip = (n: number) =>
-  siteAsset(`assets/bella/client-2026-10-v2/brow-lamination/brow-lamination-video-${String(n).padStart(2, '0')}.mp4`);
-const nanoClip = (n: number) =>
-  siteAsset(`assets/bella/media-alinhada-2026-10/nano-strokes/${String(n).padStart(2, '0')}.mp4`);
+// Training archive audit (October 2026):
+// - Nano Strokes was supplied separately.
+// - Lash Lift and Brow Lamination were supplied as ONE joint-course folder.
+// - The complete nine-video originals are archived separately. Only videos
+//   already available in the published project are linked here.
+// - A source video is referenced in at most one location on the page.
+const nanoStrokesClips = [1, 2, 3].map(n => ({
+  src: siteAsset(`assets/bella/media-alinhada-2026-10/nano-strokes/${String(n).padStart(2, '0')}.mp4`),
+  key: `nano-${n}`,
+}));
+const combinedCourseClips = [1, 2, 3, 4, 5].map(n => ({
+  src: siteAsset(`assets/bella/client-2026-10-v2/brow-lamination/brow-lamination-video-${String(n).padStart(2, '0')}.mp4`),
+  key: `combined-${n}`,
+}));
 
-const courseClips: Record<string, {src: string; poster: string; en: string; pt: string; es: string }[]> = {
-  'nano-strokes-course': [1,2,3].map(n => ({
-    src: nanoClip(n),
-    poster: siteImages.training.coursePhotos['nano-strokes-course'],
-    en: `Nano Strokes technique — demonstration ${n}`,
-    pt: `Técnica Nano Strokes — demonstração ${n}`,
-    es: `Técnica Nano Strokes — demostración ${n}`,
-  })),
-  'lash-lift-course': [
-    { src: siteImages.training.videos[1].src, poster: siteImages.training.coursePhotos['lash-lift-course'],
-      en: 'Lash training practice', pt: 'Prática de formação em cílios', es: 'Práctica de formación en pestañas' },
-    ...[4,5].map(n => ({
-      src: jointClassClip(n), poster: siteImages.training.coursePhotos['lash-lift-course'],
-      en: `Lash Lift & Brow Lamination joint class — practical session ${n - 3}`,
-      pt: `Formação conjunta Lash Lift e Brow Lamination — prática ${n - 3}`,
-      es: `Formación conjunta Lash Lift y Brow Lamination — práctica ${n - 3}`,
-    })),
-  ],
-  'brow-lamination-course': [1,2,3].map(n => ({
-    src: jointClassClip(n), poster: siteImages.training.coursePhotos['brow-lamination-course'],
-    en: `Lash Lift & Brow Lamination joint class — training moment ${n}`,
-    pt: `Formação conjunta Lash Lift e Brow Lamination — momento ${n}`,
-    es: `Formación conjunta Lash Lift y Brow Lamination — momento ${n}`,
-  })),
-};
 
 export const StoreView: React.FC<StoreViewProps> = ({ language }) => {
   const t = TRAINING_COPY[language];
@@ -118,21 +98,29 @@ export const StoreView: React.FC<StoreViewProps> = ({ language }) => {
                   loading="lazy" decoding="async" className="w-full h-full object-contain object-center"
                 />
               </figure>
-              {courseClips[course.id] && (
+              {course.id === 'nano-strokes-course' && (
                 <details className="border-b border-[#e8d6d5] bg-[#fff8f9]">
                   <summary className="cursor-pointer px-6 py-3 font-montserrat text-xs font-bold uppercase tracking-wider text-[#5b3239] hover:bg-[#f3e1e6]">
-                    {language === 'en' ? 'Photos & course videos' : language === 'pt' ? 'Fotos e vídeos do curso' : 'Fotos y vídeos del curso'}
+                    {language === 'en' ? 'Nano Strokes training videos (3)' : language === 'pt' ? 'Vídeos do curso Nano Strokes (3)' : 'Vídeos del curso Nano Strokes (3)'}
                   </summary>
-                  <div className="px-4 pb-4 space-y-3">
-                    {courseClips[course.id].map(clip => (
-                      <figure key={clip.src} className="overflow-hidden rounded-xl border border-[#e8d6d5] bg-white">
-                        <video src={clip.src} poster={clip.poster} controls playsInline preload="none"
-                          aria-label={clip[language]} className="w-full max-h-[350px] object-contain bg-[#281d23]" />
-                        <figcaption className="px-3 py-2 font-montserrat text-xs text-[#665760]">{clip[language]}</figcaption>
+                  <div className="px-4 pb-4 grid gap-4">
+                    {nanoStrokesClips.map((clip, index) => (
+                      <figure key={clip.key} className="overflow-hidden rounded-xl border border-[#e8d6d5] bg-white">
+                        <video src={clip.src} controls playsInline preload="none"
+                          aria-label={`Nano Strokes training video ${index + 1}`}
+                          className="w-full max-h-[360px] object-contain bg-[#281d23]" />
+                        <figcaption className="px-3 py-2 font-montserrat text-xs text-[#665760]">
+                          {language === 'en' ? `Nano Strokes — class video ${index + 1}` : language === 'pt' ? `Nano Strokes — aula ${index + 1}` : `Nano Strokes — clase ${index + 1}`}
+                        </figcaption>
                       </figure>
                     ))}
                   </div>
                 </details>
+              )}
+              {(course.id === 'lash-lift-course' || course.id === 'brow-lamination-course') && (
+                <a href="#combined-lash-brow-course-media" className="block border-b border-[#e8d6d5] bg-[#fff8f9] hover:bg-[#f3e1e6] px-6 py-3 font-montserrat text-xs font-bold uppercase tracking-wider text-[#5b3239]">
+                  {language === 'en' ? 'See shared Lash Lift & Brow Lamination class videos ↓' : language === 'pt' ? 'Ver vídeos da formação conjunta ↓' : 'Ver vídeos de la formación conjunta ↓'}
+                </a>
               )}
               <div className="p-6 flex flex-col grow">
                 <span className="font-montserrat text-[11px] font-bold tracking-widest text-[#9a5967] uppercase">{course.duration}</span>
@@ -152,6 +140,40 @@ export const StoreView: React.FC<StoreViewProps> = ({ language }) => {
             </article>
           ))}
         </div>
+
+        <section id="combined-lash-brow-course-media" className="mt-12 sm:mt-16 rounded-[28px] border border-[#e8d6d5] bg-[#fff9fa] p-5 sm:p-8" aria-labelledby="joint-training-heading">
+          <div className="max-w-3xl mx-auto text-center">
+            <p className="font-montserrat text-xs font-bold uppercase tracking-[0.18em] text-[#9a5967]">
+              {language === 'en' ? 'One shared collection — no repeated videos' : language === 'pt' ? 'Uma coleção conjunta — sem vídeos repetidos' : 'Una colección conjunta — sin vídeos repetidos'}
+            </p>
+            <h2 id="joint-training-heading" className="font-raleway text-2xl sm:text-3xl text-[#5b3239] mt-2">
+              Lash Lift &amp; Brow Lamination
+            </h2>
+            <p className="font-montserrat text-sm leading-relaxed text-[#675960] mt-3">
+              {language === 'en'
+                ? 'These recordings were supplied together in one training folder. They are presented once here, with no duplicate video in the individual course cards.'
+                : language === 'pt'
+                  ? 'Estes vídeos foram enviados na mesma pasta de formação. São apresentados apenas aqui, sem repetir nos cartões dos cursos.'
+                  : 'Estos vídeos llegaron juntos en la misma carpeta y aparecen una sola vez, sin duplicados en los cursos.'}
+            </p>
+          </div>
+          <details className="mt-7">
+            <summary className="cursor-pointer rounded-full bg-[#5b3239] hover:bg-[#7a4753] text-white text-xs uppercase tracking-wider font-bold py-3 px-6 w-fit mx-auto list-none text-center">
+              {language === 'en' ? 'View 5 class videos' : language === 'pt' ? 'Ver 5 vídeos da formação' : 'Ver 5 vídeos de la formación'}
+            </summary>
+            <div className="mt-7 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {combinedCourseClips.map((clip, index) => (
+                <figure key={clip.key} className="bg-white rounded-2xl overflow-hidden border border-[#e8d6d5]">
+                  <video src={clip.src} controls playsInline preload="none" className="aspect-[3/4] w-full object-contain bg-[#281d23]"
+                    aria-label={`Lash Lift and Brow Lamination combined class — video ${index + 1}`} />
+                  <figcaption className="px-4 py-3 font-montserrat text-xs text-[#5b3239]">
+                    {language === 'en' ? `Joint class — video ${index + 1}` : language === 'pt' ? `Aula conjunta — vídeo ${index + 1}` : `Clase conjunta — vídeo ${index + 1}`}
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+          </details>
+        </section>
 
       </section>
     </main>
