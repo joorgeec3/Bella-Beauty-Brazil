@@ -369,7 +369,7 @@ export const newWaxingGallery: BellaGalleryItem[] = [
   { id:'waxing-underarms-2026', image:'/assets/bella/waxing-2026-10/underarms.webp', category:'Waxing', kind:'editorial', alt:'Illustrative photograph of waxing on an underarm', serviceName:'Underarm Waxing' },
   { id:'waxing-legs-2026', image:'/assets/bella/waxing-2026-10/legs.webp', category:'Waxing', kind:'editorial', alt:'Illustrative photograph of a waxing strip applied to a leg', serviceName:'Leg Waxing' },
   { id:'waxing-face-2026', image:'/assets/bella/waxing-2026-10/face.webp', category:'Waxing', kind:'editorial', alt:'Illustrative photograph of warm wax being applied to the face', serviceName:'Facial Waxing' },
-].map(withSiteBase);
+].map(item => withSiteBase(item as BellaGalleryItem));
 
 export const homeGallery = uniqueImages([
   withSiteBase({

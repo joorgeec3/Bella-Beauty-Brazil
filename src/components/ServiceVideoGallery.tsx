@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Film, PlayCircle } from 'lucide-react';
 import type { Language } from '../data/siteData';
-import { serviceVideos } from '../data/galleryData';
+import { galleryVideos } from '../data/galleryData';
 
 type VideoItem = { src: string; title: string };
 
@@ -34,7 +34,7 @@ const videoCandidates = (serviceId: string): VideoItem[] => [
     src: `${import.meta.env.BASE_URL}assets/bella/media-alinhada-2026-10/${relative}`,
     title: `${serviceId} — video ${index+1}`,
   })),
-  ...serviceVideos
+  ...galleryVideos
     .filter(clip => clip.id !== 'gallery-video-dermaplaning-1' &&
       serviceVideoFolderToRoute[clip.id.replace(/^gallery-video-/, '').replace(/-\d+$/, '')] === serviceId)
     .map(clip => ({ src: clip.src, title: clip.serviceName })),
