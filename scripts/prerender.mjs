@@ -1,6 +1,7 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { SERVICE_GUIDES } from '../src/data/serviceGuides.ts';
+import { SERVICE_GROUPS } from '../src/data/serviceGroups.ts';
 
 const services = {
   'shadow-brows': { title: 'Shadow Brows', description: 'Shadow Brows creates a soft, shaded effect, similar to the look of freshly dyed brows. The shape, colour and intensity are tailored to your features and preferences, from subtle definition to a more defined finish.', image: '/assets/bella/client-2026-10/brow-tools.webp', price: '630' },
@@ -112,6 +113,21 @@ for (const [slug, service] of Object.entries(services)) {
   await mkdir(dirname(target), { recursive: true });
   await writeFile(target, html);
 }
+// Category landing pages keep every treatment's media and booking one click
+// from the homepage while retaining the existing individual SEO deep links.
+for (const group of SERVICE_GROUPS) {
+  const url = `${siteOrigin}/services/categories/${group.id}`;
+  const title = `${group.title.en} in Greenslopes, Brisbane | Bella Beauty Brazil`;
+  const description = `${group.lead.en} Browse treatment descriptions, photos, videos, prices and appointments in one place.`;
+  const list = group.serviceIds
+    .filter(id => services[id])
+    .map(id => `<li><a href="${siteOrigin}/services/${id}">${escapeHtml(services[id].title)}</a> — ${escapeHtml(services[id].description)}</li>`).join('');
+  const body = `<main><article><h1>${escapeHtml(group.title.en)}</h1><p>${escapeHtml(description)}</p><ul>${list}</ul><p><a href="https://book.gettimely.com/bellabrazil/book/embed?client-login=true">Book now</a></p></article></main>`;
+  const html = renderPage({ title, description, canonicalUrl: url, body });
+  const target = join(buildDir, 'services', 'categories', group.id, 'index.html');
+  await mkdir(dirname(target), { recursive: true });
+  await writeFile(target, html);
+}
 // Keep all public entry pages crawlable as well; React takes over after hydration.
 const simplePages = {
   about: ['Meet Livia Rego', 'Discover Bella Beauty Brazil, a personalised beauty studio in Greenslopes, Brisbane.'],
@@ -122,7 +138,7 @@ const simplePages = {
 };
 for (const [slug, [title, description]] of Object.entries(simplePages)) {
   const canonicalUrl = `${siteOrigin}/${slug}`;
-  const catalogueLinks = slug === 'services' ? `<h2>Our treatments</h2><ul>${Object.entries(services).map(([id, service]) => `<li><a href="${siteOrigin}/services/${id}">${escapeHtml(service.title)}</a></li>`).join('')}</ul>` : '';
+  const catalogueLinks = slug === 'services' ? `<h2>Our treatment categories</h2><ul>${SERVICE_GROUPS.map(group => `<li><a href="${siteOrigin}/services/categories/${group.id}">${escapeHtml(group.title.en)}</a></li>`).join('')}</ul>` : '';
   const body = `<main><article><h1>${escapeHtml(title)}</h1><p>${escapeHtml(description)}</p>${catalogueLinks}<a href="https://book.gettimely.com/bellabrazil/book/embed?client-login=true">Book with Bella Beauty Brazil</a></article></main>`;
   const html = renderPage({ title: `${title} | Bella Beauty Brazil`, description, canonicalUrl, body });
   // Use directories for informational routes on every host. /services already exists
@@ -133,10 +149,10 @@ for (const [slug, [title, description]] of Object.entries(simplePages)) {
   await writeFile(target, html);
 }
 // The sitemap is generated from the actual routes so no service can be accidentally omitted.
-const siteRoutes = ['/', ...Object.keys(simplePages).map((slug) => `/${slug}`), ...Object.keys(services).map((slug) => `/services/${slug}`)];
+const siteRoutes = ['/', ...Object.keys(simplePages).map((slug) => `/${slug}`), ...SERVICE_GROUPS.map(group => `/services/categories/${group.id}`), ...Object.keys(services).map((slug) => `/services/${slug}`)];
 const sitemapXml = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
   siteRoutes.map((route) => `  <url><loc>${siteOrigin}${route}</loc></url>`).join('\n') +
   '\n</urlset>\n';
 await writeFile(join(buildDir, 'sitemap.xml'), sitemapXml);
 await writeFile(join(buildDir, 'robots.txt'), `User-agent: *\nAllow: /\nSitemap: ${siteOrigin}/sitemap.xml\n`);
-console.log(`Prerendered ${Object.keys(services).length} service routes, ${Object.keys(simplePages).length} informational routes and ${siteRoutes.length} sitemap URLs.`);
+console.log(`Prerendered ${Object.keys(services).length} service routes, ${SERVICE_GROUPS.length} category routes, ${Object.keys(simplePages).length} informational routes and ${siteRoutes.length} sitemap URLs.`);

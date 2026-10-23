@@ -26,12 +26,12 @@ export const ServicePhotoGallery: React.FC<{ serviceId: string; language: Langua
   const move = (direction: number) => setIndex((value) => (value + direction + photos.length) % photos.length);
   const browEditorial = serviceId === 'shadow-hybrid';
   return (
-    <section id="service-photos" aria-labelledby="service-photos-heading" className="bg-[#fffaf9] px-4 sm:px-6 lg:px-8 py-10 sm:py-14 border-b border-[#e8d6d5]">
+    <section id={`service-photos-${serviceId}`} aria-labelledby={`service-photos-heading-${serviceId}`} className="bg-[#fffaf9] px-4 sm:px-6 lg:px-8 py-10 sm:py-14 border-b border-[#e8d6d5]">
       <div className="max-w-6xl mx-auto">
         <div className="flex flex-wrap items-end justify-between gap-3 mb-6">
           <div>
             <div className="flex items-center gap-2 text-[#9a5967] mb-2"><Images className="w-4 h-4" /><span className="text-[11px] uppercase tracking-widest font-bold">Bella Beauty Brazil</span></div>
-            <h2 id="service-photos-heading" className="font-raleway text-2xl sm:text-3xl font-semibold text-[#5b3239]">{illustrative ? labels.illustrativeHeading : labels.heading}</h2>
+            <h2 id={`service-photos-heading-${serviceId}`} className="font-raleway text-2xl sm:text-3xl font-semibold text-[#5b3239]">{illustrative ? labels.illustrativeHeading : labels.heading}</h2>
             <p className="font-montserrat text-sm text-[#675960] mt-2">{illustrative ? labels.illustrativeLead : labels.lead}</p>
           </div>
           <span className="font-montserrat text-sm tabular-nums text-[#75525c]">{index + 1} / {photos.length}</span>

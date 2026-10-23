@@ -4,11 +4,12 @@ import { Language } from '../data/siteData';
 import { siteImages } from '../data/siteImages';
 import { getServicePhotos } from './ServicePhotoGallery';
 import { categoryPhotosFor } from '../data/bellaApprovedMedia';
+import { SERVICE_GROUPS, ServiceGroupId } from '../data/serviceGroups';
 
-interface FeaturesRibbonProps { language: Language; }
+interface FeaturesRibbonProps { language: Language; onOpenCategory: (groupId: ServiceGroupId) => void; }
 interface FeatureCardData { image?: string; video?: string; title: string; text: string; footer: string; }
 
-export const FeaturesRibbon: React.FC<FeaturesRibbonProps> = ({ language }) => {
+export const FeaturesRibbon: React.FC<FeaturesRibbonProps> = ({ language, onOpenCategory }) => {
   const cards: FeatureCardData[] = [
     {
       image: getServicePhotos('shadow-brows')[1]?.src,
@@ -61,7 +62,23 @@ export const FeaturesRibbon: React.FC<FeaturesRibbonProps> = ({ language }) => {
         <div className="w-16 h-0.5 bg-[#9a5967] mx-auto mt-3" />
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto gap-4 sm:gap-6 lg:gap-7 items-stretch scroll-stagger">
-        {cards.map((card) => <FeatureCard key={card.title} {...card} />)}
+        {cards.map((card, index) => {
+          const group = SERVICE_GROUPS[index];
+          const href = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/services/categories/${group.id}`;
+          return <a key={card.title} href={href} aria-label={`${card.title} — ${group.lead[language]}`}
+            onClick={event => {
+              if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
+              event.preventDefault();
+              onOpenCategory(group.id);
+            }}
+            className="block rounded-2xl sm:rounded-3xl focus-visible:outline-4 focus-visible:outline-[#efb7c8]">
+            <FeatureCard {...card} />
+            <span className="flex items-center justify-center gap-2 mt-2 text-xs font-semibold text-[#f3c9d4]">
+              {language === 'en' ? 'Explore treatments, photos & videos' : language === 'pt' ? 'Ver tratamentos, fotos e vídeos' : 'Ver tratamientos, fotos y vídeos'}
+              <span aria-hidden="true">→</span>
+            </span>
+          </a>;
+        })}
       </div>
       <div className="mt-14 pt-10 border-t border-[#9a5967]/25 reveal-from-left">
         <div className="bg-[#22181b] rounded-3xl p-6 sm:p-8 lg:p-10 border border-[#9a5967]/30 shadow-2xl relative overflow-hidden">

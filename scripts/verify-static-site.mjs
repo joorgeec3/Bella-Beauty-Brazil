@@ -1,5 +1,6 @@
 import { access, readFile } from 'node:fs/promises';
 import { join } from 'node:path';
+import { SERVICE_GROUPS } from '../src/data/serviceGroups.ts';
 
 // Build-time smoke test for the sitemap and generated static entry points.
 // It intentionally avoids browser-only assertions: Vercel validates this before deployment.
@@ -14,14 +15,17 @@ if (catalogStart === -1 || catalogEnd === -1) throw new Error('Unable to inspect
 const catalogBlock = catalogSource.slice(catalogStart, catalogEnd);
 const catalogIds = [...catalogBlock.matchAll(/^\s*\{\s*id:\s*'([^']+)'/gm)].map((match) => match[1]);
 if (!catalogIds.length || new Set(catalogIds).size !== catalogIds.length) throw new Error('Unexpected or duplicate service IDs');
-const expectedTotalPages = 1 + 5 + catalogIds.length;
+const expectedTotalPages = 1 + 5 + SERVICE_GROUPS.length + catalogIds.length;
 
 
 if (urls.length !== expectedTotalPages || new Set(urls).size !== urls.length) {
   throw new Error(`Expected ${expectedTotalPages} unique sitemap URLs (home, 5 pages, ${catalogIds.length} services), got ${urls.length}`);
 }
 const services = urls.filter((url) => url.startsWith(origin + '/services/'));
-if (services.length !== catalogIds.length) throw new Error(`Expected ${catalogIds.length} service routes; got ${services.length}`);
+if (services.length !== catalogIds.length + SERVICE_GROUPS.length) throw new Error(`Expected ${catalogIds.length} service routes plus ${SERVICE_GROUPS.length} categories; got ${services.length}`);
+for (const group of SERVICE_GROUPS) {
+  if (!urls.includes(origin + '/services/categories/' + group.id)) throw new Error('Missing category sitemap entry: ' + group.id);
+}
 for (const id of catalogIds) {
   if (!services.includes(origin + '/services/' + id)) throw new Error(`Missing sitemap deep link for service: ${id}`);
 }

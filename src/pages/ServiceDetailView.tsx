@@ -139,7 +139,7 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
                 <a href={getServiceBookingUrl(base.id)}  className="inline-flex items-center gap-2 bg-[#efb7c8] hover:bg-white text-[#5b3239] text-xs font-bold uppercase tracking-widest px-7 py-4 rounded-full cursor-pointer transition-colors">
                   <Calendar className="w-4 h-4" /> {translated(language, 'Book now', 'Agendar agora', 'Reservar ahora')}
                 </a>
-                {hasGalleryPhotos && <a href="#service-photos" className="inline-flex items-center gap-1.5 bg-white/15 hover:bg-white/25 text-white text-xs font-bold px-5 py-4 rounded-full transition-colors">{gallery.illustrative ? translated(language, 'View related photos', 'Ver fotos relacionadas', 'Ver fotos relacionadas') : translated(language, 'See real photos', 'Ver fotos reais', 'Ver fotos reales')}<ArrowRight className="w-4 h-4" /></a>}
+                {hasGalleryPhotos && <a href={`#service-photos-${base.id}`} className="inline-flex items-center gap-1.5 bg-white/15 hover:bg-white/25 text-white text-xs font-bold px-5 py-4 rounded-full transition-colors">{gallery.illustrative ? translated(language, 'View related photos', 'Ver fotos relacionadas', 'Ver fotos relacionadas') : translated(language, 'See real photos', 'Ver fotos reais', 'Ver fotos reales')}<ArrowRight className="w-4 h-4" /></a>}
                 <span className="inline-flex items-center gap-2 text-xs uppercase tracking-wider text-neutral-200"><MapPin className="w-4 h-4 text-[#efb7c8]" /> Greenslopes, QLD 4120</span>
               </div>
             </div>

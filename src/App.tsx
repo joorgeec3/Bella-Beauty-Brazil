@@ -9,10 +9,7 @@ import { Header } from './components/Header';
 import { HeroSlider } from './components/HeroSlider';
 import { FeaturesRibbon } from './components/FeaturesRibbon';
 import { TickerMarquee } from './components/TickerMarquee';
-import { ServicesSection } from './components/ServicesSection';
 import { LocationsCarousel } from './components/LocationsCarousel';
-import { GalleryMarquee } from './components/GalleryMarquee';
-import { BeforeAfterSection } from './components/BeforeAfterSection';
 import { SmoothScrollController } from './components/SmoothScrollController';
 import { TestimonialsSection } from './components/TestimonialsSection';
 import { InstagramSection } from './components/InstagramSection';
@@ -27,6 +24,8 @@ import { ContactView } from './pages/ContactView';
 import { WorkWithUsView } from './pages/WorkWithUsView';
 import { StoreView } from './pages/StoreView';
 import { ServiceDetailView } from './pages/ServiceDetailView';
+import { ServiceCategoryView } from './pages/ServiceCategoryView';
+import { getServiceGroup, groupOfService } from './data/serviceGroups';
 import { BOOKING_URL, Language, Product, SERVICES } from './data/siteData';
 
 const APP_BASE_PATH = import.meta.env.BASE_URL.replace(/\/$/, '');
@@ -40,6 +39,10 @@ const resolveRoute = () => {
     ? rawPath.slice(APP_BASE_PATH.length)
     : rawPath;
   const path = pathWithinApp.replace(/\/+$/, '') || '/';
+  const groupMatch = path.match(/^\/services\/categories\/([^/]+)$/);
+  if (groupMatch) return getServiceGroup(groupMatch[1])
+    ? { tab: 'service-category', serviceId: groupMatch[1] }
+    : { tab: 'not-found', serviceId: undefined };
   const serviceMatch = path.match(/^\/services\/([^/]+)$/);
   if (serviceMatch) {
     const exists = SERVICES.some((service) => service.id === serviceMatch[1]);
@@ -133,6 +136,10 @@ export default function App() {
         description: 'View Bella Beauty Brazil one-to-one professional beauty courses, confirmed durations and prices in AUD.',
       },
       'not-found': { title: 'Page Not Found | Bella Beauty Brazil', description: 'The requested page could not be found. Browse Bella Beauty Brazil treatments and courses in Greenslopes.' },
+      'service-category': {
+        title: 'Beauty Treatments | Bella Beauty Brazil Greenslopes',
+        description: 'Discover Bella Beauty Brazil treatments, real photos, videos, information, prices and booking in one place.',
+      },
       'service-detail': {
         title: 'Beauty Treatment | Bella Beauty Brazil Greenslopes',
         description: 'Explore a Bella Beauty Brazil treatment with confirmed Timely details, preparation guidance, FAQs and official booking in Greenslopes, Brisbane.',
@@ -140,6 +147,8 @@ export default function App() {
     };
     const current = currentTab === 'service-detail' && activeServiceId
       ? { title: `${SERVICES.find((service) => service.id === activeServiceId)?.title || 'Beauty Treatment'} | Bella Beauty Brazil`, description: `Learn about ${SERVICES.find((service) => service.id === activeServiceId)?.title || 'this Bella Beauty Brazil treatment'}, with confirmed Timely details, FAQs and booking in Greenslopes, Brisbane.` }
+      : currentTab === 'service-category' && activeServiceId
+      ? { title: `${getServiceGroup(activeServiceId)?.title[language] || 'Beauty Treatments'} | Bella Beauty Brazil Greenslopes`, description: `${getServiceGroup(activeServiceId)?.lead[language] || ''} Browse photographs, treatment videos, details, prices and booking in Greenslopes, Brisbane.` }
       : metadata[currentTab] || metadata.home;
     document.title = current.title;
     document.documentElement.lang = language === 'en' ? 'en-AU' : language;
@@ -149,7 +158,9 @@ export default function App() {
     ogTitle?.setAttribute('content', current.title);
     const ogDescription = document.querySelector('meta[property="og:description"]');
     ogDescription?.setAttribute('content', current.description);
-    const currentPath = currentTab === 'service-detail' && activeServiceId
+    const currentPath = currentTab === 'service-category' && activeServiceId
+      ? `/services/categories/${encodeURIComponent(activeServiceId)}`
+      : currentTab === 'service-detail' && activeServiceId
       ? `/services/${encodeURIComponent(activeServiceId)}`
       : currentTab === 'home' ? '/'
       : currentTab === 'store' || currentTab === 'courses' ? '/courses'
@@ -253,10 +264,11 @@ export default function App() {
 
   const handleNavigate = (tab: string, subParam?: string) => {
     const isServiceDetail = tab === 'services' && Boolean(subParam);
-    const resolvedTab = isServiceDetail ? 'service-detail' : tab === 'courses' || tab === 'store' ? 'store' : tab;
+    const isServiceCategory = tab === 'services-category' && Boolean(subParam);
+    const resolvedTab = isServiceCategory ? 'service-category' : isServiceDetail ? 'service-detail' : tab === 'courses' || tab === 'store' ? 'store' : tab;
     setCurrentTab(resolvedTab);
-    setActiveServiceId(isServiceDetail ? subParam : undefined);
-    const routePath = isServiceDetail ? `/services/${subParam}` : resolvedTab === 'home' ? '/' : resolvedTab === 'store' ? '/courses' : `/${resolvedTab}`;
+    setActiveServiceId(isServiceDetail || isServiceCategory ? subParam : undefined);
+    const routePath = isServiceCategory ? `/services/categories/${subParam}` : isServiceDetail ? `/services/${subParam}` : resolvedTab === 'home' ? '/' : resolvedTab === 'store' ? '/courses' : `/${resolvedTab}`;
     const path = `${APP_BASE_PATH}${routePath}`;
     window.history.pushState({}, '', path);
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -303,15 +315,8 @@ export default function App() {
               onOpenServices={() => handleNavigate('services')}
               language={language}
             />
-            <FeaturesRibbon language={language} />
+            <FeaturesRibbon language={language} onOpenCategory={(groupId) => handleNavigate('services-category', groupId)} />
             <TickerMarquee language={language} />
-            <ServicesSection
-              onOpenAppointment={openBooking}
-              onNavigateToServices={(serviceId) => handleNavigate('services', serviceId)}
-              language={language}
-            />
-            <GalleryMarquee language={language} />
-            <BeforeAfterSection language={language} />
             <LocationsCarousel
               onOpenAppointment={openBooking}
               language={language}
@@ -334,6 +339,15 @@ export default function App() {
             onOpenAppointment={openBooking}
             language={language}
             onNavigateToService={(serviceId) => handleNavigate('services', serviceId)}
+          />
+        )}
+
+        {currentTab === 'service-category' && activeServiceId && (
+          <ServiceCategoryView
+            key={activeServiceId}
+            groupId={activeServiceId}
+            language={language}
+            onNavigate={handleNavigate}
           />
         )}
 

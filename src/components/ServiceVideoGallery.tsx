@@ -95,13 +95,13 @@ export const ServiceVideoGallery: React.FC<{ serviceId: string; language: Langua
   const copy = labels[language];
 
   return (
-    <section id="service-videos" aria-labelledby="service-videos-heading" className="bg-[#fffaf9] px-4 sm:px-6 lg:px-8 pt-2 pb-12 sm:pb-16 border-b border-[#e8d6d5]">
+    <section id={`service-videos-${serviceId}`} aria-labelledby={`service-videos-heading-${serviceId}`} className="bg-[#fffaf9] px-4 sm:px-6 lg:px-8 pt-2 pb-12 sm:pb-16 border-b border-[#e8d6d5]">
       <div className="max-w-6xl mx-auto">
         <div className="flex items-center gap-2 text-[#9a5967] mb-2">
           <Film className="w-4 h-4" aria-hidden="true"/>
           <span className="font-montserrat text-[11px] font-bold uppercase tracking-widest">Bella Beauty Brazil</span>
         </div>
-        <h2 id="service-videos-heading" className="font-raleway text-2xl sm:text-3xl font-semibold text-[#5b3239]">{copy.heading}</h2>
+        <h2 id={`service-videos-heading-${serviceId}`} className="font-raleway text-2xl sm:text-3xl font-semibold text-[#5b3239]">{copy.heading}</h2>
         <p className="font-montserrat text-sm text-[#675960] mt-2 mb-6">{copy.description}</p>
         <div ref={videoGridRef} className="grid grid-cols-1 sm:grid-cols-2 gap-5 lg:gap-7">
           {available.map((item, index) => (

@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { ArrowRight, CalendarDays, Clock3, MapPin, Search, X } from 'lucide-react';
 import { BOOKING_URL, SERVICES, Language, getLocalizedService, getServiceBookingUrl } from '../data/siteData';
 import { siteImages } from '../data/siteImages';
-import { ApprovedPriceList } from '../components/ApprovedPriceList';
+import { SERVICE_GROUPS } from '../data/serviceGroups';
 import { approvedDescriptionFor } from '../data/approvedServiceCatalog';
 import { getServiceGallery } from '../components/ServicePhotoGallery';
 import { serviceCoverFor } from '../data/serviceCoverPhotos';
@@ -137,6 +137,15 @@ export const ServicesView: React.FC<ServicesViewProps> = ({ initialServiceId, on
     </header>
 
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
+      <section aria-label={language === 'en' ? 'Treatment categories' : language === 'pt' ? 'Categorias de tratamentos' : 'Categorías de tratamientos'} className="mb-9">
+        <h2 className="font-raleway text-xl sm:text-2xl font-semibold text-[#5b3239] mb-4">{language === 'en' ? 'Browse by treatment category' : language === 'pt' ? 'Explorar por categoria' : 'Explorar por categoría'}</h2>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          {SERVICE_GROUPS.map(group => <a key={group.id} href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/services/categories/${group.id}`} className="rounded-xl border border-[#e8d6d5] bg-white px-4 py-4 hover:border-[#9a5967] hover:bg-[#fff7f9] transition-colors">
+            <span className="block font-raleway text-lg font-semibold text-[#5b3239]">{group.title[language]}</span>
+            <span className="block text-xs font-montserrat text-[#675960] mt-1">{group.lead[language]}</span>
+          </a>)}
+        </div>
+      </section>
       <section aria-label={labels.quick} className="mb-9">
         <p className="font-montserrat text-xs font-semibold uppercase tracking-[0.14em] text-[#9a5967] mb-3">{labels.quick}</p>
         <div className="flex flex-wrap gap-2">
@@ -236,19 +245,6 @@ export const ServicesView: React.FC<ServicesViewProps> = ({ initialServiceId, on
 
       {/* The verified lip and facial photos now belong to their precise named
           treatments. Do not repeat those same images in a second generic gallery. */}
-
-      {!search.trim() && (category === 'All' || category === 'Lashes') &&
-        <section aria-label={language === 'en' ? 'General treatment category videos' : 'Vídeos gerais das categorias'} className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-5">
-          {(category === 'All' || category === 'Lashes') &&
-            <div className="bg-white border border-[#e8d6d5] rounded-2xl p-4 sm:p-5">
-              <h3 className="font-raleway font-semibold text-lg text-[#5b3239] mb-2">{language === 'en' ? 'Lash Extensions · general demonstration' : language === 'pt' ? 'Extensões de cílios · demonstração geral' : 'Extensiones de pestañas · demostración general'}</h3>
-              <p className="text-xs font-montserrat text-[#675960] mb-3">{language === 'en' ? 'Real lash extension footage from our studio. Each application is personalised.' : language === 'pt' ? 'Vídeo real de extensões de cílios do estúdio. Cada aplicação é personalizada.' : 'Vídeo real de extensiones de pestañas en nuestro estudio.'}</p>
-              <video src={import.meta.env.BASE_URL + 'assets/bella/media-alinhada-2026-10/lash-extensions/01.mp4'} controls playsInline preload="metadata"
-                poster={import.meta.env.BASE_URL + 'assets/bella/media-alinhada-2026-10/lash-extensions/01.webp'} className="w-full max-h-80 rounded-xl object-contain bg-[#251a21]" />
-            </div>}
-
-        </section>}
-      <ApprovedPriceList language={language} />
 
       <aside className="mt-11 sm:mt-14 rounded-2xl bg-[#f3d9d0] border border-[#e8c5c8] p-6 sm:p-9 flex flex-col md:flex-row md:items-center md:justify-between gap-5">
         <div>
