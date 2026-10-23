@@ -8,7 +8,7 @@ export const SERVICE_GROUPS = [
     title: { en: 'Cosmetic Tattooing', pt: 'Tatuagem Cosmética', es: 'Tatuaje Cosmético' },
     lead: { en: 'Nano Strokes, Shadow Brows, Lip Blush and tattoo removal.', pt: 'Nano Strokes, Shadow Brows, Lip Blush e remoção de tatuagem.', es: 'Nano Strokes, Shadow Brows, Lip Blush y eliminación de tatuaje.' },
     serviceIds: ['nano-strokes','shadow-brows','lip-blush','cosmetic-tattoo-removal'],
-    photoCategory: 'Brows',
+    photoCategory: 'Lips',
   },
   {
     id: 'brow-artistry',

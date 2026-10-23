@@ -7,7 +7,7 @@ import { SERVICE_GUIDES } from '../data/serviceGuides';
 import { serviceCoverFor } from '../data/serviceCoverPhotos';
 import { getServiceGallery, ServicePhotoGallery } from '../components/ServicePhotoGallery';
 import { ServiceVideoGallery } from '../components/ServiceVideoGallery';
-import { bellaBeforeAfter } from '../data/galleryData';
+import { bellaBeforeAfter, homeGallery } from '../data/galleryData';
 
 type Props = {
   groupId: string;
@@ -78,6 +78,12 @@ export const ServiceCategoryView: React.FC<Props> = ({ groupId, language, onNavi
   if (!group) return null;
   const t = words[language];
   const results = filterResults(groupId);
+  // Previous homepage category-level pictures remain available here, once
+  // each, and are never falsely presented as a result of an exact procedure.
+  const usedTreatmentPhotos = new Set(group.serviceIds.flatMap(id => getServiceGallery(id).photos.map(photo => photo.src)));
+  const categoryPhotos = homeGallery.filter(item =>
+    item.category === group.photoCategory && item.kind === 'editorial' && !usedTreatmentPhotos.has(item.image)
+  );
   const waxLists = groupId === 'waxing' ? APPROVED_SERVICE_CATALOG.filter(cat => cat.id === 'women-waxing' || cat.id === 'men-waxing') : [];
 
   return <div className="bg-site min-h-[70vh]">
@@ -97,6 +103,22 @@ export const ServiceCategoryView: React.FC<Props> = ({ groupId, language, onNavi
       <div className="space-y-4">
         {group.serviceIds.map((id, i) => <TreatmentEntry key={id} id={id} language={language} first={i===0} onNavigate={onNavigate}/>)}
       </div>
+      {categoryPhotos.length > 0 && <details className="mt-10 rounded-2xl border border-[#e8d6d5] bg-white overflow-hidden">
+        <summary className="cursor-pointer px-5 sm:px-7 py-5 font-raleway text-lg sm:text-xl font-semibold text-[#5b3239] focus-visible:outline-2 focus-visible:outline-[#9a5967]">
+          {language === 'en' ? 'More studio photos in this category' : language === 'pt' ? 'Mais fotos do estúdio nesta categoria' : 'Más fotos del estudio en esta categoría'} ({categoryPhotos.length})
+        </summary>
+        <div className="px-4 sm:px-6 pb-6 border-t border-[#f0e3e4]">
+          <p className="font-montserrat text-xs text-[#846f75] mt-4 mb-5">
+            {language === 'en' ? 'Category-level images are not presented as results of a specific appointment.' : language === 'pt' ? 'Estas imagens ilustram a categoria e não são apresentadas como resultados de um tratamento específico.' : 'Estas imágenes ilustran la categoría y no resultados de un servicio específico.'}
+          </p>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+            {categoryPhotos.map(photo => <a key={photo.id} href={photo.image} target="_blank" rel="noopener noreferrer" className="block overflow-hidden bg-[#f5eeec] rounded-xl border border-[#e8d6d5] hover:shadow-md transition-shadow">
+              <img src={photo.image} alt={photo.alt} loading="lazy" className="w-full aspect-[4/5] object-contain" />
+              <span className="block px-2.5 py-2 font-montserrat text-[11px] text-[#675960] leading-snug">{photo.serviceName || photo.alt}</span>
+            </a>)}
+          </div>
+        </div>
+      </details>}
       {waxLists.length>0 && <section className="mt-12" aria-label={t.extra}>
         <h2 className="font-raleway text-2xl sm:text-3xl text-[#5b3239] mb-5">{t.extra}</h2>
         <div className="grid md:grid-cols-2 gap-5">{waxLists.map(list => <div key={list.id} className="rounded-2xl bg-white border border-[#e8d6d5] p-5 sm:p-6">
