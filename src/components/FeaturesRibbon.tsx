@@ -41,8 +41,7 @@ export const FeaturesRibbon: React.FC<FeaturesRibbonProps> = ({ language }) => {
       footer: language === 'en' ? 'Professional teeth whitening' : language === 'pt' ? 'Clareamento dental' : 'Blanqueamiento dental',
     },
     {
-      // Keep an accurate branded placeholder until the supplied underarm image
-      // is transferred to the repository; never re-label a portrait as a result.
+      image: siteImages.waxingPhotos.underarms,
       title: 'Waxing',
       text: language === 'en' ? 'Face & Body Waxing • Brazilian Waxing.' : language === 'pt' ? 'Depilação facial e corporal • Depilação brasileira.' : 'Depilación facial y corporal • Depilación brasileña.',
       footer: language === 'en' ? 'Face & body' : language === 'pt' ? 'Rosto e corpo' : 'Rostro y cuerpo',

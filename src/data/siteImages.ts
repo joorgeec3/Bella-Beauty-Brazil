@@ -15,6 +15,9 @@ export const siteImages = {
       { id: 'celebration', src: siteAsset('assets/bella/training/courses-v3/training-celebration.mp4'), poster: siteAsset('assets/bella/training/courses-v3/training-celebration.webp') },
     ],
   },
+  waxingPhotos: {
+    underarms: siteAsset('assets/bella/waxing-2026-10/underarms.webp'),
+  },
   hero: { mainBella: siteAsset('assets/bella/hero.png'), thumbProcedure1: siteAsset('assets/bella/gallery/studio-behind-scenes-01.webp'), thumbProcedure2: siteAsset('assets/bella/lashes.jpg') },
   client: {
     browTools: siteAsset('assets/bella/client-2026-10/brow-tools.webp'),
@@ -50,7 +53,7 @@ export const siteImages = {
     lashes: siteAsset('assets/bella/lashes.jpg'),
     // Approved real facial-care image; the old pigment-vial photograph is removed.
     treatments: siteAsset('assets/bella/dermaplaning-facial-treatment.webp'),
-    waxing: siteAsset('assets/bella/client-2026-10/waxing-treatment.webp'),
+    waxing: siteAsset('assets/bella/waxing-2026-10/underarms.webp'),
     courses: siteAsset('assets/bella/courses.png'),
   },
   gallery: { hero: siteAsset('assets/bella/hero.png'), livia: siteAsset('assets/bella/client-2026-10/about-livia-03.webp') },

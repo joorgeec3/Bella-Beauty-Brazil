@@ -1,3 +1,4 @@
+import { siteImages } from './siteImages';
 // Sources: Site Bella.zip and the client's later "fotos site bella.rar".
  // RAR review (2026-10-22) explicitly identifies the previously generic lip
  // photos as Lip Hydration and the facial folder as Facial/Dermaplaning.
@@ -66,15 +67,21 @@ const newerFolderLabels: Record<string,TreatmentPhoto[]> = {
     caption: 'Dreamy Brows · Treatment demonstration',
   }],
 };
-// The previous Waxing portrait showed Livia holding equipment, not a close-up
-// of a treatment. It is now in the site's founder/gallery area; do not display
-// it as a result photograph on Waxing service pages.
-const supplementary: Record<string,TreatmentPhoto[]> = {};
+// The photo of Livia with wax equipment is in the homepage/founder gallery.
+// The new axilla photograph was provided separately in attachments.zip.
+// It is an illustrative waxing photo, not a verified before/after client result.
+const supplementary: Record<string,TreatmentPhoto[]> = {
+  waxing: [{
+    src: siteImages.waxingPhotos.underarms,
+    alt: 'Professional waxing demonstration: a spatula applying wax to an underarm',
+    caption: 'Underarm waxing · representative photograph',
+  }],
+};
 export const serviceGalleryFor = (serviceId: string): TreatmentGallery => {
   const folder = exactFolderByService[serviceId];
   if(folder)return {photos:PHOTO_FOLDERS[folder],illustrative:serviceId==='shadow-hybrid'};
   if(newerFolderLabels[serviceId])return {photos:newerFolderLabels[serviceId],illustrative:false};
-  return {photos:supplementary[serviceId]||[],illustrative:false};
+  return {photos:supplementary[serviceId]||[],illustrative:serviceId === 'waxing'};
 };
 export const servicePhotosFor=(serviceId:string):TreatmentPhoto[] => serviceGalleryFor(serviceId).photos;
 export const categoryPhotosFor=(category:'skin-treatments-geral'|'lip-treatments-geral')=>PHOTO_FOLDERS[category];
