@@ -363,6 +363,14 @@ export const newBellaServiceGallery: BellaGalleryItem[] = photosInOrder.map(item
 const featuredStudioPhotos = new Set(['salon-brand-wall.webp', 'salon-client-experience.webp']);
 // Livia's photo with her waxing workstation belongs to the studio story,
 // not to the Waxing treatment results.
+// Client-selected waxing illustrations: underarms first, then legs and face.
+// These pictures illustrate waxing only; they are not presented as salon results.
+export const newWaxingGallery: BellaGalleryItem[] = [
+  { id:'waxing-underarms-2026', image:'/assets/bella/waxing-2026-10/underarms.webp', category:'Waxing', kind:'editorial', alt:'Illustrative photograph of waxing on an underarm', serviceName:'Underarm Waxing' },
+  { id:'waxing-legs-2026', image:'/assets/bella/waxing-2026-10/legs.webp', category:'Waxing', kind:'editorial', alt:'Illustrative photograph of a waxing strip applied to a leg', serviceName:'Leg Waxing' },
+  { id:'waxing-face-2026', image:'/assets/bella/waxing-2026-10/face.webp', category:'Waxing', kind:'editorial', alt:'Illustrative photograph of warm wax being applied to the face', serviceName:'Facial Waxing' },
+].map(withSiteBase);
+
 export const homeGallery = uniqueImages([
   withSiteBase({
     id: 'livia-waxing-preparation',
@@ -372,9 +380,12 @@ export const homeGallery = uniqueImages([
     alt: 'Livia Rego holding a waxing spatula beside her professional wax heater',
     serviceName: 'Meet Livia',
   }),
+  ...newWaxingGallery,
   ...newBellaServiceGallery,
   ...bellaGallery.filter(({ image }) => {
     const fileName = image.split('/').pop() || '';
+    // The portrait at the wax heater belongs only in Meet Livia, not Waxing.
+    if (fileName === 'waxing-treatment.webp') return false;
     return featuredStudioPhotos.has(fileName) || !homepageFeaturedImageNames.has(fileName);
   }),
 ]);

@@ -20,7 +20,6 @@ const approvedVideoClips: Record<string, string[]> = {
  // its Git blob SHA matches the Lip Hydration clip, not Dermaplaning.
 const serviceVideoFolderToRoute: Record<string, string> = {
   'brow-sculpt': 'brow-sculpt',
-  'brow-lamination': 'brow-lamination',
   'dreamy-brows': 'dreamy-brows',
   'shadow-brows': 'shadow-brows',
   'facial-spa': 'facial-spa',

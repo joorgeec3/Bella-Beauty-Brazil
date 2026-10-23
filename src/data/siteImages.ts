@@ -17,6 +17,8 @@ export const siteImages = {
   },
   waxingPhotos: {
     underarms: siteAsset('assets/bella/waxing-2026-10/underarms.webp'),
+    legs: siteAsset('assets/bella/waxing-2026-10/legs.webp'),
+    face: siteAsset('assets/bella/waxing-2026-10/face.webp'),
   },
   hero: { mainBella: siteAsset('assets/bella/hero.png'), thumbProcedure1: siteAsset('assets/bella/gallery/studio-behind-scenes-01.webp'), thumbProcedure2: siteAsset('assets/bella/lashes.jpg') },
   client: {

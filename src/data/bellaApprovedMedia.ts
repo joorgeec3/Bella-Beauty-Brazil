@@ -71,11 +71,11 @@ const newerFolderLabels: Record<string,TreatmentPhoto[]> = {
 // The new axilla photograph was provided separately in attachments.zip.
 // It is an illustrative waxing photo, not a verified before/after client result.
 const supplementary: Record<string,TreatmentPhoto[]> = {
-  waxing: [{
-    src: siteImages.waxingPhotos.underarms,
-    alt: 'Professional waxing demonstration: a spatula applying wax to an underarm',
-    caption: 'Underarm waxing · representative photograph',
-  }],
+  waxing: [
+    { src: siteImages.waxingPhotos.underarms, alt: 'Waxing applied to an underarm', caption: 'Underarm waxing · illustrative photograph' },
+    { src: siteImages.waxingPhotos.legs, alt: 'Waxing strip being applied to a leg', caption: 'Leg waxing · illustrative photograph' },
+    { src: siteImages.waxingPhotos.face, alt: 'Wax applied to facial hair near the cheek', caption: 'Facial waxing · illustrative photograph' },
+  ],
 };
 export const serviceGalleryFor = (serviceId: string): TreatmentGallery => {
   const folder = exactFolderByService[serviceId];

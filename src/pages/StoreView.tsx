@@ -33,34 +33,38 @@ const TRAINING_COPY: Record<Language, { eyebrow: string; heading: string; descri
 
 // Use only existing approved assets. Keep videos with their respective course,
 // and do not label general class footage as footage of an unverified technique.
+// Course media are shown in their respective programmes. The original
+// "Brow Lamination & Lash Lift" folder contains a *joint class*; titles below
+// describe training moments without claiming an unverified treatment result.
+const jointClassClip = (n: number) =>
+  siteAsset(`assets/bella/client-2026-10-v2/brow-lamination/brow-lamination-video-${String(n).padStart(2, '0')}.mp4`);
+const nanoClip = (n: number) =>
+  siteAsset(`assets/bella/media-alinhada-2026-10/nano-strokes/${String(n).padStart(2, '0')}.mp4`);
+
 const courseClips: Record<string, {src: string; poster: string; en: string; pt: string; es: string }[]> = {
-  'nano-strokes-course': [
-    {
-      src: siteAsset('assets/bella/media-alinhada-2026-10/nano-strokes/01.mp4'),
-      poster: siteImages.training.coursePhotos['nano-strokes-course'],
-      en: 'Nano Strokes technique demonstration',
-      pt: 'Demonstração da técnica Nano Strokes',
-      es: 'Demostración de la técnica Nano Strokes',
-    },
-  ],
+  'nano-strokes-course': [1,2,3].map(n => ({
+    src: nanoClip(n),
+    poster: siteImages.training.coursePhotos['nano-strokes-course'],
+    en: `Nano Strokes technique — demonstration ${n}`,
+    pt: `Técnica Nano Strokes — demonstração ${n}`,
+    es: `Técnica Nano Strokes — demostración ${n}`,
+  })),
   'lash-lift-course': [
-    {
-      src: siteImages.training.videos[1].src,
-      poster: siteImages.training.coursePhotos['lash-lift-course'],
-      en: 'Lash treatment training in practice',
-      pt: 'Treino prático de tratamento de cílios',
-      es: 'Formación práctica de pestañas',
-    },
+    { src: siteImages.training.videos[1].src, poster: siteImages.training.coursePhotos['lash-lift-course'],
+      en: 'Lash training practice', pt: 'Prática de formação em cílios', es: 'Práctica de formación en pestañas' },
+    ...[4,5].map(n => ({
+      src: jointClassClip(n), poster: siteImages.training.coursePhotos['lash-lift-course'],
+      en: `Lash Lift & Brow Lamination joint class — practical session ${n - 3}`,
+      pt: `Formação conjunta Lash Lift e Brow Lamination — prática ${n - 3}`,
+      es: `Formación conjunta Lash Lift y Brow Lamination — práctica ${n - 3}`,
+    })),
   ],
-  'brow-lamination-course': [
-    {
-      src: siteImages.training.videos[0].src,
-      poster: siteImages.training.coursePhotos['brow-lamination-course'],
-      en: 'Inside a hands-on beauty training class',
-      pt: 'Bastidores de uma formação prática de beleza',
-      es: 'Dentro de una clase práctica de belleza',
-    },
-  ],
+  'brow-lamination-course': [1,2,3].map(n => ({
+    src: jointClassClip(n), poster: siteImages.training.coursePhotos['brow-lamination-course'],
+    en: `Lash Lift & Brow Lamination joint class — training moment ${n}`,
+    pt: `Formação conjunta Lash Lift e Brow Lamination — momento ${n}`,
+    es: `Formación conjunta Lash Lift y Brow Lamination — momento ${n}`,
+  })),
 };
 
 export const StoreView: React.FC<StoreViewProps> = ({ language }) => {
@@ -117,7 +121,7 @@ export const StoreView: React.FC<StoreViewProps> = ({ language }) => {
               {courseClips[course.id] && (
                 <details className="border-b border-[#e8d6d5] bg-[#fff8f9]">
                   <summary className="cursor-pointer px-6 py-3 font-montserrat text-xs font-bold uppercase tracking-wider text-[#5b3239] hover:bg-[#f3e1e6]">
-                    {language === 'en' ? 'Watch course footage' : language === 'pt' ? 'Ver vídeo da formação' : 'Ver vídeo de la formación'}
+                    {language === 'en' ? 'Photos & course videos' : language === 'pt' ? 'Fotos e vídeos do curso' : 'Fotos y vídeos del curso'}
                   </summary>
                   <div className="px-4 pb-4 space-y-3">
                     {courseClips[course.id].map(clip => (
