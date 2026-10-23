@@ -101,9 +101,15 @@ const photosInOrder = Array.from({ length: Math.max(...photoGroups.map(group => 
 ).flat();
 
 export const newBellaServiceGallery: BellaGalleryItem[] = photosInOrder.map(item => withSiteBase(item));
+// Keep two verified studio photographs in the main gallery so the dedicated
+// salon-gallery section can be removed without losing all studio imagery.
+const featuredStudioPhotos = new Set(['salon-brand-wall.webp', 'salon-client-experience.webp']);
 export const homeGallery = uniqueImages([
   ...newBellaServiceGallery,
-  ...bellaGallery.filter(({ image }) => !homepageFeaturedImageNames.has(image.split('/').pop() || '')),
+  ...bellaGallery.filter(({ image }) => {
+    const fileName = image.split('/').pop() || '';
+    return featuredStudioPhotos.has(fileName) || !homepageFeaturedImageNames.has(fileName);
+  }),
 ]);
 
 export type BellaGalleryVideo = { id: string; src: string; category: BellaGalleryCategory; serviceName: string };

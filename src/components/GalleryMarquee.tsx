@@ -13,7 +13,8 @@ const labels: Record<Language, Record<Filter, string>> = {
 
 export const GalleryMarquee: React.FC<{language:Language}> = ({ language }) => {
   const [filter,setFilter] = useState<Filter>('All');
-  const [limit,setLimit] = useState(16);
+  const [limit,setLimit] = useState(10);
+  const [showAllVideos, setShowAllVideos] = useState(false);
   // Hide a pending service video until its real MP4 has been uploaded and responds.
   // This avoids a blank/broken video card while preserving the existing gallery.
   const [dermaplaningReelAvailable,setDermaplaningReelAvailable] = useState(false);
@@ -36,10 +37,21 @@ export const GalleryMarquee: React.FC<{language:Language}> = ({ language }) => {
   const categories = useMemo(() => (['All', 'Brows', 'Lips', 'Lashes', 'Skin', 'Whitening', 'Studio', 'Livia', 'Waxing'] as Filter[]).filter(c => c==='All' || homeGallery.some(item=>item.category===c) || galleryVideos.some(item=>item.category===c)),[]);
   const current = useMemo(() => homeGallery.filter(item=>filter==='All'||item.category===filter),[filter]);
   const shown = filter==='All' ? current.slice(0,limit) : current;
-  const currentVideos = galleryVideos.filter(item =>
+  const filteredVideos = galleryVideos.filter(item =>
     (item.id !== 'gallery-video-dermaplaning-1' || dermaplaningReelAvailable) &&
     (filter === 'All' || item.category === filter)
   );
+  // One representative clip for each of four different treatments. Additional
+  // recordings remain available when the visitor selects "see all".
+  const featuredVideoIds = new Set([
+    'gallery-video-brow-sculpt-1',
+    'gallery-video-lip-blush-1',
+    'gallery-video-facial-spa-1',
+    'gallery-video-teeth-whitening-1',
+  ]);
+  const currentVideos = filter === 'All' && !showAllVideos
+    ? filteredVideos.filter(item => featuredVideoIds.has(item.id))
+    : filteredVideos;
 
   useEffect(() => {
     const item = galleryVideos.find(video => video.id === 'gallery-video-dermaplaning-1');
@@ -85,7 +97,8 @@ export const GalleryMarquee: React.FC<{language:Language}> = ({ language }) => {
 
   const changeFilter = (category:Filter) => {
     setFilter(category);
-    setLimit(16);
+    setLimit(10);
+    setShowAllVideos(false);
     setLightboxIndex(null);
     setArrowPaused(false);
     playingVideosRef.current.clear();
@@ -148,7 +161,7 @@ export const GalleryMarquee: React.FC<{language:Language}> = ({ language }) => {
       {autoScrollEnabled && <button type="button" onClick={()=>setManualPaused(value=>!value)} className="inline-flex items-center gap-1.5 rounded-full border border-[#9a5967]/40 px-3 py-1.5 hover:bg-[#f3d9d0] cursor-pointer" aria-pressed={manualPaused}>{manualPaused ? <Play className="h-3 w-3" /> : <Pause className="h-3 w-3" />}{manualPaused ? (language==='en'?'Play':language==='pt'?'Reproduzir':'Reproducir') : (language==='en'?'Pause':language==='pt'?'Pausar':'Pausar')}</button>}
       <span>{autoScrollEnabled ? (language==='en'?'Auto-scroll · Hover or focus to pause · Swipe to browse':language==='pt'?'Rolagem automática · Passe o mouse ou foque para pausar · Deslize para navegar':'Desplazamiento automático · Pase el cursor o enfoque para pausar · Deslice para navegar') : (language==='en'?'Swipe or use arrows to browse':language==='pt'?'Deslize ou use as setas para navegar':'Deslice o use las flechas para navegar')}</span>
     </div>
-    {filter==='All'&&limit<current.length&&<div className="text-center mt-9"><button type="button" onClick={()=>setLimit(v=>v+16)} className="rounded-full px-8 py-3 bg-[#5b3239] text-white text-xs font-bold tracking-widest uppercase hover:bg-[#7a4753] cursor-pointer">{language==='en'?'Show More':language==='pt'?'Ver Mais':'Ver Más'}</button></div>}
+    {filter==='All'&&limit<current.length&&<div className="text-center mt-9"><button type="button" onClick={()=>setLimit(v=>v+10)} className="rounded-full px-8 py-3 bg-[#5b3239] text-white text-xs font-bold tracking-widest uppercase hover:bg-[#7a4753] cursor-pointer">{language==='en'?'Show More':language==='pt'?'Ver Mais':'Ver Más'}</button></div>}
     {currentVideos.length > 0 && <div id="gallery-videos" className="max-w-7xl mx-auto mt-12 px-4 sm:px-6 lg:px-8">
       <div className="flex flex-wrap gap-3 items-end justify-between mb-5">
         <div>
@@ -158,7 +171,7 @@ export const GalleryMarquee: React.FC<{language:Language}> = ({ language }) => {
         </div>
         <span className="font-montserrat text-xs rounded-full bg-[#f3d9d0] px-3 py-2 text-[#5b3239]">{currentVideos.length} {language==='pt'?'vídeos':language==='es'?'vídeos':'videos'}</span>
       </div>
-      <div ref={videoStripRef} className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory" aria-label={language==='pt'?'Galeria de vídeos dos serviços':'Treatment video gallery'}>
+      <div id="bella-home-video-list" ref={videoStripRef} className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory" aria-label={language==='pt'?'Galeria de vídeos dos serviços':'Treatment video gallery'}>
         {currentVideos.map((item,index)=><article key={item.id} data-bella-gallery-video data-service={item.serviceName} className="shrink-0 w-[min(75vw,240px)] sm:w-[270px] overflow-hidden rounded-2xl border border-[#d8be9b]/60 bg-white shadow-md snap-start">
           <div className="aspect-[3/4] bg-[#22181b]">
             <video src={item.src} controls playsInline preload="metadata" aria-label={`${item.serviceName} — ${language==='pt'?'vídeo':language==='es'?'vídeo':'video'} ${index+1}`} onPlay={(event)=>onVideoPlay(item.id,event.currentTarget)} onPause={()=>onVideoPause(item.id)} onEnded={()=>onVideoPause(item.id)} className="h-full w-full object-contain" />
@@ -169,7 +182,18 @@ export const GalleryMarquee: React.FC<{language:Language}> = ({ language }) => {
           </div>
         </article>)}
       </div>
-      <p className="text-xs text-[#846f75] mt-2">{language==='pt'?'Deslize horizontalmente para ver todos os vídeos.':language==='es'?'Desliza horizontalmente para ver todos los vídeos.':'Scroll sideways to see every video.'}</p>
+      <p className="text-xs text-[#846f75] mt-2">{language==='pt'?'Deslize para explorar os vídeos selecionados.':language==='es'?'Desliza para explorar los vídeos seleccionados.':'Swipe to explore the selected videos.'}</p>
+      {filter === 'All' && filteredVideos.length > 4 && (
+        <div className="mt-5 text-center">
+          <button type="button" onClick={() => setShowAllVideos(value => !value)}
+            aria-expanded={showAllVideos} aria-controls="bella-home-video-list"
+            className="inline-flex items-center justify-center rounded-full border border-[#9a5967] px-6 py-3 text-xs font-montserrat font-bold text-[#5b3239] hover:bg-[#f3d9d0] transition-colors cursor-pointer">
+            {showAllVideos
+              ? (language === 'en' ? 'Show fewer videos' : language === 'pt' ? 'Ver menos vídeos' : 'Ver menos vídeos')
+              : (language === 'en' ? `See all ${filteredVideos.length} videos` : language === 'pt' ? `Ver todos os ${filteredVideos.length} vídeos` : `Ver los ${filteredVideos.length} vídeos`)}
+          </button>
+        </div>
+      )}
     </div>}
     <GalleryLightbox images={shown} index={lightboxIndex} onClose={()=>setLightboxIndex(null)} onIndexChange={setLightboxIndex} language={language}/>
   </section>;

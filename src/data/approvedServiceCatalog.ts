@@ -58,6 +58,7 @@ export const APPROVED_SERVICE_CATALOG: ApprovedCategory[] = [
     id: 'women-waxing', title: 'Waxing – Women',
     intro: 'I use two types of wax, depending on the treatment area. Hard wax, removed without strips, is used for Brazilian waxing, underarms, facial waxing — including the sides of the face — and selected areas of the back. Strip wax, removed with waxing strips, is used for legs, arms, the abdomen and selected areas of the back, as well as smaller areas where appropriate.',
     items: [
+      { name: 'Brazilian', aud: 82 },
       { name: 'Side Face', aud: 45 }, { name: 'Facial Waxing', aud: 80 },
       { name: 'Upper Lip', aud: 18 }, { name: 'Upper Lip & Chin', aud: 40 },
       { name: 'Upper Lip & Nose', aud: 30 }, { name: 'Upper Lip, Nose & Chin', aud: 48 },
@@ -65,7 +66,7 @@ export const APPROVED_SERVICE_CATALOG: ApprovedCategory[] = [
       { name: 'Ear Waxing', aud: 25 }, { name: 'Underarms', aud: 44 },
       { name: 'Full Arms', aud: 48 }, { name: 'Half Arms', aud: 38 },
       { name: 'Abdomen', aud: 20 }, { name: 'Bikini', aud: 58 },
-      { name: 'Brazilian', aud: 82 }, { name: 'Buttocks', aud: 39 },
+      { name: 'Buttocks', aud: 39 },
       { name: 'Full Legs', aud: 78 }, { name: 'Half Legs', aud: 50 },
     ],
   },
