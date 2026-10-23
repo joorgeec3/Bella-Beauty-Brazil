@@ -41,7 +41,8 @@ export const FeaturesRibbon: React.FC<FeaturesRibbonProps> = ({ language }) => {
       footer: language === 'en' ? 'Professional teeth whitening' : language === 'pt' ? 'Clareamento dental' : 'Blanqueamiento dental',
     },
     {
-      image: siteImages.client.waxingTreatment,
+      // Keep an accurate branded placeholder until the supplied underarm image
+      // is transferred to the repository; never re-label a portrait as a result.
       title: 'Waxing',
       text: language === 'en' ? 'Face & Body Waxing • Brazilian Waxing.' : language === 'pt' ? 'Depilação facial e corporal • Depilação brasileira.' : 'Depilación facial y corporal • Depilación brasileña.',
       footer: language === 'en' ? 'Face & body' : language === 'pt' ? 'Rosto e corpo' : 'Rostro y cuerpo',
@@ -116,9 +117,9 @@ const FeatureCard: React.FC<FeatureCardData> = ({ image, video, title, text, foo
         ? <img src={image} alt={title} className="feature-card-image w-full h-full object-contain object-center transition-transform duration-700 hover:scale-105" loading="lazy" />
         : <div className="w-full h-full min-h-[160px] flex flex-col items-center justify-center gap-3 bg-gradient-to-br from-[#70424f] via-[#4e313d] to-[#21191d] px-3" role="img" aria-label={title}>
           <div className="w-20 h-20 rounded-full border border-[#efb7c8]/50 bg-white/10 flex items-center justify-center shadow-xl">
-            <Smile aria-hidden="true" className="w-10 h-10 text-[#f8d1dd]" strokeWidth={1.25} />
+            {title === 'Waxing' ? <Sparkles aria-hidden="true" className="w-10 h-10 text-[#f8d1dd]" strokeWidth={1.25} /> : <Smile aria-hidden="true" className="w-10 h-10 text-[#f8d1dd]" strokeWidth={1.25} />}
           </div>
-          <span className="font-raleway text-sm uppercase tracking-widest text-white/85">Bella Beauty</span>
+          <span className="font-raleway text-sm uppercase tracking-widest text-white/85">{title === 'Waxing' ? 'Waxing' : 'Bella Beauty'}</span>
         </div>}
   </div>
   <div className="min-w-0 flex-1 px-3 py-1.5 sm:p-1 sm:text-center flex flex-col justify-start">

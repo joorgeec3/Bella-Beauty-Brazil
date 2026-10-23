@@ -1,5 +1,3 @@
-import { siteImages } from './siteImages';
-
 // Sources: Site Bella.zip and the client's later "fotos site bella.rar".
  // RAR review (2026-10-22) explicitly identifies the previously generic lip
  // photos as Lip Hydration and the facial folder as Facial/Dermaplaning.
@@ -68,13 +66,10 @@ const newerFolderLabels: Record<string,TreatmentPhoto[]> = {
     caption: 'Dreamy Brows · Treatment demonstration',
   }],
 };
-const supplementary: Record<string,TreatmentPhoto[]> = {
-  waxing: [{
-    src:siteImages.client.waxingTreatment,
-    alt:'Waxing procedure photo previously approved by Bella Beauty Brazil',
-    caption:'Waxing · Existing studio photograph',
-  }],
-};
+// The previous Waxing portrait showed Livia holding equipment, not a close-up
+// of a treatment. It is now in the site's founder/gallery area; do not display
+// it as a result photograph on Waxing service pages.
+const supplementary: Record<string,TreatmentPhoto[]> = {};
 export const serviceGalleryFor = (serviceId: string): TreatmentGallery => {
   const folder = exactFolderByService[serviceId];
   if(folder)return {photos:PHOTO_FOLDERS[folder],illustrative:serviceId==='shadow-hybrid'};

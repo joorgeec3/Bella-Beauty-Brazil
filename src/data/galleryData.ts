@@ -361,7 +361,17 @@ export const newBellaServiceGallery: BellaGalleryItem[] = photosInOrder.map(item
 // Keep two verified studio photographs in the main gallery so the dedicated
 // salon-gallery section can be removed without losing all studio imagery.
 const featuredStudioPhotos = new Set(['salon-brand-wall.webp', 'salon-client-experience.webp']);
+// Livia's photo with her waxing workstation belongs to the studio story,
+// not to the Waxing treatment results.
 export const homeGallery = uniqueImages([
+  withSiteBase({
+    id: 'livia-waxing-preparation',
+    image: '/assets/bella/client-2026-10/waxing-treatment.webp',
+    category: 'Livia',
+    kind: 'livia',
+    alt: 'Livia Rego holding a waxing spatula beside her professional wax heater',
+    serviceName: 'Meet Livia',
+  }),
   ...newBellaServiceGallery,
   ...bellaGallery.filter(({ image }) => {
     const fileName = image.split('/').pop() || '';

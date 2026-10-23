@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Film, PlayCircle } from 'lucide-react';
 import type { Language } from '../data/siteData';
+import { serviceVideos } from '../data/galleryData';
 
 type VideoItem = { src: string; title: string };
 
@@ -17,20 +18,27 @@ const approvedVideoClips: Record<string, string[]> = {
 // Additional, previously uploaded clips from strictly named folders in the RAR.
  // The misleading "dermaplaning-video-01" is intentionally excluded because
  // its Git blob SHA matches the Lip Hydration clip, not Dermaplaning.
-const correctlyLabelledClips: Record<string,string[]> = {
-  'dreamy-brows': ['dreamy-brows/dreamy-brows-video-01.mp4'],
-  'facial-spa': ['facial-spa/facial-spa-video-01.mp4', 'facial-spa/facial-spa-video-02.mp4'],
-  'teeth-whitening': ['teeth-whitening/teeth-whitening-video-01.mp4'],
+const serviceVideoFolderToRoute: Record<string, string> = {
+  'brow-sculpt': 'brow-sculpt',
+  'brow-lamination': 'brow-lamination',
+  'dreamy-brows': 'dreamy-brows',
+  'shadow-brows': 'shadow-brows',
+  'facial-spa': 'facial-spa',
+  'lip-blush': 'lip-blush',
+  'lip-bliss-hydration': 'lip-bliss-hydration',
+  'teeth-whitening': 'teeth-whitening',
 };
+// The item titled Dermaplaning in the old upload duplicates a lip hydration file;
+// exclude it rather than presenting the wrong procedure.
 const videoCandidates = (serviceId: string): VideoItem[] => [
   ...(approvedVideoClips[serviceId] ?? []).map((relative,index)=>({
     src: `${import.meta.env.BASE_URL}assets/bella/media-alinhada-2026-10/${relative}`,
     title: `${serviceId} — video ${index+1}`,
   })),
-  ...(correctlyLabelledClips[serviceId] ?? []).map((relative,index)=>({
-    src: `${import.meta.env.BASE_URL}assets/bella/client-2026-10-v2/${relative}`,
-    title: `${serviceId} — recorded treatment ${index+1}`,
-  })),
+  ...serviceVideos
+    .filter(clip => clip.id !== 'gallery-video-dermaplaning-1' &&
+      serviceVideoFolderToRoute[clip.id.replace(/^gallery-video-/, '').replace(/-\d+$/, '')] === serviceId)
+    .map(clip => ({ src: clip.src, title: clip.serviceName })),
 ];
 
 const labels = {
