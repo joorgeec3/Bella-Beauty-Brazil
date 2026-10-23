@@ -86,21 +86,278 @@ const newPhotoFolders: { slug: string; name: string; category: BellaGalleryCateg
   { slug: 'teeth-whitening', name: 'Teeth Whitening', category: 'Whitening', count: 3 },
 ];
 const mediaRoot = '/assets/bella/client-2026-10-v2';
-const photoGroups = newPhotoFolders.map(({ slug, name, category, count }) =>
-  Array.from({ length: count }, (_, index) => ({
+// Captions and filters reviewed against the actual 43 published images,
+// not inferred from the archive folder name. Folder names were frequently wrong.
+// Labels only describe visible content; no unverified procedure is claimed.
+const verifiedPhotoDescriptions: Record<string, [BellaGalleryCategory, string, string][]> = {
+  "brow-sculpt": [
+    [
+      "Lashes",
+      "Natural Lashes",
+      "Close-up of a blue eye with long curled eyelashes and a softly defined eyebrow"
+    ],
+    [
+      "Brows",
+      "Brow Portrait",
+      "Client portrait showing softly groomed eyebrows"
+    ],
+    [
+      "Brows",
+      "Brow Comparison",
+      "Two side-by-side portraits showing a client's brows and eye area"
+    ],
+    [
+      "Lashes",
+      "Lash Detail",
+      "Side-by-side close-ups of an eye showing lash curl and the eyebrow"
+    ],
+    [
+      "Lashes",
+      "Lash Comparison",
+      "Upper and lower photos comparing the eyes, eyelashes and eyebrows"
+    ],
+    [
+      "Brows",
+      "Brow Comparison",
+      "Two close-up portraits showing the appearance of defined eyebrows"
+    ],
+    [
+      "Lips",
+      "Lip Close-Up",
+      "Close-up side profile of a client's pink, glossy lips"
+    ]
+  ],
+  "brow-sculpt-tint": [
+    [
+      "Brows",
+      "Brow Comparison",
+      "Upper and lower photographs comparing eyebrow shape and definition on the same face"
+    ],
+    [
+      "Brows",
+      "Brow Detail",
+      "Close-up of a shaped eyebrow and natural lashes beside a brown eye"
+    ]
+  ],
+  "male-brow-sculpt": [
+    [
+      "Lashes",
+      "Lash Comparison",
+      "Two close-up views of grey-blue eyes showing a difference in lash curl and length"
+    ]
+  ],
+  "shadow-brows": [
+    [
+      "Brows",
+      "Defined Brows",
+      "Client portrait showing strong, dark eyebrows"
+    ],
+    [
+      "Brows",
+      "Brow Portrait",
+      "Portrait of a client with curly hair and naturally defined eyebrows"
+    ],
+    [
+      "Brows",
+      "Men's Brows",
+      "Close-up portrait of a man highlighting the eyebrow and eye area"
+    ],
+    [
+      "Brows",
+      "Brow Comparison",
+      "Side-by-side close-ups showing the eyebrows and eye area from two views"
+    ],
+    [
+      "Brows",
+      "Brow Comparison",
+      "Two side-by-side portraits showing differences in brow shape and definition"
+    ]
+  ],
+  "brow-lamination": [
+    [
+      "Brows",
+      "Brow Portrait",
+      "Angled portrait showing a client's eyebrows and eyes"
+    ],
+    [
+      "Brows",
+      "Brow Shaping Process",
+      "Three stacked photographs showing eyebrow outlines and their finished appearance"
+    ],
+    [
+      "Whitening",
+      "Teeth Whitening Session",
+      "A client wearing protective glasses beneath a pink-lit teeth-whitening lamp"
+    ]
+  ],
+  "lash-lift": [
+    [
+      "Brows",
+      "Brow Portrait",
+      "Close-up portrait of a client lying down with styled eyebrows"
+    ],
+    [
+      "Lips",
+      "Lip Blush Comparison",
+      "Two close-up lip photographs labelled Lip Blushing, showing different lip tones"
+    ],
+    [
+      "Lips",
+      "Lip Colour Portrait",
+      "Client portrait with glossy rosy lips"
+    ],
+    [
+      "Lips",
+      "Lip Close-Up",
+      "Close-up of naturally textured lips with a glossy finish"
+    ],
+    [
+      "Lips",
+      "Lip Colour Comparison",
+      "Side-by-side close-ups comparing pale lips with a brighter pink lip colour"
+    ],
+    [
+      "Lips",
+      "Lip Colour Comparison",
+      "Side-by-side close-ups of lips showing differences in colour and definition"
+    ],
+    [
+      "Lips",
+      "Lip Treatment in Progress",
+      "A beauty professional using a handheld cosmetic device on a client's lips"
+    ],
+    [
+      "Lips",
+      "Lip Treatment Tools",
+      "Cosmetic lip-treatment supplies and colour products arranged on a metal tray"
+    ],
+    [
+      "Lips",
+      "Lip Treatment Collage",
+      "A collage showing a lip procedure and close-ups of the lips"
+    ]
+  ],
+  "lip-blush": [
+    [
+      "Whitening",
+      "Smile Comparison",
+      "Two close-up photographs of a smile showing lips and teeth"
+    ],
+    [
+      "Whitening",
+      "Teeth Comparison",
+      "Four close-up images of a smile showing the teeth from different angles"
+    ],
+    [
+      "Waxing",
+      "Facial Hair Removal",
+      "A professional wearing black gloves applies a product above a client's upper lip"
+    ],
+    [
+      "Skin",
+      "Dermaplaning",
+      "A professional carrying out a facial treatment with a flat blade near the cheek"
+    ],
+    [
+      "Skin",
+      "Dermaplaning Close-Up",
+      "A gloved professional using a small flat blade on the side of a client's nose"
+    ],
+    [
+      "Skin",
+      "Facial Treatment",
+      "A three-part collage showing cleansing and treatment of a client's face"
+    ]
+  ],
+  "lip-bliss-hydration": [
+    [
+      "Brows",
+      "Brow Comparison",
+      "Side-by-side images of closed eyes showing changes in eyebrow shape and density"
+    ],
+    [
+      "Brows",
+      "Brow Comparison",
+      "Two photographs of closed eyes showing styled eyebrow arches"
+    ],
+    [
+      "Brows",
+      "Brow Detail",
+      "Paired close-up photographs of closed eyes and defined eyebrows"
+    ]
+  ],
+  "dermaplaning": [
+    [
+      "Brows",
+      "Brow Comparison",
+      "Side-by-side client portraits highlighting differences in eyebrow definition"
+    ],
+    [
+      "Lashes",
+      "Eye and Brow Comparison",
+      "Side-by-side eye close-ups highlighting lashes and eyebrow definition"
+    ]
+  ],
+  "facial-spa": [
+    [
+      "Brows",
+      "Brow Close-Up",
+      "Detailed close-up of a brushed and styled eyebrow beside an eye"
+    ],
+    [
+      "Lashes",
+      "Lash Comparison",
+      "Two stacked close-up photographs of the same client's eyes and eyelashes"
+    ]
+  ],
+  "teeth-whitening": [
+    [
+      "Brows",
+      "Brow Portrait",
+      "Client portrait highlighting the eyebrows and eyes after a beauty appointment"
+    ],
+    [
+      "Brows",
+      "Brow Portrait",
+      "Front-facing portrait of a client with shaped eyebrows"
+    ],
+    [
+      "Brows",
+      "Natural Brow Detail",
+      "Close-up of a softly groomed eyebrow above a light-coloured eye"
+    ]
+  ]
+};
+
+const photoGroups = newPhotoFolders.map(({ slug, count }) => {
+  const descriptions = verifiedPhotoDescriptions[slug];
+  if (!descriptions || descriptions.length !== count) {
+    throw new Error(`Gallery metadata missing for ${slug}`);
+  }
+  return descriptions.map(([category, label, alt], index) => ({
     id: `new-${slug}-${index + 1}`,
     image: `${mediaRoot}/${slug}/${slug}-${String(index + 1).padStart(2, '0')}.webp`,
-    category, kind: 'editorial' as const, alt: `${name} at Bella Beauty Brazil — photo ${index + 1}`,
-    serviceName: name,
-  }))
-);
-// Mix the first image from each service before showing second images, so visitors
-// immediately see different categories rather than many consecutive brow photos.
-const photosInOrder = Array.from({ length: Math.max(...photoGroups.map(group => group.length)) }, (_, index) =>
-  photoGroups.flatMap(group => group[index] ? [group[index]] : [])
+    category,
+    kind: 'editorial' as const,
+    alt,
+    serviceName: label,
+  }));
+});
+
+// Rotate verified categories rather than showing a long sequence of one type.
+// All original image paths are preserved; only the correct metadata and order change.
+const orderedCategories: BellaGalleryCategory[] = ['Brows', 'Lashes', 'Lips', 'Skin', 'Whitening', 'Waxing'];
+const allVerifiedPhotos = photoGroups.flat();
+const photosInOrder = Array.from(
+  { length: Math.max(...orderedCategories.map(category => allVerifiedPhotos.filter(photo => photo.category === category).length)) },
+  (_, index) => orderedCategories.flatMap(category => {
+    const photo = allVerifiedPhotos.filter(item => item.category === category)[index];
+    return photo ? [photo] : [];
+  })
 ).flat();
 
 export const newBellaServiceGallery: BellaGalleryItem[] = photosInOrder.map(item => withSiteBase(item));
+
 // Keep two verified studio photographs in the main gallery so the dedicated
 // salon-gallery section can be removed without losing all studio imagery.
 const featuredStudioPhotos = new Set(['salon-brand-wall.webp', 'salon-client-experience.webp']);
