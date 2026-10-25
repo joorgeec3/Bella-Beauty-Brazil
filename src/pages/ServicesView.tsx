@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { ArrowRight, CalendarDays, Clock3, MapPin, Search, X } from 'lucide-react';
-import { BOOKING_URL, SERVICES, Language, getLocalizedService, getServiceBookingUrl } from '../data/siteData';
+import { BOOKING_URL, WHATSAPP_URL, SERVICES, Language, getLocalizedService, getServiceBookingUrl } from '../data/siteData';
 import { siteImages } from '../data/siteImages';
 import { SERVICE_GROUPS } from '../data/serviceGroups';
 import { approvedDescriptionFor } from '../data/approvedServiceCatalog';
@@ -123,7 +123,7 @@ export const ServicesView: React.FC<ServicesViewProps> = ({ initialServiceId, on
     setCategory('All');
   };
 
-  return <div className="bg-site">
+  return <div data-inline-booking-page className="bg-site">
     <header className="relative overflow-hidden bg-[#5b3239] text-center text-white px-4 py-12 sm:py-16">
       <img src={siteImages.editorial.skinPortrait} alt="" aria-hidden="true" className="pointer-events-none absolute left-0 top-0 h-full w-[40%] max-w-[240px] object-cover opacity-20 [mask-image:linear-gradient(to_right,black,transparent)]" />
       <div className="relative z-10">
@@ -255,6 +255,10 @@ export const ServicesView: React.FC<ServicesViewProps> = ({ initialServiceId, on
         <a href={BOOKING_URL} 
           className="inline-flex items-center justify-center gap-2 bg-[#5b3239] hover:bg-[#7a4753] text-white uppercase tracking-wide text-xs font-montserrat font-bold rounded-full px-6 py-4 shrink-0 transition-colors">
           {labels.helpCta}<ArrowRight className="w-4 h-4" aria-hidden="true" />
+        </a>
+        <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer"
+          className="inline-flex items-center justify-center rounded-full border border-[#8b5462] text-[#5b3239] text-xs font-montserrat font-bold px-5 py-4 shrink-0 hover:bg-white transition-colors">
+          {language === 'en' ? 'Ask on WhatsApp' : language === 'pt' ? 'Falar pelo WhatsApp' : 'Consultar por WhatsApp'}
         </a>
       </aside>
     </div>

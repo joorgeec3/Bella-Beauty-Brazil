@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ArrowLeft, ArrowRight, CalendarDays, ChevronDown, Clock3, Images, MapPin } from 'lucide-react';
-import { SERVICES, Language, getLocalizedService, getServiceBookingUrl, BOOKING_URL } from '../data/siteData';
+import { SERVICES, Language, getLocalizedService, getServiceBookingUrl, BOOKING_URL, WHATSAPP_URL } from '../data/siteData';
 import { getServiceGroup, SERVICE_GROUPS } from '../data/serviceGroups';
 import { APPROVED_SERVICE_CATALOG, approvedDescriptionFor } from '../data/approvedServiceCatalog';
 import { SERVICE_GUIDES } from '../data/serviceGuides';
@@ -95,13 +95,17 @@ export const ServiceCategoryView: React.FC<Props> = ({ groupId, language, onNavi
   );
   const waxLists = groupId === 'waxing' ? APPROVED_SERVICE_CATALOG.filter(cat => cat.id === 'women-waxing' || cat.id === 'men-waxing') : [];
 
-  return <div className="bg-site min-h-[70vh]">
+  return <div data-inline-booking-page className="bg-site min-h-[70vh]">
     <header className="bg-[#5b3239] text-white px-4 py-11 sm:py-16">
       <div className="max-w-6xl mx-auto">
         <button type="button" onClick={() => onNavigate('services')} className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#efb7c8] hover:text-white cursor-pointer"><ArrowLeft className="w-4 h-4" />{t.all}</button>
         <p className="font-montserrat text-xs uppercase tracking-widest text-[#efb7c8] mt-7">Bella Beauty Brazil · Greenslopes, Brisbane</p>
         <h1 className="font-raleway text-3xl sm:text-5xl uppercase tracking-wider mt-3">{group.title[language]}</h1>
         <p className="font-montserrat text-sm sm:text-base text-[#f3dfe6] mt-4 leading-relaxed max-w-2xl">{group.lead[language]}</p>
+        <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer"
+          className="inline-flex items-center rounded-full border border-[#efb7c8]/65 text-[#f3dfe6] px-4 py-2.5 mt-5 font-montserrat text-xs font-semibold hover:bg-white/10">
+          {language === 'en' ? 'Questions? WhatsApp' : language === 'pt' ? 'Dúvidas? WhatsApp' : '¿Preguntas? WhatsApp'}
+        </a>
       </div>
     </header>
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">

@@ -399,3 +399,14 @@ html { scroll-behavior: smooth; scroll-padding-top: 82px; }
     display: none !important;
   }
 }
+
+/* On treatment pages, inline Book Now and WhatsApp links replace floating
+   controls on phones and tablets. No scroll-dependent overlay on descriptions,
+   gallery navigation, booking details or expanded treatment accordions. */
+@media (max-width: 1023px) {
+  body:has([data-inline-booking-page]) #boton-flotante,
+  body:has([data-inline-booking-page]) [data-floating-whatsapp],
+  body:has([data-inline-booking-page]) [data-floating-back-to-top] {
+    display: none !important;
+  }
+}

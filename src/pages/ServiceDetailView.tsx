@@ -1,6 +1,6 @@
 import React from 'react';
 import { ArrowLeft, ArrowRight, Calendar, CheckCircle2, Clock, MapPin } from 'lucide-react';
-import { Language, SERVICES, getLocalizedService, getServiceBookingUrl, SERVICE_BOOKING_LINKS } from '../data/siteData';
+import { Language, SERVICES, getLocalizedService, getServiceBookingUrl, SERVICE_BOOKING_LINKS, WHATSAPP_URL } from '../data/siteData';
 import { siteImages } from '../data/siteImages';
 import { SERVICE_GUIDES } from '../data/serviceGuides';
 import { approvedDescriptionFor } from '../data/approvedServiceCatalog';
@@ -125,7 +125,7 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
 
 
   return (
-    <div className="bg-site" data-nano-strokes-view={base.id === 'nano-strokes' ? 'true' : undefined}>
+    <div className="bg-site" data-inline-booking-page data-nano-strokes-view={base.id === 'nano-strokes' ? 'true' : undefined}>
       <section data-floating-clearance={base.id === 'nano-strokes' ? true : undefined} className={`relative bg-[#5b3239] text-white ${base.id === 'nano-strokes' ? 'py-9 sm:py-14' : 'py-14 sm:py-20'} overflow-hidden scroll-rise`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <button type="button" onClick={() => onNavigate('services')} className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-[#efb7c8] hover:text-white cursor-pointer mb-8">
@@ -149,6 +149,10 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
                 <a href={getServiceBookingUrl(base.id)}  className="inline-flex items-center gap-2 bg-[#efb7c8] hover:bg-white text-[#5b3239] text-xs font-bold uppercase tracking-widest px-7 py-4 rounded-full cursor-pointer transition-colors">
                   <Calendar className="w-4 h-4" /> {translated(language, 'Book now', 'Agendar agora', 'Reservar ahora')}
                 </a>
+                {base.id !== 'nano-strokes' && <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 border border-white/50 hover:bg-white/10 text-white text-xs font-semibold px-5 py-4 rounded-full">
+                  {translated(language, 'WhatsApp enquiries', 'Falar pelo WhatsApp', 'Consultar por WhatsApp')}
+                </a>}
                 {hasGalleryPhotos && <a href={`#service-photos-${base.id}`} className="inline-flex items-center gap-1.5 bg-white/15 hover:bg-white/25 text-white text-xs font-bold px-5 py-4 rounded-full transition-colors">{gallery.illustrative ? translated(language, 'View related photos', 'Ver fotos relacionadas', 'Ver fotos relacionadas') : translated(language, 'See real photos', 'Ver fotos reais', 'Ver fotos reales')}<ArrowRight className="w-4 h-4" /></a>}
                 <span className="inline-flex items-center gap-2 text-xs uppercase tracking-wider text-neutral-200"><MapPin className="w-4 h-4 text-[#efb7c8]" /> Greenslopes, QLD 4120</span>
               </div>
