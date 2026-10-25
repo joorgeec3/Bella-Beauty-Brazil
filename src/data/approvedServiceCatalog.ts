@@ -1,4 +1,4 @@
-/** Client-approved October 2026 website PDF. Prices are AUD, not inferred from older Timely snapshots. */
+/** Client-approved website menu, updated from Livia's October 2026 Timely screenshot. All prices AUD. */
 export type ApprovedPrice = { name: string; aud: number; description?: string; note?: string };
 export type ApprovedCategory = { id: string; title: string; intro?: string; items: ApprovedPrice[]; footer?: string };
 export const APPROVED_SERVICE_CATALOG: ApprovedCategory[] = [
@@ -6,12 +6,14 @@ export const APPROVED_SERVICE_CATALOG: ApprovedCategory[] = [
     id: 'cosmetic', title: 'Cosmetic Tattooing',
     intro: 'Enhance your brows and lips with colour and definition designed around you. Every treatment starts with a consultation to understand your preferences and plan a result that complements your features.',
     items: [
-      { name: 'Microblading – Nano Strokes', aud: 630, note: 'Initial treatment · Touch-up at 45 days A$120', description: "Nano Strokes is an advanced form of microblading focused on creating delicate, realistic hair-like strokes. Using a manual tool called a Tebori, I design each pattern to follow the natural flow of your brow hairs, adding definition and filling gaps while respecting your individual features." },
+      { name: 'Microblading – Nano Strokes', aud: 630, note: 'Initial treatment 2h30 · Touch-up at 28–45 days A$150, 1h30, charged separately', description: "Nano Strokes is an advanced form of microblading focused on creating delicate, realistic hair-like strokes. Using a manual tool called a Tebori, I design each pattern to follow the natural flow of your brow hairs, adding definition and filling gaps while respecting your individual features." },
       { name: 'Shadow Brows', aud: 630, note: 'Initial treatment · Touch-up at 45 days A$120', description: "Shading creates a softly filled-in appearance, similar to brow powder. The shape, colour and intensity are tailored to your features and preferences, from gentle definition to a more noticeable makeup effect." },
       { name: 'Lip Blush – Lip Tattooing', aud: 630, note: 'Initial treatment · Touch-up at 50–60 days A$120', description: "Enhance your natural lip colour and add definition with a shade selected especially for you. Lip Blush uses a cosmetic tattoo machine to introduce pigment into the lips. The colour looks stronger immediately after treatment and softens as the lips heal." },
       { name: 'Cosmetic Tattoo Removal', aud: 150, description: "Looking to lighten unwanted cosmetic tattoo pigment? I use THink Pigment Remover as a non-laser removal treatment, with suitability assessed before we begin. The number of sessions needed varies depending on the existing tattoo and how your skin responds. Multiple sessions may be required." },
+      { name: 'Consultation', aud: 35, note: '20 minutes · Select appointment in Timely' },
+      { name: 'Annual Colour – From 6 to 12 months', aud: 300, note: '1 hour, 50 minutes · Select appointment in Timely' },
     ],
-    footer: 'Nano Strokes, Shadow Brows and Lip Blush are A$750 each including touch-up. A consultation is available if you are unsure which treatment to book.',
+    footer: 'Nano Strokes initial appointment A$630 (2h30); Microblading touch-up A$150 (1h30), from 28 to 45 days, charged separately. Consultation: A$35 (20 mins). Annual Colour: A$300 (1h50). Check Timely for other touch-up prices.',
   },
   {
     id: 'brows', title: 'Brow Services',

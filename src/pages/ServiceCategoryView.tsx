@@ -55,7 +55,7 @@ const TreatmentEntry: React.FC<{ id: string; language: Language; first: boolean;
       <span className="min-w-0 flex-1">
         <span className="block font-raleway text-lg sm:text-2xl font-semibold leading-snug">{service.title}</span>
         <span className="block font-montserrat text-xs sm:text-sm text-[#675960] mt-2">{price}{service.duration ? ` · ${service.duration}` : ''}</span>
-        {id === 'nano-strokes' && <span className="block font-montserrat text-[11px] sm:text-xs text-[#8b5462] mt-1">{language === 'en' ? 'Touch-up at 30–45 days: A$120 extra' : language === 'pt' ? 'Retoque após 30–45 dias: A$120 à parte' : 'Retoque a los 30–45 días: A$120 aparte'}</span>}
+        {id === 'nano-strokes' && <span className="block font-montserrat text-[11px] sm:text-xs text-[#8b5462] mt-1">{language === 'en' ? 'Touch-up 28–45 days: A$150 extra · 1h30' : language === 'pt' ? 'Retoque entre 28–45 dias: A$150 à parte · 1h30' : 'Retoque entre 28–45 días: A$150 aparte · 1h30'}</span>}
         <span className="flex items-center gap-1.5 font-montserrat text-[11px] font-bold uppercase tracking-wide text-[#9a5967] mt-3">{copy.more} <ChevronDown aria-hidden="true" className="w-4 h-4 transition-transform group-open:rotate-180" /></span>
       </span>
     </summary>
@@ -132,6 +132,27 @@ export const ServiceCategoryView: React.FC<Props> = ({ groupId, language, onNavi
           </div>
         </div>
       </details>}
+      {groupId === 'cosmetic-tattooing' && <section className="mt-8 sm:mt-10" aria-label={language === 'en' ? 'Additional cosmetic tattoo appointments' : language === 'pt' ? 'Outros atendimentos de tatuagem cosmética' : 'Otras citas de tatuaje cosmético'}>
+        <h2 className="font-raleway text-xl sm:text-2xl font-semibold text-[#5b3239] mb-2">
+          {language === 'en' ? 'Consultation & colour refresh' : language === 'pt' ? 'Consulta e manutenção da cor' : 'Consulta y mantenimiento del color'}
+        </h2>
+        <p className="font-montserrat text-xs text-[#675960] mb-4">
+          {language === 'en' ? 'Additional appointments listed in the updated Timely menu.' : language === 'pt' ? 'Atendimentos adicionais do menu Timely atualizado.' : 'Citas adicionales del menú Timely actualizado.'}
+        </p>
+        <div className="grid sm:grid-cols-2 gap-3">
+          {[
+            { id: 'consultation', title: { en: 'Consultation', pt: 'Consulta', es: 'Consulta' }, duration: { en: '20 minutes', pt: '20 minutos', es: '20 minutos' }, price: 35 },
+            { id: 'annual-colour', title: { en: 'Annual Colour · 6–12 months', pt: 'Manutenção anual da cor · 6–12 meses', es: 'Mantenimiento anual del color · 6–12 meses' }, duration: { en: '1 hour, 50 minutes', pt: '1 hora e 50 minutos', es: '1 hora y 50 minutos' }, price: 300 },
+          ].map(item => <div key={item.id} className="bg-white border border-[#e8d6d5] rounded-xl p-4 sm:p-5 flex flex-col gap-2">
+            <h3 className="font-raleway text-base sm:text-lg font-semibold text-[#5b3239]">{item.title[language]}</h3>
+            <p className="font-montserrat text-xs text-[#675960]">{item.duration[language]}</p>
+            <strong className="font-montserrat text-lg text-[#5b3239]">A${item.price}</strong>
+            <a href={BOOKING_URL} className="mt-1 font-montserrat text-xs font-semibold underline underline-offset-4 text-[#7a4753]">
+              {language === 'en' ? 'Find this appointment on Timely' : language === 'pt' ? 'Encontrar este atendimento no Timely' : 'Encontrar esta cita en Timely'}
+            </a>
+          </div>)}
+        </div>
+      </section>}
       {waxLists.length>0 && <section className="mt-12" aria-label={t.extra}>
         <h2 className="font-raleway text-2xl sm:text-3xl text-[#5b3239] mb-5">{t.extra}</h2>
         <div className="grid md:grid-cols-2 gap-5">{waxLists.map(list => <div key={list.id} className="rounded-2xl bg-white border border-[#e8d6d5] p-5 sm:p-6">

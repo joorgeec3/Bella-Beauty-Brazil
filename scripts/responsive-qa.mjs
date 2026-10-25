@@ -73,7 +73,7 @@ try {
       assert(await nano.count() === 1,'Nano Strokes category entry missing');
       if(!(await nano.evaluate(el=>el.open))) await nano.locator('summary').click();
       assert((await nano.innerText()).includes('About this treatment'));
-      assert((await nano.innerText()).includes('Touch-up at 30–45 days: A$120'));
+      assert((await nano.innerText()).includes('Touch-up from 28 to 45 days: A$150'));
       assert(await nano.locator('a[href*="gettimely.com"]').count()>0);
       assert(await nano.locator('a[href*="wa.me"]').count()>0);
       const thumbnailPhotos = await nano.locator('#service-photos-nano-strokes button img').evaluateAll(imgs=>imgs.map(img=>img.getAttribute('src')));
@@ -84,7 +84,7 @@ try {
     await run(width + 'px Nano Strokes page, images, aftercare and CTAs', async()=>{
       await visit('/services/nano-strokes');
       const body = await page.locator('body').innerText();
-      for(const phrase of ['About this treatment','Is this treatment right for me?','Fine, natural-looking hair strokes','Initial appointment: A$630','Touch-up at 30–45 days: A$120','Before','After','How long do Nano Strokes last?']){
+      for(const phrase of ['About this treatment','Is this treatment right for me?','Fine, natural-looking hair strokes','Initial appointment: A$630','Touch-up from 28 to 45 days: A$150','Before','After','How long do Nano Strokes last?']){
         assert(body.includes(phrase),'Missing approved Nano copy: '+phrase);
       }
       assert(!body.includes('How does it work?'),'Duplicate How does it work remains');
