@@ -143,6 +143,11 @@ export const NanoStrokesContent: React.FC<{language: Language; media?: React.Rea
 }) => {
   const t = copy[language];
   return <div data-floating-clearance className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-7 sm:py-10 space-y-4 sm:space-y-6">
+    {showPrice && <section className="rounded-2xl bg-[#f3d9d0] border border-[#e8c5c8] p-5 sm:p-7">
+      <h2 className={heading}>{t.priceTitle}</h2>
+      <p className="flex gap-2 items-start font-montserrat text-sm text-[#5b3239] font-semibold mt-3"><Clock3 className="w-4 h-4 mt-0.5 shrink-0"/>{t.initial}</p>
+      <p className="font-montserrat text-sm text-[#5b3239] mt-2">{t.touchUp}</p>
+    </section>}
     <section className={section}>
       <h2 className={heading}>{t.aboutTitle}</h2>
       <p className="font-montserrat text-sm sm:text-base text-[#54464b] leading-relaxed mt-3">{t.about}</p>
@@ -157,11 +162,7 @@ export const NanoStrokesContent: React.FC<{language: Language; media?: React.Rea
         {t.benefits.map(text => <li key={text} className="flex items-start gap-2 text-sm text-[#54464b] font-montserrat"><CheckCircle2 className="w-4 h-4 shrink-0 text-[#9a5967] mt-0.5"/>{text}</li>)}
       </ul>
     </section>
-    {showPrice && <section className="rounded-2xl bg-[#f3d9d0] border border-[#e8c5c8] p-5 sm:p-7">
-      <h2 className={heading}>{t.priceTitle}</h2>
-      <p className="flex gap-2 items-start font-montserrat text-sm text-[#5b3239] font-semibold mt-3"><Clock3 className="w-4 h-4 mt-0.5 shrink-0"/>{t.initial}</p>
-      <p className="font-montserrat text-sm text-[#5b3239] mt-2">{t.touchUp}</p>
-    </section>}
+
     {media}
     <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
       <section className={section}>

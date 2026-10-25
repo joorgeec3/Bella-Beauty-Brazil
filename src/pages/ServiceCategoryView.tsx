@@ -55,6 +55,7 @@ const TreatmentEntry: React.FC<{ id: string; language: Language; first: boolean;
       <span className="min-w-0 flex-1">
         <span className="block font-raleway text-lg sm:text-2xl font-semibold leading-snug">{service.title}</span>
         <span className="block font-montserrat text-xs sm:text-sm text-[#675960] mt-2">{price}{service.duration ? ` · ${service.duration}` : ''}</span>
+        {id === 'nano-strokes' && <span className="block font-montserrat text-[11px] sm:text-xs text-[#8b5462] mt-1">{language === 'en' ? 'Touch-up at 30–45 days: A$120 extra' : language === 'pt' ? 'Retoque após 30–45 dias: A$120 à parte' : 'Retoque a los 30–45 días: A$120 aparte'}</span>
         <span className="flex items-center gap-1.5 font-montserrat text-[11px] font-bold uppercase tracking-wide text-[#9a5967] mt-3">{copy.more} <ChevronDown aria-hidden="true" className="w-4 h-4 transition-transform group-open:rotate-180" /></span>
       </span>
     </summary>

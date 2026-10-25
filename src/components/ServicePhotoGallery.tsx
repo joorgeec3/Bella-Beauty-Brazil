@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ArrowLeft, ArrowRight, ExternalLink, Images } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ExternalLink, Images, X } from 'lucide-react';
 import { Language } from '../data/siteData';
 
 
@@ -18,11 +18,26 @@ export const ServicePhotoGallery: React.FC<{ serviceId: string; language: Langua
   const photos = serviceId === 'nano-strokes'
     ? [...allFiltered].sort((a,b) => nanoPriority.findIndex(name => a.src.endsWith(name)) - nanoPriority.findIndex(name => b.src.endsWith(name)))
     : allFiltered;
-  const needsNanoRotation = (src: string) => serviceId === 'nano-strokes' && /\/(01|02|04|05|10)\.webp(?:\?.*)?$/.test(src);
+  // Source photographs 01, 02 and 05 turn left; 04 and 10 turn right.
+  // Using their actual orientations avoids upside-down brows on mobile.
+  const nanoRotation = (src: string) =>
+    serviceId !== 'nano-strokes' ? '' :
+    /\/(01|02|05)\.webp(?:\?.*)?$/.test(src) ? 'nano-turn-left' :
+    /\/(04|10)\.webp(?:\?.*)?$/.test(src) ? 'nano-turn-right' : '';
+  const isNano = serviceId === 'nano-strokes';
   const [index, setIndex] = useState(0);
+  const [fullscreen, setFullscreen] = useState(false);
+  useEffect(() => {
+    if (!fullscreen) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setFullscreen(false);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [fullscreen]);
   // Switching between related services should always open at the first real photo.
   // The router reuses this component, so local state otherwise leaks across treatments.
-  useEffect(() => setIndex(0), [serviceId]);
+  useEffect(() => {setIndex(0); setFullscreen(false)}, [serviceId]);
   if (!photos.length) return null;
   const labels = {
     en: { heading: 'Real photos from the studio', lead: 'Browse the photos supplied by Bella Beauty Brazil.', illustrativeHeading: 'Related studio photos', illustrativeLead: 'Photographs from related treatments or the studio, not results of this particular service.', prev: 'Previous photo', next: 'Next photo', full: 'Open full photo', note: 'Brow styling photographs show the studio and technique, not a promised result for a particular tint or tattoo service.' },
@@ -43,8 +58,11 @@ export const ServicePhotoGallery: React.FC<{ serviceId: string; language: Langua
           </div>
           <span className="font-montserrat text-sm tabular-nums text-[#75525c]">{index + 1} / {photos.length}</span>
         </div>
-        <div className="relative overflow-hidden rounded-2xl bg-[#eee2df] border border-[#e8d6d5]">
-          <img src={current.src} alt={current.alt} loading="eager" className={`w-full h-[290px] sm:h-[410px] lg:h-[480px] object-contain bg-[#f5eeec] ${needsNanoRotation(current.src) ? '-rotate-90' : ''}`} />
+        <div className={`relative overflow-hidden rounded-2xl bg-[#eee2df] border border-[#e8d6d5] ${isNano ? 'nano-photo-frame' : ''}`}>
+          <img src={current.src} alt={current.alt} loading="eager"
+            className={isNano
+              ? nanoRotation(current.src) ? `nano-rotated-image ${nanoRotation(current.src)}` : 'w-full h-full object-contain bg-[#f5eeec]'
+              : 'w-full h-[290px] sm:h-[410px] lg:h-[480px] object-contain bg-[#f5eeec]'} />
           {photos.length > 1 && <>
             <button type="button" onClick={() => move(-1)} aria-label={labels.prev} className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 bg-white/95 text-[#5b3239] p-3 rounded-full shadow-lg hover:bg-[#efb7c8] cursor-pointer"><ArrowLeft className="w-5 h-5" /></button>
             <button type="button" onClick={() => move(1)} aria-label={labels.next} className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 bg-white/95 text-[#5b3239] p-3 rounded-full shadow-lg hover:bg-[#efb7c8] cursor-pointer"><ArrowRight className="w-5 h-5" /></button>
@@ -52,15 +70,28 @@ export const ServicePhotoGallery: React.FC<{ serviceId: string; language: Langua
         </div>
         <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
           <p className="font-montserrat text-sm text-[#675960]">{current.caption}</p>
-          <a href={current.src} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-xs font-bold text-[#5b3239] underline underline-offset-2 shrink-0">{labels.full}<ExternalLink className="w-3.5 h-3.5" /></a>
+          {isNano
+            ? <button type="button" onClick={() => setFullscreen(true)} className="inline-flex items-center gap-1 text-xs font-bold text-[#5b3239] underline underline-offset-2 shrink-0 cursor-pointer">{labels.full}<ExternalLink className="w-3.5 h-3.5" /></button>
+            : <a href={current.src} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-xs font-bold text-[#5b3239] underline underline-offset-2 shrink-0">{labels.full}<ExternalLink className="w-3.5 h-3.5" /></a>}
         </div>
         {photos.length > 1 && <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-3 mt-5">
-          {photos.map((photo, position) => <button type="button" key={photo.src} onClick={() => setIndex(position)} aria-label={photo.caption} aria-pressed={index === position} className={`overflow-hidden rounded-xl border-2 cursor-pointer focus-visible:outline-2 focus-visible:outline-[#9a5967] ${index === position ? 'border-[#9a5967]' : 'border-transparent'}`}>
-            <img src={photo.src} alt={photo.alt} loading="lazy" className={`w-full h-24 sm:h-36 ${serviceId === 'nano-strokes' ? 'object-contain bg-[#f5eeec]' : 'object-cover'} ${needsNanoRotation(photo.src) ? '-rotate-90' : ''}`} />
+          {photos.map((photo, position) => <button type="button" key={photo.src} onClick={() => setIndex(position)} aria-label={photo.caption} aria-pressed={index === position} className={`overflow-hidden rounded-xl border-2 cursor-pointer focus-visible:outline-2 focus-visible:outline-[#9a5967] ${isNano ? 'nano-thumb-frame' : ''} ${index === position ? 'border-[#9a5967]' : 'border-transparent'}`}>
+            <img src={photo.src} alt={photo.alt} loading="lazy" className={isNano
+              ? nanoRotation(photo.src) ? `nano-rotated-image ${nanoRotation(photo.src)}` : 'w-full h-full object-contain bg-[#f5eeec]'
+              : 'w-full h-24 sm:h-36 object-cover'} />
           </button>)}
         </div>}
         {browEditorial && !illustrative && <p className="font-montserrat text-xs text-[#846f75] leading-relaxed mt-4">{labels.note}</p>}
       </div>
+      {isNano && fullscreen && <div role="presentation" className="fixed inset-0 z-[100] bg-[#1e1418]/95 flex items-center justify-center p-3 sm:p-6" onMouseDown={(event) => {if(event.target === event.currentTarget) setFullscreen(false)}}>
+        <div role="dialog" aria-modal="true" aria-label={labels.full} className="relative bg-[#f5eeec] rounded-2xl p-3 sm:p-5 max-w-full shadow-2xl">
+          <button type="button" onClick={() => setFullscreen(false)} aria-label={language==='en'?'Close photo':language==='pt'?'Fechar foto':'Cerrar foto'} className="absolute top-2 right-2 z-10 rounded-full bg-white shadow-md text-[#5b3239] p-3 cursor-pointer"><X className="w-5 h-5"/></button>
+          <div className="nano-full-photo-frame">
+            <img src={current.src} alt={current.alt} className={nanoRotation(current.src) ? `nano-rotated-image ${nanoRotation(current.src)}` : 'h-full w-full object-contain'} />
+          </div>
+          <p className="max-w-[90vw] font-montserrat text-sm text-[#5b3239] text-center mt-3">{current.caption}</p>
+        </div>
+      </div>}
     </section>
   );
 };

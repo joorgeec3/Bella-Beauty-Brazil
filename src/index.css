@@ -344,3 +344,58 @@ html { scroll-behavior: smooth; scroll-padding-top: 82px; }
   [data-floating-whatsapp] { right: max(0.75rem, env(safe-area-inset-right, 0px)); bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px)); }
   [data-floating-whatsapp] > div:last-child button { width: 3rem; height: 3rem; }
 }
+
+/* Nano Strokes: show genuinely upright eyebrow images without cropping.
+   Source files are unmodified; the sideways originals are straightened in the
+   gallery and in its full-photo preview. Container units reserve rotated width. */
+.nano-photo-frame {
+  --nano-frame-h: 290px;
+  height: var(--nano-frame-h);
+  container-type: inline-size;
+}
+.nano-thumb-frame {
+  --nano-frame-h: 6rem;
+  height: var(--nano-frame-h);
+  position: relative;
+  container-type: inline-size;
+}
+.nano-full-photo-frame {
+  --nano-frame-h: 72dvh;
+  height: var(--nano-frame-h);
+  width: min(90vw, 1050px);
+  position: relative;
+  overflow: hidden;
+  container-type: inline-size;
+}
+.nano-rotated-image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--nano-frame-h);
+  height: 100cqw;
+  max-width: none;
+  max-height: none;
+  object-fit: contain;
+  transform-origin: center;
+}
+.nano-turn-left { transform: translate(-50%, -50%) rotate(-90deg); }
+.nano-turn-right { transform: translate(-50%, -50%) rotate(90deg); }
+@media (min-width: 640px) {
+  .nano-photo-frame { --nano-frame-h: 410px; }
+  .nano-thumb-frame { --nano-frame-h: 9rem; }
+}
+@media (min-width: 1024px) {
+  .nano-photo-frame { --nano-frame-h: 480px; }
+}
+/* On Nano Strokes, booking and WhatsApp have clearly labelled inline CTAs.
+   Withdraw the floating duplicates on mobile/tablet entirely; unlike scroll
+   observers this also covers navigation and first paint with no overlay flash. */
+@media (max-width: 1023px) {
+  body:has([data-nano-strokes-view="true"]) #boton-flotante,
+  body:has([data-nano-strokes-view="true"]) [data-floating-whatsapp],
+  body:has([data-nano-strokes-view="true"]) [data-floating-back-to-top],
+  body:has(#treatment-nano-strokes[open]) #boton-flotante,
+  body:has(#treatment-nano-strokes[open]) [data-floating-whatsapp] {
+    display: none !important;
+  }
+}
