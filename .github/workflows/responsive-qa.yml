@@ -1,6 +1,11 @@
 name: Responsive UI QA
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/responsive-qa.mjs'
+      - '.github/workflows/responsive-qa.yml'
   pull_request:
     paths:
       - 'src/**'
