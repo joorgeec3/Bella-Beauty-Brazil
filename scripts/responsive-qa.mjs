@@ -74,6 +74,8 @@ try {
       if(!(await nano.evaluate(el=>el.open))) await nano.locator('summary').click();
       assert((await nano.innerText()).includes('About this treatment'));
       assert((await nano.innerText()).includes('Touch-up from 28 to 45 days: A$150'));
+      const lip = page.locator('#treatment-lip-blush');
+      assert((await lip.innerText()).includes('Touch-up from 28–45 days'), 'Lip Blush touch-up timeline does not match Timely screenshot');
       assert(await nano.locator('a[href*="gettimely.com"]').count()>0);
       assert(await nano.locator('a[href*="wa.me"]').count()>0);
       const thumbnailPhotos = await nano.locator('#service-photos-nano-strokes button img').evaluateAll(imgs=>imgs.map(img=>img.getAttribute('src')));
