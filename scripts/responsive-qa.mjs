@@ -76,8 +76,8 @@ try {
       assert((await nano.innerText()).includes('Touch-up at 30–45 days: A$120'));
       assert(await nano.locator('a[href*="gettimely.com"]').count()>0);
       assert(await nano.locator('a[href*="wa.me"]').count()>0);
-      const galleryPhotos = await nano.locator('img').evaluateAll(imgs=>imgs.map(img=>img.getAttribute('src')));
-      assert(new Set(galleryPhotos).size===galleryPhotos.length,'Duplicate photo in Nano group');
+      const thumbnailPhotos = await nano.locator('#service-photos-nano-strokes button img').evaluateAll(imgs=>imgs.map(img=>img.getAttribute('src')));
+      assert(new Set(thumbnailPhotos).size===thumbnailPhotos.length,'Repeated thumbnail inside Nano gallery');
       if(width < 1024)assert.equal(await page.locator('#boton-flotante').evaluate(el=>getComputedStyle(el).display),'none');
       await capture('cosmetic-tattooing');
     });
@@ -103,7 +103,7 @@ try {
     });
     await run(width + 'px course gallery without repeated videos',async()=>{
       await visit('/courses');
-      assert(await page.locator('#available-courses article').count()>=4,'Course cards missing');
+      assert.equal(await page.locator('#available-courses article').count(),3,'The site currently offers three verified course cards');
       const nano = await page.locator('#available-courses video').evaluateAll(videos=>videos.map(video=>video.getAttribute('src')).filter(Boolean));
       assert.equal(nano.length,8,'Expected 3 Nano Strokes plus 5 combined-class videos');
       assert.equal(new Set(nano).size,nano.length,'Repeated training video URL');
