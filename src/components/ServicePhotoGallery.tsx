@@ -11,7 +11,14 @@ export const getServiceGallery = serviceGalleryFor;
 export const ServicePhotoGallery: React.FC<{ serviceId: string; language: Language; excludeSrc?: string }> = ({ serviceId, language, excludeSrc }) => {
   const { photos: allPhotos, illustrative } = getServiceGallery(serviceId);
   // Hide the main cover photograph from the gallery immediately below it.
-  const photos = allPhotos.filter(photo => photo.src !== excludeSrc);
+  const allFiltered = allPhotos.filter(photo => photo.src !== excludeSrc);
+  // Lead with genuinely upright eyebrow results. Keep the full original
+  // set and straighten the sideways source thumbnails when displayed.
+  const nanoPriority = ['03.webp', '06.webp', '07.webp', '09.webp', '01.webp', '02.webp', '04.webp', '05.webp', '10.webp'];
+  const photos = serviceId === 'nano-strokes'
+    ? [...allFiltered].sort((a,b) => nanoPriority.findIndex(name => a.src.endsWith(name)) - nanoPriority.findIndex(name => b.src.endsWith(name)))
+    : allFiltered;
+  const needsNanoRotation = (src: string) => serviceId === 'nano-strokes' && /\/(01|02|04|05|10)\.webp(?:\?.*)?$/.test(src);
   const [index, setIndex] = useState(0);
   // Switching between related services should always open at the first real photo.
   // The router reuses this component, so local state otherwise leaks across treatments.
@@ -26,7 +33,7 @@ export const ServicePhotoGallery: React.FC<{ serviceId: string; language: Langua
   const move = (direction: number) => setIndex((value) => (value + direction + photos.length) % photos.length);
   const browEditorial = serviceId === 'shadow-hybrid';
   return (
-    <section id={`service-photos-${serviceId}`} aria-labelledby={`service-photos-heading-${serviceId}`} className="bg-[#fffaf9] px-4 sm:px-6 lg:px-8 py-10 sm:py-14 border-b border-[#e8d6d5]">
+    <section id={`service-photos-${serviceId}`} aria-labelledby={`service-photos-heading-${serviceId}`} className={`bg-[#fffaf9] px-4 sm:px-6 lg:px-8 ${serviceId === 'nano-strokes' ? 'py-5 sm:py-8' : 'py-10 sm:py-14'} border-b border-[#e8d6d5]`}>
       <div className="max-w-6xl mx-auto">
         <div className="flex flex-wrap items-end justify-between gap-3 mb-6">
           <div>
@@ -37,7 +44,7 @@ export const ServicePhotoGallery: React.FC<{ serviceId: string; language: Langua
           <span className="font-montserrat text-sm tabular-nums text-[#75525c]">{index + 1} / {photos.length}</span>
         </div>
         <div className="relative overflow-hidden rounded-2xl bg-[#eee2df] border border-[#e8d6d5]">
-          <img src={current.src} alt={current.alt} loading="eager" className="w-full h-[320px] sm:h-[440px] lg:h-[520px] object-contain bg-[#f5eeec]" />
+          <img src={current.src} alt={current.alt} loading="eager" className={`w-full h-[290px] sm:h-[410px] lg:h-[480px] object-contain bg-[#f5eeec] ${needsNanoRotation(current.src) ? '-rotate-90' : ''}`} />
           {photos.length > 1 && <>
             <button type="button" onClick={() => move(-1)} aria-label={labels.prev} className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 bg-white/95 text-[#5b3239] p-3 rounded-full shadow-lg hover:bg-[#efb7c8] cursor-pointer"><ArrowLeft className="w-5 h-5" /></button>
             <button type="button" onClick={() => move(1)} aria-label={labels.next} className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 bg-white/95 text-[#5b3239] p-3 rounded-full shadow-lg hover:bg-[#efb7c8] cursor-pointer"><ArrowRight className="w-5 h-5" /></button>
@@ -49,7 +56,7 @@ export const ServicePhotoGallery: React.FC<{ serviceId: string; language: Langua
         </div>
         {photos.length > 1 && <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-3 mt-5">
           {photos.map((photo, position) => <button type="button" key={photo.src} onClick={() => setIndex(position)} aria-label={photo.caption} aria-pressed={index === position} className={`overflow-hidden rounded-xl border-2 cursor-pointer focus-visible:outline-2 focus-visible:outline-[#9a5967] ${index === position ? 'border-[#9a5967]' : 'border-transparent'}`}>
-            <img src={photo.src} alt={photo.alt} loading="lazy" className="w-full h-24 sm:h-36 object-cover" />
+            <img src={photo.src} alt={photo.alt} loading="lazy" className={`w-full h-24 sm:h-36 ${serviceId === 'nano-strokes' ? 'object-contain bg-[#f5eeec]' : 'object-cover'} ${needsNanoRotation(photo.src) ? '-rotate-90' : ''}`} />
           </button>)}
         </div>}
         {browEditorial && !illustrative && <p className="font-montserrat text-xs text-[#846f75] leading-relaxed mt-4">{labels.note}</p>}

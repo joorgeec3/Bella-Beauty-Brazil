@@ -22,7 +22,7 @@ export const INSTAGRAM_URL = 'https://www.instagram.com/bellabeautybrazil/';
 export const WHATSAPP_URL = 'https://wa.me/61402148437';
 
 const copy = {
-  microblading: 'Semi-permanent brow artistry designed to create realistic, natural-looking hair strokes.',
+  microblading: 'I use manual Tebori microblading to create delicate, natural-looking hair strokes, filling sparse areas and tailoring the brow shape to your features.',
   lipBlush: 'Semi-permanent cosmetic tattooing to enhance the natural tone and shape of the lips.',
   brows: 'A personalised brow shape, sculpt and tint service tailored to your features.',
   lashes: 'Lash lifting, tinting and extensions to frame the eyes with a polished finish.',
@@ -31,7 +31,7 @@ const copy = {
 };
 
 export const SERVICES: Service[] = [
-  { id: 'nano-strokes', title: 'Microblading - Nano Strokes', subtitle: 'Cosmetic Tattooing', description: copy.microblading, image: siteImages.services.microblading, price: 630, duration: '2 hours, 30 mins', category: 'Brows', benefits: ['Natural-looking hair strokes', 'Personalised brow mapping', 'Professional semi-permanent finish'] },
+  { id: 'nano-strokes', title: 'Microblading - Nano Strokes', subtitle: 'Cosmetic Tattooing', description: copy.microblading, image: siteImages.services.microblading, price: 630, duration: '2 hours, 30 mins', category: 'Brows', benefits: ['Fine, natural-looking hair strokes', 'Personalised brow mapping', 'Definition for sparse areas'] },
   { id: 'shadow-brows', title: 'Shadow Brows', subtitle: 'Cosmetic Tattooing', description: 'Soft powder-style brow shading tailored to your desired shape and colour, from subtle definition to a more noticeable makeup effect.', image: siteImages.client.browTools, price: 630, category: 'Brows', benefits: ['Soft, shaded finish', 'Personalised brow shape and colour', 'Colour appears stronger initially and softens as the brows heal'] },
   { id: 'lip-blush', title: 'Lip Blush', subtitle: 'Cosmetic Tattooing', description: copy.lipBlush, image: siteImages.services.lipBlush, price: 630, duration: '2 hours, 30 mins', category: 'Lips', benefits: ['Soft, natural-looking lip colour', 'More defined lip borders', 'Personalised shade selection', 'Colour appears stronger initially and softens as the lips heal'] },
   { id: 'cosmetic-tattoo-removal', title: 'Cosmetic Tattoo Removal', subtitle: 'Cosmetic Tattooing', description: 'A non-laser treatment using THink Pigment Remover to lighten unwanted cosmetic tattoo pigment. The number of sessions depends on your tattoo and skin response; a suitability assessment comes first.', image: siteImages.aboutMe.treatmentRoom, price: 150, category: 'Brows', benefits: ['Non-laser pigment removal', 'Individual suitability assessment', 'Sessions depend on pigment and skin response'] },
@@ -67,7 +67,7 @@ const SERVICE_COPY: Record<string, { pt: string; es: string }> = {
   'wet-look-lashes': { pt: 'Extensão de cílios de aparência mais escura, densa e texturizada.', es: 'Extensiones de pestañas con acabado oscuro, denso y texturizado.' },
   'lash-tint': { pt: 'Tintura para dar cor e definição aos cílios naturais, sem lifting.', es: 'Tinte para dar color y definición a las pestañas naturales, sin lifting.' },
   'lash-extension-removal': { pt: 'Remoção profissional de extensões de cílios com produto específico.', es: 'Retirada profesional de extensiones de pestañas con producto específico.' },
-  'nano-strokes': { pt: 'Arte semipermanente para sobrancelhas, com fios realistas e naturais.', es: 'Arte semipermanente para cejas, con trazos realistas y naturales.' },
+  'nano-strokes': { pt: 'Uso a ferramenta manual Tebori para criar fios delicados de aparência natural, preencher falhas e valorizar seus traços.', es: 'Uso una herramienta manual Tebori para crear trazos delicados de aspecto natural, rellenar zonas despobladas y realzar tus rasgos.' },
   'shadow-brows': { pt: 'Sombreamento suave com efeito de maquiagem para sobrancelhas, com formato e cor personalizados.', es: 'Sombreado suave de cejas con efecto maquillaje, forma y color personalizados.' },
   'lip-blush': { pt: 'Tatuagem cosmética semipermanente para realçar o tom e o formato natural dos lábios.', es: 'Tatuaje cosmético semipermanente para realzar el tono y la forma natural de los labios.' },
   'brow-sculpt': { pt: 'Modelagem personalizada das sobrancelhas, com mapeamento, aparo cuidadoso, depilação com cera e pinça quando necessário. Cada atendimento valoriza o formato natural e preserva o volume dos fios. Tintura e dye não estão incluídos.', es: 'Diseño personalizado de cejas con mapeo, recorte cuidadoso, depilación con cera y pinzas cuando sea necesario. Cada cita realza la forma natural y mantiene la densidad. No incluye tinte ni dye.' },
@@ -91,7 +91,7 @@ const SERVICE_COPY: Record<string, { pt: string; es: string }> = {
 
 const SERVICE_BENEFITS: Record<string, { pt: string[]; es: string[] }> = {
   'brow-sculpt': { pt: ['Mapeamento personalizado das sobrancelhas', 'Formato definido e bem cuidado', 'Volume natural preservado'], es: ['Diseño personalizado de cejas', 'Forma definida y cuidada', 'Densidad natural preservada'] },
-  'nano-strokes': { pt: ['Fios de aparência natural', 'Mapeamento personalizado das sobrancelhas', 'Acabamento semipermanente profissional'], es: ['Trazos de apariencia natural', 'Diseño personalizado de cejas', 'Acabado semipermanente profesional'] },
+  'nano-strokes': { pt: ['Fios finos com aparência natural', 'Mapeamento personalizado', 'Definição para áreas com falhas'], es: ['Trazos finos de aspecto natural', 'Diseño personalizado', 'Definición para zonas despobladas'] },
   'shadow-hybrid': { pt: ['Escultura e modelagem', 'Acabamento Hybrid', 'Styling personalizado'], es: ['Esculpido y diseño', 'Acabado Hybrid', 'Styling personalizado'] },
   'lip-blush': { pt: ['Cor natural dos lábios', 'Realce do formato', 'Tratamento orientado por consulta'], es: ['Color natural de labios', 'Realce de la forma', 'Tratamiento guiado por consulta'] },
   'brow-sculpt-tint': { pt: ['Escultura e formato', 'Tintura incluída', 'Orientação de cuidados'], es: ['Esculpido y diseño', 'Tinte incluido', 'Orientación de cuidados'] },

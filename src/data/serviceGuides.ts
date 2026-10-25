@@ -70,23 +70,23 @@ export const SERVICE_GUIDES: Partial<Record<string, Record<Language, ServiceGuid
   },
   'nano-strokes': {
     en: {
-      idealFor: 'For clients who prefer the look of individual brow hairs rather than a heavily filled-in brow. Livia can assess your existing brows, desired shape and whether cosmetic tattooing is appropriate for you.',
-      comparison: 'Nano Strokes and Microblading both aim for a hair-stroke appearance, but the tools and application technique can differ. Brow Sculpt & Tint colours and shapes existing hairs without creating cosmetic tattoo strokes; Hybrid Brows is also a styling service in the published Timely catalogue.',
-      question: 'Should I choose Nano Strokes or Brow Sculpt & Tint?',
-      answer: 'Choose based on whether you want to explore semi-permanent hair-stroke cosmetic tattooing or a temporary brow styling appointment. Ask Bella Beauty Brazil which service suits your goals before booking.'
+      idealFor: 'For those wanting more definition with a natural hair-stroke appearance. I assess your skin, existing brows and any previous tattooing before recommending the most suitable technique.',
+      comparison: '',
+      question: 'Is this treatment right for me?',
+      answer: 'I assess your skin, natural brow growth and previous cosmetic tattooing during the consultation to discuss the most suitable approach.',
     },
     pt: {
-      idealFor: 'Para quem prefere um efeito de fios individuais nas sobrancelhas, em vez de um preenchimento marcado. Livia pode avaliar os fios existentes, o formato desejado e a indicação da tatuagem cosmética.',
-      comparison: 'Nano Strokes e Microblading buscam um efeito de fios realistas, mas podem utilizar ferramentas e técnicas de aplicação diferentes. Brow Sculpt & Tint modela e colore os fios existentes sem tatuagem cosmética; Hybrid Brows é um serviço de styling no catálogo Timely.',
-      question: 'Devo escolher Nano Strokes ou Brow Sculpt & Tint?',
-      answer: 'Depende se você deseja avaliar uma tatuagem cosmética semipermanente com efeito de fios ou um serviço temporário de modelagem. Consulte a Bella Beauty Brazil antes de agendar.'
+      idealFor: 'Para quem deseja maior definição com aparência natural de fios. Avalio sua pele, sobrancelhas e tatuagens anteriores antes de recomendar a técnica mais adequada.',
+      comparison: '',
+      question: 'Este tratamento é adequado para mim?',
+      answer: 'Avalio sua pele, o crescimento natural dos pelos e qualquer tatuagem anterior durante a consulta.',
     },
     es: {
-      idealFor: 'Para quienes prefieren un efecto de vellos individuales en las cejas, en lugar de un relleno intenso. Livia puede evaluar las cejas existentes, la forma deseada y la idoneidad del tatuaje cosmético.',
-      comparison: 'Nano Strokes y Microblading buscan un efecto de trazos realistas, pero las herramientas y técnicas pueden variar. Brow Sculpt & Tint da forma y color al pelo existente sin tatuaje cosmético; Hybrid Brows es un servicio de diseño en el catálogo Timely.',
-      question: '¿Debo elegir Nano Strokes o Brow Sculpt & Tint?',
-      answer: 'Depende de si quieres explorar un tatuaje cosmético semipermanente o un servicio temporal de diseño. Consulta con Bella Beauty Brazil antes de reservar.'
-    }
+      idealFor: 'Para quienes desean más definición con trazos de aspecto natural. Evalúo tu piel, cejas y tatuajes anteriores antes de recomendar la técnica adecuada.',
+      comparison: '',
+      question: '¿Es adecuado para mí?',
+      answer: 'Evalúo tu piel, el crecimiento natural del vello y los tatuajes anteriores durante la consulta.',
+    },
   },
   'shadow-hybrid': {
     en: {

@@ -4,6 +4,7 @@ import { SERVICES, Language, getLocalizedService, getServiceBookingUrl, BOOKING_
 import { getServiceGroup, SERVICE_GROUPS } from '../data/serviceGroups';
 import { APPROVED_SERVICE_CATALOG, approvedDescriptionFor } from '../data/approvedServiceCatalog';
 import { SERVICE_GUIDES } from '../data/serviceGuides';
+import { NanoStrokesContent } from '../components/NanoStrokesContent';
 import { serviceCoverFor } from '../data/serviceCoverPhotos';
 import { getServiceGallery, ServicePhotoGallery } from '../components/ServicePhotoGallery';
 import { ServiceVideoGallery } from '../components/ServiceVideoGallery';
@@ -58,6 +59,12 @@ const TreatmentEntry: React.FC<{ id: string; language: Language; first: boolean;
       </span>
     </summary>
     {open && <div className="border-t border-[#f0e3e4]">
+      {id === 'nano-strokes'
+        ? <NanoStrokesContent language={language} media={<>
+            {photoSet.photos.some(photo => photo.src !== cover?.src) && <ServicePhotoGallery serviceId={id} language={language} excludeSrc={cover?.src} />}
+            <ServiceVideoGallery serviceId={id} language={language} />
+          </>} />
+        : <>
       <div className="p-5 sm:p-7">
         <p className="font-montserrat text-sm sm:text-base text-[#55464c] leading-relaxed">{desc}</p>
         {cover && !cover.specific && <p className="font-montserrat text-xs text-[#846f75] mt-3">{copy.note}</p>}
@@ -69,6 +76,7 @@ const TreatmentEntry: React.FC<{ id: string; language: Language; first: boolean;
       </div>
       {photoSet.photos.some(photo => photo.src !== cover?.src) && <ServicePhotoGallery serviceId={id} language={language} excludeSrc={cover?.src} />}
       <ServiceVideoGallery serviceId={id} language={language} />
+        </>}
     </div>}
   </details>;
 };

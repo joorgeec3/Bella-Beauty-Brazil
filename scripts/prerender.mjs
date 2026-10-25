@@ -52,8 +52,9 @@ const actualMediaFolder = {
 };
 for (const [id,item] of Object.entries(services)) {
   const folder = actualMediaFolder[id];
-  item.image = folder
-    ? `/assets/bella/media-alinhada-2026-10/${folder}/01.webp`
+  item.image = id === 'nano-strokes'
+    ? '/assets/bella/media-alinhada-2026-10/nano-strokes/08.webp'
+    : folder ? `/assets/bella/media-alinhada-2026-10/${folder}/01.webp`
     : id==='waxing' ? '/assets/bella/client-2026-10/waxing-treatment.webp' : '/assets/bella/logo.png';
 }
 
@@ -96,9 +97,11 @@ for (const [slug, service] of Object.entries(services)) {
   const description = `${service.description} Confirmed Timely details and official booking at Bella Beauty Brazil in Greenslopes, Brisbane.`;
   const schema = { '@context': 'https://schema.org', '@type': 'Service', name: service.title, description: service.description, provider: { '@type': 'BeautySalon', name: 'Bella Beauty Brazil', telephone: '+61 402 148 437', address: { '@type': 'PostalAddress', streetAddress: 'Suite 3, 412 Logan Road', addressLocality: 'Greenslopes', addressRegion: 'QLD', postalCode: '4120', addressCountry: 'AU' } }, areaServed: ['Greenslopes', 'Brisbane Southside', 'Greater Brisbane'], offers: service.price ? { '@type': 'Offer', priceCurrency: 'AUD', price: service.price, url: 'https://book.gettimely.com/bellabrazil/book/embed?client-login=true' } : undefined };
   const guide = SERVICE_GUIDES[slug]?.en;
-  const treatmentInfo = guide
-    ? `<h2>Who might this treatment suit?</h2><p>${escapeHtml(guide.idealFor)}</p><h2>How does it compare?</h2><p>${escapeHtml(guide.comparison)}</p><h2>Common questions</h2><h3>${escapeHtml(guide.question)}</h3><p>${escapeHtml(guide.answer)}</p>`
-    : '<p>Ask Bella Beauty Brazil about suitability, preparation and aftercare before booking.</p>';
+  const treatmentInfo = slug === 'nano-strokes'
+    ? '<h2>About this treatment</h2><p>Nano Strokes is a manual microblading technique that creates delicate, natural-looking hair strokes. Using a Tebori hand tool, I follow your natural brow growth to fill gaps and create a shape that complements your features.</p><h2>Is this treatment right for me?</h2><p>For those wanting more definition with a natural hair-stroke appearance. I assess your skin, existing brows and any previous tattooing before recommending the most suitable technique.</p><h2>Benefits</h2><ul><li>Fine, natural-looking hair strokes</li><li>Personalised brow mapping</li><li>Definition for sparse areas</li></ul><h2>Price &amp; duration</h2><p>Initial appointment A$630 — Approximately 2.5 hours. Touch-up at 30–45 days: A$120, charged separately.</p>'
+    : guide
+      ? `<h2>Who might this treatment suit?</h2><p>${escapeHtml(guide.idealFor)}</p>${guide.comparison ? `<h2>How does it compare?</h2><p>${escapeHtml(guide.comparison)}</p>` : ''}<h2>Common questions</h2><h3>${escapeHtml(guide.question)}</h3><p>${escapeHtml(guide.answer)}</p>`
+      : '<p>Ask Bella Beauty Brazil about suitability, preparation and aftercare before booking.</p>';
   const faqSchema = guide ? {
     '@type': 'FAQPage',
     mainEntity: [{

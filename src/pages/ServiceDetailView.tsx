@@ -7,6 +7,7 @@ import { approvedDescriptionFor } from '../data/approvedServiceCatalog';
 import { ServicePhotoGallery, getServiceGallery } from '../components/ServicePhotoGallery';
 import { ServiceVideoGallery } from '../components/ServiceVideoGallery';
 import { serviceCoverFor } from '../data/serviceCoverPhotos';
+import { NanoStrokesContent, nanoStrokesCopy } from '../components/NanoStrokesContent';
 
 interface ServiceDetailViewProps {
   serviceId: string;
@@ -124,18 +125,27 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
 
 
   return (
-    <div className="bg-site">
-      <section className="relative bg-[#5b3239] text-white py-14 sm:py-20 overflow-hidden scroll-rise">
+    <div className="bg-site" data-nano-strokes-view={base.id === 'nano-strokes' ? 'true' : undefined}>
+      <section data-floating-clearance={base.id === 'nano-strokes' ? true : undefined} className={`relative bg-[#5b3239] text-white ${base.id === 'nano-strokes' ? 'py-9 sm:py-14' : 'py-14 sm:py-20'} overflow-hidden scroll-rise`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <button type="button" onClick={() => onNavigate('services')} className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-[#efb7c8] hover:text-white cursor-pointer mb-8">
             <ArrowLeft className="w-4 h-4" /> {translated(language, 'All services', 'Todos os serviços', 'Todos los servicios')}
           </button>
           <p className="text-xs uppercase tracking-widest text-[#efb7c8] mb-3 font-bold">Bella Beauty Brazil · Greenslopes, Brisbane</p>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          <div className={`grid grid-cols-1 lg:grid-cols-12 ${base.id === 'nano-strokes' ? 'gap-5 sm:gap-7' : 'gap-10'} items-center`}>
             <div className="lg:col-span-6">
               <h1 className="font-raleway text-3xl sm:text-5xl font-light uppercase tracking-wider leading-tight">{service.title}</h1>
-              <p className="font-montserrat text-sm sm:text-base text-neutral-200 mt-5 max-w-xl leading-relaxed">{service.description}</p>
-              <div className="flex flex-wrap gap-4 mt-7">
+              {base.id === 'nano-strokes'
+                ? <div className="mt-4">
+                    <p className="font-montserrat text-sm text-[#f3dfe6]">{translated(language, 'Manual Tebori microblading · personalised brow artistry', 'Microblading manual com Tebori · sobrancelhas personalizadas', 'Microblading manual con Tebori · diseño personalizado de cejas')}</p>
+                    <div className="mt-5 rounded-2xl border border-white/25 bg-white/10 p-4 sm:p-5 max-w-xl">
+                      <h2 className="font-raleway text-lg font-semibold text-[#f3dfe6]">{nanoStrokesCopy[language].priceTitle}</h2>
+                      <p className="mt-2 font-montserrat text-sm font-semibold text-white">{nanoStrokesCopy[language].initial}</p>
+                      <p className="mt-2 font-montserrat text-sm text-[#f3dfe6]">{nanoStrokesCopy[language].touchUp}</p>
+                    </div>
+                  </div>
+                : <p className="font-montserrat text-sm sm:text-base text-neutral-200 mt-5 max-w-xl leading-relaxed">{service.description}</p>}
+              <div className={`flex flex-wrap gap-3 ${base.id === 'nano-strokes' ? 'mt-4' : 'mt-7'}`}>
                 <a href={getServiceBookingUrl(base.id)}  className="inline-flex items-center gap-2 bg-[#efb7c8] hover:bg-white text-[#5b3239] text-xs font-bold uppercase tracking-widest px-7 py-4 rounded-full cursor-pointer transition-colors">
                   <Calendar className="w-4 h-4" /> {translated(language, 'Book now', 'Agendar agora', 'Reservar ahora')}
                 </a>
@@ -155,8 +165,8 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
                   </div>
                 : <div className="space-y-2">
                     <img src={cover?.src || service.image}
-                      alt={cover?.specific ? `${service.title} — real client photo from Bella Beauty Brazil` : `${service.title} — representative category photo from Bella Beauty Brazil`}
-                      className="w-full aspect-[4/3] object-contain bg-[#261d21] rounded-2xl shadow-2xl border border-white/20" />
+                      alt={base.id === 'nano-strokes' ? 'Upright close-up of brows during Nano Strokes brow mapping, Bella Beauty Brazil' : cover?.specific ? `${service.title} — real client photo from Bella Beauty Brazil` : `${service.title} — representative category photo from Bella Beauty Brazil`}
+                      className={`w-full ${base.id === 'nano-strokes' ? 'aspect-[5/4] sm:aspect-[4/3]' : 'aspect-[4/3]'} object-contain bg-[#261d21] rounded-2xl shadow-2xl border border-white/20`} />
                     {!cover?.specific && <p className="font-montserrat text-xs text-[#efb7c8] text-right">{translated(language, 'Representative category photo — not a result of this particular service', 'Foto representativa da categoria — não é resultado deste serviço específico', 'Foto representativa de la categoría — no es resultado de este servicio específico')}</p>}
                   </div>}
             </div>
@@ -164,6 +174,16 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
         </div>
       </section>
 
+      {base.id === 'nano-strokes'
+        ? <NanoStrokesContent
+            language={language}
+            showPrice={false}
+            media={<>
+              <ServicePhotoGallery serviceId={base.id} language={language} excludeSrc={cover?.src} />
+              <ServiceVideoGallery serviceId={base.id} language={language} />
+            </>}
+          />
+        : <>
       <ServicePhotoGallery serviceId={base.id} language={language} excludeSrc={cover?.src} />
       <ServiceVideoGallery serviceId={base.id} language={language} />
 
@@ -265,6 +285,7 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
           </aside>
         </div>
       </main>
+        </>}
     </div>
   );
 };
