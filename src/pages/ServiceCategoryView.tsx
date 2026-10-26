@@ -8,7 +8,7 @@ import { NanoStrokesContent } from '../components/NanoStrokesContent';
 import { serviceCoverFor } from '../data/serviceCoverPhotos';
 import { getServiceGallery, ServicePhotoGallery } from '../components/ServicePhotoGallery';
 import { ServiceVideoGallery } from '../components/ServiceVideoGallery';
-import { bellaBeforeAfter, homeGallery } from '../data/galleryData';
+import { homeGallery } from '../data/galleryData';
 
 type Props = {
   groupId: string;
@@ -23,12 +23,6 @@ const words = {
 } as const;
 
 const treatSlug = (id: string) => `${import.meta.env.BASE_URL.replace(/\/$/, '')}/services/${id}`;
-const filterResults = (groupId: string) => {
-  if (groupId === 'cosmetic-tattooing') return bellaBeforeAfter.filter(x => x.category === 'Lips');
-  if (groupId === 'brow-artistry') return bellaBeforeAfter.filter(x => x.category === 'Brows');
-  if (groupId === 'lash-treatments') return bellaBeforeAfter.filter(x => x.category === 'Lashes');
-  return [];
-};
 
 const TreatmentEntry: React.FC<{ id: string; language: Language; first: boolean; onNavigate: Props['onNavigate'] }> = ({ id, language, first, onNavigate }) => {
   const [open, setOpen] = useState(first);
@@ -87,7 +81,6 @@ export const ServiceCategoryView: React.FC<Props> = ({ groupId, language, onNavi
   const group = getServiceGroup(groupId);
   if (!group) return null;
   const t = words[language];
-  const results = filterResults(groupId);
   // Previous homepage category-level pictures remain available here, once
   // each, and are never falsely presented as a result of an exact procedure.
   const usedTreatmentPhotos = new Set(group.serviceIds.flatMap(id => getServiceGallery(id).photos.map(photo => photo.src)));
@@ -161,11 +154,6 @@ export const ServiceCategoryView: React.FC<Props> = ({ groupId, language, onNavi
           <div className="mt-3">{list.items.filter(item => item.name!=='Brazilian').map(item => <div key={item.name} className="flex justify-between gap-3 py-2.5 border-b border-[#f0e6e6] text-sm font-montserrat"><span>{item.name}</span><strong className="text-[#5b3239] shrink-0">A${item.aud}</strong></div>)}</div>
         </div>)}</div>
         <a href={BOOKING_URL} className="inline-flex mt-5 rounded-full bg-[#5b3239] text-white px-6 py-3 text-xs font-bold hover:bg-[#7a4753]">{t.book}<ArrowRight className="w-4 h-4 ml-2"/></a>
-      </section>}
-      {results.length>0 && <section className="mt-12" aria-label={t.results}>
-        <h2 className="font-raleway text-2xl sm:text-3xl text-[#5b3239] mb-4">{t.results}</h2>
-        <p className="text-xs text-[#675960] mb-5">Bella Beauty Brazil · {language==='en'?'Individual results may vary.':language==='pt'?'Os resultados individuais podem variar.':'Los resultados individuales pueden variar.'}</p>
-        <div className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory">{results.map(result => <a key={result.id} href={result.image} target="_blank" rel="noopener noreferrer" className="w-52 sm:w-60 shrink-0 snap-start rounded-xl overflow-hidden border border-[#e8d6d5] shadow-sm bg-white"><img src={result.image} alt={result.alt} loading="lazy" className="w-full aspect-[4/5] object-contain" /><span className="block px-3 py-3 text-xs font-montserrat text-[#675960]">{result.alt}</span></a>)}</div>
       </section>}
       <p className="flex gap-2 items-center text-xs font-montserrat text-[#675960] mt-10"><MapPin className="w-4 h-4" />Suite 3, 412 Logan Road, Greenslopes, QLD 4120</p>
       <nav className="mt-7 flex flex-wrap gap-2">{SERVICE_GROUPS.filter(g => g.id !== groupId).map(other => <a key={other.id} href={`${import.meta.env.BASE_URL.replace(/\/$/,'')}/services/categories/${other.id}`} className="inline-flex gap-2 border border-[#d8bac3] rounded-full px-3.5 py-2 text-xs font-semibold text-[#5b3239] hover:bg-[#f3d9d0]">{other.title[language]}<ArrowRight className="w-3 h-3"/></a>)}</nav>
