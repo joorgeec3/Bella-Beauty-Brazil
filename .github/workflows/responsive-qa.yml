@@ -4,7 +4,11 @@ on:
   push:
     branches: [main]
     paths:
-      - 'scripts/responsive-qa.mjs'
+      - 'src/**'
+      - 'scripts/**'
+      - 'public/**'
+      - 'package.json'
+      - 'vite.config.ts'
       - '.github/workflows/responsive-qa.yml'
   pull_request:
     paths:
