@@ -61,6 +61,11 @@ const newerFolderLabels: Record<string,TreatmentPhoto[]> = {
   'facial-spa': labelledPhotos([PHOTO_FOLDERS['skin-treatments-geral'][0]], 'Facial Spa'),
   // This real screenshot is from the uniquely labelled DREAM BROW massage video,
   // not a generic Brow Sculpt photo and not a cosmetic tattoo result.
+  'male-brow-sculpt': [{
+    src: `${import.meta.env.BASE_URL}assets/bella/client-2026-10-v2/male-brow-sculpt/male-brow-sculpt-01.webp`,
+    alt: 'Male Brow Sculpt — photograph provided by Bella Beauty Brazil',
+    caption: 'Male Brow Sculpt',
+  }],
   'dreamy-brows': [{
     src: `${import.meta.env.BASE_URL}assets/bella/media-rar-review-2026-10/dreamy-brows-cover.webp`,
     alt: 'Dreamy Brows head and face massage — still from the client-supplied Dream Brow video',
