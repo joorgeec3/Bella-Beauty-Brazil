@@ -31,13 +31,15 @@ export const ServicePhotoGallery: React.FC<{ serviceId: string; language: Langua
     if (!fullscreen) return;
     const onKey = (event: KeyboardEvent) => {
       if (event.key === 'Escape') setFullscreen(false);
+      if (event.key === 'ArrowLeft') setIndex(value => (value - 1 + photos.length) % photos.length);
+      if (event.key === 'ArrowRight') setIndex(value => (value + 1) % photos.length);
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [fullscreen]);
+  }, [fullscreen, photos.length]);
   // Switching between related services should always open at the first real photo.
   // The router reuses this component, so local state otherwise leaks across treatments.
-  useEffect(() => {setIndex(0); setFullscreen(false)}, [serviceId]);
+  useEffect(() => {setIndex(0); setFullscreen(false)}, [serviceId, excludeSrc]);
   if (!photos.length) return null;
   const labels = {
     en: { heading: 'Real photos from the studio', lead: 'Browse the photos supplied by Bella Beauty Brazil.', illustrativeHeading: 'Related studio photos', illustrativeLead: 'Photographs from related treatments or the studio, not results of this particular service.', prev: 'Previous photo', next: 'Next photo', full: 'Open full photo', note: 'Brow styling photographs show the studio and technique, not a promised result for a particular tint or tattoo service.' },
