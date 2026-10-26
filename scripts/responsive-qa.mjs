@@ -76,6 +76,14 @@ try {
       assert((await nano.innerText()).includes('Touch-up from 28 to 45 days: A$150'));
       const lip = page.locator('#treatment-lip-blush');
       assert((await lip.innerText()).includes('Touch-up from 28–45 days'), 'Lip Blush touch-up timeline does not match Timely screenshot');
+      // Exact values visible in Livia's updated Timely service screenshot.
+      const tattooPage = await page.locator('[data-inline-booking-page]').innerText();
+      for (const amount of ['A$630', 'A$150', 'A$35', 'A$300']) {
+        assert(tattooPage.includes(amount), 'Missing updated cosmetic tattoo price: ' + amount);
+      }
+      for (const timing of ['Consultation', '20 minutes', 'Annual Colour', '1 hour, 50 minutes']) {
+        assert(tattooPage.includes(timing), 'Missing updated cosmetic tattoo appointment: ' + timing);
+      }
       assert(await nano.locator('a[href*="gettimely.com"]').count()>0);
       assert(await nano.locator('a[href*="wa.me"]').count()>0);
       const thumbnailPhotos = await nano.locator('#service-photos-nano-strokes button img').evaluateAll(imgs=>imgs.map(img=>img.getAttribute('src')));
@@ -90,6 +98,8 @@ try {
         assert(body.includes(phrase),'Missing approved Nano copy: '+phrase);
       }
       assert(!body.includes('How does it work?'),'Duplicate How does it work remains');
+      assert(!body.includes('Touch-up at 30–45 days: A$120'), 'Superseded Nano Strokes touch-up price remains');
+      assert(body.includes('Approximately 1 hour, 30 minutes'), 'Correct Nano Strokes touch-up duration missing');
       const hero = page.locator('[data-nano-strokes-view] img').first();
       assert(await hero.count() > 0,'Nano cover missing');
       await hero.scrollIntoViewIfNeeded();
