@@ -55,8 +55,8 @@ const TreatmentEntry: React.FC<{ id: string; language: Language; first: boolean;
       </span>
     </summary>
     {open && <div className="border-t border-[#f0e3e4]">
-      {id === 'nano-strokes'
-        ? <NanoStrokesContent language={language} media={<>
+      {(id === 'nano-strokes' || id === 'shadow-brows')
+        ? <NanoStrokesContent variant={id} language={language} media={<>
             {photoSet.photos.some(photo => photo.src !== cover?.src) && <ServicePhotoGallery serviceId={id} language={language} excludeSrc={cover?.src} />}
             <ServiceVideoGallery serviceId={id} language={language} />
           </>} />
