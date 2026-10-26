@@ -136,12 +136,17 @@ const copy: Record<Language, NanoText> = {
 };
 
 export const nanoStrokesCopy = copy;
+const shadowCopy: Record<Language, NanoText> = {
+ en: {...copy.en, about: 'Shadow Brows creates a soft, powder-style shaded brow effect. The shape and colour are tailored to your features and preferences.', suitability: 'For clients seeking softly shaded definition rather than individual hair strokes. I assess your skin, existing pigment and brow shape before treatment.', benefits: ['Soft, powder-style finish','Personalised brow shape and colour','Defined brows'], initial: 'Initial appointment: A$630 · Approximately 2.5 hours', touchUp: 'Please confirm Shadow Brows touch-up timing and price with the studio.', faqs: [{q:'Will the colour look darker at first?',a:'Yes. Colour can look stronger initially and soften as the brows heal.'},{q:'What if I have previous brow tattooing?',a:'Please send photos for assessment before booking.'}]},
+ pt: {...copy.pt, about: 'Shadow Brows cria um efeito sombreado suave nas sobrancelhas, semelhante ao de maquiagem. O formato e a cor são personalizados.', suitability: 'Para quem prefere definição com efeito sombreado em vez de fios individuais. Avalio a pele e pigmentações anteriores antes do tratamento.', benefits: ['Acabamento sombreado suave','Formato e cor personalizados','Sobrancelhas definidas'], initial: 'Atendimento inicial: A$630 · Aproximadamente 2h30', touchUp: 'Confirme com o estúdio o prazo e o preço do retoque de Shadow Brows.', faqs: [{q:'A cor fica mais escura no início?',a:'Sim. A cor pode ficar mais intensa inicialmente e suavizar durante a cicatrização.'},{q:'E se já tenho tatuagem nas sobrancelhas?',a:'Envie fotos para avaliação antes de agendar.'}]},
+ es: {...copy.es, about: 'Shadow Brows crea un efecto sombreado suave en las cejas, similar al maquillaje. La forma y el color se personalizan.', suitability: 'Para quienes prefieren definición sombreada en lugar de trazos individuales. Evalúo la piel y pigmentaciones previas antes del tratamiento.', benefits: ['Acabado sombreado suave','Forma y color personalizados','Cejas definidas'], initial: 'Cita inicial: A$630 · Aproximadamente 2 horas y 30 minutos', touchUp: 'Confirma con el estudio el plazo y el precio del retoque de Shadow Brows.', faqs: [{q:'¿El color se ve más oscuro al principio?',a:'Sí. El color puede verse más intenso al principio y suavizarse durante la cicatrización.'},{q:'¿Y si ya tengo tatuaje en las cejas?',a:'Envía fotos para una evaluación antes de reservar.'}]}
+};
 const section = 'rounded-2xl bg-white border border-[#e8d6d5] p-5 sm:p-7 shadow-sm';
 const heading = 'font-raleway text-xl sm:text-2xl font-semibold text-[#5b3239]';
-export const NanoStrokesContent: React.FC<{language: Language; media?: React.ReactNode; showPrice?: boolean; showBooking?: boolean}> = ({
-  language, media, showPrice = true, showBooking = true,
+export const NanoStrokesContent: React.FC<{language: Language; media?: React.ReactNode; showPrice?: boolean; showBooking?: boolean; variant?: 'nano-strokes' | 'shadow-brows'}> = ({
+  language, media, showPrice = true, showBooking = true, variant = 'nano-strokes',
 }) => {
-  const t = copy[language];
+  const t = variant === 'shadow-brows' ? shadowCopy[language] : copy[language];
   return <div data-floating-clearance className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-7 sm:py-10 space-y-4 sm:space-y-6">
     {showPrice && <section className="rounded-2xl bg-[#f3d9d0] border border-[#e8c5c8] p-5 sm:p-7">
       <h2 className={heading}>{t.priceTitle}</h2>
@@ -182,7 +187,7 @@ export const NanoStrokesContent: React.FC<{language: Language; media?: React.Rea
       </details>)}</div>
     </section>
     {showBooking && <div className="flex flex-wrap gap-3 items-center">
-      <a href={getServiceBookingUrl('nano-strokes')} className="inline-flex gap-2 items-center justify-center bg-[#5b3239] text-white rounded-full px-6 py-3 text-xs font-bold hover:bg-[#7a4753]"><CalendarDays className="w-4 h-4"/>{t.book}</a>
+      <a href={getServiceBookingUrl(variant)} className="inline-flex gap-2 items-center justify-center bg-[#5b3239] text-white rounded-full px-6 py-3 text-xs font-bold hover:bg-[#7a4753]"><CalendarDays className="w-4 h-4"/>{t.book}</a>
       <a href="https://wa.me/61402148437" target="_blank" rel="noopener noreferrer" className="inline-flex gap-2 items-center rounded-full border border-[#9a5967]/50 text-[#5b3239] px-5 py-3 text-xs font-semibold"><MessageCircle className="w-4 h-4"/>{t.contact}</a>
       <span className="font-montserrat text-xs text-[#846f75]">{t.note}</span>
     </div>}
