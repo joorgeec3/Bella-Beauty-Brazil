@@ -18,7 +18,7 @@ type NanoText = {
 const copy: Record<Language, NanoText> = {
   en: {
     aboutTitle: 'About this treatment',
-    about: 'Nano Strokes is a manual microblading technique that creates delicate, natural-looking hair strokes. Using a Tebori hand tool, I follow your natural brow growth to fill gaps and create a shape that complements your features.',
+    about: 'Nano Strokes is a manual microblading technique that creates fine, natural-looking hair strokes to enhance your brows. Using a Tebori hand tool, I follow the direction of your natural brow hairs to fill sparse areas and create a shape that complements your features.',
     suitabilityTitle: 'Is this treatment right for me?',
     suitability: 'For those wanting more definition with a natural hair-stroke appearance. I assess your skin, existing brows and any previous tattooing before recommending the most suitable technique.',
     benefitsTitle: 'Benefits',
