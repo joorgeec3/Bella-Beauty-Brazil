@@ -178,8 +178,9 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
         </div>
       </section>
 
-      {base.id === 'nano-strokes'
+      {(base.id === 'nano-strokes' || base.id === 'shadow-brows')
         ? <NanoStrokesContent
+            variant={base.id}
             language={language}
             showPrice={false}
             media={<>
