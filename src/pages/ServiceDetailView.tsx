@@ -15,6 +15,27 @@ interface ServiceDetailViewProps {
   onNavigate: (tab: string, subParam?: string) => void;
 }
 
+const teethWhiteningFaqs = {
+  en: [
+    ['How much does it cost and how long does it take?', 'A$199 for an appointment of approximately 1 hour.'],
+    ['Will it whiten crowns, veneers or fillings?', 'No. Whitening does not change the colour of these restorations.'],
+    ['Will everyone get the same result?', 'No. Results depend on your starting shade and the type of discolouration.'],
+    ['How do I book?', 'Click “Book now” to choose an available appointment.'],
+  ],
+  pt: [
+    ['Quanto custa e quanto tempo demora?', 'A$199 por um atendimento de aproximadamente 1 hora.'],
+    ['Clareia coroas, facetas ou restaurações?', 'Não. O clareamento não altera a cor dessas restaurações.'],
+    ['Todas as pessoas têm o mesmo resultado?', 'Não. Os resultados dependem da tonalidade inicial e do tipo de descoloração.'],
+    ['Como faço para agendar?', 'Clique em “Agendar agora” para escolher um horário disponível.'],
+  ],
+  es: [
+    ['¿Cuánto cuesta y cuánto dura?', 'A$199 por una cita de aproximadamente 1 hora.'],
+    ['¿Blanquea coronas, carillas o empastes?', 'No. El blanqueamiento no cambia el color de estas restauraciones.'],
+    ['¿Todas las personas obtienen el mismo resultado?', 'No. Los resultados dependen del tono inicial y del tipo de decoloración.'],
+    ['¿Cómo reservo?', 'Haz clic en “Reservar ahora” para elegir una cita disponible.'],
+  ],
+} as const;
+
 const GROUPS: Record<string, { related: string[]; difference: string; care: string; faq: string }> = {
   'nano-strokes': {
     related: ['shadow-brows', 'shadow-hybrid', 'brow-sculpt-tint'],
@@ -197,11 +218,11 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
           <div className="lg:col-span-8 space-y-8">
             <section className="bg-white rounded-2xl border border-[#e8d6d5] p-6 sm:p-10 shadow-sm scroll-rise">
               <h2 className="font-raleway text-2xl sm:text-3xl font-bold uppercase tracking-wider text-[#5b3239]">{translated(language, 'About this treatment', 'Sobre este tratamento', 'Sobre este tratamiento')}</h2>
-              <p className="font-montserrat text-neutral-700 leading-relaxed mt-4">{language === 'en' ? (approvedDescriptionFor(base.id) || service.description) : service.description}</p>
-              {!['nano-strokes', 'lip-blush', 'shadow-brows', 'brow-sculpt'].includes(base.id) && language === 'en' && approvedDescriptionFor(base.id) && <p className="font-montserrat text-xs text-[#846f75] mt-3">Treatment description provided by Bella Beauty Brazil.</p>}
-              {guide && <>
-                <h3 className="font-raleway text-xl font-bold text-[#5b3239] mt-8">{translated(language, 'Who may this treatment suit?', 'Para quem este tratamento pode ser indicado?', '¿Para quién puede ser adecuado este tratamiento?')}</h3>
-                <p className="font-montserrat text-neutral-700 leading-relaxed mt-3">{guide.idealFor}</p>
+              <p className="font-montserrat text-neutral-700 leading-relaxed mt-4">{base.id === 'teeth-whitening' ? service.description : language === 'en' ? (approvedDescriptionFor(base.id) || service.description) : service.description}</p>
+              {!['nano-strokes', 'lip-blush', 'shadow-brows', 'brow-sculpt', 'teeth-whitening'].includes(base.id) && language === 'en' && approvedDescriptionFor(base.id) && <p className="font-montserrat text-xs text-[#846f75] mt-3">Treatment description provided by Bella Beauty Brazil.</p>}
+              {(guide || base.id === 'teeth-whitening') && <>
+                <h3 className="font-raleway text-xl font-bold text-[#5b3239] mt-8">{base.id === 'teeth-whitening' ? translated(language, 'Is this treatment right for me?', 'Este tratamento é indicado para mim?', '¿Es este tratamiento adecuado para mí?') : translated(language, 'Who may this treatment suit?', 'Para quem este tratamento pode ser indicado?', '¿Para quién puede ser adecuado este tratamiento?')}</h3>
+                <p className="font-montserrat text-neutral-700 leading-relaxed mt-3">{base.id === 'teeth-whitening' ? translated(language, 'Interested in a brighter smile? Contact me before booking to discuss suitability and what to expect.', 'Quer um sorriso mais branco? Entre em contato antes de agendar para conversar sobre a indicação e o que esperar.', '¿Te interesa una sonrisa más blanca? Contáctame antes de reservar para hablar sobre la idoneidad y qué esperar.') : guide?.idealFor}</p>
                 {base.id === 'nano-strokes' ? (
                   <>
                     <h3 className="font-raleway text-xl font-bold text-[#5b3239] mt-8">{translated(language, 'How does it work?', 'Como funciona?', '¿Cómo funciona?')}</h3>
@@ -224,14 +245,14 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
                       )}
                     </p>
                   </>
-                ) : base.id === 'brow-sculpt' ? null : (
+                ) : ['brow-sculpt', 'teeth-whitening'].includes(base.id) ? null : (
                   <>
                     <h3 className="font-raleway text-xl font-bold text-[#5b3239] mt-8">{translated(language, 'How is it different?', 'Quais são as diferenças?', '¿En qué se diferencia?')}</h3>
                     <p className="font-montserrat text-neutral-700 leading-relaxed mt-3">{guide.comparison}</p>
                   </>
                 )}
               </>}
-              <h3 className="font-raleway text-xl font-bold text-[#5b3239] mt-8">{translated(language, 'Benefits and what to expect', 'Benefícios e o que esperar', 'Beneficios y qué esperar')}</h3>
+              <h3 className="font-raleway text-xl font-bold text-[#5b3239] mt-8">{base.id === 'teeth-whitening' ? translated(language, 'What to expect', 'O que esperar', 'Qué esperar') : translated(language, 'Benefits and what to expect', 'Benefícios e o que esperar', 'Beneficios y qué esperar')}</h3>
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
                 {(base.id === 'shadow-brows' && language !== 'en'
                   ? (language === 'pt'
@@ -250,7 +271,7 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
             </section>
             <section className="space-y-3">
               <h2 className="font-raleway text-2xl font-bold uppercase tracking-wider text-[#5b3239]">FAQ</h2>
-              <details className="bg-white border border-[#e8d6d5] rounded-xl p-5" open><summary className="font-montserrat font-bold text-[#5b3239] cursor-pointer">
+              {base.id === 'teeth-whitening' ? teethWhiteningFaqs[language].map(([q, a], i) => <details key={q} className="bg-white border border-[#e8d6d5] rounded-xl p-5" open={i === 0}><summary className="font-montserrat font-bold text-[#5b3239] cursor-pointer">{q}</summary><p className="font-montserrat text-sm text-neutral-700 leading-relaxed mt-3">{a}</p></details>) : <><details className="bg-white border border-[#e8d6d5] rounded-xl p-5" open><summary className="font-montserrat font-bold text-[#5b3239] cursor-pointer">
                 {base.id === 'brow-sculpt'
                   ? translated(language, 'What should I avoid before my appointment?', 'O que devo evitar antes do meu agendamento?', '¿Qué debo evitar antes de mi cita?')
                   : base.id === 'shadow-brows'
