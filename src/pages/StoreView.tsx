@@ -99,10 +99,10 @@ export const StoreView: React.FC<StoreViewProps> = ({ language }) => {
                 />
               </figure>
               {course.id === 'nano-strokes-course' && (
-                <details className="border-b border-[#e8d6d5] bg-[#fff8f9]">
-                  <summary className="cursor-pointer px-6 py-3 font-montserrat text-xs font-bold uppercase tracking-wider text-[#5b3239] hover:bg-[#f3e1e6]">
+                <div className="border-b border-[#e8d6d5] bg-[#fff8f9]">
+                  <h4 className="px-6 py-3 font-montserrat text-xs font-bold uppercase tracking-wider text-[#5b3239]">
                     {language === 'en' ? 'Nano Strokes training videos (3)' : language === 'pt' ? 'Vídeos do curso Nano Strokes (3)' : 'Vídeos del curso Nano Strokes (3)'}
-                  </summary>
+                  </h4>
                   <div className="px-4 pb-4 grid gap-4">
                     {nanoStrokesClips.map((clip, index) => (
                       <figure key={clip.key} className="overflow-hidden rounded-xl border border-[#e8d6d5] bg-white">
@@ -157,10 +157,10 @@ export const StoreView: React.FC<StoreViewProps> = ({ language }) => {
                   : 'Estos vídeos llegaron juntos en la misma carpeta y aparecen una sola vez, sin duplicados en los cursos.'}
             </p>
           </div>
-          <details className="mt-7">
-            <summary className="cursor-pointer rounded-full bg-[#5b3239] hover:bg-[#7a4753] text-white text-xs uppercase tracking-wider font-bold py-3 px-6 w-fit mx-auto list-none text-center">
+          <div className="mt-7">
+            <h3 className="rounded-full bg-[#5b3239] text-white text-xs uppercase tracking-wider font-bold py-3 px-6 w-fit mx-auto text-center">
               {language === 'en' ? 'View 5 class videos' : language === 'pt' ? 'Ver 5 vídeos da formação' : 'Ver 5 vídeos de la formación'}
-            </summary>
+            </h3>
             <div className="mt-7 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {combinedCourseClips.map((clip, index) => (
                 <figure key={clip.key} className="bg-white rounded-2xl overflow-hidden border border-[#e8d6d5]">
@@ -172,7 +172,7 @@ export const StoreView: React.FC<StoreViewProps> = ({ language }) => {
                 </figure>
               ))}
             </div>
-          </details>
+          </div>
         </section>
 
       </section>
