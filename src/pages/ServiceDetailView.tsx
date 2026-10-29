@@ -329,7 +329,7 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
                     </p>
                   </>
                 ) : base.id === 'lip-blush' ? null
-: ['brow-sculpt', 'teeth-whitening'].includes(base.id) ? null : (
+                : ['brow-sculpt', 'teeth-whitening'].includes(base.id) ? null : (
                   <>
                     <h3 className="font-raleway text-xl font-bold text-[#5b3239] mt-8">{translated(language, 'How is it different?', 'Quais são as diferenças?', '¿En qué se diferencia?')}</h3>
                     <p className="font-montserrat text-neutral-700 leading-relaxed mt-3">{guide?.comparison}</p>
