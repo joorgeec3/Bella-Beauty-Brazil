@@ -159,10 +159,10 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
               {base.id === 'nano-strokes'
                 ? <div className="mt-4">
                     <p className="font-montserrat text-sm text-[#f3dfe6]">{translated(language, 'Manual Tebori microblading · personalised brow artistry', 'Microblading manual com Tebori · sobrancelhas personalizadas', 'Microblading manual con Tebori · diseño personalizado de cejas')}</p>
-                    <div className="mt-5 rounded-2xl border border-white/25 bg-white/10 p-4 sm:p-5 max-w-xl">
-                      <h2 className="font-raleway text-lg font-semibold text-[#f3dfe6]">{nanoStrokesCopy[language].priceTitle}</h2>
-                      <p className="mt-2 font-montserrat text-sm font-semibold text-white">{nanoStrokesCopy[language].initial}</p>
-                      <p className="mt-2 font-montserrat text-sm text-[#f3dfe6]">{nanoStrokesCopy[language].touchUp}</p>
+                    <div className="mt-5 rounded-2xl border border-[#e8c5c8] bg-[#f3d9d0] p-5 sm:p-6 max-w-xl shadow-md">
+                      <h2 className="font-raleway text-xl font-bold text-[#452c36]">{nanoStrokesCopy[language].priceTitle}</h2>
+                      <p className="mt-3 font-montserrat text-base font-semibold text-[#39292f] leading-relaxed">{nanoStrokesCopy[language].initial}</p>
+                      <p className="mt-2 font-montserrat text-base text-[#39292f] leading-relaxed">{nanoStrokesCopy[language].touchUp}</p>
                     </div>
                   </div>
                 : <p className="font-montserrat text-sm sm:text-base text-neutral-200 mt-5 max-w-xl leading-relaxed">{service.description}</p>}
@@ -170,7 +170,7 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
                 <a href={getServiceBookingUrl(base.id)}  className="inline-flex items-center gap-2 bg-[#efb7c8] hover:bg-white text-[#5b3239] text-xs font-bold uppercase tracking-widest px-7 py-4 rounded-full cursor-pointer transition-colors">
                   <Calendar className="w-4 h-4" /> {translated(language, 'Book now', 'Agendar agora', 'Reservar ahora')}
                 </a>
-                {base.id !== 'nano-strokes' && <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer"
+                {<a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 border border-white/50 hover:bg-white/10 text-white text-xs font-semibold px-5 py-4 rounded-full">
                   {translated(language, 'WhatsApp enquiries', 'Falar pelo WhatsApp', 'Consultar por WhatsApp')}
                 </a>}
@@ -212,6 +212,7 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
             variant={base.id}
             language={language}
             showPrice={false}
+            showBooking={base.id !== 'nano-strokes'}
             media={<>
               <ServicePhotoGallery serviceId={base.id} language={language} excludeSrc={cover?.src} />
               <ServiceVideoGallery serviceId={base.id} language={language} />
