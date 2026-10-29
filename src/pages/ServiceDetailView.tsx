@@ -211,8 +211,8 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
         ? <NanoStrokesContent
             variant={base.id}
             language={language}
-            showPrice={false}
-            showBooking={base.id !== 'nano-strokes'}
+            showPrice={base.id === 'shadow-brows'}
+            showBooking={false}
             media={<>
               <ServicePhotoGallery serviceId={base.id} language={language} excludeSrc={cover?.src} />
               <ServiceVideoGallery serviceId={base.id} language={language} />
