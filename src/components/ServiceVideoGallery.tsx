@@ -21,7 +21,8 @@ const approvedVideoClips: Record<string, string[]> = {
 const serviceVideoFolderToRoute: Record<string, string> = {
   'brow-sculpt': 'brow-sculpt',
   'dreamy-brows': 'dreamy-brows',
-  'shadow-brows': 'shadow-brows',
+  // Shadow Brows already has two distinct videos in approvedVideoClips.
+  // Do not append the later 17-second clip: it repeats material from the same session.
   'facial-spa': 'facial-spa',
   'lip-blush': 'lip-blush',
   'lip-bliss-hydration': 'lip-bliss-hydration',
