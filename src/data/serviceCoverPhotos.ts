@@ -4,6 +4,6 @@ export type ServiceCover = { src: string; specific: boolean };
 export const serviceCoverFor = (serviceId: string): ServiceCover | undefined => {
   const {photos,illustrative} = serviceGalleryFor(serviceId);
   // Use the last Nano Strokes gallery image as the service cover.
-  const cover = serviceId === 'nano-strokes' && photos.length > 0 ? photos[photos.length - 1] : serviceId === 'brow-sculpt' && photos.length >= 2 ? photos[1] : photos[0];
+  const cover = serviceId === 'lip-blush' && photos.length >= 6 ? photos[5] : serviceId === 'nano-strokes' && photos.length > 0 ? photos[photos.length - 1] : serviceId === 'brow-sculpt' && photos.length >= 2 ? photos[1] : photos[0];
   return cover ? {src:cover.src,specific:!illustrative} : undefined;
 };
