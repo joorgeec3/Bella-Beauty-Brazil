@@ -10,7 +10,8 @@ type VideoItem = { src: string; title: string };
 const approvedVideoClips: Record<string, string[]> = {
   'nano-strokes': ['nano-strokes/01.mp4','nano-strokes/02.mp4','nano-strokes/03.mp4'],
   'shadow-brows': ['shadow-brows/01.mp4','shadow-brows/02.mp4'],
-  'lip-blush': ['lip-blush/01.mp4'],
+  // Lip Blush already uses the newer client-supplied gallery clip below.
+  // The older lip-blush/01.mp4 repeats the same treatment visually; keep only the clearer clip.
   'brow-sculpt': ['brow-sculpt/01.mp4'],
   // Formerly shown as a generic lip-treatment video; RAR names it Lip Hydration.
   'lip-bliss-hydration': ['lip-treatments-geral/01.mp4'],
