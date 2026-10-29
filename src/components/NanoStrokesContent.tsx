@@ -25,8 +25,8 @@ const copy: Record<Language, NanoText> = {
     benefits: ['Fine, natural-looking hair strokes', 'Personalised brow mapping', 'Definition for sparse areas'],
     priceTitle: 'Price & duration',
     initial: 'Initial appointment: A$630 · Approximately 2.5 hours',
-    touchUp: 'Touch-up from 28 to 45 days: A$150 · Approximately 1 hour, 30 minutes, charged separately.',
-    beforeTitle: 'Before',
+    touchUp: 'Touch-up: Approximately 1.5 hours · Price and interval to be confirmed.',
+    beforeTitle: 'Before your appointment',
     before: [
       'Avoid waxing or plucking.',
       'Avoid retinol and exfoliating acids, including AHA/BHA, around the brows for 15 days.',
@@ -35,7 +35,7 @@ const copy: Record<Language, NanoText> = {
       'Taking or recently taken isotretinoin (Roaccutane/Accutane)? Contact me before booking; treatment may need to be postponed pending dermatological advice.',
       'Do not stop prescribed medication for your appointment.',
     ],
-    afterTitle: 'After',
+    afterTitle: 'Aftercare',
     after: [
       'Gently cleanse one hour after treatment.',
       'Apply a very thin layer of the recommended aftercare cream.',
@@ -51,9 +51,9 @@ const copy: Record<Language, NanoText> = {
       { q: 'Will my brows look darker at first?', a: 'Yes. They may initially look darker and more defined. Colour changes and some flaking can occur during healing, so allow your skin to heal before judging the result.' },
       { q: 'Can I wear makeup or exercise afterwards?', a: 'Avoid brow makeup for 14 days and strenuous exercise or heavy sweating for 2–5 days. Allow longer if the area remains sensitive.' },
       { q: 'Can I book if I have an old brow tattoo?', a: 'Please send clear photos before booking so I can assess the existing pigment and discuss your options.' },
-      { q: 'Will I need a touch-up?', a: 'The touch-up is part of the cosmetic tattooing process. Between 28 and 45 days, I assess how your skin has retained the pigment and refine areas that need more colour or definition. The appointment takes approximately 1 hour, 30 minutes and costs A$150, charged separately.' },
+      { q: 'Will I need a touch-up?', a: 'A touch-up may help refine pigment retention and brow definition after healing.' },
     ],
-    book: 'Book now', contact: 'Questions? WhatsApp', note: 'Prices and appointment availability are confirmed on Timely.',
+    book: 'Book now', contact: 'Questions? WhatsApp', note: '',
   },
   pt: {
     aboutTitle: 'Sobre este tratamento',
@@ -64,8 +64,8 @@ const copy: Record<Language, NanoText> = {
     benefits: ['Traços finos com aparência natural', 'Mapeamento personalizado das sobrancelhas', 'Mais definição em áreas com falhas'],
     priceTitle: 'Preço e duração',
     initial: 'Sessão inicial: A$630 · Aproximadamente 2,5 horas',
-    touchUp: 'Retoque entre 28 e 45 dias: A$150 · Aproximadamente 1h30, cobrado separadamente.',
-    beforeTitle: 'Antes',
+    touchUp: 'Retoque: Aproximadamente 1,5 hora · Valor e prazo a confirmar.',
+    beforeTitle: 'Antes do atendimento',
     before: [
       'Evite depilar ou retirar os pelos com pinça.',
       'Evite retinol e ácidos esfoliantes, incluindo AHA/BHA, na região por 15 dias.',
@@ -74,7 +74,7 @@ const copy: Record<Language, NanoText> = {
       'Usa ou usou recentemente isotretinoína (Roaccutane/Accutane)? Entre em contato antes de agendar; o tratamento poderá precisar ser adiado após orientação dermatológica.',
       'Não interrompa medicamentos prescritos para o atendimento.',
     ],
-    afterTitle: 'Depois',
+    afterTitle: 'Cuidados após o atendimento',
     after: [
       'Limpe delicadamente uma hora após o procedimento.',
       'Aplique uma camada bem fina do creme de cuidados recomendado.',
@@ -90,9 +90,9 @@ const copy: Record<Language, NanoText> = {
       { q: 'As sobrancelhas ficam mais escuras no início?', a: 'Sim. Podem parecer mais escuras e definidas no início. Durante a cicatrização, a cor muda e pode ocorrer descamação; espere a pele cicatrizar antes de avaliar o resultado.' },
       { q: 'Posso usar maquiagem ou me exercitar?', a: 'Evite maquiagem nas sobrancelhas por 14 dias e exercícios intensos ou suor excessivo por 2–5 dias. Espere mais se a região estiver sensível.' },
       { q: 'Posso agendar se já tenho tatuagem na sobrancelha?', a: 'Envie fotos nítidas antes de agendar para que eu avalie o pigmento existente e converse sobre suas opções.' },
-      { q: 'Vou precisar de retoque?', a: 'O retoque faz parte do processo. Entre 28 e 45 dias, avalio a retenção do pigmento e refino as áreas que precisam de cor ou definição. A sessão dura aproximadamente 1h30 e custa A$150, cobrado separadamente.' },
+      { q: 'Vou precisar de retoque?', a: 'O retoque pode ajudar a aperfeiçoar a retenção do pigmento e a definição após a cicatrização.' },
     ],
-    book: 'Agendar agora', contact: 'Dúvidas? WhatsApp', note: 'Os preços e horários devem ser confirmados no Timely.',
+    book: 'Agendar agora', contact: 'Dúvidas? WhatsApp', note: '',
   },
   es: {
     aboutTitle: 'Sobre este tratamiento',
@@ -103,8 +103,8 @@ const copy: Record<Language, NanoText> = {
     benefits: ['Trazos finos de aspecto natural', 'Diseño personalizado de cejas', 'Mayor definición en zonas despobladas'],
     priceTitle: 'Precio y duración',
     initial: 'Sesión inicial: A$630 · Aproximadamente 2,5 horas',
-    touchUp: 'Retoque entre 28 y 45 días: A$150 · Aproximadamente 1 hora y 30 minutos, cobrado por separado.',
-    beforeTitle: 'Antes',
+    touchUp: 'Retoque: Aproximadamente 1,5 horas · Precio y plazo pendientes de confirmación.',
+    beforeTitle: 'Antes de la cita',
     before: [
       'Evita la depilación con cera o pinzas.',
       'Evita retinol y ácidos exfoliantes, incluidos AHA/BHA, alrededor de las cejas durante 15 días.',
@@ -113,7 +113,7 @@ const copy: Record<Language, NanoText> = {
       '¿Tomas o has tomado recientemente isotretinoína (Roaccutane/Accutane)? Contáctame antes de reservar; puede ser necesario posponer el tratamiento tras consultar a dermatología.',
       'No suspendas medicamentos recetados para la cita.',
     ],
-    afterTitle: 'Después',
+    afterTitle: 'Cuidados posteriores',
     after: [
       'Limpia suavemente una hora después del tratamiento.',
       'Aplica una capa muy fina de la crema de cuidado recomendada.',
@@ -129,17 +129,17 @@ const copy: Record<Language, NanoText> = {
       { q: '¿Se verán más oscuras al principio?', a: 'Sí. Al principio pueden verse más oscuras y definidas. El color cambia y puede haber descamación durante la cicatrización; espera a que sane la piel antes de evaluar el resultado.' },
       { q: '¿Puedo maquillarme o hacer ejercicio después?', a: 'Evita maquillaje de cejas durante 14 días y ejercicio intenso o sudor abundante durante 2–5 días. Espera más si la zona sigue sensible.' },
       { q: '¿Puedo reservar si tengo un tatuaje anterior en las cejas?', a: 'Envíame fotos nítidas antes de reservar para evaluar el pigmento existente y comentar tus opciones.' },
-      { q: '¿Necesitaré un retoque?', a: 'El retoque forma parte del proceso. Entre 28 y 45 días después, evalúo la retención del pigmento y perfecciono las zonas que necesitan más color o definición. La sesión dura aproximadamente 1 hora y 30 minutos y cuesta A$150, por separado.' },
+      { q: '¿Necesitaré un retoque?', a: 'Un retoque puede ayudar a perfeccionar la retención del pigmento y la definición después de sanar.' },
     ],
-    book: 'Reservar ahora', contact: '¿Dudas? WhatsApp', note: 'Los precios y la disponibilidad se confirman en Timely.',
+    book: 'Reservar ahora', contact: '¿Dudas? WhatsApp', note: '',
   },
 };
 
 export const nanoStrokesCopy = copy;
 const shadowCopy: Record<Language, NanoText> = {
- en: {...copy.en, about: 'Shadow Brows creates a soft, powder-style shaded brow effect. The shape and colour are tailored to your features and preferences.', suitability: 'For clients seeking softly shaded definition rather than individual hair strokes. I assess your skin, existing pigment and brow shape before treatment.', benefits: ['Soft, powder-style finish','Personalised brow shape and colour','Defined brows'], initial: 'Initial appointment: A$630 · Approximately 2.5 hours', touchUp: 'Please confirm Shadow Brows touch-up timing and price with the studio.', faqs: [{q:'Will the colour look darker at first?',a:'Yes. Colour can look stronger initially and soften as the brows heal.'},{q:'What if I have previous brow tattooing?',a:'Please send photos for assessment before booking.'}]},
- pt: {...copy.pt, about: 'Shadow Brows cria um efeito sombreado suave nas sobrancelhas, semelhante ao de maquiagem. O formato e a cor são personalizados.', suitability: 'Para quem prefere definição com efeito sombreado em vez de fios individuais. Avalio a pele e pigmentações anteriores antes do tratamento.', benefits: ['Acabamento sombreado suave','Formato e cor personalizados','Sobrancelhas definidas'], initial: 'Atendimento inicial: A$630 · Aproximadamente 2h30', touchUp: 'Confirme com o estúdio o prazo e o preço do retoque de Shadow Brows.', faqs: [{q:'A cor fica mais escura no início?',a:'Sim. A cor pode ficar mais intensa inicialmente e suavizar durante a cicatrização.'},{q:'E se já tenho tatuagem nas sobrancelhas?',a:'Envie fotos para avaliação antes de agendar.'}]},
- es: {...copy.es, about: 'Shadow Brows crea un efecto sombreado suave en las cejas, similar al maquillaje. La forma y el color se personalizan.', suitability: 'Para quienes prefieren definición sombreada en lugar de trazos individuales. Evalúo la piel y pigmentaciones previas antes del tratamiento.', benefits: ['Acabado sombreado suave','Forma y color personalizados','Cejas definidas'], initial: 'Cita inicial: A$630 · Aproximadamente 2 horas y 30 minutos', touchUp: 'Confirma con el estudio el plazo y el precio del retoque de Shadow Brows.', faqs: [{q:'¿El color se ve más oscuro al principio?',a:'Sí. El color puede verse más intenso al principio y suavizarse durante la cicatrización.'},{q:'¿Y si ya tengo tatuaje en las cejas?',a:'Envía fotos para una evaluación antes de reservar.'}]}
+ en: {...copy.en, about: 'Shadow Brows creates a soft, powder-style shaded brow effect. The shape and colour are tailored to your features and preferences.', suitability: 'For clients seeking softly shaded definition rather than individual hair strokes. I assess your skin, existing pigment and brow shape before treatment.', benefits: ['Soft, powder-style finish','Personalised brow shape and colour','Defined brows'], initial: 'Initial appointment: A$630 · Approximately 2.5 hours', touchUp: 'Please confirm Shadow Brows touch-up timing and price with the studio.', note: 'Prices and appointment availability are confirmed on Timely.', faqs: [{q:'Will the colour look darker at first?',a:'Yes. Colour can look stronger initially and soften as the brows heal.'},{q:'What if I have previous brow tattooing?',a:'Please send photos for assessment before booking.'}]},
+ pt: {...copy.pt, about: 'Shadow Brows cria um efeito sombreado suave nas sobrancelhas, semelhante ao de maquiagem. O formato e a cor são personalizados.', suitability: 'Para quem prefere definição com efeito sombreado em vez de fios individuais. Avalio a pele e pigmentações anteriores antes do tratamento.', benefits: ['Acabamento sombreado suave','Formato e cor personalizados','Sobrancelhas definidas'], initial: 'Atendimento inicial: A$630 · Aproximadamente 2h30', touchUp: 'Confirme com o estúdio o prazo e o preço do retoque de Shadow Brows.', note: 'Os preços e horários devem ser confirmados no Timely.', faqs: [{q:'A cor fica mais escura no início?',a:'Sim. A cor pode ficar mais intensa inicialmente e suavizar durante a cicatrização.'},{q:'E se já tenho tatuagem nas sobrancelhas?',a:'Envie fotos para avaliação antes de agendar.'}]},
+ es: {...copy.es, about: 'Shadow Brows crea un efecto sombreado suave en las cejas, similar al maquillaje. La forma y el color se personalizan.', suitability: 'Para quienes prefieren definición sombreada en lugar de trazos individuales. Evalúo la piel y pigmentaciones previas antes del tratamiento.', benefits: ['Acabado sombreado suave','Forma y color personalizados','Cejas definidas'], initial: 'Cita inicial: A$630 · Aproximadamente 2 horas y 30 minutos', touchUp: 'Confirma con el estudio el plazo y el precio del retoque de Shadow Brows.', note: 'Los precios y la disponibilidad se confirman en Timely.', faqs: [{q:'¿El color se ve más oscuro al principio?',a:'Sí. El color puede verse más intenso al principio y suavizarse durante la cicatrización.'},{q:'¿Y si ya tengo tatuaje en las cejas?',a:'Envía fotos para una evaluación antes de reservar.'}]}
 };
 const section = 'rounded-2xl bg-white border border-[#e8d6d5] p-5 sm:p-7 shadow-sm';
 const heading = 'font-raleway text-xl sm:text-2xl font-semibold text-[#5b3239]';
@@ -150,12 +150,12 @@ export const NanoStrokesContent: React.FC<{language: Language; media?: React.Rea
   return <div data-floating-clearance className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-7 sm:py-10 space-y-4 sm:space-y-6">
     {showPrice && <section className="rounded-2xl bg-[#f3d9d0] border border-[#e8c5c8] p-5 sm:p-7">
       <h2 className={heading}>{t.priceTitle}</h2>
-      <p className="flex gap-2 items-start font-montserrat text-sm text-[#5b3239] font-semibold mt-3"><Clock3 className="w-4 h-4 mt-0.5 shrink-0"/>{t.initial}</p>
-      <p className="font-montserrat text-sm text-[#5b3239] mt-2">{t.touchUp}</p>
+      <p className="flex gap-2 items-start font-montserrat text-base text-[#402d35] font-semibold mt-3"><Clock3 className="w-4 h-4 mt-0.5 shrink-0"/>{t.initial}</p>
+      <p className="font-montserrat text-base text-[#402d35] mt-2">{t.touchUp}</p>
     </section>}
     <section className={section}>
       <h2 className={heading}>{t.aboutTitle}</h2>
-      <p className="font-montserrat text-sm sm:text-base text-[#54464b] leading-relaxed mt-3">{t.about}</p>
+      <p className="font-montserrat text-base text-[#34252c] leading-relaxed mt-3">{t.about}</p>
     </section>
     <section className={section}>
       <h2 className={heading}>{t.suitabilityTitle}</h2>
@@ -164,7 +164,7 @@ export const NanoStrokesContent: React.FC<{language: Language; media?: React.Rea
     <section className={section}>
       <h2 className={heading}>{t.benefitsTitle}</h2>
       <ul className="grid gap-2 sm:grid-cols-3 mt-4">
-        {t.benefits.map(text => <li key={text} className="flex items-start gap-2 text-sm text-[#54464b] font-montserrat"><CheckCircle2 className="w-4 h-4 shrink-0 text-[#9a5967] mt-0.5"/>{text}</li>)}
+        {t.benefits.map(text => <li key={text} className="flex items-start gap-2 text-base text-[#34252c] font-montserrat"><CheckCircle2 className="w-4 h-4 shrink-0 text-[#9a5967] mt-0.5"/>{text}</li>)}
       </ul>
     </section>
 
@@ -172,7 +172,7 @@ export const NanoStrokesContent: React.FC<{language: Language; media?: React.Rea
     <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
       <section className={section}>
         <h2 className={heading}>{t.beforeTitle}</h2>
-        <ul className="list-disc pl-5 mt-4 space-y-2">{t.before.map(item => <li key={item} className="font-montserrat text-sm text-[#54464b] leading-relaxed">{item}</li>)}</ul>
+        <ul className="list-disc pl-5 mt-4 space-y-3 marker:text-[#803f55]">{t.before.map(item => <li key={item} className="font-montserrat text-base text-[#34252c] leading-relaxed">{item}</li>)}</ul>
       </section>
       <section className={section}>
         <h2 className={heading}>{t.afterTitle}</h2>
@@ -182,14 +182,14 @@ export const NanoStrokesContent: React.FC<{language: Language; media?: React.Rea
     <section className={section}>
       <h2 className={heading}>{t.faqTitle}</h2>
       <div className="space-y-2 mt-4">{t.faqs.map((f,i)=><details key={f.q} className="rounded-xl border border-[#e8d6d5] px-4 py-3 bg-[#fffaf9]" open={i===0}>
-        <summary className="font-montserrat text-sm font-semibold text-[#5b3239] cursor-pointer">{f.q}</summary>
-        <p className="font-montserrat text-sm text-[#55464c] leading-relaxed mt-3">{f.a}</p>
+        <summary className="font-montserrat text-base font-bold text-[#402d35] cursor-pointer">{f.q}</summary>
+        <p className="font-montserrat text-base text-[#34252c] leading-relaxed mt-3">{f.a}</p>
       </details>)}</div>
     </section>
     {showBooking && <div className="flex flex-wrap gap-3 items-center">
       <a href={getServiceBookingUrl(variant)} className="inline-flex gap-2 items-center justify-center bg-[#5b3239] text-white rounded-full px-6 py-3 text-xs font-bold hover:bg-[#7a4753]"><CalendarDays className="w-4 h-4"/>{t.book}</a>
       <a href="https://wa.me/61402148437" target="_blank" rel="noopener noreferrer" className="inline-flex gap-2 items-center rounded-full border border-[#9a5967]/50 text-[#5b3239] px-5 py-3 text-xs font-semibold"><MessageCircle className="w-4 h-4"/>{t.contact}</a>
-      <span className="font-montserrat text-xs text-[#846f75]">{t.note}</span>
+      {t.note && <span className="font-montserrat text-xs text-[#58414a]">{t.note}</span>}
     </div>}
   </div>;
 };
