@@ -143,9 +143,56 @@ const copy: Record<Language, NanoText> = {
 
 export const nanoStrokesCopy = copy;
 const shadowCopy: Record<Language, NanoText> = {
- en: {...copy.en, about: 'Shadow Brows creates a soft, powder-style shaded brow effect. The shape and colour are tailored to your features and preferences.', suitability: 'For clients seeking softly shaded definition rather than individual hair strokes. I assess your skin, existing pigment and brow shape before treatment.', benefits: ['Soft, powder-style finish','Personalised brow shape and colour','Defined brows'], initial: 'Initial appointment: A$630 · Approximately 2.5 hours', touchUp: 'Please confirm Shadow Brows touch-up timing and price with the studio.', note: 'Prices and appointment availability are confirmed on Timely.', faqs: [{q:'Will the colour look darker at first?',a:'Yes. Colour can look stronger initially and soften as the brows heal.'},{q:'What if I have previous brow tattooing?',a:'Please send photos for assessment before booking.'}]},
- pt: {...copy.pt, about: 'Shadow Brows cria um efeito sombreado suave nas sobrancelhas, semelhante ao de maquiagem. O formato e a cor são personalizados.', suitability: 'Para quem prefere definição com efeito sombreado em vez de fios individuais. Avalio a pele e pigmentações anteriores antes do tratamento.', benefits: ['Acabamento sombreado suave','Formato e cor personalizados','Sobrancelhas definidas'], initial: 'Atendimento inicial: A$630 · Aproximadamente 2h30', touchUp: 'Confirme com o estúdio o prazo e o preço do retoque de Shadow Brows.', note: 'Os preços e horários devem ser confirmados no Timely.', faqs: [{q:'A cor fica mais escura no início?',a:'Sim. A cor pode ficar mais intensa inicialmente e suavizar durante a cicatrização.'},{q:'E se já tenho tatuagem nas sobrancelhas?',a:'Envie fotos para avaliação antes de agendar.'}]},
- es: {...copy.es, about: 'Shadow Brows crea un efecto sombreado suave en las cejas, similar al maquillaje. La forma y el color se personalizan.', suitability: 'Para quienes prefieren definición sombreada en lugar de trazos individuales. Evalúo la piel y pigmentaciones previas antes del tratamiento.', benefits: ['Acabado sombreado suave','Forma y color personalizados','Cejas definidas'], initial: 'Cita inicial: A$630 · Aproximadamente 2 horas y 30 minutos', touchUp: 'Confirma con el estudio el plazo y el precio del retoque de Shadow Brows.', note: 'Los precios y la disponibilidad se confirman en Timely.', faqs: [{q:'¿El color se ve más oscuro al principio?',a:'Sí. El color puede verse más intenso al principio y suavizarse durante la cicatrización.'},{q:'¿Y si ya tengo tatuaje en las cejas?',a:'Envía fotos para una evaluación antes de reservar.'}]}
+  en: {
+    ...copy.en,
+    about: 'Shadow Brows gives your brows a soft, powder-like finish. I personalise the shape and colour to complement your features and preferences.',
+    suitability: 'I recommend this treatment for clients who prefer softly shaded brows with added definition. Before treatment, I assess your skin, any existing brow pigment and your brow shape.',
+    benefits: ['Soft, powder-style finish', 'Personalised brow shape and colour', 'Defined brows'],
+    initial: copy.en.initial,
+    // Both cosmetic tattoo services share the same touch-up policy. Keep price and interval
+    // unconfirmed until the studio approves them for both services.
+    touchUp: copy.en.touchUp,
+    note: '',
+    faqs: [
+      { q: 'Will the colour look darker at first?', a: 'Yes. Colour can look stronger initially and soften as the brows heal.' },
+      { q: 'What if I have previous brow tattooing?', a: 'Please send photos for assessment before booking.' },
+      { q: 'What is the difference between Shadow Brows and Nano Strokes?', a: 'Shadow Brows creates a soft, shaded effect similar to brow powder. My Nano Strokes technique uses a Tebori hand tool to create individual hair-like strokes.' },
+      { q: 'Will my brows look too bold?', a: 'Shadow Brows can be soft and subtle. I personalise the shape, colour and shading intensity to suit your features and preferred look.' },
+      { q: 'How do you choose the shape and colour?', a: 'I assess your natural brows and facial features, then discuss the shape and colour with you before treatment.' },
+    ],
+  },
+  pt: {
+    ...copy.pt,
+    about: 'Shadow Brows proporciona às sobrancelhas um acabamento suave, semelhante ao de um pó. Personalizo o formato e a cor para valorizar seus traços e preferências.',
+    suitability: 'Recomendo este tratamento para quem prefere sobrancelhas suavemente sombreadas e mais definidas. Antes do procedimento, avalio sua pele, qualquer pigmento existente e o formato das suas sobrancelhas.',
+    benefits: ['Acabamento sombreado suave', 'Formato e cor personalizados', 'Sobrancelhas definidas'],
+    initial: copy.pt.initial,
+    touchUp: copy.pt.touchUp,
+    note: '',
+    faqs: [
+      { q: 'A cor fica mais escura no início?', a: 'Sim. A cor pode ficar mais intensa inicialmente e suavizar durante a cicatrização.' },
+      { q: 'E se já tenho tatuagem nas sobrancelhas?', a: 'Envie fotos para avaliação antes de agendar.' },
+      { q: 'Qual é a diferença entre Shadow Brows e Nano Strokes?', a: 'Shadow Brows cria um efeito sombreado suave, semelhante ao de um pó para sobrancelhas. A técnica Nano Strokes utiliza uma ferramenta manual Tebori para criar traços individuais que imitam fios.' },
+      { q: 'Minhas sobrancelhas ficarão muito marcadas?', a: 'O resultado pode ser suave e discreto. Personalizo o formato, a cor e a intensidade do sombreado conforme seus traços e preferências.' },
+      { q: 'Como você escolhe o formato e a cor?', a: 'Avalio suas sobrancelhas naturais e seus traços faciais e converso com você sobre o formato e a cor antes do procedimento.' },
+    ],
+  },
+  es: {
+    ...copy.es,
+    about: 'Shadow Brows da a las cejas un acabado suave, similar al maquillaje en polvo. Personalizo la forma y el color para complementar tus rasgos y preferencias.',
+    suitability: 'Recomiendo este tratamiento a quienes prefieren cejas suavemente sombreadas con mayor definición. Antes del tratamiento, evalúo tu piel, cualquier pigmento existente y la forma de tus cejas.',
+    benefits: ['Acabado sombreado suave', 'Forma y color personalizados', 'Cejas definidas'],
+    initial: copy.es.initial,
+    touchUp: copy.es.touchUp,
+    note: '',
+    faqs: [
+      { q: '¿El color se ve más oscuro al principio?', a: 'Sí. El color puede verse más intenso al principio y suavizarse durante la cicatrización.' },
+      { q: '¿Y si ya tengo un tatuaje en las cejas?', a: 'Envíame fotos para una evaluación antes de reservar.' },
+      { q: '¿Cuál es la diferencia entre Shadow Brows y Nano Strokes?', a: 'Shadow Brows crea un efecto sombreado suave, similar al maquillaje en polvo para cejas. Mi técnica Nano Strokes utiliza una herramienta manual Tebori para crear trazos individuales que parecen vellos.' },
+      { q: '¿Mis cejas quedarán demasiado marcadas?', a: 'Shadow Brows puede ser suave y sutil. Personalizo la forma, el color y la intensidad del sombreado según tus rasgos y preferencias.' },
+      { q: '¿Cómo eliges la forma y el color?', a: 'Evalúo tus cejas naturales y rasgos faciales, y hablamos sobre la forma y el color antes del tratamiento.' },
+    ],
+  },
 };
 const section = 'rounded-2xl bg-white border border-[#e8d6d5] p-5 sm:p-7 shadow-sm';
 const heading = 'font-raleway text-xl sm:text-2xl font-semibold text-[#5b3239]';
@@ -165,7 +212,7 @@ export const NanoStrokesContent: React.FC<{language: Language; media?: React.Rea
     </section>
     <section className={section}>
       <h2 className={heading}>{t.suitabilityTitle}</h2>
-      <p className="font-montserrat text-sm sm:text-base text-[#54464b] leading-relaxed mt-3">{t.suitability}</p>
+      <p className="font-montserrat text-base text-[#34252c] leading-relaxed mt-3">{t.suitability}</p>
     </section>
     <section className={section}>
       <h2 className={heading}>{t.benefitsTitle}</h2>
@@ -182,7 +229,7 @@ export const NanoStrokesContent: React.FC<{language: Language; media?: React.Rea
       </section>
       <section className={section}>
         <h2 className={heading}>{t.afterTitle}</h2>
-        <ul className="list-disc pl-5 mt-4 space-y-2">{t.after.map(item => <li key={item} className="font-montserrat text-sm text-[#54464b] leading-relaxed">{item}</li>)}</ul>
+        <ul className="list-disc pl-5 mt-4 space-y-3 marker:text-[#803f55]">{t.after.map(item => <li key={item} className="font-montserrat text-base text-[#34252c] leading-relaxed">{item}</li>)}</ul>
       </section>
     </div>
     <section className={section}>
