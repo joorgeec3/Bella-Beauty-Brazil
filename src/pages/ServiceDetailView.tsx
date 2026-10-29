@@ -15,6 +15,91 @@ interface ServiceDetailViewProps {
   onNavigate: (tab: string, subParam?: string) => void;
 }
 
+const lipBlushBefore = [
+  "Moisturise your lips daily for 7 days before your appointment.",
+  "Stay well hydrated.",
+  "Avoid matte or drying lipsticks for 7 days beforehand.",
+  "Do not pick or scrub dry, cracked or irritated lips.",
+  "Your lips must be free from open wounds and active cold sores.",
+  "Tell me if you have a history of cold sores. Discuss preventative antiviral medication with your healthcare professional before treatment.",
+  "Contact me before booking if you use isotretinoin, have recent lip fillers, or use acids or facial peels near the lips.",
+  "Tell me about allergies, medications and conditions that may affect healing.",
+  "Do not stop prescribed medication for your appointment."
+];
+const lipBlushAfter = [
+  "Keep your lips clean and moisturised with the recommended aftercare product.",
+  "Apply the product using a clean cotton swab.",
+  "Avoid touching your lips except when cleaning or applying aftercare.",
+  "Avoid kissing on the lips for 7 days.",
+  "Do not pick, peel or scratch flaking skin.",
+  "Avoid very hot foods and drinks for 7 days.",
+  "Avoid alcohol for 7 days.",
+  "Avoid direct sun exposure for 15 days.",
+  "Avoid lipstick for at least 15 days and until healed.",
+  "Follow any antiviral instructions provided by your healthcare professional.",
+  "Seek medical advice for worsening pain, redness, swelling, discharge or fever."
+];
+const lipBlushHealing = [
+  [
+    "Immediately after treatment",
+    "Lips may feel tender and appear more intensely coloured. Follow your aftercare instructions."
+  ],
+  [
+    "Day 1",
+    "Some tenderness and a small amount of clear fluid may occur."
+  ],
+  [
+    "Day 2",
+    "The colour may appear darker, and your lips may feel dry."
+  ],
+  [
+    "Days 3–5",
+    "Flaking may begin. Do not pick or peel the skin."
+  ],
+  [
+    "Days 6–10",
+    "The colour may look much lighter. This is not the final result."
+  ],
+  [
+    "Around days 30–45",
+    "The colour gradually settles. Healing times vary."
+  ],
+  [
+    "After 60 days",
+    "Book your touch-up so I can assess the healed colour and refine areas if needed."
+  ]
+];
+const lipBlushFaqs = [
+  [
+    "Will Lip Blush make my lips bigger?",
+    "Lip Blush enhances colour and definition. It does not add volume, although improved definition can give the appearance of fuller lips."
+  ],
+  [
+    "How do you choose the colour?",
+    "I assess your natural lip colour and discuss your preferred look before selecting a suitable shade with you."
+  ],
+  [
+    "Will it look like lipstick?",
+    "Lip Blush can create a soft tint rather than an opaque lipstick finish. The healed result depends on your natural lip colour, the selected shade and pigment retention."
+  ],
+  [
+    "Will the colour look darker at first?",
+    "Yes. The colour initially appears stronger and softens during healing. Allow approximately 30–45 days for it to settle."
+  ],
+  [
+    "Can I have Lip Blush if I get cold sores?",
+    "Please tell me before booking. Lip tattooing can trigger an outbreak, so discuss a prevention plan with your healthcare professional beforehand. Treatment must be postponed if you have an active cold sore."
+  ],
+  [
+    "Will I need a touch-up?",
+    "A touch-up may be needed to refine the healed colour. Schedule it after 60 days so I can assess your result."
+  ],
+  [
+    "Does the pigment disappear completely?",
+    "The colour fades over time, but some pigment may remain. Results and maintenance needs vary."
+  ]
+];
+
 const teethWhiteningFaqs = {
   en: [
     ['How much does it cost and how long does it take?', 'A$199 for an appointment of approximately 1 hour.'],
@@ -227,11 +312,11 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
           <div className="lg:col-span-8 space-y-8">
             <section className="bg-white rounded-2xl border border-[#e8d6d5] p-6 sm:p-10 shadow-sm scroll-rise">
               <h2 className="font-raleway text-2xl sm:text-3xl font-bold uppercase tracking-wider text-[#5b3239]">{translated(language, 'About this treatment', 'Sobre este tratamento', 'Sobre este tratamiento')}</h2>
-              <p className="font-montserrat text-neutral-700 leading-relaxed mt-4">{base.id === 'teeth-whitening' ? service.description : language === 'en' ? (approvedDescriptionFor(base.id) || service.description) : service.description}</p>
+              <p className="font-montserrat text-neutral-700 leading-relaxed mt-4">{base.id === 'lip-blush' && language === 'en' ? "Lip Blush enhances your natural lip colour and definition with a shade selected especially for you. I use a cosmetic tattoo machine to deposit pigment into the lips, creating a softly tinted finish. The colour appears stronger immediately after treatment and softens as the lips heal." : base.id === 'teeth-whitening' ? service.description : language === 'en' ? (approvedDescriptionFor(base.id) || service.description) : service.description}</p>
               {!['nano-strokes', 'lip-blush', 'shadow-brows', 'brow-sculpt', 'teeth-whitening'].includes(base.id) && language === 'en' && approvedDescriptionFor(base.id) && <p className="font-montserrat text-xs text-[#846f75] mt-3">Treatment description provided by Bella Beauty Brazil.</p>}
               {(guide || base.id === 'teeth-whitening') && <>
-                <h3 className="font-raleway text-xl font-bold text-[#5b3239] mt-8">{base.id === 'teeth-whitening' ? translated(language, 'Is this treatment right for me?', 'Este tratamento é indicado para mim?', '¿Es este tratamiento adecuado para mí?') : translated(language, 'Who may this treatment suit?', 'Para quem este tratamento pode ser indicado?', '¿Para quién puede ser adecuado este tratamiento?')}</h3>
-                <p className="font-montserrat text-neutral-700 leading-relaxed mt-3">{base.id === 'teeth-whitening' ? translated(language, 'Interested in a brighter smile? Contact me before booking to discuss suitability and what to expect.', 'Quer um sorriso mais branco? Entre em contato antes de agendar para conversar sobre a indicação e o que esperar.', '¿Te interesa una sonrisa más blanca? Contáctame antes de reservar para hablar sobre la idoneidad y qué esperar.') : guide?.idealFor}</p>
+                <h3 className="font-raleway text-xl font-bold text-[#5b3239] mt-8">{['teeth-whitening', 'lip-blush'].includes(base.id) ? translated(language, 'Is this treatment right for me?', 'Este tratamento é indicado para mim?', '¿Es este tratamiento adecuado para mí?') : translated(language, 'Who may this treatment suit?', 'Para quem este tratamento pode ser indicado?', '¿Para quién puede ser adecuado este tratamiento?')}</h3>
+                <p className="font-montserrat text-neutral-700 leading-relaxed mt-3">{base.id === 'lip-blush' && language === 'en' ? "This treatment may suit you if you would like to enhance pale lips, improve colour definition or achieve a softly tinted look. I assess your natural lip colour and discuss your goals before recommending a personalised treatment." : base.id === 'teeth-whitening' ? translated(language, 'Interested in a brighter smile? Contact me before booking to discuss suitability and what to expect.', 'Quer um sorriso mais branco? Entre em contato antes de agendar para conversar sobre a indicação e o que esperar.', '¿Te interesa una sonrisa más blanca? Contáctame antes de reservar para hablar sobre la idoneidad y qué esperar.') : guide?.idealFor}</p>
                 {base.id === 'nano-strokes' ? (
                   <>
                     <h3 className="font-raleway text-xl font-bold text-[#5b3239] mt-8">{translated(language, 'How does it work?', 'Como funciona?', '¿Cómo funciona?')}</h3>
@@ -243,18 +328,8 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
                       )}
                     </p>
                   </>
-                ) : base.id === 'lip-blush' ? (
-                  <>
-                    <h3 className="font-raleway text-xl font-bold text-[#5b3239] mt-8">{translated(language, 'A soft, natural finish', 'Um acabamento suave e natural', 'Un acabado suave y natural')}</h3>
-                    <p className="font-montserrat text-neutral-700 leading-relaxed mt-3">
-                      {translated(language,
-                        'Lip Blush enhances your natural lip colour and gently defines the lip border. The shade is selected with you to suit your preferences. The healed result is a soft wash of colour rather than a full lipstick look.',
-                        'Lip Blush realça a cor natural dos lábios e define suavemente seu contorno. O tom é escolhido com você, de acordo com suas preferências. Depois de cicatrizado, o resultado é uma cor suave, e não um efeito de batom intenso.',
-                        'Lip Blush realza el color natural de tus labios y define suavemente su contorno. El tono se elige contigo según tus preferencias. Una vez cicatrizado, el resultado es un toque suave de color, no un efecto de pintalabios intenso.'
-                      )}
-                    </p>
-                  </>
-                ) : ['brow-sculpt', 'teeth-whitening'].includes(base.id) ? null : (
+                ) : base.id === 'lip-blush' ? null
+: ['brow-sculpt', 'teeth-whitening'].includes(base.id) ? null : (
                   <>
                     <h3 className="font-raleway text-xl font-bold text-[#5b3239] mt-8">{translated(language, 'How is it different?', 'Quais são as diferenças?', '¿En qué se diferencia?')}</h3>
                     <p className="font-montserrat text-neutral-700 leading-relaxed mt-3">{guide?.comparison}</p>
@@ -274,13 +349,22 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
                     : (service.benefits || [])).map((benefit) => <li key={benefit} className="flex items-start gap-2 text-sm font-montserrat text-neutral-700"><CheckCircle2 className="w-4 h-4 text-[#9a5967] shrink-0 mt-0.5" />{benefit}</li>)}
               </ul>
             </section>
-            <section className="bg-[#f3d9d0] rounded-2xl border border-[#e8c5c8] p-6 sm:p-10 scroll-rise">
+            {base.id === 'lip-blush' ? <>
+              {([['Before your appointment', lipBlushBefore], ['Aftercare', lipBlushAfter]] as const).map(([heading, items]) => <section key={heading} className="bg-[#f3d9d0] rounded-2xl border border-[#e8c5c8] p-6 sm:p-10 scroll-rise">
+                <h2 className="font-raleway text-2xl font-bold text-[#5b3239]">{heading}</h2>
+                <ul className="list-disc pl-6 space-y-3 mt-5 font-montserrat text-base leading-7 text-[#3f3539]">{items.map(item => <li key={item}>{item}</li>)}</ul>
+              </section>)}
+              <section className="bg-white rounded-2xl border border-[#e8d6d5] p-6 sm:p-10 scroll-rise">
+                <h2 className="font-raleway text-2xl font-bold text-[#5b3239]">Healing Process</h2>
+                <div className="mt-5 space-y-4">{lipBlushHealing.map(([period, info]) => <div key={period} className="border-l-4 border-[#9a5967] pl-4 py-1"><h3 className="font-montserrat text-base font-bold text-[#5b3239]">{period}</h3><p className="font-montserrat text-base leading-7 text-[#3f3539] mt-1">{info}</p></div>)}</div>
+              </section>
+            </> : <section className="bg-[#f3d9d0] rounded-2xl border border-[#e8c5c8] p-6 sm:p-10 scroll-rise">
               <h2 className="font-raleway text-2xl font-bold uppercase tracking-wider text-[#5b3239]">{translated(language, 'Preparation and aftercare', 'Preparação e cuidados', 'Preparación y cuidados')}</h2>
               <p className="font-montserrat text-neutral-700 leading-relaxed mt-4">{groupCopy.care}</p>
-            </section>
+            </section>}
             <section className="space-y-3">
               <h2 className="font-raleway text-2xl font-bold uppercase tracking-wider text-[#5b3239]">FAQ</h2>
-              {base.id === 'teeth-whitening' ? teethWhiteningFaqs[language].map(([q, a], i) => <details key={q} className="bg-white border border-[#e8d6d5] rounded-xl p-5" open={i === 0}><summary className="font-montserrat font-bold text-[#5b3239] cursor-pointer">{q}</summary><p className="font-montserrat text-sm text-neutral-700 leading-relaxed mt-3">{a}</p></details>) : <><details className="bg-white border border-[#e8d6d5] rounded-xl p-5" open><summary className="font-montserrat font-bold text-[#5b3239] cursor-pointer">
+              {base.id === 'lip-blush' ? lipBlushFaqs.map(([q,a]) => <details key={q} className="bg-white border border-[#e8d6d5] rounded-xl p-5"><summary className="font-montserrat text-base font-bold text-[#5b3239] cursor-pointer">{q}</summary><p className="font-montserrat text-base leading-7 text-[#3f3539] mt-3">{a}</p></details>) : base.id === 'teeth-whitening' ? teethWhiteningFaqs[language].map(([q, a], i) => <details key={q} className="bg-white border border-[#e8d6d5] rounded-xl p-5" open={i === 0}><summary className="font-montserrat font-bold text-[#5b3239] cursor-pointer">{q}</summary><p className="font-montserrat text-sm text-neutral-700 leading-relaxed mt-3">{a}</p></details>) : <><details className="bg-white border border-[#e8d6d5] rounded-xl p-5" open><summary className="font-montserrat font-bold text-[#5b3239] cursor-pointer">
                 {base.id === 'brow-sculpt'
                   ? translated(language, 'What should I avoid before my appointment?', 'O que devo evitar antes do meu agendamento?', '¿Qué debo evitar antes de mi cita?')
                   : base.id === 'shadow-brows'
@@ -307,7 +391,7 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
             <div className="bg-[#5b3239] text-white rounded-2xl p-6 sm:p-8 shadow-lg sticky top-28">
               <h2 className="font-raleway text-2xl font-bold uppercase tracking-wider">{translated(language, 'Book this service', 'Agende este serviço', 'Reserva este servicio')}</h2>
               <div className="flex items-center gap-3 mt-5 text-[#efb7c8]"><Calendar className="w-5 h-5" /><strong className="font-montserrat text-xl">{isPriceConfirmed ? `A$${service.price}` : translated(language, 'Enquire', 'Consultar', 'Consultar')}</strong></div>
-              {base.id === 'lip-blush' && <p className="mt-3 font-montserrat text-sm font-medium leading-relaxed text-white/95">{translated(language, 'Lip Blush touch-up: from 28 to 45 days. Confirm its separate price and duration on Timely.', 'Retoque de Lip Blush: entre 28 e 45 dias. Confirme o valor e a duração separadamente no Timely.', 'Retoque de Lip Blush: entre 28 y 45 días. Confirma el precio y la duración por separado en Timely.')}</p>}
+              {base.id === 'lip-blush' && <p className="mt-3 font-montserrat text-sm font-medium leading-relaxed text-white/95">{translated(language, 'Lip Blush touch-up: After 60 days. Touch-up price to be confirmed with the studio.', 'Retoque de Lip Blush: após 60 dias. Valor do retoque a confirmar com o estúdio.', 'Retoque de Lip Blush: después de 60 días. Precio del retoque pendiente de confirmación.')}</p>}
               {base.id === 'shadow-brows' && <p className="mt-3 font-montserrat text-sm font-medium leading-relaxed text-white/95">{translated(language, 'Please confirm touch-up details with the studio before booking.', 'Confirme os detalhes do retoque com o estúdio antes de reservar.', 'Confirma los detalles del retoque con el estudio antes de reservar.')}</p>}
               {service.duration && <div className="flex items-center gap-3 mt-3 text-neutral-200"><Clock className="w-5 h-5" /><span className="font-montserrat text-sm">{service.duration}</span></div>}
               <a href={getServiceBookingUrl(base.id)} className="mt-7 inline-flex w-full items-center justify-center gap-2 bg-[#efb7c8] hover:bg-white text-[#5b3239] text-xs font-bold uppercase tracking-widest px-5 py-4 rounded-full cursor-pointer transition-colors"><Calendar className="w-4 h-4" />{translated(language, 'Book now', 'Agendar agora', 'Reservar ahora')}</a>
