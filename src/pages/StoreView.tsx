@@ -115,7 +115,7 @@ export const StoreView: React.FC<StoreViewProps> = ({ language }) => {
                       </figure>
                     ))}
                   </div>
-                </details>
+                </div>
               )}
               {(course.id === 'lash-lift-course' || course.id === 'brow-lamination-course') && (
                 <a href="#combined-lash-brow-course-media" className="block border-b border-[#e8d6d5] bg-[#fff8f9] hover:bg-[#f3e1e6] px-6 py-3 font-montserrat text-xs font-bold uppercase tracking-wider text-[#5b3239]">
