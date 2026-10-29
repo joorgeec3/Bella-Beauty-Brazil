@@ -198,7 +198,7 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
                     ) : (
                       <img src={cover?.src || service.image}
                         alt={cover?.specific ? `${service.title} — real client photo from Bella Beauty Brazil` : `${service.title} — representative category photo from Bella Beauty Brazil`}
-                        className="w-full aspect-[4/3] object-contain bg-[#261d21] rounded-2xl shadow-2xl border border-white/20" />
+                        className={`w-full aspect-[4/3] bg-[#261d21] rounded-2xl shadow-2xl border border-white/20 ${base.id === 'lip-blush' ? 'object-cover object-[center_56%]' : 'object-contain'}`} />
                     )}
                     {!cover?.specific && <p className="font-montserrat text-xs text-[#efb7c8] text-right">{translated(language, 'Representative category photo — not a result of this particular service', 'Foto representativa da categoria — não é resultado deste serviço específico', 'Foto representativa de la categoría — no es resultado de este servicio específico')}</p>}
                   </div>}
