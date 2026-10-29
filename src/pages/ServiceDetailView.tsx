@@ -189,9 +189,17 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
                     </p>
                   </div>
                 : <div className="space-y-2">
-                    <img src={cover?.src || service.image}
-                      alt={base.id === 'nano-strokes' ? 'Upright photographs of brow shaping stages provided by Bella Beauty Brazil' : cover?.specific ? `${service.title} — real client photo from Bella Beauty Brazil` : `${service.title} — representative category photo from Bella Beauty Brazil`}
-                      className={`w-full ${base.id === 'nano-strokes' ? 'aspect-[5/4] sm:aspect-[4/3]' : 'aspect-[4/3]'} object-contain bg-[#261d21] rounded-2xl shadow-2xl border border-white/20`} />
+                    {base.id === 'nano-strokes' ? (
+                      <div className="nano-cover-frame w-full rounded-2xl shadow-2xl border border-white/20 bg-[#261d21]">
+                        <img src={cover?.src || service.image}
+                          alt="Nano Strokes — Bella Beauty Brazil eyebrow treatment"
+                          className="nano-rotated-image nano-turn-right" />
+                      </div>
+                    ) : (
+                      <img src={cover?.src || service.image}
+                        alt={cover?.specific ? `${service.title} — real client photo from Bella Beauty Brazil` : `${service.title} — representative category photo from Bella Beauty Brazil`}
+                        className="w-full aspect-[4/3] object-contain bg-[#261d21] rounded-2xl shadow-2xl border border-white/20" />
+                    )}
                     {!cover?.specific && <p className="font-montserrat text-xs text-[#efb7c8] text-right">{translated(language, 'Representative category photo — not a result of this particular service', 'Foto representativa da categoria — não é resultado deste serviço específico', 'Foto representativa de la categoría — no es resultado de este servicio específico')}</p>}
                   </div>}
             </div>
