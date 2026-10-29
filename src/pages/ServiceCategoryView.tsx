@@ -48,8 +48,7 @@ const TreatmentEntry: React.FC<{ id: string; language: Language; first: boolean;
       </div>
       <span className="min-w-0 flex-1">
         <span className="block font-raleway text-lg sm:text-2xl font-semibold leading-snug">{service.title}</span>
-        <span className="block font-montserrat text-xs sm:text-sm text-[#675960] mt-2">{price}{service.duration ? ` · ${service.duration}` : ''}</span>
-        {id === 'nano-strokes' && <span className="block font-montserrat text-[11px] sm:text-xs text-[#8b5462] mt-1">{language === 'en' ? 'Touch-up 28–45 days: A$150 extra · 1h30' : language === 'pt' ? 'Retoque entre 28–45 dias: A$150 à parte · 1h30' : 'Retoque entre 28–45 días: A$150 aparte · 1h30'}</span>}
+        {id !== 'nano-strokes' && <span className="block font-montserrat text-xs sm:text-sm text-[#675960] mt-2">{price}{service.duration ? ` · ${service.duration}` : ''}</span>}
         {id === 'lip-blush' && <span className="block font-montserrat text-[11px] sm:text-xs text-[#8b5462] mt-1">{language === 'en' ? 'Touch-up from 28–45 days · Price to confirm on Timely' : language === 'pt' ? 'Retoque entre 28–45 dias · Valor a confirmar no Timely' : 'Retoque entre 28–45 días · Precio a confirmar en Timely'}</span>}
         <span className="flex items-center gap-1.5 font-montserrat text-[11px] font-bold uppercase tracking-wide text-[#9a5967] mt-3">{copy.more} <ChevronDown aria-hidden="true" className="w-4 h-4 transition-transform group-open:rotate-180" /></span>
       </span>
