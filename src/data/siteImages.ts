@@ -7,7 +7,7 @@ export const siteImages = {
     coursePhotos: {
       'lash-lift-course': siteAsset('assets/bella/training/courses-v3/lash-lift-course.webp'),
       'brow-lamination-course': siteAsset('assets/bella/training/courses-v3/brow-lamination-course.webp'),
-      'nano-strokes-course': siteAsset('assets/bella/client-2026-10/nano-strokes-procedure.webp'),
+      'nano-strokes-course': siteAsset('assets/bella/training/courses-v3/nano-strokes-course.webp'),
     },
     videos: [
       { id: 'practice', src: siteAsset('assets/bella/training/courses-v3/training-practical.mp4'), poster: siteAsset('assets/bella/training/courses-v3/training-hero.webp') },
