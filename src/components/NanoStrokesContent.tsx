@@ -25,7 +25,7 @@ const copy: Record<Language, NanoText> = {
     benefits: ['Fine, natural-looking hair strokes', 'Personalised brow mapping', 'Definition for sparse areas'],
     priceTitle: 'Price & duration',
     initial: 'Initial appointment: A$630 · Approximately 2.5 hours',
-    touchUp: 'Touch-up: Approximately 1.5 hours · Price and interval to be confirmed.',
+    touchUp: 'Touch-up: A$150 · Approximately 1.5 hours · Timing to be confirmed with the studio.',
     beforeTitle: 'Before your appointment',
     before: [
       'Avoid waxing or plucking.',
@@ -66,7 +66,7 @@ const copy: Record<Language, NanoText> = {
     benefits: ['Traços finos com aparência natural', 'Mapeamento personalizado das sobrancelhas', 'Mais definição em áreas com falhas'],
     priceTitle: 'Preço e duração',
     initial: 'Sessão inicial: A$630 · Aproximadamente 2,5 horas',
-    touchUp: 'Retoque: Aproximadamente 1,5 hora · Valor e prazo a confirmar.',
+    touchUp: 'Retoque: A$150 · Aproximadamente 1,5 hora · Prazo a confirmar com o estúdio.',
     beforeTitle: 'Antes do atendimento',
     before: [
       'Evite depilar ou retirar os pelos com pinça.',
@@ -107,7 +107,7 @@ const copy: Record<Language, NanoText> = {
     benefits: ['Trazos finos de aspecto natural', 'Diseño personalizado de cejas', 'Mayor definición en zonas despobladas'],
     priceTitle: 'Precio y duración',
     initial: 'Sesión inicial: A$630 · Aproximadamente 2,5 horas',
-    touchUp: 'Retoque: Aproximadamente 1,5 horas · Precio y plazo pendientes de confirmación.',
+    touchUp: 'Retoque: A$150 · Aproximadamente 1,5 horas · Plazo por confirmar con el estudio.',
     beforeTitle: 'Antes de la cita',
     before: [
       'Evita la depilación con cera o pinzas.',
@@ -149,8 +149,8 @@ const shadowCopy: Record<Language, NanoText> = {
     suitability: 'I recommend this treatment for clients who prefer softly shaded brows with added definition. Before treatment, I assess your skin, any existing brow pigment and your brow shape.',
     benefits: ['Soft, powder-style finish', 'Personalised brow shape and colour', 'Defined brows'],
     initial: copy.en.initial,
-    // Both cosmetic tattoo services share the same touch-up policy. Keep price and interval
-    // unconfirmed until the studio approves them for both services.
+    // Nano Strokes and Shadow Brows share the same approved touch-up price and duration.
+    // The exact interval still requires confirmation from the studio.
     touchUp: copy.en.touchUp,
     note: '',
     faqs: [
