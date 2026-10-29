@@ -9,7 +9,10 @@ type VideoItem = { src: string; title: string };
 // No generic or unrelated clip may appear as proof of a specific treatment.
 const approvedVideoClips: Record<string, string[]> = {
   'nano-strokes': ['nano-strokes/01.mp4','nano-strokes/02.mp4','nano-strokes/03.mp4'],
-  'shadow-brows': ['shadow-brows/01.mp4','shadow-brows/02.mp4'],
+  // Keep only the first original clip; the second existing clip repeats the same session.
+  // Client-provided videos 03 and 04 are validated from the 2026-10-29 iCloud ZIP.
+  // The gallery checks file existence before showing them, so they require the actual media files.
+  'shadow-brows': ['shadow-brows/01.mp4','shadow-brows/03.mp4','shadow-brows/04.mp4'],
   // Lip Blush already uses the newer client-supplied gallery clip below.
   // The older lip-blush/01.mp4 repeats the same treatment visually; keep only the clearer clip.
   'brow-sculpt': ['brow-sculpt/01.mp4'],
