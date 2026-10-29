@@ -345,6 +345,21 @@ html { scroll-behavior: smooth; scroll-padding-top: 82px; }
   [data-floating-whatsapp] > div:last-child button { width: 3rem; height: 3rem; }
 }
 
+/* Nano Strokes service cover: turn the original sideways gallery image upright,
+   fit it within the hero on all screen sizes, and preserve the entire photo. */
+.nano-cover-frame {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 5 / 4;
+  container-type: inline-size;
+  --nano-frame-h: 80cqw;
+}
+@media (min-width: 640px) {
+  .nano-cover-frame {
+    aspect-ratio: 4 / 3;
+    --nano-frame-h: 75cqw;
+  }
+}
 /* Nano Strokes: show genuinely upright eyebrow images without cropping.
    Source files are unmodified; the sideways originals are straightened in the
    gallery and in its full-photo preview. Container units reserve rotated width. */
