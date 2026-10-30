@@ -84,6 +84,23 @@ const imageAlt = (id: string, title: string) =>
   serviceCoverFor(id)?.specific
     ? `${title} — real photograph provided by Bella Beauty Brazil`
     : `${title} — representative photo from the related beauty category, not this specific treatment result`;
+const browCardSummaries: Record<Language, Record<string, string>> = {
+  en: {
+    'brow-sculpt': 'Personalised brow mapping, waxing, tweezing and trimming. Shaping only, without tint or dye.',
+    'brow-sculpt-tint': 'The full personalised Brow Sculpt with traditional tint to enhance natural brow hairs.',
+    'shadow-hybrid': 'The full personalised Brow Sculpt with temporary hybrid dye for the hairs and skin.',
+  },
+  pt: {
+    'brow-sculpt': 'Mapeamento, cera, pinça e aparo personalizados. Apenas design, sem tintura ou dye.',
+    'brow-sculpt-tint': 'O design personalizado do Brow Sculpt com tintura tradicional para realçar os fios.',
+    'shadow-hybrid': 'O design personalizado do Brow Sculpt com coloração híbrida temporária dos pelos e da pele.',
+  },
+  es: {
+    'brow-sculpt': 'Diseño personalizado con cera, pinzas y recorte. Solo forma, sin tinte ni dye.',
+    'brow-sculpt-tint': 'El diseño personalizado de Brow Sculpt con tinte tradicional para realzar el vello.',
+    'shadow-hybrid': 'El diseño personalizado de Brow Sculpt con color híbrido temporal para vello y piel.',
+  },
+};
 const normalizeSearch = (value: string) => value.toLocaleLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 const cardSummary = (value: string): string => {
   const text = value.trim();
@@ -213,7 +230,7 @@ export const ServicesView: React.FC<ServicesViewProps> = ({ initialServiceId, on
             <div className="min-w-0 p-4 sm:p-5 flex-1 flex flex-col">
               <span className="font-montserrat text-[10px] font-bold uppercase tracking-[0.14em] text-[#9a5967]">{categoryLabels[language][service.category as Category] || service.category}</span>
               <h2 className="font-raleway text-lg sm:text-xl font-semibold text-[#5b3239] mt-1 leading-snug">{service.title}</h2>
-              <p className="font-montserrat text-xs text-neutral-600 leading-relaxed line-clamp-2 mt-2">{cardSummary(language === 'en' ? (approvedDescriptionFor(service.id) || service.description) : service.description)}</p>
+              <p className="font-montserrat text-xs text-neutral-600 leading-relaxed line-clamp-2 mt-2">{cardSummary(browCardSummaries[language][service.id] || (language === 'en' ? (approvedDescriptionFor(service.id) || service.description) : service.description))}</p>
               {serviceCoverFor(service.id) && !serviceCoverFor(service.id)?.specific && <p className="font-montserrat text-[10px] leading-snug text-[#846f75] mt-2">{language === 'en' ? 'Representative beauty category photo' : language === 'pt' ? 'Foto representativa da categoria' : 'Foto representativa de la categoría'}</p>}
               {getServiceGallery(service.id).photos.length > 1 && <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#9a5967] mt-2">{getServiceGallery(service.id).illustrative
                 ? (language === 'en' ? `View ${getServiceGallery(service.id).photos.length} related photos` : language === 'pt' ? `Ver ${getServiceGallery(service.id).photos.length} fotos relacionadas` : `Ver ${getServiceGallery(service.id).photos.length} fotos relacionadas`)
