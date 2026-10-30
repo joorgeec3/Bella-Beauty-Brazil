@@ -395,7 +395,7 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
                 <div className="mt-5 space-y-4">{lipBlushHealing.map(([period, info]) => <div key={period} className="border-l-4 border-[#9a5967] pl-4 py-1"><h3 className="font-montserrat text-base font-bold text-[#5b3239]">{period}</h3><p className="font-montserrat text-base leading-7 text-[#3f3539] mt-1">{info}</p></div>)}</div>
               </section>
             </> : base.id === 'brow-lamination' ? <>
-              {([['Before your appointment', browLaminationBefore], ['Aftercare', browLaminationAfter]] as const).map(([heading, items]) => <section key={heading} className="bg-[#f3d9d0] rounded-2xl border border-[#e8c5c8] p-6 sm:p-10 scroll-rise">
+              {([['Before Your Appointment', browLaminationBefore], ['Aftercare', browLaminationAfter]] as const).map(([heading, items]) => <section key={heading} className="bg-[#f3d9d0] rounded-2xl border border-[#e8c5c8] p-6 sm:p-10 scroll-rise">
                 <h2 className="font-raleway text-2xl font-bold text-[#5b3239]">{heading}</h2>
                 <ul className="list-disc pl-6 space-y-3 mt-5 font-montserrat text-base leading-7 text-[#3f3539]">{items.map(item => <li key={item}>{item}</li>)}</ul>
               </section>)}
