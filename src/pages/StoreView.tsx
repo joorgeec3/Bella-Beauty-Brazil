@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, GraduationCap } from 'lucide-react';
+import { ArrowRight, GraduationCap, MessageCircle } from 'lucide-react';
 import { COURSES, Language } from '../data/siteData';
 import { siteImages, siteAsset } from '../data/siteImages';
 
@@ -9,6 +9,16 @@ const COURSE_COPY: Record<string, { pt: string; es: string }> = {
   'brow-lamination-course': { pt: 'Formação individual de Brow Lamination.', es: 'Formación individual de Brow Lamination.' },
   'classic-eyelashes-course': { pt: 'Formação individual em extensões Classic.', es: 'Formación individual en extensiones Classic.' },
   'nano-strokes-course': { pt: 'Formação em Micro Nano Strokes realistas.', es: 'Formación en Micro Nano Strokes realistas.' },
+};
+const COURSE_DETAILS: Record<string, { content: string; practice: string; kit: string; support: string; duration: string }> = {
+  'lash-lift-course': { content: 'Consultation, lash assessment, shield selection, product application, processing times and aftercare.', practice: 'Two live models: one Livia demonstration and one supervised student practice.', kit: 'Professional take-home starter kit, training manual, certificate, products and disposables used during training.', support: 'One year of WhatsApp support.', duration: '8 hours · One-to-one · In person · Dates by arrangement' },
+  'brow-lamination-course': { content: 'Consultation, brow and hair assessment, mapping and shaping, lamination, tinting, processing times, conditioning care, safety and aftercare.', practice: 'Two live models: one Livia demonstration and one supervised student practice.', kit: 'Professional take-home starter kit, training manual, certificate, products and disposables used during training.', support: 'One year of WhatsApp support.', duration: '8 hours · One-to-one · In person · Dates by arrangement' },
+  'nano-strokes-course': { content: 'Manual cosmetic tattooing with Tebori. Brow mapping, facial analysis, hair-flow patterns, pigment selection, skin assessment, depth and pressure control, hygiene, consultation and aftercare.', practice: 'Synthetic-skin practice, live demonstration by Livia and a supervised treatment on a model, with individual feedback.', kit: 'Professional starter kit with Tebori tool, disposable blades, pigments, mapping supplies, practice skins and disposables; plus training manual and certificate.', support: 'Six months of technical support.', duration: '3 days · One-to-one · In person · Dates arranged individually' },
+};
+const COURSE_LABELS: Record<Language, { content: string; practice: string; kit: string; support: string; duration: string; investment: string; enquire: string }> = {
+  en: { content: 'Content', practice: 'Practical training', kit: 'Kit & materials', support: 'Support', duration: 'Duration & format', investment: 'Investment', enquire: 'Enquire on WhatsApp' },
+  pt: { content: 'Conteúdo', practice: 'Prática', kit: 'Kit e materiais', support: 'Suporte', duration: 'Duração e formato', investment: 'Investimento', enquire: 'Consultar pelo WhatsApp' },
+  es: { content: 'Contenido', practice: 'Práctica', kit: 'Kit y materiales', support: 'Soporte', duration: 'Duración y formato', investment: 'Inversión', enquire: 'Consultar por WhatsApp' },
 };
 const TRAINING_COPY: Record<Language, { eyebrow: string; heading: string; description: string; caption: string }> = {
   en: {
@@ -117,24 +127,30 @@ export const StoreView: React.FC<StoreViewProps> = ({ language }) => {
                   </div>
                 </div>
               )}
-              {(course.id === 'lash-lift-course' || course.id === 'brow-lamination-course') && (
-                <a href="#combined-lash-brow-course-media" className="block border-b border-[#e8d6d5] bg-[#fff8f9] hover:bg-[#f3e1e6] px-6 py-3 font-montserrat text-xs font-bold uppercase tracking-wider text-[#5b3239]">
-                  {language === 'en' ? 'See shared Lash Lift & Brow Lamination class videos ↓' : language === 'pt' ? 'Ver vídeos da formação conjunta ↓' : 'Ver vídeos de la formación conjunta ↓'}
-                </a>
-              )}
               <div className="p-6 flex flex-col grow">
                 <span className="font-montserrat text-[11px] font-bold tracking-widest text-[#9a5967] uppercase">{course.duration}</span>
                 <h3 className="font-raleway text-xl font-bold text-[#5b3239] mt-2">{course.title}</h3>
-                <p className="font-montserrat text-sm text-neutral-600 leading-relaxed mt-3 grow">
-                  {language === 'en' ? course.description : COURSE_COPY[course.id]?.[language] || course.description}
-                </p>
-                <p className="font-montserrat text-2xl font-bold text-[#5b3239] mt-5">A${course.price.toFixed(0)}</p>
-                <a href={course.bookingUrl} className="inline-flex items-center justify-center gap-2 bg-[#5b3239] hover:bg-[#7a4753] text-white text-xs font-bold uppercase tracking-widest px-5 py-3 rounded-full mt-5 cursor-pointer">
-                  <GraduationCap className="w-4 h-4" aria-hidden="true" />
-                  {language === 'en'
-                    ? ({ 'nano-strokes-course': 'ENQUIRE ABOUT NANO STROKES TRAINING', 'lash-lift-course': 'ENQUIRE ABOUT LASH LIFT TRAINING', 'brow-lamination-course': 'ENQUIRE ABOUT BROW LAMINATION TRAINING' } as Record<string,string>)[course.id] || 'ENQUIRE'
-                    : language === 'pt' ? 'CONSULTAR CURSO' : 'CONSULTAR CURSO'}
-                  <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+                <div className="mt-4 space-y-3 grow">
+                  {([
+                    [COURSE_LABELS[language].content, COURSE_DETAILS[course.id]?.content],
+                    [COURSE_LABELS[language].practice, COURSE_DETAILS[course.id]?.practice],
+                    [COURSE_LABELS[language].kit, COURSE_DETAILS[course.id]?.kit],
+                    [COURSE_LABELS[language].support, COURSE_DETAILS[course.id]?.support],
+                    [COURSE_LABELS[language].duration, COURSE_DETAILS[course.id]?.duration],
+                  ] as [string, string | undefined][]).map(([label, value]) => value ? (
+                    <div key={label}>
+                      <h4 className="font-montserrat text-[11px] font-bold uppercase tracking-wider text-[#9a5967]">{label}</h4>
+                      <p className="font-montserrat text-sm text-neutral-600 leading-relaxed mt-1">{value}</p>
+                    </div>
+                  ) : null)}
+                </div>
+                <div className="mt-5">
+                  <span className="font-montserrat text-[11px] font-bold uppercase tracking-wider text-[#9a5967]">{COURSE_LABELS[language].investment}</span>
+                  <p className="font-montserrat text-2xl font-bold text-[#5b3239] mt-1">A${course.price.toLocaleString('en-AU')}</p>
+                </div>
+                <a href={'https://wa.me/61402148437?text=' + encodeURIComponent('Hi, I would like to enquire about the ' + course.title + ' at Bella Beauty Brazil.')} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 bg-[#5b3239] hover:bg-[#7a4753] text-white text-xs font-bold uppercase tracking-widest px-5 py-3 rounded-full mt-5 cursor-pointer">
+                  <MessageCircle className="w-4 h-4" aria-hidden="true" />
+                  {COURSE_LABELS[language].enquire}
                 </a>
               </div>
             </article>
@@ -143,23 +159,13 @@ export const StoreView: React.FC<StoreViewProps> = ({ language }) => {
 
         <section id="combined-lash-brow-course-media" className="mt-12 sm:mt-16 rounded-[28px] border border-[#e8d6d5] bg-[#fff9fa] p-5 sm:p-8" aria-labelledby="joint-training-heading">
           <div className="max-w-3xl mx-auto text-center">
-            <p className="font-montserrat text-xs font-bold uppercase tracking-[0.18em] text-[#9a5967]">
-              {language === 'en' ? 'One shared collection — no repeated videos' : language === 'pt' ? 'Uma coleção conjunta — sem vídeos repetidos' : 'Una colección conjunta — sin vídeos repetidos'}
-            </p>
             <h2 id="joint-training-heading" className="font-raleway text-2xl sm:text-3xl text-[#5b3239] mt-2">
               Lash Lift &amp; Brow Lamination
             </h2>
-            <p className="font-montserrat text-sm leading-relaxed text-[#675960] mt-3">
-              {language === 'en'
-                ? 'These recordings were supplied together in one training folder. They are presented once here, with no duplicate video in the individual course cards.'
-                : language === 'pt'
-                  ? 'Estes vídeos foram enviados na mesma pasta de formação. São apresentados apenas aqui, sem repetir nos cartões dos cursos.'
-                  : 'Estos vídeos llegaron juntos en la misma carpeta y aparecen una sola vez, sin duplicados en los cursos.'}
-            </p>
           </div>
           <div className="mt-7">
-            <h3 className="rounded-full bg-[#5b3239] text-white text-xs uppercase tracking-wider font-bold py-3 px-6 w-fit mx-auto text-center">
-              {language === 'en' ? 'View 5 class videos' : language === 'pt' ? 'Ver 5 vídeos da formação' : 'Ver 5 vídeos de la formación'}
+            <h3 className="font-raleway text-lg font-semibold text-[#5b3239] text-center">
+              {language === 'en' ? 'Lash Lift & Brow Lamination — Training videos' : language === 'pt' ? 'Lash Lift & Brow Lamination — Vídeos da formação' : 'Lash Lift & Brow Lamination — Vídeos de formación'}
             </h3>
             <div className="mt-7 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {combinedCourseClips.map((clip, index) => (
