@@ -57,6 +57,28 @@ const browLaminationAfter = [
   "Avoid exfoliating acids and retinoids on recently treated skin until any sensitivity has settled.",
   "Contact the studio if irritation develops. Seek medical advice for significant swelling, blistering or persistent discomfort."
 ];
+const dermaplaningAftercare = [
+  "Cleanse gently with lukewarm water and a mild cleanser. Avoid scrubbing or cleansing brushes.",
+  "Keep your skin moisturised with the recommended gentle skincare.",
+  "Apply broad-spectrum SPF 50+ daily and limit direct sun exposure.",
+  "Avoid retinol, exfoliating acids, scrubs and other irritating products until your skin has settled and you have been advised to restart them.",
+  "Avoid hot showers, saunas and strenuous exercise while your skin feels warm or sensitive.",
+  "Avoid makeup while the skin is irritated, and do not pick or scratch the treated area.",
+  "Contact the studio if irritation persists. Seek medical advice for worsening redness, pain, swelling, blistering or discharge."
+];
+
+const microneedlingAftercare = [
+  "Mild redness, tightness and sensitivity may occur after treatment and should gradually improve.",
+  "During the initial recovery period, use only the post-treatment products recommended for your procedure.",
+  "Follow your personalised instructions on when to wash your face and restart skincare. Avoid hot water, scrubbing and cleansing devices.",
+  "Avoid makeup for at least 24 hours, and longer if your skin remains irritated or your treatment instructions require it.",
+  "Avoid direct sun exposure. Use shade and a hat immediately after treatment, and begin the recommended SPF 50+ when advised.",
+  "Avoid strenuous exercise, heavy sweating, saunas, steam rooms and swimming for 72 hours, or longer if the skin has not settled.",
+  "Avoid retinoids, exfoliating acids, scrubs and other irritating products until healing is complete and you have been advised to restart them.",
+  "Do not pick or peel flaking skin.",
+  "Seek medical advice for increasing pain, spreading redness, significant swelling, discharge or fever."
+];
+
 const lipBlushHealing = [
   [
     "Immediately after treatment",
@@ -385,7 +407,18 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
                     : (service.benefits || [])).map((benefit) => <li key={benefit} className="flex items-start gap-2 text-sm font-montserrat text-neutral-700"><CheckCircle2 className="w-4 h-4 text-[#9a5967] shrink-0 mt-0.5" />{benefit}</li>)}
               </ul>
             </section>
-            {base.id === 'lip-blush' ? <>
+            {base.id === 'dermaplaning' ? <>
+              <section className="bg-[#f3d9d0] rounded-2xl border border-[#e8c5c8] p-6 sm:p-10 scroll-rise">
+                <h2 className="font-raleway text-2xl font-bold text-[#5b3239]">Aftercare</h2>
+                <ul className="list-disc pl-6 space-y-3 mt-5 font-montserrat text-base leading-7 text-[#3f3539]">{dermaplaningAftercare.map(item => <li key={item}>{item}</li>)}</ul>
+              </section>
+            </> : ['microneedling', 'deluxe-facial'].includes(base.id) ? <>
+              <section className="bg-[#f3d9d0] rounded-2xl border border-[#e8c5c8] p-6 sm:p-10 scroll-rise">
+                <h2 className="font-raleway text-2xl font-bold text-[#5b3239]">Aftercare — Microneedling</h2>
+                {base.id === 'deluxe-facial' && <p className="font-montserrat text-base leading-7 text-[#3f3539] mt-4">As the Deluxe Facial combines Dermaplaning with Microneedling, please follow the Microneedling aftercare instructions below.</p>}
+                <ul className="list-disc pl-6 space-y-3 mt-5 font-montserrat text-base leading-7 text-[#3f3539]">{microneedlingAftercare.map(item => <li key={item}>{item}</li>)}</ul>
+              </section>
+            </> : base.id === 'lip-blush' ? <>
               {([['Before your appointment', lipBlushBefore], ['Aftercare', lipBlushAfter]] as const).map(([heading, items]) => <section key={heading} className="bg-[#f3d9d0] rounded-2xl border border-[#e8c5c8] p-6 sm:p-10 scroll-rise">
                 <h2 className="font-raleway text-2xl font-bold text-[#5b3239]">{heading}</h2>
                 <ul className="list-disc pl-6 space-y-3 mt-5 font-montserrat text-base leading-7 text-[#3f3539]">{items.map(item => <li key={item}>{item}</li>)}</ul>
