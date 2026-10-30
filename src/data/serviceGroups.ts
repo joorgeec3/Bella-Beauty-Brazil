@@ -26,7 +26,7 @@ export const SERVICE_GROUPS = [
   },
   {
     id: 'skin-treatments',
-    title: { en: 'Skin & Lip Care', pt: 'Pele e Hidratação Labial', es: 'Piel y Cuidado de Labios' },
+    title: { en: 'Skin Treatments', pt: 'Tratamentos de Pele', es: 'Tratamientos de Piel' },
     lead: { en: 'Facials, dermaplaning, microneedling and lip hydration.', pt: 'Faciais, dermaplaning, microagulhamento e hidratação labial.', es: 'Faciales, dermaplaning, microneedling e hidratación labial.' },
     serviceIds: ['dermaplaning','microneedling','facial-spa','deluxe-facial','lip-bliss-hydration'],
     photoCategory: 'Skin',
