@@ -44,9 +44,9 @@ const TreatmentEntry: React.FC<{ id: string; language: Language; first: boolean;
 
   return <details id={`treatment-${id}`} open={open} onToggle={event => setOpen(event.currentTarget.open)} data-floating-clearance className="group overflow-hidden rounded-2xl border border-[#e8d6d5] bg-white shadow-sm">
     <summary className="cursor-pointer flex gap-4 sm:gap-6 p-4 sm:p-6 items-center text-[#5b3239] list-none [&::-webkit-details-marker]:hidden focus-visible:outline-2 focus-visible:outline-[#9a5967]">
-      <div className="w-24 h-28 sm:w-32 sm:h-32 shrink-0 overflow-hidden rounded-xl bg-[#eee2df] flex items-center justify-center">
+      {id !== 'waxing' && <div className="w-24 h-28 sm:w-32 sm:h-32 shrink-0 overflow-hidden rounded-xl bg-[#eee2df] flex items-center justify-center">
         {cover ? <img src={cover.src} alt={service.title} loading="lazy" className="w-full h-full object-contain" /> : <span className="font-raleway text-3xl text-[#9a5967]">{service.title.slice(0,1)}</span>}
-      </div>
+      </div>}
       <span className="min-w-0 flex-1">
         <span className="block font-raleway text-lg sm:text-2xl font-semibold leading-snug">{service.title}</span>
         {id === 'waxing'
@@ -84,11 +84,11 @@ const TreatmentEntry: React.FC<{ id: string; language: Language; first: boolean;
           {id === 'lip-blush' && <p className="font-montserrat text-base text-[#402d35] mt-2">{copy.lipTouchUp}</p>}
         </section>}
         <p className="font-montserrat text-sm sm:text-base text-[#55464c] leading-relaxed">{id === 'waxing' ? (language === 'en' ? 'Professional waxing using hard wax or strip wax, selected for the treatment area. See all waxing options and prices below.' : language === 'pt' ? 'Depilação profissional com cera adequada à região. Confira abaixo todas as opções e preços.' : 'Depilación profesional con la cera adecuada para cada zona. Consulta las opciones y precios a continuación.') : desc}</p>
-        {id !== 'waxing' && cover && !cover.specific && <p className="font-montserrat text-xs text-[#846f75] mt-3">{copy.note}</p>}}
+        {id !== 'waxing' && cover && !cover.specific && <p className="font-montserrat text-xs text-[#846f75] mt-3">{copy.note}</p>}
         {id === 'lip-blush' ? <div className="mt-5 rounded-xl bg-[#faf0f2] p-4 sm:p-5"><h3 className="font-raleway font-semibold text-lg text-[#5b3239]">Is this treatment right for me?</h3><p className="font-montserrat text-base leading-7 mt-2 text-[#3f3539]">This treatment may suit you if you would like to enhance pale lips, improve colour definition or achieve a softly tinted look. I assess your natural lip colour and discuss your goals before recommending a personalised treatment.</p></div> : guide && <div className="mt-5 rounded-xl bg-[#faf0f2] p-4 sm:p-5"><h3 className="font-raleway font-semibold text-lg text-[#5b3239]">{copy.care}</h3><p className="font-montserrat text-sm leading-relaxed mt-2 text-[#55464c]">{guide.idealFor}</p>{id !== 'waxing' && <p className="font-montserrat text-sm leading-relaxed mt-2 text-[#55464c]">{guide.comparison}</p>}</div>}
         <div className="flex flex-wrap gap-3 mt-6 items-center">
           <a href={getServiceBookingUrl(id)} className="inline-flex items-center justify-center gap-2 bg-[#5b3239] text-white rounded-full px-5 py-3 text-xs font-bold hover:bg-[#7a4753]"><CalendarDays className="w-4 h-4"/>{copy.book}</a>
-          <a href={treatSlug(id)} onClick={onTreatmentLink} className="inline-flex items-center gap-2 rounded-full border border-[#9a5967]/50 px-5 py-3 text-xs font-semibold text-[#5b3239] hover:bg-[#f3d9d0]">{id === 'lip-blush' ? 'Explore other treatments' : copy.view}<ArrowRight className="w-4 h-4"/></a>
+          {id !== 'waxing' && <a href={treatSlug(id)} onClick={onTreatmentLink} className="inline-flex items-center gap-2 rounded-full border border-[#9a5967]/50 px-5 py-3 text-xs font-semibold text-[#5b3239] hover:bg-[#f3d9d0]">{id === 'lip-blush' ? 'Explore other treatments' : copy.view}<ArrowRight className="w-4 h-4"/></a>}
         </div>
       </div>
       {id !== 'waxing' && photoSet.photos.some(photo => photo.src !== cover?.src) && <ServicePhotoGallery serviceId={id} language={language} excludeSrc={cover?.src} />}
