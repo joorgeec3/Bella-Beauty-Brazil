@@ -29,8 +29,8 @@ import { getServiceGroup, groupOfService } from './data/serviceGroups';
 import { BOOKING_URL, Language, Product, SERVICES } from './data/siteData';
 
 const APP_BASE_PATH = import.meta.env.BASE_URL.replace(/\/$/, '');
-// Change VITE_PUBLIC_SITE_URL to the official domain only after the domain points at this Vercel project.
-const PUBLIC_SITE_ORIGIN = (import.meta.env.VITE_PUBLIC_SITE_URL || 'https://bella-beauty-brazil.vercel.app').replace(/\/+$/, '');
+// Use the official studio domain for canonical URLs, social sharing metadata and structured data.
+const PUBLIC_SITE_ORIGIN = (import.meta.env.VITE_PUBLIC_SITE_URL || 'https://bellabeautybrazil.com.au').replace(/\/+$/, '');
 
 const resolveRoute = () => {
   if (typeof window === 'undefined') return { tab: 'home', serviceId: undefined as string | undefined };
