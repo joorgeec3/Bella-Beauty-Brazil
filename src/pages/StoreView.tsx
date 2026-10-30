@@ -4,12 +4,6 @@ import { COURSES, Language } from '../data/siteData';
 import { siteImages, siteAsset } from '../data/siteImages';
 
 interface StoreViewProps { language: Language; }
-const COURSE_COPY: Record<string, { pt: string; es: string }> = {
-  'lash-lift-course': { pt: 'Formação individual de Lash Lift.', es: 'Formación individual de Lash Lift.' },
-  'brow-lamination-course': { pt: 'Formação individual de Brow Lamination.', es: 'Formación individual de Brow Lamination.' },
-  'classic-eyelashes-course': { pt: 'Formação individual em extensões Classic.', es: 'Formación individual en extensiones Classic.' },
-  'nano-strokes-course': { pt: 'Formação em Micro Nano Strokes realistas.', es: 'Formación en Micro Nano Strokes realistas.' },
-};
 const COURSE_DETAILS: Record<string, { content: string; practice: string; kit: string; support: string; duration: string }> = {
   'lash-lift-course': { content: 'Consultation, lash assessment, shield selection, product application, processing times and aftercare.', practice: 'Two live models: one Livia demonstration and one supervised student practice.', kit: 'Professional take-home starter kit, training manual, certificate, products and disposables used during training.', support: 'One year of WhatsApp support.', duration: '8 hours · One-to-one · In person · Dates by arrangement' },
   'brow-lamination-course': { content: 'Consultation, brow and hair assessment, mapping and shaping, lamination, tinting, processing times, conditioning care, safety and aftercare.', practice: 'Two live models: one Livia demonstration and one supervised student practice.', kit: 'Professional take-home starter kit, training manual, certificate, products and disposables used during training.', support: 'One year of WhatsApp support.', duration: '8 hours · One-to-one · In person · Dates by arrangement' },
