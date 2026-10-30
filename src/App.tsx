@@ -108,7 +108,7 @@ export default function App() {
   React.useEffect(() => {
     const metadata: Record<string, { title: string; description: string }> = {
       home: {
-        title: 'Bella Beauty Brazil | Brows, Lashes & Beauty in Greenslopes',
+        title: 'Bella Beauty Brazil Signature Care | Brows, Lashes & Beauty in Greenslopes',
         description: 'Bella Beauty Brazil by Livia Rego offers Nano Strokes, Microblading, Lip Blush, brows, lashes, skin treatments and professional courses in Greenslopes, Brisbane.',
       },
       about: {
