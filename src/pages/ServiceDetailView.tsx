@@ -7,6 +7,7 @@ import { approvedDescriptionFor } from '../data/approvedServiceCatalog';
 import { ServicePhotoGallery, getServiceGallery } from '../components/ServicePhotoGallery';
 import { ServiceVideoGallery } from '../components/ServiceVideoGallery';
 import { serviceCoverFor } from '../data/serviceCoverPhotos';
+import { BrowArtistryContent } from '../components/BrowArtistryContent';
 import { NanoStrokesContent, nanoStrokesCopy } from '../components/NanoStrokesContent';
 
 interface ServiceDetailViewProps {
@@ -224,7 +225,8 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
     ? { difference: `${base.title} é um serviço da categoria ${base.category || 'beleza'} da Bella Beauty Brazil. Confirme a técnica mais adequada diretamente com o estúdio.`, care: 'O preparo, a indicação e os cuidados dependem do tratamento. Siga as orientações da Bella Beauty Brazil.', faq: `Como agendar ${base.title}? Consulte a disponibilidade, os preços e as informações no Timely oficial.` }
     : { difference: `${base.title} es un servicio de ${base.category || 'belleza'} de Bella Beauty Brazil. Consulta con el estudio qué técnica es la adecuada.`, care: 'La preparación, la idoneidad y los cuidados varían según el tratamiento. Sigue las instrucciones de Bella Beauty Brazil.', faq: `¿Cómo reservar ${base.title}? Consulta disponibilidad, precios y detalles en el Timely oficial.` };
   const groupCopy = language === 'en' ? group : GROUP_TRANSLATIONS[base.id]?.[language] || { ...group, ...fallbackTranslation };
-  const related = group.related.map((id) => SERVICES.find((item) => item.id === id)).filter(Boolean) as typeof SERVICES;
+  const relatedIds = base.id === 'brow-sculpt' ? ['brow-sculpt-tint', 'shadow-hybrid'] : base.id === 'brow-sculpt-tint' ? ['brow-sculpt', 'shadow-hybrid'] : base.id === 'shadow-hybrid' ? ['brow-sculpt', 'brow-sculpt-tint'] : group.related;
+  const related = relatedIds.map((id) => SERVICES.find((item) => item.id === id)).filter(Boolean) as typeof SERVICES;
   const isPriceConfirmed = typeof service.price === 'number';
   const guide = SERVICE_GUIDES[base.id]?.[language];
   const hasGalleryPhotos = gallery.photos.some(photo => photo.src !== cover?.src);
@@ -303,6 +305,21 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
               <ServiceVideoGallery serviceId={base.id} language={language} />
             </>}
           />
+        : (base.id === 'brow-sculpt' || base.id === 'brow-sculpt-tint' || base.id === 'shadow-hybrid')
+          ? <>
+              <BrowArtistryContent serviceId={base.id} language={language} showBooking={false} />
+              <ServicePhotoGallery serviceId={base.id} language={language} excludeSrc={cover?.src} />
+              <ServiceVideoGallery serviceId={base.id} language={language} />
+              <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 sm:pb-16">
+                <h2 className="font-raleway text-xl sm:text-2xl font-semibold text-[#5b3239]">{translated(language, 'Related brow services', 'Serviços de sobrancelhas relacionados', 'Servicios de cejas relacionados')}</h2>
+                <div className="mt-4 flex flex-wrap gap-3">
+                  {related.map(item => <button key={item.id} type="button" onClick={() => onNavigate('services', item.id)}
+                    className="rounded-xl border border-[#d8bac3] bg-white px-5 py-3 text-sm font-montserrat font-semibold text-[#5b3239] hover:bg-[#f3d9d0] cursor-pointer">
+                    {getLocalizedService(item, language).title}
+                  </button>)}
+                </div>
+              </section>
+            </>
         : <>
       <ServicePhotoGallery serviceId={base.id} language={language} excludeSrc={cover?.src} />
       <ServiceVideoGallery serviceId={base.id} language={language} />
