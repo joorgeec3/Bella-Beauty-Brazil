@@ -152,8 +152,8 @@ export const SERVICE_GUIDES: Partial<Record<string, Record<Language, ServiceGuid
     en: {
       idealFor: 'For clients looking for a brushed, more structured appearance using their existing brow hairs, with shape and tint included.',
       comparison: 'Brow Lamination styles the position of brow hairs. Brow Sculpt & Tint focuses on shaping and colour; cosmetic tattooing uses pigment to create a semi-permanent effect.',
-      question: 'Does Brow Lamination include shape and tint?',
-      answer: 'The treatment combines brow lamination with shaping and tint. Confirm suitability and preparation with the studio before your appointment.'
+      question: 'How long do the results last?',
+      answer: 'Results typically last 6–8 weeks, depending on your natural brow growth cycle, hair condition and aftercare. The tint may fade sooner than the lamination effect.'
     },
     pt: {
       idealFor: 'Para quem busca sobrancelhas alinhadas e estruturadas utilizando os fios naturais, com modelagem e coloração incluídas.',
