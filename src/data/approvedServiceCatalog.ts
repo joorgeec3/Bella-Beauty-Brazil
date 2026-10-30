@@ -28,7 +28,7 @@ export const APPROVED_SERVICE_CATALOG: ApprovedCategory[] = [
     footer: 'Colour longevity depends on the product, skin type and aftercare. Skin staining usually fades sooner than colour on hairs.',
   },
   {
-    id: 'skin', title: 'Skin & Hair Treatments',
+    id: 'skin', title: 'Skin Treatments',
     items: [
       { name: 'Dermaplaning', aud: 140, note: 'Optional LED light therapy +A$20', description: "Refresh dull skin with gentle exfoliation that removes dead skin cells and fine facial hair, leaving your skin feeling smoother and your makeup sitting more evenly. Includes double cleansing, skin assessment, tailored skincare, moisturiser and SPF." },
       { name: 'Microneedling', aud: 185, description: "A targeted treatment that stimulates the skin’s natural repair process and collagen production to help improve the appearance of fine lines, uneven texture and acne scars. Treatment is personalised to your skin’s needs." },
