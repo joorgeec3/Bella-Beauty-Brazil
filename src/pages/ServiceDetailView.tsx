@@ -79,6 +79,17 @@ const microneedlingAftercare = [
   "Seek medical advice for increasing pain, spreading redness, significant swelling, discharge or fever."
 ];
 
+const teethWhiteningAftercare = [
+  "Brush gently twice daily with fluoride toothpaste and continue cleaning between your teeth.",
+  "Temporary sensitivity may occur. Avoid very hot or cold foods and drinks if they cause discomfort.",
+  "Ask your dentist whether a toothpaste for sensitive teeth would be suitable.",
+  "Limit frequent exposure to staining drinks such as coffee, tea and red wine, and rinse with water afterwards.",
+  "Avoid smoking and tobacco to help reduce new staining.",
+  "Follow the specific eating, drinking and maintenance instructions supplied for the whitening product used.",
+  "Do not add extra whitening sessions or home whitening products without advice.",
+  "Seek dental advice for severe or persistent sensitivity, tooth pain, gum burns or ulcers."
+];
+
 const lipBlushHealing = [
   [
     "Immediately after treatment",
@@ -407,7 +418,12 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
                     : (service.benefits || [])).map((benefit) => <li key={benefit} className="flex items-start gap-2 text-sm font-montserrat text-neutral-700"><CheckCircle2 className="w-4 h-4 text-[#9a5967] shrink-0 mt-0.5" />{benefit}</li>)}
               </ul>
             </section>
-            {base.id === 'dermaplaning' ? <>
+            {base.id === 'teeth-whitening' ? <>
+              <section className="bg-[#f3d9d0] rounded-2xl border border-[#e8c5c8] p-6 sm:p-10 scroll-rise">
+                <h2 className="font-raleway text-2xl font-bold text-[#5b3239]">Aftercare</h2>
+                <ul className="list-disc pl-6 space-y-3 mt-5 font-montserrat text-base leading-7 text-[#3f3539]">{teethWhiteningAftercare.map(item => <li key={item}>{item}</li>)}</ul>
+              </section>
+            </> : base.id === 'dermaplaning' ? <>
               <section className="bg-[#f3d9d0] rounded-2xl border border-[#e8c5c8] p-6 sm:p-10 scroll-rise">
                 <h2 className="font-raleway text-2xl font-bold text-[#5b3239]">Aftercare</h2>
                 <ul className="list-disc pl-6 space-y-3 mt-5 font-montserrat text-base leading-7 text-[#3f3539]">{dermaplaningAftercare.map(item => <li key={item}>{item}</li>)}</ul>
