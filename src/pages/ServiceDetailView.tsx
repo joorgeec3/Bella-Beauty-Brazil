@@ -209,6 +209,18 @@ const GROUPS: Record<string, { related: string[]; difference: string; care: stri
     care: 'Follow the preparation and aftercare guidance provided for your appointment. Contact the studio if you have questions about suitability.',
     faq: 'How is Brow Lamination different from tattooing? Lamination styles existing brow hairs, while cosmetic tattooing deposits pigment for a semi-permanent finish.',
   },
+  'male-brow-sculpt': {
+    related: ['brow-sculpt', 'brow-sculpt-tint', 'brow-lamination'],
+    difference: 'Male Brow Sculpt focuses on natural grooming and a tidy shape. Brow Sculpt & Tint and Brow Lamination add different levels of colour and styling.',
+    care: 'Your preferred shape and the natural growth of your brows guide the grooming approach.',
+    faq: 'Would another brow service suit me? Brow Sculpt, Brow Sculpt & Tint and Brow Lamination are available for different styling preferences.',
+  },
+  'dreamy-brows': {
+    related: ['brow-sculpt', 'brow-sculpt-tint', 'brow-lamination'],
+    difference: 'Dreamy Brows combines personalised brow shaping with a relaxing facial and scalp massage. You can also explore Brow Sculpt, Brow Sculpt & Tint and Brow Lamination as brow-only options.',
+    care: 'The brow shape is tailored to your features, followed by a gentle facial and scalp massage.',
+    faq: 'Can I book brow shaping without the massage? Yes. Brow Sculpt and Brow Sculpt & Tint are available as separate services.',
+  },
   'lash-lift': {
     related: ['classic-eyelashes', 'hybrid-eyelashes', 'brow-lamination'],
     difference: 'Lash Lift & Tint works with the natural lashes. Classic and Hybrid Lash Extensions add applied extensions and create different levels of density.',
@@ -382,7 +394,7 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
             <section className="bg-white rounded-2xl border border-[#e8d6d5] p-6 sm:p-10 shadow-sm scroll-rise">
               <h2 className="font-raleway text-2xl sm:text-3xl font-bold uppercase tracking-wider text-[#5b3239]">{translated(language, 'About this treatment', 'Sobre este tratamento', 'Sobre este tratamiento')}</h2>
               <p className="font-montserrat text-neutral-700 leading-relaxed mt-4">{base.id === 'lip-blush' && language === 'en' ? "Lip Blush enhances your natural lip colour and definition with a shade selected especially for you. I use a cosmetic tattoo machine to deposit pigment into the lips, creating a softly tinted finish. The colour appears stronger immediately after treatment and softens as the lips heal." : base.id === 'teeth-whitening' ? service.description : language === 'en' ? (approvedDescriptionFor(base.id) || service.description) : service.description}</p>
-              {!['nano-strokes', 'lip-blush', 'shadow-brows', 'brow-sculpt', 'teeth-whitening'].includes(base.id) && language === 'en' && approvedDescriptionFor(base.id) && <p className="font-montserrat text-xs text-[#846f75] mt-3">Treatment description provided by Bella Beauty Brazil.</p>}
+              {/* Approved descriptions are shown without administrative attribution. */}
               {(guide || base.id === 'teeth-whitening') && <>
                 <h3 className="font-raleway text-xl font-bold text-[#5b3239] mt-8">{['teeth-whitening', 'lip-blush'].includes(base.id) ? translated(language, 'Is this treatment right for me?', 'Este tratamento é indicado para mim?', '¿Es este tratamiento adecuado para mí?') : translated(language, 'Who may this treatment suit?', 'Para quem este tratamento pode ser indicado?', '¿Para quién puede ser adecuado este tratamiento?')}</h3>
                 <p className="font-montserrat text-neutral-700 leading-relaxed mt-3">{base.id === 'lip-blush' && language === 'en' ? "This treatment may suit you if you would like to enhance pale lips, improve colour definition or achieve a softly tinted look. I assess your natural lip colour and discuss your goals before recommending a personalised treatment." : base.id === 'teeth-whitening' ? translated(language, 'Interested in a brighter smile? Contact me before booking to discuss suitability and what to expect.', 'Quer um sorriso mais branco? Entre em contato antes de agendar para conversar sobre a indicação e o que esperar.', '¿Te interesa una sonrisa más blanca? Contáctame antes de reservar para hablar sobre la idoneidad y qué esperar.') : guide?.idealFor}</p>
