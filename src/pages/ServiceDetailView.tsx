@@ -136,10 +136,10 @@ const GROUPS: Record<string, { related: string[]; difference: string; care: stri
     faq: 'Is Shadow Brows the same as Hybrid Dye? No. Shadow Brows is cosmetic tattooing, while Hybrid Dye is temporary brow colour and shaping.',
   },
   'shadow-hybrid': {
-    related: ['nano-strokes', 'shadow-brows', 'brow-sculpt-tint'],
-    difference: 'Brow Sculpt & Hybrid Dye is listed at A$79 for a tint-and-shape service. Semi-permanent Shadow Brows is a separate cosmetic tattoo procedure, starting at A$630, with a touch-up at A$150.',
-    care: 'Follow the official preparation and aftercare guidance supplied by Bella Beauty Brazil. Availability and suitability should be confirmed through the official booking page.',
-    faq: 'What is the difference? Hybrid Dye is temporary brow styling at A$79; cosmetic tattoo Shadow Brows starts at A$630. Confirm your preferred treatment with the studio.',
+    related: ['brow-sculpt', 'brow-sculpt-tint'],
+    difference: 'Hybrid Dye is a temporary brow colour treatment, not cosmetic tattooing.',
+    care: 'Discuss your skin history and any required product-specific patch test with the studio.',
+    faq: 'How is Hybrid Dye different from Tint? Hybrid Dye colours brow hairs and temporarily stains the skin.',
   },
   'lip-blush': {
     related: ['nano-strokes', 'brow-sculpt-tint', 'facial-spa'],
@@ -148,10 +148,10 @@ const GROUPS: Record<string, { related: string[]; difference: string; care: stri
     faq: 'Is Lip Blush permanent? It is described by Bella Beauty Brazil as semi-permanent cosmetic tattooing. Confirm suitability and expected care requirements during the official booking process.',
   },
   'brow-sculpt-tint': {
-    related: ['brow-sculpt', 'brow-lamination', 'shadow-hybrid'],
-    difference: 'Brow Sculpting and Tint shapes and colours the natural brows. Brow Lamination changes the direction and appearance of brow hairs, while cosmetic tattooing creates a semi-permanent brow finish.',
-    care: 'Follow the aftercare guidance from Bella Beauty Brazil and use the official Timely page to confirm availability and any preparation requirements.',
-    faq: 'Does Brow Sculpt & Tint include tinting? Yes, the published Timely service name includes both sculpting and tinting. The price and duration are shown from the catalogue.',
+    related: ['brow-sculpt', 'shadow-hybrid'],
+    difference: 'Traditional tint colours natural brow hairs for soft definition, unlike Hybrid Dye, which also temporarily stains the skin.',
+    care: 'Discuss your skin history and any required product-specific patch test with the studio.',
+    faq: 'Does Brow Sculpt & Tint include shaping? Yes, it includes the same personalised mapping, waxing and tweezing as Brow Sculpt.',
   },
   'brow-lamination': {
     related: ['brow-sculpt-tint', 'lash-lift', 'shadow-hybrid'],
@@ -179,16 +179,16 @@ const GROUP_TRANSLATIONS: Record<string, Record<'pt' | 'es', { difference: strin
     es: { difference: 'Nano Strokes y Microblading crean un efecto de trazos realistas en las cejas. Shadow o Hybrid ofrecen un acabado más sombreado y definido. La opción adecuada depende del resultado deseado y de la consulta.', care: 'Para indicaciones, preparación y cuidados, sigue las instrucciones de Bella Beauty Brazil y confirma los detalles durante tu reserva o consulta en Timely.', faq: '¿Es esta la técnica adecuada para mí? Bella Beauty Brazil evaluará tus objetivos y tu idoneidad durante la consulta. El precio y la duración publicados en Timely aparecen abajo.' },
   },
   'shadow-hybrid': {
-    pt: { difference: 'O menu aprovado informa Brow Sculpt & Hybrid Dye por A$79, uma modelagem com coloração temporária. Shadow Brows é uma tatuagem cosmética separada por A$630, com retoque de A$150.', care: 'Siga os cuidados e orientações fornecidos pela Bella Beauty Brazil. Confirme indicação, disponibilidade e qualquer preparação na página oficial de reserva.', faq: 'Qual a diferença? Hybrid Dye é design e coloração temporária de A$79; Shadow Brows é tatuagem cosmética a partir de A$630.' },
-    es: { difference: 'El menú aprobado indica Brow Sculpt & Hybrid Dye por A$79, un tratamiento temporal de diseño y color. Shadow Brows es un tatuaje cosmético aparte por A$630, más retoque de A$150.', care: 'Sigue los cuidados y las indicaciones de Bella Beauty Brazil. Confirma idoneidad, disponibilidad y preparación en la página oficial de reserva.', faq: '¿En qué se diferencian? Hybrid Dye es estilismo temporal por A$79; Shadow Brows es tatuaje cosmético desde A$630.' },
+    pt: { difference: 'Hybrid Dye é uma coloração temporária de sobrancelhas, não uma tatuagem cosmética.', care: 'Converse com o estúdio sobre seu histórico de pele e a necessidade de teste de sensibilidade.', faq: 'Qual a diferença para Tint? A coloração híbrida colore os pelos e pigmenta temporariamente a pele.' },
+    es: { difference: 'Hybrid Dye es una coloración temporal de cejas, no un tatuaje cosmético.', care: 'Consulta al estudio sobre tu historial cutáneo y si hace falta una prueba de sensibilidad.', faq: '¿En qué se diferencia del tinte? Hybrid Dye colorea el vello y tiñe temporalmente la piel.' },
   },
   'lip-blush': {
     pt: { difference: 'Lip Blush é um serviço de tatuagem cosmética para realçar o tom e o formato natural dos lábios. É diferente dos tratamentos faciais, que se concentram no cuidado da pele.', care: 'A preparação, a indicação e os cuidados devem seguir as orientações da Bella Beauty Brazil para seu atendimento. Confirme dúvidas pessoais antes da reserva.', faq: 'Lip Blush é permanente? A Bella Beauty Brazil descreve o serviço como tatuagem cosmética semipermanente. Confirme indicação e cuidados esperados no processo oficial de reserva.' },
     es: { difference: 'Lip Blush es un servicio de tatuaje cosmético para realzar el tono y la forma natural de los labios. Es diferente de los tratamientos faciales, enfocados en el cuidado de la piel.', care: 'La preparación, la idoneidad y los cuidados deben seguir las indicaciones de Bella Beauty Brazil para tu cita. Confirma tus dudas antes de reservar.', faq: '¿Lip Blush es permanente? Bella Beauty Brazil describe el servicio como tatuaje cosmético semipermanente. Confirma la idoneidad y los cuidados durante la reserva oficial.' },
   },
   'brow-sculpt-tint': {
-    pt: { difference: 'Brow Sculpting & Tint modela e coloreia as sobrancelhas naturais. A Brow Lamination muda a direção e a aparência dos fios, enquanto a tatuagem cosmética cria um acabamento semipermanente.', care: 'Siga os cuidados da Bella Beauty Brazil e use o Timely oficial para confirmar disponibilidade e qualquer preparação necessária.', faq: 'Brow Sculpt & Tint inclui coloração? Sim, o nome publicado no Timely inclui escultura e tintura. O preço e a duração vêm do catálogo.' },
-    es: { difference: 'Brow Sculpting & Tint da forma y color a las cejas naturales. Brow Lamination cambia la dirección y apariencia del pelo, mientras el tatuaje cosmético crea un acabado semipermanente.', care: 'Sigue los cuidados de Bella Beauty Brazil y usa el Timely oficial para confirmar disponibilidad y preparación.', faq: '¿Brow Sculpt & Tint incluye tinte? Sí, el nombre publicado en Timely incluye diseño y tinte. El precio y la duración provienen del catálogo.' },
+    pt: { difference: 'Tintura tradicional coloreia os pelos naturais com definição suave; Hybrid Dye também pigmenta temporariamente a pele.', care: 'Converse com o estúdio sobre seu histórico de pele e a necessidade de teste de sensibilidade.', faq: 'Inclui design? Sim, inclui mapeamento, cera e pinça personalizados, como no Brow Sculpt.' },
+    es: { difference: 'El tinte tradicional colorea el vello natural con definición suave; Hybrid Dye también tiñe temporalmente la piel.', care: 'Consulta al estudio sobre tu historial cutáneo y si hace falta una prueba de sensibilidad.', faq: '¿Incluye diseño? Sí, incluye diseño personalizado, cera y pinzas, como Brow Sculpt.' },
   },
   'brow-lamination': {
     pt: { difference: 'Brow Lamination, Shape & Tint é styling de sobrancelhas. Não é igual à tatuagem cosmética ou Nano Strokes, que criam efeitos de pigmento semipermanente.', care: 'Siga as orientações de preparação e cuidados fornecidas pela Bella Beauty Brazil para seu atendimento. Confirme indicação e disponibilidade no Timely.', faq: 'Como a Brow Lamination difere da tatuagem? A laminação modela os fios existentes, enquanto a tatuagem cosmética deposita pigmento para um acabamento semipermanente.' },
