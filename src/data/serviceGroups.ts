@@ -13,8 +13,8 @@ export const SERVICE_GROUPS = [
   {
     id: 'brow-artistry',
     title: { en: 'Brow Artistry', pt: 'Design de Sobrancelhas', es: 'Diseño de Cejas' },
-    lead: { en: 'Sculpting, tinting, hybrid dye and brow lamination.', pt: 'Design, tintura, coloração híbrida e laminação.', es: 'Diseño, tinte, tinte híbrido y laminado.' },
-    serviceIds: ['brow-sculpt','brow-sculpt-tint','shadow-hybrid','brow-lamination','male-brow-sculpt','dreamy-brows'],
+    lead: { en: 'Brow styling, lamination and personalised Exos Hair care for brows and scalp.', pt: 'Design, laminação e cuidados personalizados Exos Hair para sobrancelhas e couro cabeludo.', es: 'Diseño, laminado y cuidado personalizado Exos Hair para cejas y cuero cabelludo.' },
+    serviceIds: ['brow-sculpt','brow-sculpt-tint','shadow-hybrid','brow-lamination','male-brow-sculpt','dreamy-brows','grow-up-hair-brows','grow-up-hair-scalp'],
     photoCategory: 'Brows',
   },
   {
@@ -27,8 +27,8 @@ export const SERVICE_GROUPS = [
   {
     id: 'skin-treatments',
     title: { en: 'Skin & Lip Care', pt: 'Pele e Hidratação Labial', es: 'Piel y Cuidado de Labios' },
-    lead: { en: 'Facials, dermaplaning, microneedling, lip hydration and hair care.', pt: 'Faciais, dermaplaning, microagulhamento, hidratação labial e cuidados capilares.', es: 'Faciales, dermaplaning, microneedling, hidratación labial y cuidado capilar.' },
-    serviceIds: ['dermaplaning','microneedling','facial-spa','deluxe-facial','lip-bliss-hydration','grow-up-hair-brows','grow-up-hair-scalp'],
+    lead: { en: 'Facials, dermaplaning, microneedling and lip hydration.', pt: 'Faciais, dermaplaning, microagulhamento e hidratação labial.', es: 'Faciales, dermaplaning, microneedling e hidratación labial.' },
+    serviceIds: ['dermaplaning','microneedling','facial-spa','deluxe-facial','lip-bliss-hydration'],
     photoCategory: 'Skin',
   },
   {
