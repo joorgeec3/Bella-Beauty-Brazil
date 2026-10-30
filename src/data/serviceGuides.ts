@@ -23,19 +23,19 @@ export const SERVICE_GUIDES: Partial<Record<string, Record<Language, ServiceGuid
       idealFor: 'For anyone wanting tidier, more defined brows while keeping their natural colour and fullness.',
       comparison: '',
       question: 'Does Brow Sculpt include tint or dye?',
-      answer: 'No. Brow Sculpt focuses on shaping only. For added colour, please book Brow Sculpt & Tint or Brow Sculpt & Dye.'
+      answer: 'No. Brow Sculpt focuses on shaping only. For added colour, please book Brow Sculpt & Tint or Brow Sculpt & Hybrid Dye.'
     },
     pt: {
       idealFor: 'Para quem deseja sobrancelhas mais alinhadas e definidas, mantendo a cor e o volume naturais.',
       comparison: '',
       question: 'Brow Sculpt inclui tintura ou dye?',
-      answer: 'Não. Brow Sculpt é apenas para modelagem. Se desejar cor, agende Brow Sculpt & Tint ou Brow Sculpt & Dye.'
+      answer: 'Não. Brow Sculpt é apenas para modelagem. Se desejar cor, agende Brow Sculpt & Tint ou Brow Sculpt & Hybrid Dye.'
     },
     es: {
       idealFor: 'Para quienes desean unas cejas más cuidadas y definidas, manteniendo su color y densidad naturales.',
       comparison: '',
       question: '¿Brow Sculpt incluye tinte o dye?',
-      answer: 'No. Brow Sculpt se centra únicamente en el diseño. Para añadir color, reserva Brow Sculpt & Tint o Brow Sculpt & Dye.'
+      answer: 'No. Brow Sculpt se centra únicamente en el diseño. Para añadir color, reserva Brow Sculpt & Tint o Brow Sculpt & Hybrid Dye.'
     }
   },
   'classic-eyelashes': {
@@ -90,22 +90,22 @@ export const SERVICE_GUIDES: Partial<Record<string, Record<Language, ServiceGuid
   },
   'shadow-hybrid': {
     en: {
-      idealFor: 'For clients who want a more defined look using shaping and hybrid brow colour. The published Timely service is Brow Sculpt & Hybrid Brow, not a separately confirmed semi-permanent Shadow Brows tattoo.',
-      comparison: 'Hybrid brow styling works with the natural brow hairs and skin tinting approach used in the appointment. Shadow or Powder Brows can describe a cosmetic tattoo effect, which must not be confused with the A$79 styling service listed on Timely.',
-      question: 'Does the Hybrid Brow booking include semi-permanent Shadow Brows tattooing?',
-      answer: 'No such inclusion is confirmed in the published service listing. Contact Bella Beauty Brazil for a separate cosmetic tattooing consultation if that is the result you want.'
+      idealFor: 'For clients seeking personalised brow shaping with temporary colour on both the brow hairs and skin.',
+      comparison: 'Hybrid Dye is a temporary brow colour treatment, not cosmetic tattooing.',
+      question: 'How is Hybrid Dye different from Tint?',
+      answer: 'Hybrid Dye colours the brow hairs and temporarily stains the skin. Traditional tint focuses on enhancing the hairs.'
     },
     pt: {
-      idealFor: 'Para quem busca sobrancelhas mais definidas com modelagem e coloração híbrida. O serviço publicado no Timely é Brow Sculpt & Hybrid Brow, e não uma tatuagem Shadow Brows semipermanente confirmada separadamente.',
-      comparison: 'O styling Hybrid trabalha o formato e a coloração das sobrancelhas. Shadow ou Powder Brows também podem designar técnicas de tatuagem cosmética, que não devem ser confundidas com o serviço de styling de A$79 do Timely.',
-      question: 'O agendamento Hybrid Brow inclui tatuagem Shadow Brows semipermanente?',
-      answer: 'Essa inclusão não está confirmada no serviço publicado. Consulte a Bella Beauty Brazil sobre uma avaliação de tatuagem cosmética, caso seja esse o resultado desejado.'
+      idealFor: 'Para quem deseja design personalizado com coloração temporária nos pelos e na pele.',
+      comparison: 'Hybrid Dye é uma coloração temporária de sobrancelhas, não uma tatuagem cosmética.',
+      question: 'Qual é a diferença entre Hybrid Dye e Tint?',
+      answer: 'Hybrid Dye colore os pelos e pigmenta temporariamente a pele. A tintura tradicional realça principalmente os pelos.'
     },
     es: {
-      idealFor: 'Para quienes buscan unas cejas más definidas mediante diseño y color híbrido. El servicio publicado en Timely es Brow Sculpt & Hybrid Brow, no un tatuaje Shadow Brows semipermanente confirmado por separado.',
-      comparison: 'El diseño Hybrid trabaja la forma y el color de las cejas. Shadow o Powder Brows también pueden referirse a tatuaje cosmético, que no debe confundirse con el diseño de A$79 publicado en Timely.',
-      question: '¿La cita Hybrid Brow incluye tatuaje Shadow Brows semipermanente?',
-      answer: 'No hay confirmación de esa inclusión en el servicio publicado. Consulta con Bella Beauty Brazil sobre tatuaje cosmético si buscas ese resultado.'
+      idealFor: 'Para quienes desean diseño personalizado con color temporal en el vello y la piel.',
+      comparison: 'Hybrid Dye es una coloración temporal de cejas, no un tatuaje cosmético.',
+      question: '¿Qué diferencia hay entre Hybrid Dye y Tint?',
+      answer: 'Hybrid Dye colorea el vello y tiñe temporalmente la piel. El tinte tradicional realza principalmente el vello.'
     }
   },
   'lip-blush': {
@@ -130,22 +130,22 @@ export const SERVICE_GUIDES: Partial<Record<string, Record<Language, ServiceGuid
   },
   'brow-sculpt-tint': {
     en: {
-      idealFor: 'For clients who want their existing brow hairs shaped and tinted in one appointment, with the finish tailored to their facial features.',
-      comparison: 'Brow Sculpt & Tint shapes and colours natural brow hairs. Brow Lamination also changes the direction and appearance of those hairs, while Nano Strokes is a cosmetic tattooing service.',
-      question: 'Is Brow Sculpt & Tint the same as Brow Lamination?',
-      answer: 'No. The services are listed separately on Timely. Choose the appointment that matches your styling goals, or ask the studio for guidance.'
+      idealFor: 'For clients seeking the same personalised Brow Sculpt shaping, with a soft traditional tint on the natural hairs.',
+      comparison: 'Tint enhances brow hairs for soft definition. Hybrid Dye also temporarily stains the skin.',
+      question: 'Does Brow Sculpt & Tint include waxing and tweezing?',
+      answer: 'Yes. It includes the same personalised brow mapping, waxing and tweezing as Brow Sculpt.'
     },
     pt: {
-      idealFor: 'Para quem quer modelar e colorir os fios naturais das sobrancelhas no mesmo atendimento, com acabamento adaptado aos traços do rosto.',
-      comparison: 'Brow Sculpt & Tint modela e colore os fios naturais. Brow Lamination também modifica a direção e o visual dos fios; Nano Strokes é um serviço de tatuagem cosmética.',
-      question: 'Brow Sculpt & Tint é igual a Brow Lamination?',
-      answer: 'Não. São serviços separados no Timely. Escolha conforme o acabamento desejado ou peça orientação ao estúdio.'
+      idealFor: 'Para quem deseja o mesmo design personalizado do Brow Sculpt, com tintura tradicional nos pelos.',
+      comparison: 'Tintura realça os fios com definição suave. Hybrid Dye também pigmenta temporariamente a pele.',
+      question: 'Brow Sculpt & Tint inclui cera e pinça?',
+      answer: 'Sim. Inclui o mesmo mapeamento, depilação com cera e pinça personalizados do Brow Sculpt.'
     },
     es: {
-      idealFor: 'Para quienes desean dar forma y color a sus cejas naturales en una misma cita, con un acabado adaptado a sus facciones.',
-      comparison: 'Brow Sculpt & Tint diseña y tiñe el pelo natural. Brow Lamination también modifica su dirección y apariencia; Nano Strokes es un servicio de tatuaje cosmético.',
-      question: '¿Brow Sculpt & Tint es igual a Brow Lamination?',
-      answer: 'No. Son servicios distintos en Timely. Elige según el resultado deseado o pide orientación al estudio.'
+      idealFor: 'Para quienes quieren el mismo diseño personalizado de Brow Sculpt con tinte tradicional en el vello.',
+      comparison: 'El tinte realza el vello con definición suave. Hybrid Dye también tiñe temporalmente la piel.',
+      question: '¿Brow Sculpt & Tint incluye cera y pinzas?',
+      answer: 'Sí. Incluye el mismo diseño personalizado, cera y pinzas que Brow Sculpt.'
     }
   },
   'brow-lamination': {
