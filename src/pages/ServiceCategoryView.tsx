@@ -18,9 +18,9 @@ type Props = {
 };
 
 const words = {
-  en: { priceDuration: 'Price & duration', durationNotListed: 'Duration to confirm with the studio', lipTouchUp: 'Touch-up after 60 days · Price to be confirmed with the studio', all: 'All services', opening: 'Select a treatment to see its complete information, photographs, videos, prices and booking in one place.', photos: 'Photos & videos', view: 'View all treatment details', book: 'Book now', price: 'Price', care: 'Suitability & guidance', results: 'Related treatment comparisons', note: 'Representative category photos are not proof of a particular result.', extra: 'Other waxing options & prices', more: 'View details & photos', whatsapp: 'Confirm details with the studio', none: 'Ask the studio' },
-  pt: { priceDuration: 'Preço e duração', durationNotListed: 'Duração a confirmar com o estúdio', lipTouchUp: 'Retoque após 60 dias · Valor a confirmar com o estúdio', all: 'Todos os serviços', opening: 'Abra um tratamento para ver informações, fotos, vídeos, valores e agendamento reunidos em um só lugar.', photos: 'Fotos e vídeos', view: 'Ver página completa do tratamento', book: 'Agendar agora', price: 'Valor', care: 'Indicação e orientações', results: 'Comparações de tratamentos relacionados', note: 'Fotos representativas da categoria não comprovam o resultado de um procedimento específico.', extra: 'Outras opções de depilação e preços', more: 'Ver detalhes e fotos', whatsapp: 'Confirmar detalhes com o estúdio', none: 'Consultar estúdio' },
-  es: { priceDuration: 'Precio y duración', durationNotListed: 'Duración por confirmar con el estudio', lipTouchUp: 'Retoque después de 60 días · Precio por confirmar con el estudio', all: 'Todos los servicios', opening: 'Abre un tratamiento para ver su información, fotos, vídeos, precios y reservas en un solo lugar.', photos: 'Fotos y vídeos', view: 'Ver página completa del tratamiento', book: 'Reservar ahora', price: 'Precio', care: 'Indicaciones', results: 'Comparaciones de tratamientos relacionados', note: 'Las fotos representativas no garantizan un resultado específico.', extra: 'Otras opciones de depilación y precios', more: 'Ver detalles y fotos', whatsapp: 'Confirmar detalles con el estudio', none: 'Consultar al estudio' },
+  en: { priceDuration: 'Price & duration', durationNotListed: 'Duration to confirm with the studio', lipTouchUp: 'Touch-up after 60 days · Price to be confirmed with the studio', all: 'All services', opening: 'Select a treatment to see its complete information, photographs, videos, prices and booking in one place.', photos: 'Photos & videos', view: 'View all treatment details', book: 'Book now', price: 'Price', care: 'Suitability & guidance', results: 'Related treatment comparisons', note: 'Representative category photos are not proof of a particular result.', extra: 'Waxing options & prices', more: 'View details & photos', whatsapp: 'Confirm details with the studio', none: 'Ask the studio' },
+  pt: { priceDuration: 'Preço e duração', durationNotListed: 'Duração a confirmar com o estúdio', lipTouchUp: 'Retoque após 60 dias · Valor a confirmar com o estúdio', all: 'Todos os serviços', opening: 'Abra um tratamento para ver informações, fotos, vídeos, valores e agendamento reunidos em um só lugar.', photos: 'Fotos e vídeos', view: 'Ver página completa do tratamento', book: 'Agendar agora', price: 'Valor', care: 'Indicação e orientações', results: 'Comparações de tratamentos relacionados', note: 'Fotos representativas da categoria não comprovam o resultado de um procedimento específico.', extra: 'Opções e preços de depilação', more: 'Ver detalhes e fotos', whatsapp: 'Confirmar detalhes com o estúdio', none: 'Consultar estúdio' },
+  es: { priceDuration: 'Precio y duración', durationNotListed: 'Duración por confirmar con el estudio', lipTouchUp: 'Retoque después de 60 días · Precio por confirmar con el estudio', all: 'Todos los servicios', opening: 'Abre un tratamiento para ver su información, fotos, vídeos, precios y reservas en un solo lugar.', photos: 'Fotos y vídeos', view: 'Ver página completa del tratamiento', book: 'Reservar ahora', price: 'Precio', care: 'Indicaciones', results: 'Comparaciones de tratamientos relacionados', note: 'Las fotos representativas no garantizan un resultado específico.', extra: 'Opciones y precios de depilación', more: 'Ver detalles y fotos', whatsapp: 'Confirmar detalles con el estudio', none: 'Consultar al estudio' },
 } as const;
 
 const treatSlug = (id: string) => `${import.meta.env.BASE_URL.replace(/\/$/, '')}/services/${id}`;
@@ -49,7 +49,9 @@ const TreatmentEntry: React.FC<{ id: string; language: Language; first: boolean;
       </div>
       <span className="min-w-0 flex-1">
         <span className="block font-raleway text-lg sm:text-2xl font-semibold leading-snug">{service.title}</span>
-        <span className="flex items-center gap-1.5 font-montserrat text-[11px] font-bold uppercase tracking-wide text-[#9a5967] mt-3">{copy.more} <ChevronDown aria-hidden="true" className="w-4 h-4 transition-transform group-open:rotate-180" /></span>
+        {id === 'waxing'
+          ? <span className="flex items-center gap-1.5 text-[#9a5967] mt-2"><ChevronDown aria-hidden="true" className="w-5 h-5 transition-transform group-open:rotate-180" /></span>
+          : <span className="flex items-center gap-1.5 font-montserrat text-[11px] font-bold uppercase tracking-wide text-[#9a5967] mt-3">{copy.more} <ChevronDown aria-hidden="true" className="w-4 h-4 transition-transform group-open:rotate-180" /></span>}
       </span>
     </summary>
     {open && <div className="border-t border-[#f0e3e4]">
@@ -66,7 +68,12 @@ const TreatmentEntry: React.FC<{ id: string; language: Language; first: boolean;
             </>
         : <>
       <div className="p-5 sm:p-7">
-        <section aria-label={copy.priceDuration} className="rounded-2xl bg-[#f3d9d0] border border-[#e8c5c8] p-5 sm:p-7 mb-6">
+        {id === 'waxing' && <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-6" aria-label={language === 'en' ? 'Waxing photos' : language === 'pt' ? 'Fotos de depilação' : 'Fotos de depilación'}>
+          {photoSet.photos.slice(0, 3).map(photo => <a key={photo.src} href={photo.src} target="_blank" rel="noopener noreferrer" className="block overflow-hidden rounded-xl border border-[#e8d6d5] bg-[#f5eeec]">
+            <img src={photo.src} alt={photo.alt} loading="lazy" className="w-full h-52 sm:h-44 md:h-52 object-cover" />
+          </a>)}
+        </div>}
+        {id !== 'waxing' && <section aria-label={copy.priceDuration} className="rounded-2xl bg-[#f3d9d0] border border-[#e8c5c8] p-5 sm:p-7 mb-6">
           <h3 className="font-raleway text-xl sm:text-2xl font-semibold text-[#5b3239]">{copy.priceDuration}</h3>
           <p className="flex flex-wrap items-center gap-2 font-montserrat text-base font-semibold text-[#402d35] mt-3">
             <Clock3 className="w-4 h-4 shrink-0" aria-hidden="true" />
@@ -75,16 +82,16 @@ const TreatmentEntry: React.FC<{ id: string; language: Language; first: boolean;
             <span>{service.duration || copy.durationNotListed}</span>
           </p>
           {id === 'lip-blush' && <p className="font-montserrat text-base text-[#402d35] mt-2">{copy.lipTouchUp}</p>}
-        </section>
-        <p className="font-montserrat text-sm sm:text-base text-[#55464c] leading-relaxed">{desc}</p>
-        {cover && !cover.specific && <p className="font-montserrat text-xs text-[#846f75] mt-3">{copy.note}</p>}
-        {id === 'lip-blush' ? <div className="mt-5 rounded-xl bg-[#faf0f2] p-4 sm:p-5"><h3 className="font-raleway font-semibold text-lg text-[#5b3239]">Is this treatment right for me?</h3><p className="font-montserrat text-base leading-7 mt-2 text-[#3f3539]">This treatment may suit you if you would like to enhance pale lips, improve colour definition or achieve a softly tinted look. I assess your natural lip colour and discuss your goals before recommending a personalised treatment.</p></div> : guide && <div className="mt-5 rounded-xl bg-[#faf0f2] p-4 sm:p-5"><h3 className="font-raleway font-semibold text-lg text-[#5b3239]">{copy.care}</h3><p className="font-montserrat text-sm leading-relaxed mt-2 text-[#55464c]">{guide.idealFor}</p><p className="font-montserrat text-sm leading-relaxed mt-2 text-[#55464c]">{guide.comparison}</p></div>}
+        </section>}
+        <p className="font-montserrat text-sm sm:text-base text-[#55464c] leading-relaxed">{id === 'waxing' ? (language === 'en' ? 'Professional waxing using hard wax or strip wax, selected for the treatment area. See all waxing options and prices below.' : language === 'pt' ? 'Depilação profissional com cera adequada à região. Confira abaixo todas as opções e preços.' : 'Depilación profesional con la cera adecuada para cada zona. Consulta las opciones y precios a continuación.') : desc}</p>
+        {id !== 'waxing' && cover && !cover.specific && <p className="font-montserrat text-xs text-[#846f75] mt-3">{copy.note}</p>}}
+        {id === 'lip-blush' ? <div className="mt-5 rounded-xl bg-[#faf0f2] p-4 sm:p-5"><h3 className="font-raleway font-semibold text-lg text-[#5b3239]">Is this treatment right for me?</h3><p className="font-montserrat text-base leading-7 mt-2 text-[#3f3539]">This treatment may suit you if you would like to enhance pale lips, improve colour definition or achieve a softly tinted look. I assess your natural lip colour and discuss your goals before recommending a personalised treatment.</p></div> : guide && <div className="mt-5 rounded-xl bg-[#faf0f2] p-4 sm:p-5"><h3 className="font-raleway font-semibold text-lg text-[#5b3239]">{copy.care}</h3><p className="font-montserrat text-sm leading-relaxed mt-2 text-[#55464c]">{guide.idealFor}</p>{id !== 'waxing' && <p className="font-montserrat text-sm leading-relaxed mt-2 text-[#55464c]">{guide.comparison}</p>}</div>}
         <div className="flex flex-wrap gap-3 mt-6 items-center">
           <a href={getServiceBookingUrl(id)} className="inline-flex items-center justify-center gap-2 bg-[#5b3239] text-white rounded-full px-5 py-3 text-xs font-bold hover:bg-[#7a4753]"><CalendarDays className="w-4 h-4"/>{copy.book}</a>
           <a href={treatSlug(id)} onClick={onTreatmentLink} className="inline-flex items-center gap-2 rounded-full border border-[#9a5967]/50 px-5 py-3 text-xs font-semibold text-[#5b3239] hover:bg-[#f3d9d0]">{id === 'lip-blush' ? 'Explore other treatments' : copy.view}<ArrowRight className="w-4 h-4"/></a>
         </div>
       </div>
-      {photoSet.photos.some(photo => photo.src !== cover?.src) && <ServicePhotoGallery serviceId={id} language={language} excludeSrc={cover?.src} />}
+      {id !== 'waxing' && photoSet.photos.some(photo => photo.src !== cover?.src) && <ServicePhotoGallery serviceId={id} language={language} excludeSrc={cover?.src} />}
       <ServiceVideoGallery serviceId={id} language={language} />
         </>}
     </div>}
@@ -125,7 +132,7 @@ export const ServiceCategoryView: React.FC<Props> = ({ groupId, language, onNavi
       <div className="space-y-4">
         {visibleServiceIds.map((id, i) => <React.Fragment key={id}><TreatmentEntry key={id} id={id} language={language} first={i===0} onNavigate={onNavigate}/>{id === 'lash-lift' && <div className="rounded-xl border border-[#e8d6d5] bg-white px-5 py-4 flex flex-wrap items-center justify-between gap-3"><span className="font-montserrat text-sm font-semibold text-[#5b3239]">Lash Lift Only — without tint</span><span className="font-montserrat text-sm font-semibold text-[#5b3239]">A$119</span></div>}</React.Fragment>)}
       </div>
-      {categoryPhotos.length > 0 && <details className="mt-10 rounded-2xl border border-[#e8d6d5] bg-white overflow-hidden">
+      {groupId !== 'waxing' && categoryPhotos.length > 0 && <details className="mt-10 rounded-2xl border border-[#e8d6d5] bg-white overflow-hidden">
         <summary className="cursor-pointer px-5 sm:px-7 py-5 font-raleway text-lg sm:text-xl font-semibold text-[#5b3239] focus-visible:outline-2 focus-visible:outline-[#9a5967]">
           {language === 'en' ? 'More studio photos in this category' : language === 'pt' ? 'Mais fotos do estúdio nesta categoria' : 'Más fotos del estudio en esta categoría'} ({categoryPhotos.length})
         </summary>
@@ -166,7 +173,7 @@ export const ServiceCategoryView: React.FC<Props> = ({ groupId, language, onNavi
         <h2 className="font-raleway text-2xl sm:text-3xl text-[#5b3239] mb-5">{t.extra}</h2>
         <div className="grid md:grid-cols-2 gap-5">{waxLists.map(list => <div key={list.id} className="rounded-2xl bg-white border border-[#e8d6d5] p-5 sm:p-6">
           <h3 className="font-raleway text-xl font-semibold text-[#5b3239]">{list.title}</h3>
-          <div className="mt-3">{list.items.filter(item => item.name!=='Brazilian').map(item => <div key={item.name} className="flex justify-between gap-3 py-2.5 border-b border-[#f0e6e6] text-sm font-montserrat"><span>{item.name}</span><strong className="text-[#5b3239] shrink-0">A${item.aud}</strong></div>)}</div>
+          <div className="mt-3">{list.items.map(item => <div key={item.name} className="flex justify-between gap-3 py-2.5 border-b border-[#f0e6e6] text-sm font-montserrat"><span>{item.name === 'Brazilian' ? 'Brazilian Waxing' : item.name}</span><strong className="text-[#5b3239] shrink-0">A${item.aud}</strong></div>)}</div>
         </div>)}</div>
         <a href={BOOKING_URL} className="inline-flex mt-5 rounded-full bg-[#5b3239] text-white px-6 py-3 text-xs font-bold hover:bg-[#7a4753]">{t.book}<ArrowRight className="w-4 h-4 ml-2"/></a>
       </section>}
