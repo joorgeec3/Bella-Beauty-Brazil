@@ -12,7 +12,6 @@ export const ContactView: React.FC<ContactViewProps> = ({ language }) => {
     name: '',
     email: '',
     phone: '',
-    location: 'Greenslopes',
     message: '',
   });
   const location = LOCATIONS[0];
@@ -20,7 +19,7 @@ export const ContactView: React.FC<ContactViewProps> = ({ language }) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const subject = encodeURIComponent(`Bella Beauty enquiry — ${formData.name}`);
-    const body = encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nLocation: ${formData.location}\n\n${formData.message}`);
+    const body = encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\n\n${formData.message}`);
     window.location.href = `mailto:livia.anjos14@gmail.com?subject=${subject}&body=${body}`;
   };
 
@@ -104,6 +103,29 @@ export const ContactView: React.FC<ContactViewProps> = ({ language }) => {
                 </div>
               </div>
             </div>
+            <div className="mt-8 rounded-2xl border border-[#e8d6d5] bg-white p-6 sm:p-7">
+              <p className="font-montserrat text-[11px] font-bold uppercase tracking-[0.18em] text-[#9a5967]">
+                {language === 'en' ? 'A thoughtful gift' : language === 'pt' ? 'Um presente especial' : 'Un regalo especial'}
+              </p>
+              <h3 className="font-raleway text-2xl font-semibold text-[#5b3239] mt-2">
+                {language === 'en' ? 'Gift Vouchers' : language === 'pt' ? 'Gift Vouchers' : 'Gift Vouchers'}
+              </h3>
+              <p className="font-montserrat text-sm leading-relaxed text-neutral-600 mt-2">
+                {language === 'en'
+                  ? 'Give someone a Bella Beauty experience. Visit our Timely page to explore gift voucher options, or contact the studio for assistance with your purchase.'
+                  : language === 'pt'
+                  ? 'Presenteie alguém com uma experiência Bella Beauty. Acesse nossa página Timely para consultar os vouchers ou fale com o estúdio para receber ajuda na compra.'
+                  : 'Regala una experiencia Bella Beauty. Visita nuestra página de Timely para consultar los vouchers o contacta con el estudio para recibir ayuda.'}
+              </p>
+              <div className="flex flex-col sm:flex-row gap-3 mt-5">
+                <a href="https://bellabrazil.gettimely.com/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center rounded-full bg-[#5b3239] hover:bg-[#7a4753] text-white font-montserrat font-bold text-xs uppercase tracking-widest px-6 py-3 transition-colors">
+                  {language === 'en' ? 'View Timely' : language === 'pt' ? 'Acessar Timely' : 'Ver Timely'}
+                </a>
+                <a href="https://wa.me/61402148437?text=Hi%2C%20I%27d%20like%20help%20purchasing%20a%20Bella%20Beauty%20gift%20voucher." target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center rounded-full border border-[#9a5967] text-[#5b3239] hover:bg-[#f8eef1] font-montserrat font-bold text-xs uppercase tracking-widest px-6 py-3 transition-colors">
+                  {language === 'en' ? 'Ask on WhatsApp' : language === 'pt' ? 'Consultar pelo WhatsApp' : 'Consultar por WhatsApp'}
+                </a>
+              </div>
+            </div>
             <div className="overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-900 shadow-sm">
               <iframe title="Bella Beauty Brazil map" src="https://www.google.com/maps?q=Suite%203,%20412%20Logan%20Road,%20Greenslopes%20QLD%204120%20Australia&output=embed" className="h-64 w-full border-0" loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
               <a href="https://www.google.com/maps/dir/?api=1&destination=Suite+3%2C+412+Logan+Road%2C+Greenslopes+QLD+4120+Australia" target="_blank" rel="noopener noreferrer" className="block bg-[#5b3239] px-4 py-3 text-center text-xs font-bold uppercase tracking-widest text-white cursor-pointer">{language === 'en' ? 'Get Directions' : language === 'pt' ? 'Como chegar' : 'Cómo llegar'}</a>
@@ -152,31 +174,16 @@ export const ContactView: React.FC<ContactViewProps> = ({ language }) => {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block font-semibold text-neutral-700 mb-1">
-                      {language === 'en' ? 'Phone Number' : language === 'pt' ? 'Telefone' : 'Teléfono'}
-                    </label>
-                    <input
-                      type="tel"
-                      value={formData.phone}
-                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      className="w-full px-4 py-3 bg-site border border-neutral-200 rounded-lg focus:outline-hidden focus:border-[#9a5967]"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block font-semibold text-neutral-700 mb-1">
-                      {language === 'en' ? 'Preferred Location' : language === 'pt' ? 'Local de interesse' : 'Ubicación de interés'}
-                    </label>
-                    <select
-                      value={formData.location}
-                      onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                      className="w-full px-4 py-3 bg-site border border-neutral-200 rounded-lg focus:outline-hidden focus:border-[#9a5967]"
-                    >
-                      <option value="Greenslopes">Greenslopes (Brisbane)</option>
-                    </select>
-                  </div>
+                <div>
+                  <label className="block font-semibold text-neutral-700 mb-1">
+                    {language === 'en' ? 'Phone Number' : language === 'pt' ? 'Telefone' : 'Teléfono'}
+                  </label>
+                  <input
+                    type="tel"
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    className="w-full px-4 py-3 bg-site border border-neutral-200 rounded-lg focus:outline-hidden focus:border-[#9a5967]"
+                  />
                 </div>
 
                 <div>
