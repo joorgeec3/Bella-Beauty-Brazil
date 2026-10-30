@@ -42,6 +42,14 @@ const exactFolderByService: Record<string, keyof typeof PHOTO_FOLDERS> = {
   'lash-lift':'lash-lift',
   'teeth-whitening':'teeth-whitening',
 };
+// These six client-supplied images belong to the folder labelled "brow-dye" and
+// visibly show brow styling. The exact colour product cannot be identified by
+// appearance alone, so retain them as illustrative references until confirmed.
+const dyeReferencePhotos: TreatmentPhoto[] = PHOTO_FOLDERS['brow-dye'].map((photo, i) => ({
+  ...photo,
+  alt: `Brow styling studio reference — photograph ${i + 1}; product used not independently verified`,
+  caption: `Brow styling reference · ${i + 1} / ${PHOTO_FOLDERS['brow-dye'].length} · exact dye product not verified`,
+}));
 // Photos in the generic Lash Extensions folder are not verified as Classic,
 // Hybrid or Wet Look. Avoid assigning them to a specific technique until
 // Bella Beauty Brazil confirms which exact service each image shows.
@@ -80,7 +88,7 @@ const supplementary: Record<string,TreatmentPhoto[]> = {
 };
 export const serviceGalleryFor = (serviceId: string): TreatmentGallery => {
   const folder = exactFolderByService[serviceId];
-  if(folder)return {photos:PHOTO_FOLDERS[folder],illustrative:serviceId==='shadow-hybrid'};
+  if(folder)return {photos:serviceId === 'shadow-hybrid' ? dyeReferencePhotos : PHOTO_FOLDERS[folder],illustrative:serviceId==='shadow-hybrid'};
   if(newerFolderLabels[serviceId])return {photos:newerFolderLabels[serviceId],illustrative:false};
   return {photos:supplementary[serviceId]||[],illustrative:serviceId === 'waxing'};
 };
