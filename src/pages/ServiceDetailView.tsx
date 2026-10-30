@@ -41,6 +41,22 @@ const lipBlushAfter = [
   "Follow any antiviral instructions provided by your healthcare professional.",
   "Seek medical advice for worsening pain, redness, swelling, discharge or fever."
 ];
+const browLaminationBefore = [
+  "Arrive with clean brows, free from makeup.",
+  "Tell us about previous reactions to lamination, tint or other brow products.",
+  "Mention recent skin treatments and any retinoids or exfoliating products used around your brows.",
+  "Treatment should be postponed if the skin is broken, sunburnt or irritated.",
+  "Contact us before your appointment to check whether a patch test is required."
+];
+const browLaminationAfter = [
+  "Keep your brows dry and avoid steam, saunas and heavy sweating for the first 48 hours.",
+  "Avoid rubbing your brows or sleeping with pressure on them.",
+  "Avoid brow makeup, strong cleansers and makeup removers around the brows during this initial period.",
+  "Afterwards, gently brush your brows into place each day with a clean spoolie.",
+  "Use the recommended brow conditioner as directed to help keep the hairs soft and manageable.",
+  "Avoid exfoliating acids and retinoids on recently treated skin until any sensitivity has settled.",
+  "Contact the studio if irritation develops. Seek medical advice for significant swelling, blistering or persistent discomfort."
+];
 const lipBlushHealing = [
   [
     "Immediately after treatment",
@@ -157,13 +173,13 @@ const GROUPS: Record<string, { related: string[]; difference: string; care: stri
   'brow-lamination': {
     related: ['brow-sculpt-tint', 'lash-lift', 'shadow-hybrid'],
     difference: 'Brow Lamination, Shape & Tint is a brow styling service. It is not the same as cosmetic tattooing or Nano Strokes, which create semi-permanent pigment effects.',
-    care: 'Follow Bella Beauty Brazil’s appointment-specific preparation and aftercare guidance. Confirm suitability and availability through Timely.',
+    care: 'Follow the preparation and aftercare guidance provided for your appointment. Contact the studio if you have questions about suitability.',
     faq: 'How is Brow Lamination different from tattooing? Lamination styles existing brow hairs, while cosmetic tattooing deposits pigment for a semi-permanent finish.',
   },
   'lash-lift': {
     related: ['classic-eyelashes', 'hybrid-eyelashes', 'brow-lamination'],
     difference: 'Lash Lift & Tint works with the natural lashes. Classic and Hybrid Lash Extensions add applied extensions and create different levels of density.',
-    care: 'Follow the eye-area preparation and aftercare instructions supplied by Bella Beauty Brazil. Confirm suitability and appointment requirements before booking.',
+    care: 'Follow the eye-area preparation and aftercare instructions supplied by Bella Beauty Brazil. Contact the studio if you have questions about suitability.',
     faq: 'What is the difference between a Lash Lift and extensions? A Lash Lift curls and tints natural lashes; extensions add individual or volume lashes according to the selected set.',
   },
   dermaplaning: {
@@ -192,8 +208,8 @@ const GROUP_TRANSLATIONS: Record<string, Record<'pt' | 'es', { difference: strin
     es: { difference: 'El tinte tradicional colorea el vello natural con definición suave; Hybrid Dye también tiñe temporalmente la piel.', care: 'Consulta al estudio sobre tu historial cutáneo y si hace falta una prueba de sensibilidad.', faq: '¿Incluye diseño? Sí, incluye diseño personalizado, cera y pinzas, como Brow Sculpt.' },
   },
   'brow-lamination': {
-    pt: { difference: 'Brow Lamination, Shape & Tint é styling de sobrancelhas. Não é igual à tatuagem cosmética ou Nano Strokes, que criam efeitos de pigmento semipermanente.', care: 'Siga as orientações de preparação e cuidados fornecidas pela Bella Beauty Brazil para seu atendimento. Confirme indicação e disponibilidade no Timely.', faq: 'Como a Brow Lamination difere da tatuagem? A laminação modela os fios existentes, enquanto a tatuagem cosmética deposita pigmento para um acabamento semipermanente.' },
-    es: { difference: 'Brow Lamination, Shape & Tint es styling de cejas. No es igual al tatuaje cosmético o Nano Strokes, que crean efectos de pigmento semipermanente.', care: 'Sigue las indicaciones de preparación y cuidados de Bella Beauty Brazil para tu cita. Confirma idoneidad y disponibilidad en Timely.', faq: '¿Cómo se diferencia Brow Lamination del tatuaje? La laminación peina el pelo existente, mientras el tatuaje cosmético deposita pigmento para un acabado semipermanente.' },
+    pt: { difference: 'Brow Lamination, Shape & Tint é styling de sobrancelhas. Não é igual à tatuagem cosmética ou Nano Strokes, que criam efeitos de pigmento semipermanente.', care: 'Siga as orientações de preparação e cuidados fornecidas pela Bella Beauty Brazil para seu atendimento. Entre em contato com o estúdio se tiver dúvidas sobre a indicação.', faq: 'Como a Brow Lamination difere da tatuagem? A laminação modela os fios existentes, enquanto a tatuagem cosmética deposita pigmento para um acabamento semipermanente.' },
+    es: { difference: 'Brow Lamination, Shape & Tint es styling de cejas. No es igual al tatuaje cosmético o Nano Strokes, que crean efectos de pigmento semipermanente.', care: 'Sigue las indicaciones de preparación y cuidados de Bella Beauty Brazil para tu cita. Contacta al estudio si tienes dudas sobre la idoneidad.', faq: '¿Cómo se diferencia Brow Lamination del tatuaje? La laminación peina el pelo existente, mientras el tatuaje cosmético deposita pigmento para un acabado semipermanente.' },
   },
   'lash-lift': {
     pt: { difference: 'Lash Lift & Tint trabalha com os cílios naturais. Extensões Classic, Hybrid e Russian Volume adicionam extensões aplicadas e criam níveis diferentes de densidade.', care: 'Siga as instruções de preparação e cuidados para a área dos olhos fornecidas pela Bella Beauty Brazil. Confirme indicação e requisitos antes de reservar.', faq: 'Qual a diferença entre Lash Lift e extensões? Lash Lift curva e colore os cílios naturais; extensões adicionam cílios individuais ou volume conforme o conjunto escolhido.' },
@@ -378,6 +394,11 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
                 <h2 className="font-raleway text-2xl font-bold text-[#5b3239]">Healing Process</h2>
                 <div className="mt-5 space-y-4">{lipBlushHealing.map(([period, info]) => <div key={period} className="border-l-4 border-[#9a5967] pl-4 py-1"><h3 className="font-montserrat text-base font-bold text-[#5b3239]">{period}</h3><p className="font-montserrat text-base leading-7 text-[#3f3539] mt-1">{info}</p></div>)}</div>
               </section>
+            </> : base.id === 'brow-lamination' ? <>
+              {([['Before your appointment', browLaminationBefore], ['Aftercare', browLaminationAfter]] as const).map(([heading, items]) => <section key={heading} className="bg-[#f3d9d0] rounded-2xl border border-[#e8c5c8] p-6 sm:p-10 scroll-rise">
+                <h2 className="font-raleway text-2xl font-bold text-[#5b3239]">{heading}</h2>
+                <ul className="list-disc pl-6 space-y-3 mt-5 font-montserrat text-base leading-7 text-[#3f3539]">{items.map(item => <li key={item}>{item}</li>)}</ul>
+              </section>)}
             </> : <section className="bg-[#f3d9d0] rounded-2xl border border-[#e8c5c8] p-6 sm:p-10 scroll-rise">
               <h2 className="font-raleway text-2xl font-bold uppercase tracking-wider text-[#5b3239]">{translated(language, 'Preparation and aftercare', 'Preparação e cuidados', 'Preparación y cuidados')}</h2>
               <p className="font-montserrat text-neutral-700 leading-relaxed mt-4">{groupCopy.care}</p>
@@ -404,15 +425,15 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
                     : groupCopy.faq}
               </p></details>
               {guide && base.id !== 'nano-strokes' && <details className="bg-white border border-[#e8d6d5] rounded-xl p-5"><summary className="font-montserrat font-bold text-[#5b3239] cursor-pointer">{guide.question}</summary><p className="font-montserrat text-sm text-neutral-700 leading-relaxed mt-3">{guide.answer}</p></details>}
-              {!['shadow-brows', 'brow-sculpt'].includes(base.id) && <details className="bg-white border border-[#e8d6d5] rounded-xl p-5"><summary className="font-montserrat font-bold text-[#5b3239] cursor-pointer">{translated(language, 'Where can I confirm the latest price?', 'Onde confirmar o preço atual?', '¿Dónde puedo confirmar el precio actual?')}</summary><p className="font-montserrat text-sm text-neutral-700 leading-relaxed mt-3">{isPriceConfirmed ? translated(language, 'The price and duration shown reflect the service catalogue recorded for this website. Prices and availability may change; the official Timely page is the final reference when booking.', 'O preço e a duração apresentados refletem o catálogo registrado para este site. Eles podem mudar; consulte o Timely oficial para o valor e a disponibilidade atualizados.', 'El precio y la duración corresponden al catálogo registrado para este sitio. Pueden cambiar; consulta el Timely oficial para conocer el precio y la disponibilidad actual.') : translated(language, 'No price is displayed here because it was not confirmed in the available catalogue. Please enquire through Timely.', 'Nenhum preço é exibido porque não foi confirmado no catálogo disponível. Consulte pelo Timely.', 'No se muestra precio porque no fue confirmado en el catálogo disponible. Consulta por Timely.')}</p></details>}</>}
+              {!['shadow-brows', 'brow-sculpt', 'brow-lamination', 'lash-lift'].includes(base.id) && <details className="bg-white border border-[#e8d6d5] rounded-xl p-5"><summary className="font-montserrat font-bold text-[#5b3239] cursor-pointer">{translated(language, 'Where can I confirm the latest price?', 'Onde confirmar o preço atual?', '¿Dónde puedo confirmar el precio actual?')}</summary><p className="font-montserrat text-sm text-neutral-700 leading-relaxed mt-3">{isPriceConfirmed ? translated(language, 'The price and duration shown reflect the service catalogue recorded for this website. Prices and availability may change; the official Timely page is the final reference when booking.', 'O preço e a duração apresentados refletem o catálogo registrado para este site. Eles podem mudar; consulte o Timely oficial para o valor e a disponibilidade atualizados.', 'El precio y la duración corresponden al catálogo registrado para este sitio. Pueden cambiar; consulta el Timely oficial para conocer el precio y la disponibilidad actual.') : translated(language, 'No price is displayed here because it was not confirmed in the available catalogue. Please enquire through Timely.', 'Nenhum preço é exibido porque não foi confirmado no catálogo disponível. Consulte pelo Timely.', 'No se muestra precio porque no fue confirmado en el catálogo disponible. Consulta por Timely.')}</p></details>}</>}
             </section>
           </div>
           <aside className="lg:col-span-4 space-y-5">
             <div className="bg-[#5b3239] text-white rounded-2xl p-6 sm:p-8 shadow-lg sticky top-28">
               <h2 className="font-raleway text-2xl font-bold uppercase tracking-wider">{translated(language, 'Book this service', 'Agende este serviço', 'Reserva este servicio')}</h2>
               <div className="flex items-center gap-3 mt-5 text-[#efb7c8]"><Calendar className="w-5 h-5" /><strong className="font-montserrat text-xl">{isPriceConfirmed ? `A$${service.price}` : translated(language, 'Enquire', 'Consultar', 'Consultar')}</strong></div>
-              {base.id === 'lip-blush' && <p className="mt-3 font-montserrat text-sm font-medium leading-relaxed text-white/95">{translated(language, 'Lip Blush touch-up: After 60 days. Touch-up price to be confirmed with the studio.', 'Retoque de Lip Blush: após 60 dias. Valor do retoque a confirmar com o estúdio.', 'Retoque de Lip Blush: después de 60 días. Precio del retoque pendiente de confirmación.')}</p>}
-              {base.id === 'shadow-brows' && <p className="mt-3 font-montserrat text-sm font-medium leading-relaxed text-white/95">{translated(language, 'Shadow Brows touch-up: A$150 · Approximately 1.5 hours. Confirm the interval with the studio.', 'Retoque Shadow Brows: A$150 · Aproximadamente 1,5 hora. Confirme o prazo com o estúdio.', 'Retoque Shadow Brows: A$150 · Aproximadamente 1,5 horas. Confirma el plazo con el estudio.')}</p>}
+              {base.id === 'lip-blush' && <p className="mt-3 font-montserrat text-sm font-medium leading-relaxed text-white/95">{translated(language, 'Touch-up: A$150 · After 60 days.', 'Retoque: A$150 · Após 60 dias.', 'Retoque: A$150 · Después de 60 días.')}</p>}
+              {base.id === 'shadow-brows' && <p className="mt-3 font-montserrat text-sm font-medium leading-relaxed text-white/95">{translated(language, 'Shadow Brows touch-up: A$150 · Approximately 1.5 hours. ', 'Retoque Shadow Brows: A$150 · Aproximadamente 1,5 hora. Confirme o prazo com o estúdio.', 'Retoque Shadow Brows: A$150 · Aproximadamente 1,5 horas. Confirma el plazo con el estudio.')}</p>}
               {service.duration && <div className="flex items-center gap-3 mt-3 text-neutral-200"><Clock className="w-5 h-5" /><span className="font-montserrat text-sm">{service.duration}</span></div>}
               <a href={getServiceBookingUrl(base.id)} className="mt-7 inline-flex w-full items-center justify-center gap-2 bg-[#efb7c8] hover:bg-white text-[#5b3239] text-xs font-bold uppercase tracking-widest px-5 py-4 rounded-full cursor-pointer transition-colors"><Calendar className="w-4 h-4" />{translated(language, 'Book now', 'Agendar agora', 'Reservar ahora')}</a>
               {!SERVICE_BOOKING_LINKS[base.id] && <p className="mt-3 font-montserrat text-xs text-white/75 leading-relaxed">{translated(language, 'Choose your treatment on the Timely booking page.', 'Escolha o tratamento na página de agendamento do Timely.', 'Selecciona tu tratamiento en la página de reservas de Timely.')}</p>}
