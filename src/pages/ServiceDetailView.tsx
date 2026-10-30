@@ -9,6 +9,7 @@ import { ServiceVideoGallery } from '../components/ServiceVideoGallery';
 import { serviceCoverFor } from '../data/serviceCoverPhotos';
 import { BrowArtistryContent } from '../components/BrowArtistryContent';
 import { NanoStrokesContent, nanoStrokesCopy } from '../components/NanoStrokesContent';
+import { ServiceCategoryView } from './ServiceCategoryView';
 
 interface ServiceDetailViewProps {
   serviceId: string;
@@ -207,6 +208,8 @@ const GROUP_TRANSLATIONS: Record<string, Record<'pt' | 'es', { difference: strin
 const translated = (language: Language, en: string, pt: string, es: string) => language === 'en' ? en : language === 'pt' ? pt : es;
 
 export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId, language, onNavigate }) => {
+  // Waxing is a category with separately priced body areas; show one consistent menu.
+  if (serviceId === 'waxing') return <ServiceCategoryView groupId="waxing" language={language} onNavigate={onNavigate} />;
   const base = SERVICES.find((service) => service.id === serviceId) || SERVICES[0];
   const service = getLocalizedService(base, language);
   // Exact client photos are separated from representative category photography.
