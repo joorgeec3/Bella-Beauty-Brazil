@@ -150,39 +150,39 @@ export const SERVICE_GUIDES: Partial<Record<string, Record<Language, ServiceGuid
   },
   'brow-lamination': {
     en: {
-      idealFor: 'For clients looking for a brushed, more structured appearance using their existing brow hairs, with shape and tint included in the published appointment.',
+      idealFor: 'For clients looking for a brushed, more structured appearance using their existing brow hairs, with shape and tint included.',
       comparison: 'Brow Lamination styles the position of brow hairs. Brow Sculpt & Tint focuses on shaping and colour; cosmetic tattooing uses pigment to create a semi-permanent effect.',
       question: 'Does Brow Lamination include shape and tint?',
-      answer: 'The Bella Beauty Brazil Timely listing is called Brow Lamination, Shape & Tint. Confirm suitability and any preparation before booking.'
+      answer: 'The treatment combines brow lamination with shaping and tint. Confirm suitability and preparation with the studio before your appointment.'
     },
     pt: {
-      idealFor: 'Para quem busca sobrancelhas alinhadas e estruturadas utilizando os fios naturais, com modelagem e coloração incluídas no atendimento publicado.',
+      idealFor: 'Para quem busca sobrancelhas alinhadas e estruturadas utilizando os fios naturais, com modelagem e coloração incluídas.',
       comparison: 'Brow Lamination alinha os fios. Brow Sculpt & Tint foca na modelagem e na coloração; a tatuagem cosmética utiliza pigmento para efeito semipermanente.',
       question: 'Brow Lamination inclui modelagem e coloração?',
-      answer: 'O serviço do Timely se chama Brow Lamination, Shape & Tint. Confirme indicação e orientações de preparo antes do agendamento.'
+      answer: 'O tratamento combina laminação, modelagem e coloração das sobrancelhas. Confirme a indicação e o preparo com o estúdio antes do atendimento.'
     },
     es: {
-      idealFor: 'Para quienes buscan cejas peinadas y estructuradas con el pelo natural, con diseño y tinte incluidos en la cita publicada.',
+      idealFor: 'Para quienes buscan cejas peinadas y estructuradas con el pelo natural, con diseño y tinte incluidos.',
       comparison: 'Brow Lamination peina el pelo de las cejas. Brow Sculpt & Tint se centra en forma y color; el tatuaje cosmético usa pigmento para un efecto semipermanente.',
       question: '¿Brow Lamination incluye diseño y tinte?',
-      answer: 'El servicio en Timely se llama Brow Lamination, Shape & Tint. Confirma idoneidad y preparación antes de reservar.'
+      answer: 'El tratamiento combina laminado, diseño y tinte de cejas. Confirma la idoneidad y la preparación con el estudio antes de la cita.'
     }
   },
   'lash-lift': {
     en: {
-      idealFor: 'For clients who prefer to enhance the appearance of their own lashes without booking an extension set. Lash Lift & Tint is a separate service in Timely.',
+      idealFor: 'For clients who prefer to enhance the appearance of their own natural lashes without adding extensions.',
       comparison: 'A Lash Lift works with natural lashes, whereas Classic, Hybrid and Russian Volume appointments involve lash extensions. The desired look and individual suitability determine which service is more appropriate.',
       question: 'Should I book Lash Lift & Tint or eyelash extensions?',
       answer: 'Choose Lash Lift & Tint if you want to explore enhancing your own lashes, or discuss extensions if you prefer an added-lash look. Ask the studio about aftercare and eye-area suitability.'
     },
     pt: {
-      idealFor: 'Para quem prefere realçar os próprios cílios sem agendar uma aplicação de extensões. Lash Lift & Tint é um serviço separado no Timely.',
+      idealFor: 'Para quem prefere realçar os próprios cílios naturais sem adicionar extensões.',
       comparison: 'Lash Lift trabalha os cílios naturais; Classic, Hybrid e Russian Volume envolvem aplicação de extensões. O resultado desejado e a indicação individual orientam a escolha.',
       question: 'Devo agendar Lash Lift & Tint ou extensões?',
       answer: 'Lash Lift & Tint é uma opção para realçar os próprios cílios. Para um efeito com fios adicionados, consulte sobre extensões e cuidados necessários.'
     },
     es: {
-      idealFor: 'Para quienes prefieren realzar sus pestañas naturales sin reservar un conjunto de extensiones. Lash Lift & Tint es un servicio separado en Timely.',
+      idealFor: 'Para quienes prefieren realzar sus pestañas naturales sin añadir extensiones.',
       comparison: 'Lash Lift trabaja las pestañas naturales, mientras que Classic, Hybrid y Russian Volume utilizan extensiones. El resultado buscado y la idoneidad individual orientan la elección.',
       question: '¿Debo reservar Lash Lift & Tint o extensiones?',
       answer: 'Lash Lift & Tint permite explorar el realce de las pestañas naturales. Para un efecto de pestañas añadidas, consulta sobre extensiones y cuidados.'
