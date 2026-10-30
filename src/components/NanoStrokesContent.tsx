@@ -24,8 +24,8 @@ const copy: Record<Language, NanoText> = {
     benefitsTitle: 'Benefits',
     benefits: ['Fine, natural-looking hair strokes', 'Personalised brow mapping', 'Definition for sparse areas'],
     priceTitle: 'Price & duration',
-    initial: 'Initial appointment: A$630 · Approximately 2.5 hours',
-    touchUp: 'Touch-up: A$150 · Approximately 1.5 hours · Timing to be confirmed with the studio.',
+    initial: 'Initial appointment: A$630 · Approximately two and a half hours',
+    touchUp: 'Touch-up: A$150 · Approximately 1.5 hours.',
     beforeTitle: 'Before your appointment',
     before: [
       'Avoid waxing or plucking.',
@@ -65,8 +65,8 @@ const copy: Record<Language, NanoText> = {
     benefitsTitle: 'Benefícios',
     benefits: ['Traços finos com aparência natural', 'Mapeamento personalizado das sobrancelhas', 'Mais definição em áreas com falhas'],
     priceTitle: 'Preço e duração',
-    initial: 'Sessão inicial: A$630 · Aproximadamente 2,5 horas',
-    touchUp: 'Retoque: A$150 · Aproximadamente 1,5 hora · Prazo a confirmar com o estúdio.',
+    initial: 'Sessão inicial: A$630 · Aproximadamente duas horas e meia',
+    touchUp: 'Retoque: A$150 · Aproximadamente 1,5 hora.',
     beforeTitle: 'Antes do atendimento',
     before: [
       'Evite depilar ou retirar os pelos com pinça.',
@@ -106,8 +106,8 @@ const copy: Record<Language, NanoText> = {
     benefitsTitle: 'Beneficios',
     benefits: ['Trazos finos de aspecto natural', 'Diseño personalizado de cejas', 'Mayor definición en zonas despobladas'],
     priceTitle: 'Precio y duración',
-    initial: 'Sesión inicial: A$630 · Aproximadamente 2,5 horas',
-    touchUp: 'Retoque: A$150 · Aproximadamente 1,5 horas · Plazo por confirmar con el estudio.',
+    initial: 'Sesión inicial: A$630 · Aproximadamente duas horas e meia',
+    touchUp: 'Retoque: A$150 · Aproximadamente 1,5 horas.',
     beforeTitle: 'Antes de la cita',
     before: [
       'Evita la depilación con cera o pinzas.',
