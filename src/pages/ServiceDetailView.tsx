@@ -289,6 +289,7 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
     ? { difference: `${base.title} é um serviço da categoria ${base.category || 'beleza'} da Bella Beauty Brazil. Confirme a técnica mais adequada diretamente com o estúdio.`, care: 'O preparo, a indicação e os cuidados dependem do tratamento. Siga as orientações da Bella Beauty Brazil.', faq: `Como agendar ${base.title}? Consulte a disponibilidade, os preços e as informações no Timely oficial.` }
     : { difference: `${base.title} es un servicio de ${base.category || 'belleza'} de Bella Beauty Brazil. Consulta con el estudio qué técnica es la adecuada.`, care: 'La preparación, la idoneidad y los cuidados varían según el tratamiento. Sigue las instrucciones de Bella Beauty Brazil.', faq: `¿Cómo reservar ${base.title}? Consulta disponibilidad, precios y detalles en el Timely oficial.` };
   const groupCopy = language === 'en' ? group : GROUP_TRANSLATIONS[base.id]?.[language] || { ...group, ...fallbackTranslation };
+  const guide = SERVICE_GUIDES[base.id]?.[language];
   const faqAnswerOnly = (value: string) => value.includes('?') ? value.slice(value.indexOf('?') + 1).trim() : value;
   const extensionIds = ['classic-eyelashes', 'hybrid-eyelashes', 'wet-look-lashes', 'lash-extension-removal'];
   const extensionFaqAnswer = extensionIds.includes(base.id)
@@ -305,7 +306,6 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
   const relatedIds = base.id === 'brow-sculpt' ? ['brow-sculpt-tint', 'shadow-hybrid'] : base.id === 'brow-sculpt-tint' ? ['brow-sculpt', 'shadow-hybrid'] : base.id === 'shadow-hybrid' ? ['brow-sculpt', 'brow-sculpt-tint'] : group.related;
   const related = relatedIds.map((id) => SERVICES.find((item) => item.id === id)).filter(Boolean) as typeof SERVICES;
   const isPriceConfirmed = typeof service.price === 'number';
-  const guide = SERVICE_GUIDES[base.id]?.[language];
   const hasGalleryPhotos = gallery.photos.some(photo => photo.src !== cover?.src);
 
 
