@@ -69,7 +69,7 @@ const newerFolderLabels: Record<string,TreatmentPhoto[]> = {
   // not a generic Brow Sculpt photo and not a cosmetic tattoo result.
   'male-brow-sculpt': labelledPhotos([PHOTO_FOLDERS['brow-sculpt'][6]], 'Male Brow Sculpt'),
   'dreamy-brows': [{
-    src: `${import.meta.env.BASE_URL}assets/bella/media-rar-review-2026-10/dreamy-brows-cover.webp`,
+    src: `${import.meta.env?.BASE_URL || '/'}assets/bella/media-rar-review-2026-10/dreamy-brows-cover.webp`,
     alt: 'Dreamy Brows head and face massage — still from the client-supplied Dream Brow video',
     caption: 'Dreamy Brows · Treatment demonstration',
   }],
