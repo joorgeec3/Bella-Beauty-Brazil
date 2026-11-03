@@ -190,6 +190,13 @@ const infoPage = (route, lang) => {
     '<div class="seo-grid">' + COURSES.map((course) => '<article class="seo-card">' + image(course.image, course.title) +
       '<h3>' + escapeHtml(course.title) + '</h3><p>' + escapeHtml(course.description) + '</p>' +
       '<p><strong>A$' + escapeHtml(course.price) + '</strong></p></article>').join('') + '</div>' +
+    '<section><h2>Lash Lift & Brow Lamination — practical course photography</h2>' +
+    '<p>Original, unedited photographs from practical training and a Lash Lifting course completion moment.</p>' +
+    '<div class="seo-media">' +
+    image('/assets/bella/training/brow-lamination-continuation-2026-11/Facetune_23-02-2023-12-58-24.JPEG', 'Practical beauty training at Bella Beauty Brazil') +
+    image('/assets/bella/training/brow-lamination-continuation-2026-11/IMG_2450.JPG', 'Beauty training with a model at the studio') +
+    image('/assets/bella/training/brow-lamination-continuation-2026-11/IMG_1986.JPEG', 'Lash Lifting course completion photograph') +
+    '</div></section>' +
     '<h2>Professional Eyebrow Design · Modules 21–27</h2><p>Client Consultation, Brow Design Worksheet, Practical Training, Common Mistakes, Client Aftercare, Professional Photography and Social Media for Brow Artists.</p>' +
     '<p>Final Examination · Certificate of Completion · Bella Beauty Brazil Academy</p></section>' };
   if (route === '/about') return { title: t.about + ' | Bella Beauty Brazil', description: t.intro,

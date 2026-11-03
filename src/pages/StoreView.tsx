@@ -175,6 +175,29 @@ export const StoreView: React.FC<StoreViewProps> = ({ language }) => {
               ))}
             </div>
           </div>
+          <div className="mt-10 border-t border-[#e8d6d5] pt-8" id="brow-lamination-course-continuation">
+            <h3 className="font-raleway text-xl sm:text-2xl font-semibold text-[#5b3239] text-center">
+              {language === 'en' ? 'More moments from our Lash Lift & Brow Lamination courses' : language === 'pt' ? 'Mais momentos dos cursos de Lash Lift e Brow Lamination' : 'Más momentos de los cursos de Lash Lift y Brow Lamination'}
+            </h3>
+            <p className="mt-3 max-w-2xl mx-auto text-center text-sm font-montserrat leading-relaxed text-[#65515b]">
+              {language === 'en' ? 'Original, unedited photographs of practical learning and course completion.' : language === 'pt' ? 'Fotografias originais, sem edição, das atividades práticas e da conclusão de formação.' : 'Fotografías originales sin editar de las prácticas y la finalización de la formación.'}
+            </p>
+            <div className="mt-7 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 items-stretch">
+              {([
+                { name: 'Facetune_23-02-2023-12-58-24.JPEG', label: language === 'en' ? 'Hands-on beauty training' : language === 'pt' ? 'Treinamento prático de beleza' : 'Formación práctica de belleza', alt: 'Practical beauty training at Bella Beauty Brazil' },
+                { name: 'IMG_2450.JPG', label: language === 'en' ? 'Professional studio training' : language === 'pt' ? 'Formação profissional no estúdio' : 'Formación profesional en el estudio', alt: 'Practical beauty training with a model in the studio' },
+                { name: 'IMG_1986.JPEG', label: language === 'en' ? 'Lash Lifting course completion' : language === 'pt' ? 'Conclusão do curso de Lash Lifting' : 'Finalización del curso de Lash Lifting', alt: 'Student and instructor holding a Lash Lifting course certificate' },
+              ] as const).map((photo) => (
+                <figure key={photo.name} className="flex flex-col overflow-hidden rounded-2xl border border-[#e8d6d5] bg-white">
+                  <div className="min-h-[245px] h-[300px] sm:h-[330px] bg-[#f8f0f2] flex items-center justify-center">
+                    <img src={siteAsset('assets/bella/training/brow-lamination-continuation-2026-11/' + photo.name)} alt={photo.alt}
+                      loading="lazy" decoding="async" className="block w-full h-full object-contain" />
+                  </div>
+                  <figcaption className="px-4 py-3 font-montserrat text-sm leading-relaxed text-[#5b3239]">{photo.label}</figcaption>
+                </figure>
+              ))}
+            </div>
+          </div>
         </section>
 
       </section>
