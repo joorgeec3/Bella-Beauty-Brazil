@@ -11,7 +11,7 @@ import { siteImages } from '../src/data/siteImages.ts';
 const languages = ['en', 'pt', 'es'];
 const details = {
   en: {
-    html: 'en-AU', search: 'Beauty treatments in Greenslopes, Brisbane', home: 'Beauty and professional training in Greenslopes',
+    html: 'en-AU', search: 'Beauty treatments in Greenslopes, Brisbane', home: 'Brows, Lashes & Cosmetic Tattooing in Greenslopes, Brisbane',
     intro: 'Personalised brows, lashes, cosmetic tattooing, skin treatments and waxing with Livia Rego.',
     services: 'All treatments', categories: 'Treatment categories', courses: 'Professional courses',
     about: 'About Bella Beauty Brazil', contact: 'Contact', locations: 'Location and opening hours',

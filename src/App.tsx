@@ -12,7 +12,6 @@ import { TickerMarquee } from './components/TickerMarquee';
 import { LocationsCarousel } from './components/LocationsCarousel';
 import { SmoothScrollController } from './components/SmoothScrollController';
 import { TestimonialsSection } from './components/TestimonialsSection';
-import { InstagramSection } from './components/InstagramSection';
 import { Footer } from './components/Footer';
 import { SideHoursDrawer } from './components/SideHoursDrawer';
 import { JoinChatButton } from './components/JoinChatButton';
@@ -117,7 +116,7 @@ export default function App() {
   React.useEffect(() => {
     const metadata: Record<string, { title: string; description: string }> = {
       home: {
-        title: 'Bella Beauty Brazil Signature Care | Brows, Lashes & Beauty in Greenslopes',
+        title: 'Brows, Lashes & Cosmetic Tattooing in Greenslopes, Brisbane | Bella Beauty Brazil',
         description: 'Bella Beauty Brazil by Livia Rego offers Nano Strokes, Microblading, Lip Blush, brows, lashes, skin treatments and professional courses in Greenslopes, Brisbane.',
       },
       about: {
@@ -378,7 +377,6 @@ export default function App() {
               language={language}
             />
             <TestimonialsSection language={language} />
-            <InstagramSection language={language} />
           </>
         )}
 
@@ -447,11 +445,11 @@ export default function App() {
       <button
         id="boton-flotante"
         onClick={openBooking}
-        className={`flex items-center space-x-2 py-3 px-5 sm:px-6 cursor-pointer transition-opacity duration-300 ${showFloatingAppointment ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none sm:opacity-100 sm:pointer-events-auto'}`}
+        className={`flex items-center gap-1.5 py-2 px-3 sm:px-4 cursor-pointer transition-opacity duration-300 ${showFloatingAppointment ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none sm:opacity-100 sm:pointer-events-auto'}`}
         aria-label={language === 'en' ? 'Book now' : language === 'pt' ? 'Agendar agora' : 'Reservar ahora'}
       >
-        <Calendar className="w-4 h-4 text-white" />
-          <span className="floating-appointment-label font-montserrat font-extrabold text-xs tracking-wider text-white uppercase">
+        <Calendar className="w-3.5 h-3.5 text-white" />
+          <span className="floating-appointment-label font-montserrat font-extrabold text-[10px] sm:text-xs tracking-wider text-white uppercase">
           {language === 'en' ? 'BOOK NOW' : language === 'pt' ? 'AGENDA' : 'AGENDAR CITA'}
         </span>
       </button>

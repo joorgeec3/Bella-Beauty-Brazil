@@ -84,7 +84,6 @@ const TreatmentEntry: React.FC<{ id: string; language: Language; first: boolean;
           {id === 'lip-blush' && <p className="font-montserrat text-base text-[#402d35] mt-2">{copy.lipTouchUp}</p>}
         </section>}
         <p className="font-montserrat text-sm sm:text-base text-[#55464c] leading-relaxed">{id === 'waxing' ? (language === 'en' ? 'Professional waxing using hard wax or strip wax, selected for the treatment area. See all waxing options and prices below.' : language === 'pt' ? 'Depilação profissional com cera adequada à região. Confira abaixo todas as opções e preços.' : 'Depilación profesional con la cera adecuada para cada zona. Consulta las opciones y precios a continuación.') : desc}</p>
-        {id !== 'waxing' && cover && !cover.specific && <p className="font-montserrat text-xs text-[#846f75] mt-3">{copy.note}</p>}
         {id === 'lip-blush' ? <div className="mt-5 rounded-xl bg-[#faf0f2] p-4 sm:p-5"><h3 className="font-raleway font-semibold text-lg text-[#5b3239]">Is this treatment right for me?</h3><p className="font-montserrat text-base leading-7 mt-2 text-[#3f3539]">This treatment may suit you if you would like to enhance pale lips, improve colour definition or achieve a softly tinted look. I assess your natural lip colour and discuss your goals before recommending a personalised treatment.</p></div> : guide && <div className="mt-5 rounded-xl bg-[#faf0f2] p-4 sm:p-5"><h3 className="font-raleway font-semibold text-lg text-[#5b3239]">{copy.care}</h3><p className="font-montserrat text-sm leading-relaxed mt-2 text-[#55464c]">{guide.idealFor}</p>{id !== 'waxing' && <p className="font-montserrat text-sm leading-relaxed mt-2 text-[#55464c]">{guide.comparison}</p>}</div>}
         <div className="flex flex-wrap gap-3 mt-6 items-center">
           <a href={getServiceBookingUrl(id)} className="inline-flex items-center justify-center gap-2 bg-[#5b3239] text-white rounded-full px-5 py-3 text-xs font-bold hover:bg-[#7a4753]"><CalendarDays className="w-4 h-4"/>{copy.book}</a>
@@ -137,9 +136,6 @@ export const ServiceCategoryView: React.FC<Props> = ({ groupId, language, onNavi
           {language === 'en' ? 'More studio photos in this category' : language === 'pt' ? 'Mais fotos do estúdio nesta categoria' : 'Más fotos del estudio en esta categoría'} ({categoryPhotos.length})
         </summary>
         <div className="px-4 sm:px-6 pb-6 border-t border-[#f0e3e4]">
-          <p className="font-montserrat text-xs text-[#846f75] mt-4 mb-5">
-            {language === 'en' ? 'Category-level images are not presented as results of a specific appointment.' : language === 'pt' ? 'Estas imagens ilustram a categoria e não são apresentadas como resultados de um tratamento específico.' : 'Estas imágenes ilustran la categoría y no resultados de un servicio específico.'}
-          </p>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
             {categoryPhotos.map(photo => <a key={photo.id} href={photo.image} target="_blank" rel="noopener noreferrer" className="block overflow-hidden bg-[#f5eeec] rounded-xl border border-[#e8d6d5] hover:shadow-md transition-shadow">
               <img src={photo.image} alt={photo.alt} loading="lazy" className="w-full aspect-[4/5] object-contain" />

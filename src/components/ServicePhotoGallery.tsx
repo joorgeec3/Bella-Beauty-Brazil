@@ -84,7 +84,6 @@ export const ServicePhotoGallery: React.FC<{ serviceId: string; language: Langua
               : 'w-full h-24 sm:h-36 object-cover'} />
           </button>)}
         </div>}
-        {browEditorial && !illustrative && <p className="font-montserrat text-xs text-[#846f75] leading-relaxed mt-4">{labels.note}</p>}
       </div>
       {isNano && fullscreen && <div role="presentation" className="fixed inset-0 z-[100] bg-[#1e1418]/95 flex items-center justify-center p-3 sm:p-6" onMouseDown={(event) => {if(event.target === event.currentTarget) setFullscreen(false)}}>
         <div role="dialog" aria-modal="true" aria-label={labels.full} className="relative bg-[#f5eeec] rounded-2xl p-3 sm:p-5 max-w-full shadow-2xl">
