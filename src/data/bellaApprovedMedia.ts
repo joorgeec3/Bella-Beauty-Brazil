@@ -58,6 +58,20 @@ const labelledPhotos = (photos: TreatmentPhoto[], treatment: string): TreatmentP
     caption: `${treatment} · ${index + 1} / ${photos.length}`,
   }));
 const newerFolderLabels: Record<string,TreatmentPhoto[]> = {
+  // Client-supplied Hybrid Eyelash Extensions photos, labelled by the studio.
+  // The collage shows a before-and-after comparison; the other is a result portrait.
+  'hybrid-eyelashes': [
+    {
+      src: `${import.meta.env?.BASE_URL || '/'}assets/bella/hybrid-eyelash-extensions/hybrid-before-after.webp`,
+      alt: 'Hybrid lash extensions before and after — Bella Beauty Brazil',
+      caption: 'Hybrid Eyelash Extensions · Before & after',
+    },
+    {
+      src: `${import.meta.env?.BASE_URL || '/'}assets/bella/hybrid-eyelash-extensions/hybrid-result.webp`,
+      alt: 'Hybrid lash extensions result close-up — Bella Beauty Brazil',
+      caption: 'Hybrid Eyelash Extensions · Client result',
+    },
+  ],
   // The new RAR explicitly names "Lip Hydration treatment"; only rename
   // captions here. Source images are unchanged, not copied or repeated.
   'lip-bliss-hydration': labelledPhotos(PHOTO_FOLDERS['lip-treatments-geral'], 'Lip Bliss Hydration'),
