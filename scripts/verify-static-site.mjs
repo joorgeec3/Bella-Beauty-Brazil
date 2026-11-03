@@ -1,5 +1,6 @@
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
+import { createHash } from 'node:crypto';
 import { SERVICES } from '../src/data/siteData.ts';
 import { SERVICE_GROUPS } from '../src/data/serviceGroups.ts';
 
@@ -73,5 +74,29 @@ const robots = await readFile(join(output, 'robots.txt'), 'utf8');
 if (!robots.includes('Sitemap: ' + origin + '/sitemap.xml')) {
   throw new Error('robots.txt points at the wrong sitemap');
 }
+
+// Verify that the newly supplied Wet Look media arrives in dist byte-for-byte
+// identical to the originals. Neither image nor video is transformed.
+const originalAssets = [
+  ['IMG_9777.JPEG', '72561ed4ee064c0a35b02afd3ca39f2378c329ef1bd5bae326da55f25e13c94f'],
+  ['IMG_9781.MP4', '05cb48eb655bf444d31f80d5eda943928f1de850f63cf398d4b5dd1c06e6d0e8'],
+];
+for (const [filename, expectedSha256] of originalAssets) {
+  const bytes = await readFile(join(output, 'assets', 'bella', 'wet-eyelash-extensions', filename));
+  if (createHash('sha256').update(bytes).digest('hex') !== expectedSha256) {
+    throw new Error('Wet Look original media changed during build: ' + filename);
+  }
+}
+for (const lang of Object.keys(languages)) {
+  const wetPage = await read(localized(lang, '/services/wet-look-lashes'));
+  if (!wetPage.includes('/assets/bella/wet-eyelash-extensions/IMG_9777.JPEG')) {
+    throw new Error('Wet Look original photo missing in HTML: ' + lang);
+  }
+  const hybridPage = await read(localized(lang, '/services/hybrid-eyelashes'));
+  if (hybridPage.includes('/assets/bella/wet-eyelash-extensions/')) {
+    throw new Error('Wet Look media incorrectly linked to Hybrid: ' + lang);
+  }
+}
+
 console.log('SEO static HTML passed: ' + expected + ' pages (' + SERVICES.length +
   ' treatments x EN/PT/ES + categories and informational pages).');

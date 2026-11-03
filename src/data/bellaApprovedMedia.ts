@@ -72,6 +72,15 @@ const newerFolderLabels: Record<string,TreatmentPhoto[]> = {
       caption: 'Hybrid Eyelash Extensions · Client result',
     },
   ],
+  // The client supplied the original (unaltered) JPEG for Wet Look Lash Extensions.
+  // The companion iPhone Live Photo MOV is not needed as a second, duplicate clip.
+  'wet-look-lashes': [
+    {
+      src: `${import.meta.env?.BASE_URL || '/'}assets/bella/wet-eyelash-extensions/IMG_9777.JPEG`,
+      alt: 'Wet Look Lash Extensions — original photograph from Bella Beauty Brazil',
+      caption: 'Wet Look Lash Extensions · Original client photograph',
+    },
+  ],
   // The new RAR explicitly names "Lip Hydration treatment"; only rename
   // captions here. Source images are unchanged, not copied or repeated.
   'lip-bliss-hydration': labelledPhotos(PHOTO_FOLDERS['lip-treatments-geral'], 'Lip Bliss Hydration'),

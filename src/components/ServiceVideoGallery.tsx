@@ -36,7 +36,15 @@ const serviceVideoFolderToRoute: Record<string, string> = {
 };
 // The item titled Dermaplaning in the old upload duplicates a lip hydration file;
 // exclude it rather than presenting the wrong procedure.
+// Client-supplied original Wet Look video (H.264 MP4). No transcoding or cropping.
+const additionalStudioClips: Record<string, VideoItem[]> = {
+  'wet-look-lashes': [{
+    src: `${import.meta.env.BASE_URL}assets/bella/wet-eyelash-extensions/IMG_9781.MP4`,
+    title: 'Wet Look Lash Extensions — original studio video',
+  }],
+};
 const videoCandidates = (serviceId: string): VideoItem[] => [
+  ...(additionalStudioClips[serviceId] ?? []),
   ...(approvedVideoClips[serviceId] ?? []).map((relative,index)=>({
     src: `${import.meta.env.BASE_URL}assets/bella/media-alinhada-2026-10/${relative}`,
     title: `${serviceId} — video ${index+1}`,
