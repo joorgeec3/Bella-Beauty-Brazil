@@ -1,4 +1,4 @@
-const siteAsset = (path: string) => `${import.meta.env.BASE_URL}${path.replace(/^\/+/, '')}`;
+const siteAsset = (path: string) => `${import.meta.env?.BASE_URL || '/'}${path.replace(/^\/+/, '')}`;
 
 export const siteImages = {
   editorial: { skinPortrait: siteAsset('assets/bella/editorial/skin-portrait.webp'), rosePortrait: siteAsset('assets/bella/editorial/roses-portrait.webp') },

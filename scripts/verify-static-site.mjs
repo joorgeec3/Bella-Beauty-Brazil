@@ -1,42 +1,77 @@
-import { access, readFile } from 'node:fs/promises';
+import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
+import { SERVICES } from '../src/data/siteData.ts';
 import { SERVICE_GROUPS } from '../src/data/serviceGroups.ts';
 
-// Build-time smoke test for the sitemap and generated static entry points.
-// It intentionally avoids browser-only assertions: Vercel validates this before deployment.
-const dir = process.env.GITHUB_PAGES === 'true' ? 'dist-pages' : 'dist';
-const origin = (process.env.PUBLIC_SITE_URL || 'https://bella-beauty-brazil.vercel.app').replace(/\/+$/, '');
-const xml = await readFile(join(dir, 'sitemap.xml'), 'utf8');
-const urls = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
-const catalogSource = await readFile('src/data/siteData.ts', 'utf8');
-const catalogStart = catalogSource.indexOf('export const SERVICES: Service[] = [');
-const catalogEnd = catalogSource.indexOf('\n];', catalogStart);
-if (catalogStart === -1 || catalogEnd === -1) throw new Error('Unable to inspect published service routes');
-const catalogBlock = catalogSource.slice(catalogStart, catalogEnd);
-const catalogIds = [...catalogBlock.matchAll(/^\s*\{\s*id:\s*'([^']+)'/gm)].map((match) => match[1]);
-if (!catalogIds.length || new Set(catalogIds).size !== catalogIds.length) throw new Error('Unexpected or duplicate service IDs');
-const expectedTotalPages = 1 + 5 + SERVICE_GROUPS.length + catalogIds.length;
-
-
-if (urls.length !== expectedTotalPages || new Set(urls).size !== urls.length) {
-  throw new Error(`Expected ${expectedTotalPages} unique sitemap URLs (home, 5 pages, ${catalogIds.length} services), got ${urls.length}`);
+// Check the final generated files, not just React metadata. Crawlers must be
+// able to read every service, its copy and photos with JavaScript disabled.
+const output = process.env.GITHUB_PAGES === 'true' ? 'dist-pages' : 'dist';
+const origin = (process.env.PUBLIC_SITE_URL || 'https://bellabeautybrazil.com.au').replace(/\/+$/, '');
+const languages = { en: { html: 'en-AU', prefix: '' }, pt: { html: 'pt-BR', prefix: '/pt' },
+  es: { html: 'es', prefix: '/es' } };
+const routes = ['/', '/about', '/services', '/courses', '/locations', '/contact',
+  ...SERVICE_GROUPS.map((g) => '/services/categories/' + g.id),
+  ...SERVICES.map((s) => '/services/' + s.id)];
+const expected = routes.length * Object.keys(languages).length;
+const read = (route) => readFile(route === '/' ? join(output, 'index.html') :
+  join(output, route.replace(/^\//, ''), 'index.html'), 'utf8');
+const localized = (lang, route) => languages[lang].prefix + (route === '/' ? '' : route) || '/';
+const xml = await readFile(join(output, 'sitemap.xml'), 'utf8');
+const urls = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
+if (routes.length !== 38 || SERVICES.length !== 26 || SERVICE_GROUPS.length !== 6) {
+  throw new Error('Service catalogue changed. Review and update expected SEO route counts.');
 }
-const services = urls.filter((url) => url.startsWith(origin + '/services/'));
-if (services.length !== catalogIds.length + SERVICE_GROUPS.length) throw new Error(`Expected ${catalogIds.length} service routes plus ${SERVICE_GROUPS.length} categories; got ${services.length}`);
-for (const group of SERVICE_GROUPS) {
-  if (!urls.includes(origin + '/services/categories/' + group.id)) throw new Error('Missing category sitemap entry: ' + group.id);
+if (urls.length !== expected || new Set(urls).size !== expected) {
+  throw new Error('Sitemap must have ' + expected + ' unique localised route URLs, found ' + urls.length);
 }
-for (const id of catalogIds) {
-  if (!services.includes(origin + '/services/' + id)) throw new Error(`Missing sitemap deep link for service: ${id}`);
+const expectedUrls = new Set();
+for (const lang of Object.keys(languages)) {
+  for (const route of routes) {
+    const path = localized(lang, route), url = origin + path;
+    expectedUrls.add(url);
+    const html = await read(path);
+    if (!html.includes('<html lang="' + languages[lang].html + '">')) {
+      throw new Error('Wrong HTML language: ' + path);
+    }
+    if (!html.includes('<div id="root"><main class="bella-seo">') || !/<h1>[^<]+<\/h1>/.test(html)) {
+      throw new Error('No readable HTML body when JavaScript is disabled: ' + path);
+    }
+    if (!html.includes('<link rel="canonical" href="' + url + '"')) {
+      throw new Error('Wrong canonical: ' + path);
+    }
+    if ((html.match(/<link rel="canonical"/g) || []).length !== 1) {
+      throw new Error('Duplicate canonical: ' + path);
+    }
+    for (const [alt, code] of [['en-AU', 'en'], ['pt-BR', 'pt'], ['es', 'es'], ['x-default', 'en']]) {
+      const altUrl = origin + localized(code, route);
+      if (!html.includes('hreflang="' + alt + '" href="' + altUrl + '"')) {
+        throw new Error('Missing hreflang ' + alt + ': ' + path);
+      }
+    }
+    if (route === '/' || route === '/services' || route.startsWith('/services/')) {
+      if (!/<img [^>]*src="[^"]+"[^>]*alt="[^"]+"/.test(html)) {
+        throw new Error('Missing static photography: ' + path);
+      }
+    }
+    if (route.startsWith('/services/') && !route.startsWith('/services/categories/')) {
+      const id = route.split('/')[2];
+      const service = SERVICES.find((s) => s.id === id);
+      if (!service || !html.includes(service.title.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;'))) {
+        throw new Error('Missing service name/body: ' + path);
+      }
+      if (!html.includes('Book on Timely') && !html.includes('Agendar pelo Timely') &&
+          !html.includes('Reservar en Timely')) {
+        throw new Error('Missing booking action: ' + path);
+      }
+    }
+  }
 }
-if (!urls.every((url) => url.startsWith(origin + '/'))) throw new Error('Sitemap hostname differs from configured origin');
-
-const robots = await readFile(join(dir, 'robots.txt'), 'utf8');
-if (!robots.includes(`Sitemap: ${origin}/sitemap.xml`)) throw new Error('robots.txt sitemap host mismatch');
-
-for (const url of urls) {
-  const route = url.slice(origin.length);
-  const file = route === '/' ? join(dir, 'index.html') : join(dir, route.slice(1), 'index.html');
-  await access(file).catch(() => { throw new Error(`Missing pre-rendered route: ${route}`); });
+if (expectedUrls.size !== expected || urls.some((url) => !expectedUrls.has(url))) {
+  throw new Error('Sitemap includes missing, duplicate or unexpected localized URLs');
 }
-console.log(`Static SEO smoke test passed: ${expectedTotalPages} routes, ${catalogIds.length} services, sitemap, robots and entry files.`);
+const robots = await readFile(join(output, 'robots.txt'), 'utf8');
+if (!robots.includes('Sitemap: ' + origin + '/sitemap.xml')) {
+  throw new Error('robots.txt points at the wrong sitemap');
+}
+console.log('SEO static HTML passed: ' + expected + ' pages (' + SERVICES.length +
+  ' treatments x EN/PT/ES + categories and informational pages).');

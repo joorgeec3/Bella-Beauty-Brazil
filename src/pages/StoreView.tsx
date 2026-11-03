@@ -2,6 +2,7 @@ import React from 'react';
 import { ArrowRight, GraduationCap, MessageCircle } from 'lucide-react';
 import { COURSES, Language } from '../data/siteData';
 import { siteImages, siteAsset } from '../data/siteImages';
+import { RobustAutoPlayVideo } from '../components/RobustAutoPlayVideo';
 import { BrowDesignAcademy } from '../components/BrowDesignAcademy';
 
 interface StoreViewProps { language: Language; }
@@ -114,9 +115,7 @@ export const StoreView: React.FC<StoreViewProps> = ({ language }) => {
                   <div className="px-4 pb-4 grid gap-4">
                     {nanoStrokesClips.map((clip, index) => (
                       <figure key={clip.key} className="overflow-hidden rounded-xl border border-[#e8d6d5] bg-white">
-                        <video src={clip.src} controls playsInline preload="none"
-                          aria-label={`Nano Strokes training video ${index + 1}`}
-                          className="w-full max-h-[360px] object-contain bg-[#281d23]" />
+                        <div className="w-full aspect-[3/4] max-h-[360px] bg-[#281d23]"><RobustAutoPlayVideo src={clip.src} poster={siteImages.training.coursePhotos['nano-strokes-course']} controls className="w-full h-full object-contain" /></div>
                         <figcaption className="px-3 py-2 font-montserrat text-xs text-[#665760]">
                           {language === 'en' ? `Nano Strokes — class video ${index + 1}` : language === 'pt' ? `Nano Strokes — aula ${index + 1}` : `Nano Strokes — clase ${index + 1}`}
                         </figcaption>
@@ -168,8 +167,7 @@ export const StoreView: React.FC<StoreViewProps> = ({ language }) => {
             <div className="mt-7 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {combinedCourseClips.map((clip, index) => (
                 <figure key={clip.key} className="bg-white rounded-2xl overflow-hidden border border-[#e8d6d5]">
-                  <video src={clip.src} controls playsInline preload="none" className="aspect-[3/4] w-full object-contain bg-[#281d23]"
-                    aria-label={`Lash Lift and Brow Lamination combined class — video ${index + 1}`} />
+                  <div className="aspect-[3/4] w-full bg-[#281d23]"><RobustAutoPlayVideo src={clip.src} poster={siteImages.training.coursePhotos['brow-lamination-course']} controls className="w-full h-full object-contain" /></div>
                   <figcaption className="px-4 py-3 font-montserrat text-xs text-[#5b3239]">
                     {language === 'en' ? `Joint class — video ${index + 1}` : language === 'pt' ? `Aula conjunta — vídeo ${index + 1}` : `Clase conjunta — vídeo ${index + 1}`}
                   </figcaption>

@@ -26,11 +26,20 @@ import { StoreView } from './pages/StoreView';
 import { ServiceDetailView } from './pages/ServiceDetailView';
 import { ServiceCategoryView } from './pages/ServiceCategoryView';
 import { getServiceGroup, groupOfService } from './data/serviceGroups';
-import { BOOKING_URL, Language, Product, SERVICES } from './data/siteData';
+import { BOOKING_URL, Language, Product, SERVICES, getLocalizedService } from './data/siteData';
 
 const APP_BASE_PATH = import.meta.env.BASE_URL.replace(/\/$/, '');
 // Use the official studio domain for canonical URLs, social sharing metadata and structured data.
 const PUBLIC_SITE_ORIGIN = (import.meta.env.VITE_PUBLIC_SITE_URL || 'https://bellabeautybrazil.com.au').replace(/\/+$/, '');
+
+const localeFromLocation = (): Language => {
+  if (typeof window === 'undefined') return 'en';
+  const path = window.location.pathname;
+  const relative = APP_BASE_PATH && path.startsWith(APP_BASE_PATH + '/') ? path.slice(APP_BASE_PATH.length) : path;
+  const language = /^\/(es|pt)(?:\/|$)/.exec(relative)?.[1];
+  return language === 'es' || language === 'pt' ? language : 'en';
+};
+const withLocale = (path: string, language: Language): string => language === 'en' ? path : '/' + language + (path === '/' ? '' : path);
 
 const resolveRoute = () => {
   if (typeof window === 'undefined') return { tab: 'home', serviceId: undefined as string | undefined };
@@ -38,7 +47,7 @@ const resolveRoute = () => {
   const pathWithinApp = APP_BASE_PATH && (rawPath === APP_BASE_PATH || rawPath.startsWith(`${APP_BASE_PATH}/`))
     ? rawPath.slice(APP_BASE_PATH.length)
     : rawPath;
-  const path = pathWithinApp.replace(/\/+$/, '') || '/';
+  const path = (pathWithinApp.replace(/\/+$/, '') || '/').replace(/^\/(?:es|pt)(?=\/|$)/, '') || '/';
   const groupMatch = path.match(/^\/services\/categories\/([^/]+)$/);
   if (groupMatch) return getServiceGroup(groupMatch[1])
     ? { tab: 'service-category', serviceId: groupMatch[1] }
@@ -63,7 +72,7 @@ export default function App() {
   const [activeServiceId, setActiveServiceId] = useState<string | undefined>(initialRoute.serviceId);
   const [sideHoursOpen, setSideHoursOpen] = useState(false);
   const [quickviewProduct, setQuickviewProduct] = useState<Product | null>(null);
-  const [language, setLanguage] = useState<Language>('en');
+  const [language, setLanguage] = useState<Language>(localeFromLocation);
   const [showFloatingAppointment, setShowFloatingAppointment] = useState(false);
   // Open Timely's own service-selection screen directly in the same tab.
   // This avoids blocked popup windows and the extra location modal on mobile/tablet.
@@ -145,13 +154,15 @@ export default function App() {
         description: 'Explore a Bella Beauty Brazil treatment with confirmed Timely details, preparation guidance, FAQs and official booking in Greenslopes, Brisbane.',
       },
     };
+    const activeService = SERVICES.find((item) => item.id === activeServiceId);
+    const localizedService = activeService ? getLocalizedService(activeService, language) : undefined;
     const current = currentTab === 'service-detail' && activeServiceId
-      ? { title: `${SERVICES.find((service) => service.id === activeServiceId)?.title || 'Beauty Treatment'} | Bella Beauty Brazil`, description: `Learn about ${SERVICES.find((service) => service.id === activeServiceId)?.title || 'this Bella Beauty Brazil treatment'}, with confirmed Timely details, FAQs and booking in Greenslopes, Brisbane.` }
+      ? { title: (localizedService?.title || 'Beauty Treatment') + ' | Bella Beauty Brazil Greenslopes', description: localizedService?.description || metadata['service-detail'].description }
       : currentTab === 'service-category' && activeServiceId
       ? { title: `${getServiceGroup(activeServiceId)?.title[language] || 'Beauty Treatments'} | Bella Beauty Brazil Greenslopes`, description: `${getServiceGroup(activeServiceId)?.lead[language] || ''} Browse photographs, treatment videos, details, prices and booking in Greenslopes, Brisbane.` }
       : metadata[currentTab] || metadata.home;
     document.title = current.title;
-    document.documentElement.lang = language === 'en' ? 'en-AU' : language;
+    document.documentElement.lang = language === 'en' ? 'en-AU' : language === 'pt' ? 'pt-BR' : 'es';
     const description = document.querySelector('meta[name="description"]');
     description?.setAttribute('content', current.description);
     const ogTitle = document.querySelector('meta[property="og:title"]');
@@ -166,7 +177,7 @@ export default function App() {
       : currentTab === 'store' || currentTab === 'courses' ? '/courses'
       : currentTab === 'not-found' ? window.location.pathname
       : `/${currentTab}`;
-    const canonicalUrl = PUBLIC_SITE_ORIGIN + currentPath;
+    const canonicalUrl = PUBLIC_SITE_ORIGIN + withLocale(currentPath, language);
     let canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
     if (!canonical) {
       canonical = document.createElement('link');
@@ -174,6 +185,14 @@ export default function App() {
       document.head.appendChild(canonical);
     }
     canonical.href = canonicalUrl;
+    document.querySelectorAll('link[rel="alternate"][hreflang]').forEach((node) => node.remove());
+    for (const [code, lang] of [['en-AU', 'en'], ['pt-BR', 'pt'], ['es', 'es'], ['x-default', 'en']] as const) {
+      const alternate = document.createElement('link');
+      alternate.rel = 'alternate';
+      alternate.hreflang = code;
+      alternate.href = PUBLIC_SITE_ORIGIN + withLocale(currentPath, lang);
+      document.head.appendChild(alternate);
+    }
     let ogUrl = document.querySelector<HTMLMetaElement>('meta[property="og:url"]');
     if (!ogUrl) {
       ogUrl = document.createElement('meta');
@@ -217,6 +236,7 @@ export default function App() {
       const route = resolveRoute();
       setCurrentTab(route.tab);
       setActiveServiceId(route.serviceId);
+      setLanguage(localeFromLocation());
     };
     window.addEventListener('popstate', onPopState);
     return () => window.removeEventListener('popstate', onPopState);
@@ -269,9 +289,17 @@ export default function App() {
     setCurrentTab(resolvedTab);
     setActiveServiceId(isServiceDetail || isServiceCategory ? subParam : undefined);
     const routePath = isServiceCategory ? `/services/categories/${subParam}` : isServiceDetail ? `/services/${subParam}` : resolvedTab === 'home' ? '/' : resolvedTab === 'store' ? '/courses' : `/${resolvedTab}`;
-    const path = `${APP_BASE_PATH}${routePath}`;
+    const path = `${APP_BASE_PATH}${withLocale(routePath, language)}`;
     window.history.pushState({}, '', path);
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const chooseLanguage = (lang: Language) => {
+    const routePath = currentTab === 'service-category' && activeServiceId ? '/services/categories/' + activeServiceId
+      : currentTab === 'service-detail' && activeServiceId ? '/services/' + activeServiceId
+      : currentTab === 'home' ? '/' : currentTab === 'store' ? '/courses' : '/' + currentTab;
+    setLanguage(lang);
+    window.history.pushState({}, '', APP_BASE_PATH + withLocale(routePath, lang));
   };
 
   return (
@@ -285,8 +313,8 @@ export default function App() {
         onOpenAppointment={openBooking}
         onOpenHours={() => setSideHoursOpen(true)}
         language={language}
-        onSelectLanguage={(lang) => setLanguage(lang)}
-        onToggleLanguage={() => setLanguage((l) => (l === 'en' ? 'es' : l === 'es' ? 'pt' : 'en'))}
+        onSelectLanguage={chooseLanguage}
+        onToggleLanguage={() => chooseLanguage(language === 'en' ? 'es' : language === 'es' ? 'pt' : 'en')}
       />
 
       {/* Main View Router */}

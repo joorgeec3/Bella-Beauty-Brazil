@@ -6,7 +6,7 @@ import { siteImages } from './siteImages';
  // Do not copy assets, fabricate results, or reuse a photo in multiple services.
 export type TreatmentPhoto = { src: string; alt: string; caption: string };
 export type TreatmentGallery = { photos: TreatmentPhoto[]; illustrative: boolean };
-const root = `${import.meta.env.BASE_URL}assets/bella/media-alinhada-2026-10`;
+const root = `${import.meta.env?.BASE_URL || '/'}assets/bella/media-alinhada-2026-10`;
 const collection = (folder: string, count: number, title: string): TreatmentPhoto[] =>
   Array.from({length:count}, (_,i)=>({
     src: `${root}/${folder}/${String(i+1).padStart(2,'0')}.webp`,

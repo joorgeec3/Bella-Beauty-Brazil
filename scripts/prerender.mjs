@@ -77,7 +77,7 @@ const isGitHubPages = process.env.GITHUB_PAGES === 'true';
 const buildDir = isGitHubPages ? 'dist-pages' : 'dist';
 const publicAsset = (path) => isGitHubPages ? `/Bella-Beauty-Brazil${path}` : path;
 const source = await readFile(join(buildDir, 'index.html'), 'utf8');
-const siteOrigin = (process.env.PUBLIC_SITE_URL || 'https://bella-beauty-brazil.vercel.app').replace(/\/+$/, '');
+const siteOrigin = (process.env.PUBLIC_SITE_URL || 'https://bellabeautybrazil.com.au').replace(/\/+$/, '');
 const renderPage = ({ title, description, canonicalUrl, body, schema }) => {
   // Replace the homepage tags; adding a second title/canonical is invalid SEO.
   let html = source

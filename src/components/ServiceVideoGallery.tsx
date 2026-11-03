@@ -1,7 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Film, PlayCircle } from 'lucide-react';
 import type { Language } from '../data/siteData';
 import { galleryVideos } from '../data/galleryData';
+import { RobustAutoPlayVideo } from './RobustAutoPlayVideo';
+import { serviceCoverFor } from '../data/serviceCoverPhotos';
 
 type VideoItem = { src: string; title: string };
 
@@ -48,31 +50,23 @@ const videoCandidates = (serviceId: string): VideoItem[] => [
 const labels = {
   en: {
     heading: 'Watch the treatment',
-    description: 'Real videos provided by Bella Beauty Brazil. Select play to watch.',
+    description: 'Real treatment videos from Bella Beauty Brazil. Videos play automatically without sound when visible.',
     video: 'Treatment video',
   },
   pt: {
     heading: 'Veja o tratamento',
-    description: 'Vídeos reais enviados pela Bella Beauty Brazil. Toque para reproduzir.',
+    description: 'Vídeos reais da Bella Beauty Brazil iniciam automaticamente sem som quando aparecem na tela.',
     video: 'Vídeo do tratamento',
   },
   es: {
     heading: 'Mira el tratamiento',
-    description: 'Vídeos reales proporcionados por Bella Beauty Brazil. Pulsa para reproducir.',
+    description: 'Vídeos reales de Bella Beauty Brazil se reproducen automáticamente sin sonido al estar visibles.',
     video: 'Vídeo del tratamiento',
   },
 } as const;
 
 export const ServiceVideoGallery: React.FC<{ serviceId: string; language: Language }> = ({ serviceId, language }) => {
   const [available, setAvailable] = useState<VideoItem[]>([]);
-  const videoGridRef = useRef<HTMLDivElement>(null);
-
-  const handleVideoPlay = (current: HTMLVideoElement) => {
-    // Only one treatment clip should produce sound at a time.
-    videoGridRef.current?.querySelectorAll('video').forEach((video) => {
-      if (video !== current && !video.paused) video.pause();
-    });
-  };
 
   useEffect(() => {
     const controller = new AbortController();
@@ -108,11 +102,11 @@ export const ServiceVideoGallery: React.FC<{ serviceId: string; language: Langua
         </div>
         <h2 id={`service-videos-heading-${serviceId}`} className="font-raleway text-2xl sm:text-3xl font-semibold text-[#5b3239]">{copy.heading}</h2>
         <p className="font-montserrat text-sm text-[#675960] mt-2 mb-6">{copy.description}</p>
-        <div ref={videoGridRef} className="grid grid-cols-1 sm:grid-cols-2 gap-5 lg:gap-7">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 lg:gap-7">
           {available.map((item, index) => (
             <div key={item.src} className="rounded-2xl border border-[#ead8db] overflow-hidden bg-white shadow-sm">
               <div className="relative aspect-[9/12] max-h-[470px] bg-[#261d21] flex items-center justify-center">
-                <video src={item.src} controls playsInline preload={index === 0 ? 'metadata' : 'none'} onPlay={(event)=>handleVideoPlay(event.currentTarget)} aria-label={`${copy.video} ${index + 1}`} className="w-full h-full object-contain"/>
+                <RobustAutoPlayVideo src={item.src} poster={serviceCoverFor(serviceId)?.src} controls className="w-full h-full object-contain"/>
               </div>
               <div className="flex items-center gap-2 px-4 py-3 text-sm font-montserrat text-[#5b3239]">
                 <PlayCircle className="w-4 h-4" aria-hidden="true"/>
