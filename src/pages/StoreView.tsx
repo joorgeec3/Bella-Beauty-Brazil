@@ -2,6 +2,7 @@ import React from 'react';
 import { ArrowRight, GraduationCap, MessageCircle } from 'lucide-react';
 import { COURSES, Language } from '../data/siteData';
 import { siteImages, siteAsset } from '../data/siteImages';
+import { BrowDesignAcademy } from '../components/BrowDesignAcademy';
 
 interface StoreViewProps { language: Language; }
 const COURSE_DETAILS: Record<string, { content: string; practice: string; kit: string; support: string; duration: string }> = {
@@ -69,6 +70,9 @@ export const StoreView: React.FC<StoreViewProps> = ({ language }) => {
             <a href="#available-courses" className="mt-8 inline-flex items-center justify-center gap-2 rounded-full bg-[#9a5967] hover:bg-[#af7080] px-6 py-3.5 font-montserrat text-xs uppercase tracking-wider font-bold text-white transition-colors focus-visible:outline-2 focus-visible:outline-offset-2">
               <GraduationCap className="w-4 h-4" aria-hidden="true" />{language === 'en' ? 'Explore courses' : 'Ver cursos'}
               <ArrowRight className="w-4 h-4" aria-hidden="true" />
+            </a>
+            <a href="#brow-design-academy" className="mt-4 font-montserrat text-xs font-semibold text-[#f3d9e0] underline underline-offset-4 hover:text-white">
+              {language === 'pt' ? 'Design de Sobrancelhas · Módulos 21–27' : language === 'es' ? 'Diseño de Cejas · Módulos 21–27' : 'Professional Eyebrow Design · Modules 21–27'}
             </a>
           </div>
           <figure className="w-full max-w-[330px] sm:max-w-[370px] lg:max-w-[420px] justify-self-center">
@@ -176,6 +180,7 @@ export const StoreView: React.FC<StoreViewProps> = ({ language }) => {
         </section>
 
       </section>
+      <BrowDesignAcademy language={language} />
     </main>
   );
 };
