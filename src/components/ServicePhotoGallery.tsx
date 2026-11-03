@@ -46,7 +46,8 @@ export const ServicePhotoGallery: React.FC<{ serviceId: string; language: Langua
     pt: { heading: 'Fotos reais do estúdio', lead: 'Veja as fotografias enviadas pela Bella Beauty Brazil.', illustrativeHeading: 'Fotos de serviços relacionados', illustrativeLead: 'Fotografias de outros tratamentos relacionados ou do estúdio, não resultados deste serviço específico.', prev: 'Foto anterior', next: 'Próxima foto', full: 'Abrir foto inteira', note: 'As fotografias de sobrancelhas mostram o atendimento e a técnica, não um resultado prometido de uma coloração ou tatuagem específica.' },
     es: { heading: 'Fotos reales del estudio', lead: 'Explora las fotografías proporcionadas por Bella Beauty Brazil.', illustrativeHeading: 'Fotos de tratamientos relacionados', illustrativeLead: 'Fotografías de otros tratamientos relacionados o del estudio, no resultados de este servicio específico.', prev: 'Foto anterior', next: 'Foto siguiente', full: 'Abrir foto completa', note: 'Las fotos de cejas muestran el estudio y la técnica, no un resultado prometido de un tinte o tatuaje específico.' },
   }[language];
-  const current = photos[index % photos.length];
+  const visibleIndex = index % photos.length;
+  const current = photos[visibleIndex];
   const move = (direction: number) => setIndex((value) => (value + direction + photos.length) % photos.length);
   const browEditorial = serviceId === 'shadow-hybrid';
   return (
@@ -58,7 +59,7 @@ export const ServicePhotoGallery: React.FC<{ serviceId: string; language: Langua
             <h2 id={`service-photos-heading-${serviceId}`} className="font-raleway text-2xl sm:text-3xl font-semibold text-[#5b3239]">{illustrative ? labels.illustrativeHeading : labels.heading}</h2>
             <p className="font-montserrat text-sm text-[#675960] mt-2">{illustrative ? labels.illustrativeLead : labels.lead}</p>
           </div>
-          <span className="font-montserrat text-sm tabular-nums text-[#75525c]">{index + 1} / {photos.length}</span>
+          <span className="font-montserrat text-sm tabular-nums text-[#75525c]">{visibleIndex + 1} / {photos.length}</span>
         </div>
         <div className={`relative overflow-hidden rounded-2xl bg-[#eee2df] border border-[#e8d6d5] ${isNano ? 'nano-photo-frame' : ''}`}>
           <img src={current.src} alt={current.alt} loading="eager"
@@ -77,7 +78,7 @@ export const ServicePhotoGallery: React.FC<{ serviceId: string; language: Langua
             : <a href={current.src} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-xs font-bold text-[#5b3239] underline underline-offset-2 shrink-0">{labels.full}<ExternalLink className="w-3.5 h-3.5" /></a>}
         </div>
         {photos.length > 1 && <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-3 mt-5">
-          {photos.map((photo, position) => <button type="button" key={photo.src} onClick={() => setIndex(position)} aria-label={photo.caption} aria-pressed={index === position} className={`overflow-hidden rounded-xl border-2 cursor-pointer focus-visible:outline-2 focus-visible:outline-[#9a5967] ${isNano ? 'nano-thumb-frame' : ''} ${index === position ? 'border-[#9a5967]' : 'border-transparent'}`}>
+          {photos.map((photo, position) => <button type="button" key={photo.src} onClick={() => setIndex(position)} aria-label={photo.caption} aria-pressed={visibleIndex === position} className={`overflow-hidden rounded-xl border-2 cursor-pointer focus-visible:outline-2 focus-visible:outline-[#9a5967] ${isNano ? 'nano-thumb-frame' : ''} ${visibleIndex === position ? 'border-[#9a5967]' : 'border-transparent'}`}>
             <img src={photo.src} alt={photo.alt} loading="lazy" className={isNano
               ? nanoRotation(photo.src) ? `nano-rotated-image ${nanoRotation(photo.src)}` : 'w-full h-full object-contain bg-[#f5eeec]'
               : 'w-full h-24 sm:h-36 object-cover'} />

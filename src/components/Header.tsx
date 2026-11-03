@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Calendar, Menu, X, ChevronDown, Globe, GraduationCap } from 'lucide-react';
 import { SERVICES, LOCATIONS, Language } from '../data/siteData';
 import { BrandLogo } from './BrandLogo';
+import { SERVICE_GROUPS } from '../data/serviceGroups';
 
 interface HeaderProps {
   currentTab: string;
@@ -212,15 +213,23 @@ export const Header: React.FC<HeaderProps> = ({
                 <span>{language === 'en' ? 'Services' : language === 'pt' ? 'Serviços' : 'Servicios'}</span>
                 <ChevronDown className="w-3.5 h-3.5 text-[#806859] transition-transform group-hover:rotate-180 group-hover:text-[#9a5967]" />
               </button>
-              <div className="absolute left-0 mt-0 w-72 bg-[#fbf8f5] shadow-xl rounded-b-md border border-[#d8be9b]/40 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all duration-200 z-50 py-2">
+              <div className="absolute left-0 mt-0 w-80 max-h-[70vh] overflow-y-auto bg-[#fbf8f5] shadow-xl rounded-b-md border border-[#d8be9b]/40 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all duration-200 z-50 py-2">
                 <button type="button" onClick={() => onNavigate('services')}
                   className="w-full text-left px-4 py-3 text-xs font-bold uppercase tracking-wider text-[#5b3239] hover:bg-[#f3d9d0] cursor-pointer">
                   {language === 'en' ? 'Browse all services · Search & filters' : language === 'pt' ? 'Todos os serviços · Busca e filtros' : 'Todos los servicios · Búsqueda y filtros'}
                 </button>
                 <div className="mx-4 my-1 border-t border-[#d8be9b]/50" />
-                {SERVICES.filter((service) => ['nano-strokes', 'shadow-hybrid', 'lip-blush', 'brow-lamination', 'lash-lift', 'teeth-whitening'].includes(service.id)).map((service) => (
+                {SERVICE_GROUPS.map((group) => (
+                  <button key={group.id} type="button" onClick={() => onNavigate('services-category', group.id)}
+                    className="w-full text-left px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-[#5b3239] hover:bg-[#f3d9d0] cursor-pointer">
+                    {language === 'en' ? ({ 'brow-artistry': 'Brows', 'lash-treatments': 'Lashes', 'skin-treatments': 'Skin' } as Record<string, string>)[group.id] || group.title.en : language === 'pt' ? group.title.pt : group.title.es}
+                  </button>
+                ))}
+                <div className="mx-4 my-1 border-t border-[#d8be9b]/50" />
+                <p className="px-4 py-2 text-[10px] font-semibold tracking-wide text-[#806859]">Lash Lift · Lash Extensions · Exos Hair Care</p>
+                {SERVICES.filter((service) => ['lash-lift','classic-eyelashes','hybrid-eyelashes','lash-extension-removal','grow-up-hair-brows','grow-up-hair-scalp'].includes(service.id)).map((service) => (
                   <button key={service.id} type="button" onClick={() => onNavigate('services', service.id)}
-                    className="w-full text-left px-4 py-2.5 text-xs text-[#3c3033] hover:bg-[#ede5dc] hover:text-[#9a5967] transition-colors cursor-pointer">
+                    className="w-full text-left px-4 py-2 text-xs text-[#3c3033] hover:bg-[#ede5dc] hover:text-[#9a5967] cursor-pointer">
                     {service.title}
                   </button>
                 ))}
@@ -383,6 +392,9 @@ export const Header: React.FC<HeaderProps> = ({
           >
               {labels.services}
           </button>
+          <div className="ml-3 border-l border-[#d8be9b]/60 pl-2 py-1 space-y-0.5">
+            {SERVICE_GROUPS.map((group) => <button key={group.id} type="button" onClick={() => handleMobileSelect('services-category', group.id)} className="block w-full text-left px-3 py-2 text-xs font-semibold text-[#5b3239] hover:bg-[#ede6df] rounded-md">{group.title[language]}</button>)}
+          </div>
 
           <button
             onClick={() => handleMobileSelect('locations')}

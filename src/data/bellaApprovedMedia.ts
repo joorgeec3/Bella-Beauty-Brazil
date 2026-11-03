@@ -78,6 +78,24 @@ const newerFolderLabels: Record<string,TreatmentPhoto[]> = {
 // The new axilla photograph was provided separately in attachments.zip.
 // It is an illustrative waxing photo, not a verified before/after client result.
 const supplementary: Record<string,TreatmentPhoto[]> = {
+  // Verified category-level photography: not attributed to a particular
+  // extension style or a particular Microneedling/Deluxe Facial outcome.
+  ...Object.fromEntries(
+    ['classic-eyelashes', 'hybrid-eyelashes', 'wet-look-lashes', 'lash-extension-removal'].map((id) => [
+      id, PHOTO_FOLDERS['lash-extensions'].map((photo, i) => ({
+        ...photo, alt: 'Lash extensions studio photograph ' + (i + 1),
+        caption: 'Bella Beauty Brazil · Lash Extensions',
+      })),
+    ])
+  ),
+  ...Object.fromEntries(
+    ['microneedling', 'deluxe-facial'].map((id) => [
+      id, PHOTO_FOLDERS['skin-treatments-geral'].map((photo, i) => ({
+        ...photo, alt: 'Skin treatment studio photograph ' + (i + 1),
+        caption: 'Bella Beauty Brazil · Skin Treatments',
+      })),
+    ])
+  ),
   waxing: [
     { src: siteImages.waxingPhotos.underarms, alt: 'Waxing applied to an underarm', caption: 'Underarm waxing · illustrative photograph' },
     { src: siteImages.waxingPhotos.legs, alt: 'Waxing strip being applied to a leg', caption: 'Leg waxing · illustrative photograph' },
@@ -88,7 +106,7 @@ export const serviceGalleryFor = (serviceId: string): TreatmentGallery => {
   const folder = exactFolderByService[serviceId];
   if(folder)return {photos:serviceId === 'shadow-hybrid' ? dyeReferencePhotos : PHOTO_FOLDERS[folder],illustrative:false};
   if(newerFolderLabels[serviceId])return {photos:newerFolderLabels[serviceId],illustrative:false};
-  return {photos:supplementary[serviceId]||[],illustrative:serviceId === 'waxing'};
+  return {photos:supplementary[serviceId]||[],illustrative:Boolean(supplementary[serviceId])};
 };
 export const servicePhotosFor=(serviceId:string):TreatmentPhoto[] => serviceGalleryFor(serviceId).photos;
 export const categoryPhotosFor=(category:'skin-treatments-geral'|'lip-treatments-geral')=>PHOTO_FOLDERS[category];

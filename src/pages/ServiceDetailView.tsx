@@ -289,6 +289,19 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
     ? { difference: `${base.title} é um serviço da categoria ${base.category || 'beleza'} da Bella Beauty Brazil. Confirme a técnica mais adequada diretamente com o estúdio.`, care: 'O preparo, a indicação e os cuidados dependem do tratamento. Siga as orientações da Bella Beauty Brazil.', faq: `Como agendar ${base.title}? Consulte a disponibilidade, os preços e as informações no Timely oficial.` }
     : { difference: `${base.title} es un servicio de ${base.category || 'belleza'} de Bella Beauty Brazil. Consulta con el estudio qué técnica es la adecuada.`, care: 'La preparación, la idoneidad y los cuidados varían según el tratamiento. Sigue las instrucciones de Bella Beauty Brazil.', faq: `¿Cómo reservar ${base.title}? Consulta disponibilidad, precios y detalles en el Timely oficial.` };
   const groupCopy = language === 'en' ? group : GROUP_TRANSLATIONS[base.id]?.[language] || { ...group, ...fallbackTranslation };
+  const faqAnswerOnly = (value: string) => value.includes('?') ? value.slice(value.indexOf('?') + 1).trim() : value;
+  const extensionIds = ['classic-eyelashes', 'hybrid-eyelashes', 'wet-look-lashes', 'lash-extension-removal'];
+  const extensionFaqAnswer = extensionIds.includes(base.id)
+    ? guide?.answer || (base.id === 'lash-extension-removal'
+      ? translated(language,
+          'Lash extensions are removed professionally using a dedicated remover. Do not pull or peel off extensions at home.',
+          'As extensões são retiradas profissionalmente com removedor específico. Não puxe nem arranque em casa.',
+          'Las extensiones se retiran profesionalmente con un producto específico. No las arranques en casa.')
+      : translated(language,
+          'Wet Look extensions create a darker, denser, textured lash line. The finish is tailored to your natural lashes.',
+          'As extensões Wet Look criam uma linha de cílios mais escura, densa e texturizada, adaptada aos fios naturais.',
+          'Las extensiones Wet Look crean una línea de pestañas más oscura, densa y texturizada, adaptada a las pestañas naturales.'))
+    : undefined;
   const relatedIds = base.id === 'brow-sculpt' ? ['brow-sculpt-tint', 'shadow-hybrid'] : base.id === 'brow-sculpt-tint' ? ['brow-sculpt', 'shadow-hybrid'] : base.id === 'shadow-hybrid' ? ['brow-sculpt', 'brow-sculpt-tint'] : group.related;
   const related = relatedIds.map((id) => SERVICES.find((item) => item.id === id)).filter(Boolean) as typeof SERVICES;
   const isPriceConfirmed = typeof service.price === 'number';
@@ -483,14 +496,14 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
                         'No. Shadow Brows is a cosmetic tattooing treatment that creates a soft, shaded brow effect. Brow dye temporarily colours the existing hairs and can also stain the skin.',
                         'Não. Shadow Brows é um tratamento de tatuagem cosmética que cria um efeito suave e sombreado nas sobrancelhas. A tintura colore temporariamente os fios existentes e também pode pigmentar a pele.',
                         'No. Shadow Brows es un tratamiento de tatuaje cosmético que crea un efecto suave y sombreado en las cejas. El tinte colorea temporalmente los vellos existentes y también puede teñir la piel.')
-                    : groupCopy.faq}
+                    : extensionFaqAnswer || faqAnswerOnly(groupCopy.faq)}
               </p></details>
-              {guide && base.id !== 'nano-strokes' && <details className="bg-white border border-[#e8d6d5] rounded-xl p-5"><summary className="font-montserrat font-bold text-[#5b3239] cursor-pointer">{guide.question}</summary><p className="font-montserrat text-sm text-neutral-700 leading-relaxed mt-3">{guide.answer}</p></details>}
+              {guide && base.id !== 'nano-strokes' && !extensionFaqAnswer && <details className="bg-white border border-[#e8d6d5] rounded-xl p-5"><summary className="font-montserrat font-bold text-[#5b3239] cursor-pointer">{guide.question}</summary><p className="font-montserrat text-sm text-neutral-700 leading-relaxed mt-3">{guide.answer}</p></details>}
               {!['shadow-brows', 'brow-sculpt', 'brow-lamination', 'lash-lift'].includes(base.id) && <details className="bg-white border border-[#e8d6d5] rounded-xl p-5"><summary className="font-montserrat font-bold text-[#5b3239] cursor-pointer">{translated(language, 'Where can I confirm the latest price?', 'Onde confirmar o preço atual?', '¿Dónde puedo confirmar el precio actual?')}</summary><p className="font-montserrat text-sm text-neutral-700 leading-relaxed mt-3">{isPriceConfirmed ? translated(language, 'The price and duration shown reflect the service catalogue recorded for this website. Prices and availability may change; the official Timely page is the final reference when booking.', 'O preço e a duração apresentados refletem o catálogo registrado para este site. Eles podem mudar; consulte o Timely oficial para o valor e a disponibilidade atualizados.', 'El precio y la duración corresponden al catálogo registrado para este sitio. Pueden cambiar; consulta el Timely oficial para conocer el precio y la disponibilidad actual.') : translated(language, 'No price is displayed here because it was not confirmed in the available catalogue. Please enquire through Timely.', 'Nenhum preço é exibido porque não foi confirmado no catálogo disponível. Consulte pelo Timely.', 'No se muestra precio porque no fue confirmado en el catálogo disponible. Consulta por Timely.')}</p></details>}</>}
             </section>
           </div>
           <aside className="lg:col-span-4 space-y-5">
-            <div className="bg-[#5b3239] text-white rounded-2xl p-6 sm:p-8 shadow-lg sticky top-28">
+            <div className="bg-[#5b3239] text-white rounded-2xl p-6 sm:p-8 shadow-lg">
               <h2 className="font-raleway text-2xl font-bold uppercase tracking-wider">{translated(language, 'Book this service', 'Agende este serviço', 'Reserva este servicio')}</h2>
               <div className="flex items-center gap-3 mt-5 text-[#efb7c8]"><Calendar className="w-5 h-5" /><strong className="font-montserrat text-xl">{isPriceConfirmed ? `A$${service.price}` : translated(language, 'Enquire', 'Consultar', 'Consultar')}</strong></div>
               {base.id === 'lip-blush' && <p className="mt-3 font-montserrat text-sm font-medium leading-relaxed text-white/95">{translated(language, 'Touch-up: A$150 · After 60 days.', 'Retoque: A$150 · Após 60 dias.', 'Retoque: A$150 · Después de 60 días.')}</p>}
