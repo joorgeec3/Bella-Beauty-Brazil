@@ -127,7 +127,7 @@ export const StoreView: React.FC<StoreViewProps> = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
           <div className="space-y-4">
             <figure className="rounded-[28px] overflow-hidden border border-[#e8d6d5] bg-[#f4e8ea] shadow-xl">
-              <img src={siteImages.training.coursePhotos['nano-strokes-course']} alt="Bella Nano Strokes Course with Livia Rego" loading="eager" decoding="async" className="w-full aspect-[4/5] object-cover" />
+              <video src={siteAsset('assets/bella/training/courses-2026-11/nano-cover.mp4')} poster={siteAsset('assets/bella/training/courses-2026-11/nano-cover.webp')} autoPlay muted loop playsInline preload="metadata" aria-label="A student arriving for her Bella Nano Strokes Course with Livia Rego" className="block w-full aspect-[4/5] object-cover" />
             </figure>
             {NANO_WHY.map(([title, detail]) => (
               <div key={title} className="rounded-2xl border border-[#e8d6d5] bg-white p-5">
@@ -165,7 +165,11 @@ export const StoreView: React.FC<StoreViewProps> = () => {
         </div>
         <div className="mt-10">
           <h3 className="font-raleway text-xl font-semibold text-[#5b3239] text-center">Inside the Nano Strokes course</h3>
-          <div className="mt-5 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-4xl mx-auto">
+          <div className="mt-5 grid grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
+            <figure className="overflow-hidden rounded-2xl border border-[#e8d6d5] bg-white">
+              <div className="w-full aspect-[3/4] bg-[#281d23]"><video src={siteAsset('assets/bella/training/courses-2026-11/nano-pigments-class.mp4')} poster={siteAsset('assets/bella/training/courses-2026-11/nano-pigments-class.webp')} controls playsInline preload="none" className="w-full h-full object-cover" /></div>
+              <figcaption className="px-3 py-2 font-montserrat text-xs text-[#665760]">Livia explains pigments &amp; technique</figcaption>
+            </figure>
             {nanoStrokesClips.map((clip, index) => (
               <figure key={clip.key} className="overflow-hidden rounded-2xl border border-[#e8d6d5] bg-white">
                 <div className="w-full aspect-[3/4] bg-[#281d23]"><RobustAutoPlayVideo src={clip.src} poster={siteImages.training.coursePhotos['nano-strokes-course']} controls className="w-full h-full object-contain" /></div>
@@ -206,6 +210,17 @@ export const StoreView: React.FC<StoreViewProps> = () => {
                 </article>
               );
             })}
+          </div>
+
+          <div id="lash-lift-course-video" className="mt-14 grid grid-cols-1 md:grid-cols-[minmax(0,300px)_minmax(0,1fr)] gap-6 md:gap-10 items-center max-w-4xl mx-auto">
+            <figure className="overflow-hidden rounded-2xl border border-[#e8d6d5] bg-white w-full max-w-[300px] mx-auto">
+              <div className="w-full aspect-[9/16] bg-[#281d23]"><video src={siteAsset('assets/bella/training/courses-2026-11/lash-lift-class.mp4')} poster={siteAsset('assets/bella/training/courses-2026-11/lash-lift-class.webp')} controls playsInline preload="none" className="w-full h-full object-cover" /></div>
+            </figure>
+            <div className="text-center md:text-left">
+              <p className="font-montserrat text-[11px] font-bold uppercase tracking-widest text-[#9a5967]">Lash Lift Course</p>
+              <h3 className="font-raleway text-xl sm:text-2xl font-semibold text-[#5b3239] mt-2">A day in class with Livia</h3>
+              <p className="font-montserrat text-sm leading-relaxed text-[#4c3b42] mt-3">From Livia’s explanation and mapping to the hands-on treatment on a live model and the certificate at the end of the day.</p>
+            </div>
           </div>
 
           <h3 className="font-raleway text-xl font-semibold text-[#5b3239] text-center mt-14">Brow Lamination Course — class videos &amp; photos</h3>
