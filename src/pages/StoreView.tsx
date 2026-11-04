@@ -36,6 +36,12 @@ const SECONDARY_COURSES: Record<string, { pitch: string; included: string[] }> =
   },
 };
 
+const BROW_COURSE_PHOTOS = [
+  { name: 'Facetune_23-02-2023-12-58-24.JPEG', alt: 'Brow lamination hands-on training at Bella Beauty Brazil' },
+  { name: 'IMG_2450.JPG', alt: 'Livia Rego practising brow lamination on a model in the studio' },
+  { name: 'IMG_1986.JPEG', alt: 'Student and Livia Rego holding a course completion certificate' },
+] as const;
+
 const Fact: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   <span className="inline-flex items-center rounded-full border border-[#e8c5c8] bg-white px-3 py-1.5 font-montserrat text-xs font-semibold text-[#5b3239]">{children}</span>
 );
@@ -124,7 +130,15 @@ export const StoreView: React.FC<StoreViewProps> = ({ language }) => {
               const info = SECONDARY_COURSES[course.id];
               return (
                 <article key={course.id} className="bg-white rounded-2xl overflow-hidden shadow-lg border border-[#e8d6d5] flex flex-col">
-                  <img src={siteImages.training.coursePhotos[course.id as keyof typeof siteImages.training.coursePhotos] || course.image} alt={`${course.title} — Bella Beauty Brazil`} loading="lazy" decoding="async" className="w-full aspect-[16/10] object-cover bg-[#f4e8ea]" />
+                  {course.id === 'brow-lamination-course' ? (
+                    <div className="grid grid-cols-3 gap-0.5 bg-[#f4e8ea]">
+                      {BROW_COURSE_PHOTOS.map(photo => (
+                        <img key={photo.name} src={siteAsset('assets/bella/training/brow-lamination-continuation-2026-11/' + photo.name)} alt={photo.alt} loading="lazy" decoding="async" className="block w-full aspect-[8/15] object-cover" />
+                      ))}
+                    </div>
+                  ) : (
+                    <img src={siteImages.training.coursePhotos[course.id as keyof typeof siteImages.training.coursePhotos] || course.image} alt={`${course.title} — Bella Beauty Brazil`} loading="lazy" decoding="async" className="w-full aspect-[16/10] object-cover bg-[#f4e8ea]" />
+                  )}
                   <div className="p-6 flex flex-col grow">
                     <h3 className="font-raleway text-xl font-bold text-[#5b3239]">{course.title}</h3>
                     <p className="font-montserrat text-sm text-[#4c3b42] mt-2">{info?.pitch}</p>
@@ -144,25 +158,12 @@ export const StoreView: React.FC<StoreViewProps> = ({ language }) => {
             })}
           </div>
 
-          <h3 className="font-raleway text-xl font-semibold text-[#5b3239] text-center mt-14">Lash Lift &amp; Brow Lamination — training videos</h3>
+          <h3 className="font-raleway text-xl font-semibold text-[#5b3239] text-center mt-14">Brow Lamination Course — class videos</h3>
           <div className="mt-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
             {combinedCourseClips.map((clip, index) => (
               <figure key={clip.key} className="bg-white rounded-2xl overflow-hidden border border-[#e8d6d5]">
-                <div className="aspect-[3/4] w-full bg-[#281d23]"><RobustAutoPlayVideo src={clip.src} poster={siteImages.training.coursePhotos['brow-lamination-course']} controls className="w-full h-full object-contain" /></div>
+                <div className="aspect-[3/4] w-full bg-[#281d23]"><RobustAutoPlayVideo src={clip.src} poster={siteAsset('assets/bella/training/brow-lamination-continuation-2026-11/Facetune_23-02-2023-12-58-24.JPEG')} controls className="w-full h-full object-contain" /></div>
                 <figcaption className="px-3 py-2 font-montserrat text-xs text-[#5b3239]">Class video {index + 1}</figcaption>
-              </figure>
-            ))}
-          </div>
-
-          <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-4" id="brow-lamination-course-continuation">
-            {([
-              { name: 'Facetune_23-02-2023-12-58-24.JPEG', label: 'Hands-on training', alt: 'Practical beauty training at Bella Beauty Brazil' },
-              { name: 'IMG_2450.JPG', label: 'Practising on a model in the studio', alt: 'Practical beauty training with a model in the studio' },
-              { name: 'IMG_1986.JPEG', label: 'Lash Lifting course completion', alt: 'Student and instructor holding a Lash Lifting course certificate' },
-            ] as const).map(photo => (
-              <figure key={photo.name} className="overflow-hidden rounded-2xl border border-[#e8d6d5] bg-white">
-                <img src={siteAsset('assets/bella/training/brow-lamination-continuation-2026-11/' + photo.name)} alt={photo.alt} loading="lazy" decoding="async" className="block w-full aspect-[4/5] object-cover" />
-                <figcaption className="px-4 py-3 font-montserrat text-sm text-[#5b3239]">{photo.label}</figcaption>
               </figure>
             ))}
           </div>
