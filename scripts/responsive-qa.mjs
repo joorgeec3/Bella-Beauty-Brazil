@@ -116,7 +116,7 @@ try {
     await run(width + 'px course gallery without repeated videos',async()=>{
       await visit('/courses');
       assert.equal(await page.locator('#available-courses article').count(),3,'The site currently offers three verified course cards');
-      const nano = await page.locator('#available-courses video').evaluateAll(videos=>videos.map(video=>video.getAttribute('src')).filter(Boolean));
+      const nano = await page.locator('#training-gallery video').evaluateAll(videos=>videos.map(video=>video.getAttribute('src')).filter(Boolean));
       assert.equal(nano.length,8,'Expected 3 Nano Strokes plus 5 combined-class videos');
       assert.equal(new Set(nano).size,nano.length,'Repeated training video URL');
       await capture('courses');

@@ -1,8 +1,7 @@
 import React from 'react';
-import { ArrowRight, GraduationCap, MessageCircle } from 'lucide-react';
+import { ArrowRight, BookOpen, CalendarDays, Clock, GraduationCap, HandHeart, LifeBuoy, MapPin, MessageCircle, Package, UserRound } from 'lucide-react';
 import { COURSES, Language } from '../data/siteData';
 import { siteImages, siteAsset } from '../data/siteImages';
-import { RobustAutoPlayVideo } from '../components/RobustAutoPlayVideo';
 import { BrowDesignAcademy } from '../components/BrowDesignAcademy';
 
 interface StoreViewProps { language: Language; }
@@ -89,118 +88,150 @@ export const StoreView: React.FC<StoreViewProps> = ({ language }) => {
         </div>
       </header>
 
-      <section id="available-courses" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20" aria-label={language === 'en' ? 'Available courses' : 'Cursos disponíveis'}>
-        <p className="font-montserrat text-sm text-neutral-600 text-center max-w-3xl mx-auto mb-10">
-          {language === 'en'
-            ? 'Learn with Livia at Bella Beauty Brazil in Greenslopes, Brisbane. Personalised training combines explanations, demonstrations and guided practice.'
-            : language === 'pt'
-              ? 'Aprenda com a Livia na Bella Beauty Brazil, em Greenslopes, Brisbane. Formação individual com explicações, demonstrações e prática supervisionada.'
-              : 'Aprende con Livia en Bella Beauty Brazil, en Greenslopes, Brisbane. Formación individual con explicaciones, demostraciones y práctica guiada.'}
-        </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {COURSES.map((course) => (
-            <article key={course.id} className="bg-white rounded-2xl overflow-hidden shadow-lg border border-[#e8d6d5] flex flex-col">
-              <figure className="relative h-72 sm:h-80 bg-[#f4e8ea] border-b border-[#e8d6d5] overflow-hidden">
-                <img
-                  src={siteImages.training.coursePhotos[course.id as keyof typeof siteImages.training.coursePhotos] || course.image}
-                  alt={`${course.title} — Bella Beauty Brazil`}
-                  loading="lazy" decoding="async" className="w-full h-full object-contain object-center"
-                />
-              </figure>
-              {course.id === 'nano-strokes-course' && (
-                <div className="border-b border-[#e8d6d5] bg-[#fff8f9]">
-                  <h4 className="px-6 py-3 font-montserrat text-xs font-bold uppercase tracking-wider text-[#5b3239]">
-                    {language === 'en' ? 'Nano Strokes training videos (3)' : language === 'pt' ? 'Vídeos do curso Nano Strokes (3)' : 'Vídeos del curso Nano Strokes (3)'}
-                  </h4>
-                  <div className="px-4 pb-4 grid gap-4">
-                    {nanoStrokesClips.map((clip, index) => (
-                      <figure key={clip.key} className="overflow-hidden rounded-xl border border-[#e8d6d5] bg-white">
-                        <div className="w-full aspect-[3/4] max-h-[360px] bg-[#281d23]"><RobustAutoPlayVideo src={clip.src} poster={siteImages.training.coursePhotos['nano-strokes-course']} controls className="w-full h-full object-contain" /></div>
-                        <figcaption className="px-3 py-2 font-montserrat text-xs text-[#665760]">
-                          {language === 'en' ? `Nano Strokes — class video ${index + 1}` : language === 'pt' ? `Nano Strokes — aula ${index + 1}` : `Nano Strokes — clase ${index + 1}`}
-                        </figcaption>
-                      </figure>
-                    ))}
-                  </div>
-                </div>
-              )}
-              <div className="p-6 flex flex-col grow">
-                <span className="font-montserrat text-[11px] font-bold tracking-widest text-[#9a5967] uppercase">{course.duration}</span>
-                <h3 className="font-raleway text-xl font-bold text-[#5b3239] mt-2">{course.title}</h3>
-                <div className="mt-4 space-y-3 grow">
-                  {([
-                    [COURSE_LABELS[language].content, COURSE_DETAILS[course.id]?.content],
-                    [COURSE_LABELS[language].practice, COURSE_DETAILS[course.id]?.practice],
-                    [COURSE_LABELS[language].kit, COURSE_DETAILS[course.id]?.kit],
-                    [COURSE_LABELS[language].support, COURSE_DETAILS[course.id]?.support],
-                    [COURSE_LABELS[language].duration, COURSE_DETAILS[course.id]?.duration],
-                  ] as [string, string | undefined][]).map(([label, value]) => value ? (
-                    <div key={label}>
-                      <h4 className="font-montserrat text-[11px] font-bold uppercase tracking-wider text-[#9a5967]">{label}</h4>
-                      <p className="font-montserrat text-sm text-neutral-600 leading-relaxed mt-1">{value}</p>
-                    </div>
-                  ) : null)}
-                </div>
-                <div className="mt-5">
-                  <span className="font-montserrat text-[11px] font-bold uppercase tracking-wider text-[#9a5967]">{COURSE_LABELS[language].investment}</span>
-                  <p className="font-montserrat text-2xl font-bold text-[#5b3239] mt-1">A${course.price.toLocaleString('en-AU')}</p>
-                </div>
-                <a href={'https://wa.me/61402148437?text=' + encodeURIComponent('Hi, I would like to enquire about the ' + course.title + ' at Bella Beauty Brazil.')} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 bg-[#5b3239] hover:bg-[#7a4753] text-white text-xs font-bold uppercase tracking-widest px-5 py-3 rounded-full mt-5 cursor-pointer">
-                  <MessageCircle className="w-4 h-4" aria-hidden="true" />
-                  {COURSE_LABELS[language].enquire}
-                </a>
-              </div>
-            </article>
-          ))}
+      <section id="available-courses" className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20" aria-labelledby="courses-heading">
+        <div className="text-center max-w-2xl mx-auto mb-10 lg:mb-14">
+          <p className="font-montserrat text-[11px] sm:text-xs uppercase tracking-[0.22em] text-[#9a5967] font-bold">One-to-one · In person · Greenslopes, Brisbane</p>
+          <h2 id="courses-heading" className="font-raleway text-3xl sm:text-4xl text-[#5b3239] mt-3">Professional courses</h2>
+          <p className="font-montserrat text-sm sm:text-base text-neutral-600 leading-relaxed mt-4">
+            Learn with Livia at Bella Beauty Brazil. Personalised training combines explanations, demonstrations and guided practice.
+          </p>
+          <nav className="mt-6 flex flex-wrap justify-center gap-2" aria-label="Jump to a course">
+            {COURSES.map((course) => (
+              <a key={course.id} href={`#${course.id}`} className="rounded-full border border-[#e2c9cc] bg-white px-4 py-2 font-montserrat text-xs font-semibold text-[#5b3239] hover:bg-[#5b3239] hover:text-white transition-colors">
+                {course.title.replace(/ Course$/, '')}
+              </a>
+            ))}
+          </nav>
         </div>
 
-        <section id="combined-lash-brow-course-media" className="mt-12 sm:mt-16 rounded-[28px] border border-[#e8d6d5] bg-[#fff9fa] p-5 sm:p-8" aria-labelledby="joint-training-heading">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 id="joint-training-heading" className="font-raleway text-2xl sm:text-3xl text-[#5b3239] mt-2">
-              Lash Lift &amp; Brow Lamination
-            </h2>
-          </div>
-          <div className="mt-7">
-            <h3 className="font-raleway text-lg font-semibold text-[#5b3239] text-center">
-              {language === 'en' ? 'Lash Lift & Brow Lamination — Training videos' : language === 'pt' ? 'Lash Lift & Brow Lamination — Vídeos da formação' : 'Lash Lift & Brow Lamination — Vídeos de formación'}
-            </h3>
-            <div className="mt-7 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {combinedCourseClips.map((clip, index) => (
-                <figure key={clip.key} className="bg-white rounded-2xl overflow-hidden border border-[#e8d6d5]">
-                  <div className="aspect-[3/4] w-full bg-[#281d23]"><RobustAutoPlayVideo src={clip.src} poster={siteImages.training.coursePhotos['brow-lamination-course']} controls className="w-full h-full object-contain" /></div>
-                  <figcaption className="px-4 py-3 font-montserrat text-xs text-[#5b3239]">
-                    {language === 'en' ? `Joint class — video ${index + 1}` : language === 'pt' ? `Aula conjunta — vídeo ${index + 1}` : `Clase conjunta — vídeo ${index + 1}`}
-                  </figcaption>
+        <div className="space-y-8 lg:space-y-10">
+          {COURSES.map((course, courseIndex) => {
+            const details = COURSE_DETAILS[course.id];
+            const labels = COURSE_LABELS[language];
+            const facts = (details?.duration || '').split(' · ').filter(Boolean);
+            const blocks = [
+              { icon: BookOpen, label: labels.content, value: details?.content },
+              { icon: HandHeart, label: labels.practice, value: details?.practice },
+              { icon: Package, label: labels.kit, value: details?.kit },
+              { icon: LifeBuoy, label: labels.support, value: details?.support },
+            ].filter((b) => b.value);
+            const imageRight = courseIndex % 2 === 1;
+            return (
+              <article id={course.id} key={course.id} className="scroll-mt-28 bg-white rounded-[28px] overflow-hidden shadow-[0_12px_40px_rgba(91,50,57,0.10)] border border-[#ecdcdc] grid grid-cols-1 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.6fr)]">
+                <figure className={`relative bg-[#f4e8ea] min-h-[300px] sm:min-h-[380px] lg:min-h-full ${imageRight ? 'lg:order-2' : ''}`}>
+                  <img
+                    src={siteImages.training.coursePhotos[course.id as keyof typeof siteImages.training.coursePhotos] || course.image}
+                    alt={`${course.title} — Bella Beauty Brazil`}
+                    loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover object-center"
+                  />
+                  <span className="absolute top-4 left-4 rounded-full bg-[#21171c]/80 backdrop-blur px-3 py-1.5 font-montserrat text-[11px] font-bold uppercase tracking-widest text-white">
+                    {course.duration}
+                  </span>
                 </figure>
-              ))}
-            </div>
-          </div>
-          <div className="mt-10 border-t border-[#e8d6d5] pt-8" id="brow-lamination-course-continuation">
-            <h3 className="font-raleway text-xl sm:text-2xl font-semibold text-[#5b3239] text-center">
-              {language === 'en' ? 'More moments from our Lash Lift & Brow Lamination courses' : language === 'pt' ? 'Mais momentos dos cursos de Lash Lift e Brow Lamination' : 'Más momentos de los cursos de Lash Lift y Brow Lamination'}
-            </h3>
-            <p className="mt-3 max-w-2xl mx-auto text-center text-sm font-montserrat leading-relaxed text-[#65515b]">
-              {language === 'en' ? 'Original, unedited photographs of practical learning and course completion.' : language === 'pt' ? 'Fotografias originais, sem edição, das atividades práticas e da conclusão de formação.' : 'Fotografías originales sin editar de las prácticas y la finalización de la formación.'}
-            </p>
-            <div className="mt-7 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 items-stretch">
-              {([
-                { name: 'Facetune_23-02-2023-12-58-24.JPEG', label: language === 'en' ? 'Hands-on beauty training' : language === 'pt' ? 'Treinamento prático de beleza' : 'Formación práctica de belleza', alt: 'Practical beauty training at Bella Beauty Brazil' },
-                { name: 'IMG_2450.JPG', label: language === 'en' ? 'Professional studio training' : language === 'pt' ? 'Formação profissional no estúdio' : 'Formación profesional en el estudio', alt: 'Practical beauty training with a model in the studio' },
-                { name: 'IMG_1986.JPEG', label: language === 'en' ? 'Lash Lifting course completion' : language === 'pt' ? 'Conclusão do curso de Lash Lifting' : 'Finalización del curso de Lash Lifting', alt: 'Student and instructor holding a Lash Lifting course certificate' },
-              ] as const).map((photo) => (
-                <figure key={photo.name} className="flex flex-col overflow-hidden rounded-2xl border border-[#e8d6d5] bg-white">
-                  <div className="min-h-[245px] h-[300px] sm:h-[330px] bg-[#f8f0f2] flex items-center justify-center">
-                    <img src={siteAsset('assets/bella/training/brow-lamination-continuation-2026-11/' + photo.name)} alt={photo.alt}
-                      loading="lazy" decoding="async" className="block w-full h-full object-contain" />
-                  </div>
-                  <figcaption className="px-4 py-3 font-montserrat text-sm leading-relaxed text-[#5b3239]">{photo.label}</figcaption>
-                </figure>
-              ))}
-            </div>
-          </div>
-        </section>
 
+                <div className="p-6 sm:p-8 lg:p-10 flex flex-col">
+                  <p className="font-montserrat text-[11px] font-bold tracking-[0.2em] text-[#9a5967] uppercase">Course {String(courseIndex + 1).padStart(2, '0')}</p>
+                  <h3 className="font-raleway text-2xl sm:text-3xl font-semibold text-[#5b3239] mt-2">{course.title}</h3>
+
+                  {facts.length > 0 && (
+                    <ul className="mt-4 flex flex-wrap gap-2" aria-label={labels.duration}>
+                      {facts.map((fact, i) => {
+                        const Icon = i === 0 ? Clock : i === 1 ? UserRound : i === 2 ? MapPin : CalendarDays;
+                        return (
+                          <li key={fact} className="inline-flex items-center gap-1.5 rounded-full bg-[#f8eef0] px-3 py-1.5 font-montserrat text-xs font-semibold text-[#5b3239]">
+                            <Icon className="w-3.5 h-3.5 text-[#9a5967]" aria-hidden="true" />{fact}
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  )}
+
+                  <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {blocks.map(({ icon: Icon, label, value }) => (
+                      <div key={label} className="rounded-2xl bg-[#fbf6f6] border border-[#f0e3e4] p-4">
+                        <div className="flex items-center gap-2">
+                          <span className="inline-flex w-7 h-7 items-center justify-center rounded-full bg-white border border-[#ecdcdc]">
+                            <Icon className="w-3.5 h-3.5 text-[#9a5967]" aria-hidden="true" />
+                          </span>
+                          <h4 className="font-montserrat text-[11px] font-bold uppercase tracking-wider text-[#9a5967]">{label}</h4>
+                        </div>
+                        <p className="font-montserrat text-sm text-neutral-700 leading-relaxed mt-2">{value}</p>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="mt-6 pt-6 border-t border-[#f0e3e4] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <div>
+                      <span className="font-montserrat text-[11px] font-bold uppercase tracking-wider text-[#9a5967]">{labels.investment}</span>
+                      <p className="font-raleway text-3xl font-semibold text-[#5b3239] leading-none mt-1">A${course.price.toLocaleString('en-AU')}</p>
+                    </div>
+                    <a href={'https://wa.me/61402148437?text=' + encodeURIComponent('Hi, I would like to enquire about the ' + course.title + ' at Bella Beauty Brazil.')} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 bg-[#5b3239] hover:bg-[#7a4753] text-white text-xs font-bold uppercase tracking-widest px-6 py-3.5 rounded-full cursor-pointer transition-colors">
+                      <MessageCircle className="w-4 h-4" aria-hidden="true" />
+                      {labels.enquire}
+                    </a>
+                  </div>
+                </div>
+              </article>
+            );
+          })}
+        </div>
       </section>
+
+      <section id="training-gallery" className="bg-[#f8f1f2] border-y border-[#ecdcdc]" aria-labelledby="training-gallery-heading">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+          <div className="text-center max-w-2xl mx-auto">
+            <p className="font-montserrat text-[11px] sm:text-xs uppercase tracking-[0.22em] text-[#9a5967] font-bold">Inside the classes</p>
+            <h2 id="training-gallery-heading" className="font-raleway text-2xl sm:text-3xl text-[#5b3239] mt-2">Training videos &amp; photos</h2>
+            <p className="font-montserrat text-sm text-neutral-600 mt-3">Tap a video to play it.</p>
+          </div>
+
+          {[
+            { id: 'nano-strokes-course-media', title: 'Nano Strokes', clips: nanoStrokesClips, poster: siteImages.training.coursePhotos['nano-strokes-course'] },
+            { id: 'combined-lash-brow-course-media', title: 'Lash Lift & Brow Lamination', clips: combinedCourseClips, poster: siteImages.training.coursePhotos['brow-lamination-course'] },
+          ].map((group) => (
+            <div key={group.id} id={group.id} className="mt-10">
+              <h3 className="font-montserrat text-xs font-bold uppercase tracking-widest text-[#5b3239] flex items-center gap-3">
+                {group.title}<span className="h-px flex-1 bg-[#e2c9cc]" aria-hidden="true" />
+              </h3>
+              <div className="mt-4 grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-3">
+                {group.clips.map((clip, index) => (
+                  <figure key={clip.key} className="rounded-xl overflow-hidden bg-[#281d23] border border-[#e8d6d5]">
+                    <video
+                      src={clip.src}
+                      poster={group.poster}
+                      controls
+                      playsInline
+                      preload="none"
+                      aria-label={`${group.title} — training video ${index + 1}`}
+                      className="block w-full aspect-[3/4] object-cover"
+                    />
+                  </figure>
+                ))}
+              </div>
+            </div>
+          ))}
+
+          <div id="brow-lamination-course-continuation" className="mt-10">
+            <h3 className="font-montserrat text-xs font-bold uppercase tracking-widest text-[#5b3239] flex items-center gap-3">
+              Course moments<span className="h-px flex-1 bg-[#e2c9cc]" aria-hidden="true" />
+            </h3>
+            <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
+              {([
+                { name: 'Facetune_23-02-2023-12-58-24.JPEG', label: 'Hands-on beauty training', alt: 'Practical beauty training at Bella Beauty Brazil' },
+                { name: 'IMG_2450.JPG', label: 'Professional studio training', alt: 'Practical beauty training with a model in the studio' },
+                { name: 'IMG_1986.JPEG', label: 'Lash Lifting course completion', alt: 'Student and instructor holding a Lash Lifting course certificate' },
+              ] as const).map((photo) => (
+                <figure key={photo.name} className="relative overflow-hidden rounded-2xl bg-white border border-[#e8d6d5]">
+                  <img src={siteAsset('assets/bella/training/brow-lamination-continuation-2026-11/' + photo.name)} alt={photo.alt}
+                    loading="lazy" decoding="async" className="block w-full aspect-[4/3] object-cover" />
+                  <figcaption className="px-4 py-2.5 font-montserrat text-xs text-[#5b3239]">{photo.label}</figcaption>
+                </figure>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       <BrowDesignAcademy language={language} />
     </main>
   );
