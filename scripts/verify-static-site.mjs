@@ -8,8 +8,8 @@ import { SERVICE_GROUPS } from '../src/data/serviceGroups.ts';
 // able to read every service, its copy and photos with JavaScript disabled.
 const output = process.env.GITHUB_PAGES === 'true' ? 'dist-pages' : 'dist';
 const origin = (process.env.PUBLIC_SITE_URL || 'https://bellabeautybrazil.com.au').replace(/\/+$/, '');
-const languages = { en: { html: 'en-AU', prefix: '' }, pt: { html: 'pt-BR', prefix: '/pt' },
-  es: { html: 'es', prefix: '/es' } };
+// English-only website (Nov 2026).
+const languages = { en: { html: 'en-AU', prefix: '' } };
 const routes = ['/', '/about', '/services', '/courses', '/locations', '/contact',
   ...SERVICE_GROUPS.map((g) => '/services/categories/' + g.id),
   ...SERVICES.map((s) => '/services/' + s.id)];
@@ -43,7 +43,7 @@ for (const lang of Object.keys(languages)) {
     if ((html.match(/<link rel="canonical"/g) || []).length !== 1) {
       throw new Error('Duplicate canonical: ' + path);
     }
-    for (const [alt, code] of [['en-AU', 'en'], ['pt-BR', 'pt'], ['es', 'es'], ['x-default', 'en']]) {
+    for (const [alt, code] of [['en-AU', 'en'], ['x-default', 'en']]) {
       const altUrl = origin + localized(code, route);
       if (!html.includes('hreflang="' + alt + '" href="' + altUrl + '"')) {
         throw new Error('Missing hreflang ' + alt + ': ' + path);
@@ -66,8 +66,7 @@ for (const lang of Object.keys(languages)) {
       if (!service || !html.includes(service.title.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;'))) {
         throw new Error('Missing service name/body: ' + path);
       }
-      if (!html.includes('Book now') && !html.includes('Agendar agora') &&
-          !html.includes('Reservar ahora')) {
+      if (!html.includes('Book now')) {
         throw new Error('Missing booking action: ' + path);
       }
     }
@@ -119,4 +118,4 @@ for (const lang of Object.keys(languages)) {
 }
 
 console.log('SEO static HTML passed: ' + expected + ' pages (' + SERVICES.length +
-  ' treatments x EN/PT/ES + categories and informational pages).');
+  ' treatments + categories and informational pages).');

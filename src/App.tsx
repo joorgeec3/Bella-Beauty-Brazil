@@ -31,13 +31,8 @@ const APP_BASE_PATH = import.meta.env.BASE_URL.replace(/\/$/, '');
 // Use the official studio domain for canonical URLs, social sharing metadata and structured data.
 const PUBLIC_SITE_ORIGIN = (import.meta.env.VITE_PUBLIC_SITE_URL || 'https://bellabeautybrazil.com.au').replace(/\/+$/, '');
 
-const localeFromLocation = (): Language => {
-  if (typeof window === 'undefined') return 'en';
-  const path = window.location.pathname;
-  const relative = APP_BASE_PATH && path.startsWith(APP_BASE_PATH + '/') ? path.slice(APP_BASE_PATH.length) : path;
-  const language = /^\/(es|pt)(?:\/|$)/.exec(relative)?.[1];
-  return language === 'es' || language === 'pt' ? language : 'en';
-};
+// The website is English-only (client decision, Nov 2026). Old /pt and /es links redirect to English in vercel.json.
+const localeFromLocation = (): Language => 'en';
 const withLocale = (path: string, language: Language): string => language === 'en' ? path : '/' + language + (path === '/' ? '' : path);
 
 const resolveRoute = () => {
@@ -213,7 +208,7 @@ export default function App() {
     }
     canonical.href = canonicalUrl;
     document.querySelectorAll('link[rel="alternate"][hreflang]').forEach((node) => node.remove());
-    for (const [code, lang] of [['en-AU', 'en'], ['pt-BR', 'pt'], ['es', 'es'], ['x-default', 'en']] as const) {
+    for (const [code, lang] of [['en-AU', 'en'], ['x-default', 'en']] as const) {
       const alternate = document.createElement('link');
       alternate.rel = 'alternate';
       alternate.hreflang = code;

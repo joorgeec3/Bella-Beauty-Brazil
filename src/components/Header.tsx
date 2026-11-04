@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calendar, Clock, Menu, X, ChevronDown, Globe, GraduationCap } from 'lucide-react';
+import { Calendar, Clock, Menu, X, ChevronDown, GraduationCap } from 'lucide-react';
 import { SERVICES, Language } from '../data/siteData';
 import { BrandLogo } from './BrandLogo';
 import { SERVICE_GROUPS } from '../data/serviceGroups';
@@ -99,8 +99,8 @@ export const Header: React.FC<HeaderProps> = ({
         showHeader || mobileMenuOpen ? 'translate-y-0' : '-translate-y-full'
       }`}
     >
-      {/* Small Top Bar: Language Selector & Clinic Contact (emcima delicado) */}
-      <div className="bg-[#ede6df] text-[#5c4943] text-[11px] font-montserrat border-b border-[#e3d8ce] py-1.5 px-4 sm:px-6 lg:px-8">
+      {/* Small Top Bar: clinic contact (tablet/desktop) */}
+      <div className="hidden sm:block bg-[#ede6df] text-[#5c4943] text-[11px] font-montserrat border-b border-[#e3d8ce] py-1.5 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           {/* Quick Clinic Info (Desktop) */}
           <div className="hidden sm:flex items-center space-x-3 text-[11px] text-[#5c4943]">
@@ -116,52 +116,6 @@ export const Header: React.FC<HeaderProps> = ({
             </a>
           </div>
 
-          {/* Language Selection Section */}
-          <div className="flex items-center space-x-2 text-[11px] font-montserrat ml-auto">
-            <span className="text-[#6e594f] flex items-center gap-1 uppercase tracking-wider text-[10px] font-medium">
-              <Globe className="w-3 h-3 text-[#9a5967]" />
-              <span>{language === 'en' ? 'Language:' : 'Idioma:'}</span>
-            </span>
-
-            <div className="inline-flex items-center bg-[#e2d8cf] rounded-full p-0.5 border border-[#d3c2b2] shadow-inner">
-              <button
-                type="button"
-                onClick={() => onSelectLanguage('en')}
-                className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold tracking-wider transition-all cursor-pointer ${
-                  language === 'en'
-                    ? 'bg-[#9a5967] text-white shadow-xs'
-                    : 'text-[#6e594f] hover:text-[#2d2426]'
-                }`}
-                title="English"
-              >
-                EN
-              </button>
-              <button
-                type="button"
-                onClick={() => onSelectLanguage('es')}
-                className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold tracking-wider transition-all cursor-pointer ${
-                  language === 'es'
-                    ? 'bg-[#9a5967] text-white shadow-xs'
-                    : 'text-[#6e594f] hover:text-[#2d2426]'
-                }`}
-                title="Español"
-              >
-                ES
-              </button>
-              <button
-                type="button"
-                onClick={() => onSelectLanguage('pt')}
-                className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold tracking-wider transition-all cursor-pointer ${
-                  language === 'pt'
-                    ? 'bg-[#9a5967] text-white shadow-xs'
-                    : 'text-[#6e594f] hover:text-[#2d2426]'
-                }`}
-                title="Português"
-              >
-                PT
-              </button>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -415,38 +369,8 @@ export const Header: React.FC<HeaderProps> = ({
           </button>
         </div>
 
-        {/* Idioma & Agendamento no mobile */}
+        {/* Horários & Agendamento no mobile (site somente em inglês) */}
         <div className="pt-3 mt-2 border-t border-[#d8be9b]/30 flex items-center justify-between">
-          <div className="flex items-center space-x-1 bg-[#e2d8cf] p-0.5 rounded-full border border-[#d3c2b2]">
-            <button
-              type="button"
-              onClick={() => onSelectLanguage('en')}
-              className={`px-2.5 py-1 text-xs font-bold rounded-full transition-all cursor-pointer ${
-                language === 'en' ? 'bg-[#9a5967] text-white shadow-xs' : 'text-[#6e594f] hover:text-[#2d2426]'
-              }`}
-            >
-              EN
-            </button>
-            <button
-              type="button"
-              onClick={() => onSelectLanguage('es')}
-              className={`px-2.5 py-1 text-xs font-bold rounded-full transition-all cursor-pointer ${
-                language === 'es' ? 'bg-[#9a5967] text-white shadow-xs' : 'text-[#6e594f] hover:text-[#2d2426]'
-              }`}
-            >
-              ES
-            </button>
-            <button
-              type="button"
-              onClick={() => onSelectLanguage('pt')}
-              className={`px-2.5 py-1 text-xs font-bold rounded-full transition-all cursor-pointer ${
-                language === 'pt' ? 'bg-[#9a5967] text-white shadow-xs' : 'text-[#6e594f] hover:text-[#2d2426]'
-              }`}
-            >
-              PT
-            </button>
-          </div>
-
           <button
             onClick={() => {
               onOpenHours();

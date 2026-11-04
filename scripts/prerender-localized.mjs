@@ -10,7 +10,8 @@ import { siteImages } from '../src/data/siteImages.ts';
 
 // Produce actual HTML for search engines and browsers with JavaScript disabled.
 // English uses existing URLs; Portuguese and Spanish have their own crawlable URLs.
-const languages = ['en', 'pt', 'es'];
+// English-only website (client decision, Nov 2026). PT/ES copy is kept in the data but not published.
+const languages = ['en'];
 const details = {
   en: {
     html: 'en-AU', search: 'Beauty treatments in Greenslopes, Brisbane', home: 'Brows, Lashes & Cosmetic Tattooing in Greenslopes, Brisbane',
@@ -104,10 +105,7 @@ const navigation = (lang) => '<nav aria-label="Bella Beauty Brazil">' +
   anchor(lang, '/about', details[lang].about) +
   anchor(lang, '/locations', details[lang].locations) +
   anchor(lang, '/contact', details[lang].contact) + '</nav>';
-const languagesNav = (route) => '<nav aria-label="Language / Idioma">' +
-  '<a href="' + href('en', route) + '" lang="en-AU">EN</a>' +
-  '<a href="' + href('pt', route) + '" lang="pt-BR">PT</a>' +
-  '<a href="' + href('es', route) + '" lang="es">ES</a></nav>';
+const languagesNav = () => '';
 const footer = (lang) => '<footer><strong>Bella Beauty Brazil · Greenslopes, Brisbane</strong>' +
   '<p>Suite 3, 412 Logan Road, Greenslopes QLD 4120, Australia · +61 402 148 437</p>' +
   '<p><a href="' + escapeHtml(BOOKING_URL) + '">' + details[lang].booking + '</a></p></footer>';
@@ -244,7 +242,7 @@ const htmlFor = (lang, route, page) => {
   const fullRoute = localizedRoute(lang, route);
   const canonical = origin + fullRoute;
   const alternates = [
-    ['en-AU', 'en'], ['pt-BR', 'pt'], ['es', 'es'], ['x-default', 'en']
+    ['en-AU', 'en'], ['x-default', 'en']
   ].map(([code, value]) => '<link rel="alternate" hreflang="' + code +
     '" href="' + escapeHtml(origin + localizedRoute(value, route)) + '" />').join('\n');
   let html = template
@@ -300,4 +298,4 @@ await writeFile(join(output, 'sitemap.xml'),
   urls.map((url) => '  <url><loc>' + escapeHtml(url) + '</loc></url>').join('\n') + '\n</urlset>\n');
 await writeFile(join(output, 'robots.txt'), 'User-agent: *\nAllow: /\nSitemap: ' + origin + '/sitemap.xml\n');
 console.log('Prerendered ' + urls.length + ' HTML pages (' + routePaths.length +
-  ' routes x EN/PT/ES), with treatment descriptions, verified photos and localized SEO metadata.');
+  ' English routes), with treatment descriptions, verified photos and localized SEO metadata.');
