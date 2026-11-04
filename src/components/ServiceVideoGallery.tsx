@@ -41,6 +41,9 @@ const additionalStudioClips: Record<string, VideoItem[]> = {
   'classic-eyelashes': [{
     src: `${import.meta.env.BASE_URL}assets/bella/eyelash-extensions-originals/classic-eyelashes-original.mp4`,
     title: 'Classic Eyelash Extensions — client-supplied original video (IMG_3664.MP4)',
+  }, {
+    src: `${import.meta.env.BASE_URL}assets/bella/classic-eyelash-extensions/IMG_3666.MP4`,
+    title: 'Classic Eyelash Extensions — additional original studio video (IMG_3666.MP4)',
   }],
   'hybrid-eyelashes': [{
     src: `${import.meta.env.BASE_URL}assets/bella/eyelash-extensions-originals/hybrid-eyelashes-original.mp4`,

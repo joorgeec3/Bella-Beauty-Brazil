@@ -58,6 +58,25 @@ const labelledPhotos = (photos: TreatmentPhoto[], treatment: string): TreatmentP
     caption: `${treatment} · ${index + 1} / ${photos.length}`,
   }));
 const newerFolderLabels: Record<string,TreatmentPhoto[]> = {
+  // Client-provided Classic set: one lash close-up plus two honest
+  // behind-the-scenes studio photographs. Original PNG bytes are unchanged.
+  'classic-eyelashes': [
+    {
+      src: `${import.meta.env?.BASE_URL || '/'}assets/bella/classic-eyelash-extensions/IMG_3669.PNG`,
+      alt: 'Classic Eyelash Extensions — close-up of the lashes at Bella Beauty Brazil',
+      caption: 'Classic Eyelash Extensions · Lash close-up',
+    },
+    {
+      src: `${import.meta.env?.BASE_URL || '/'}assets/bella/classic-eyelash-extensions/IMG_3667.PNG`,
+      alt: 'Behind the scenes at Bella Beauty Brazil — brow treatment in progress',
+      caption: 'Bella Beauty Brazil · Studio behind the scenes',
+    },
+    {
+      src: `${import.meta.env?.BASE_URL || '/'}assets/bella/classic-eyelash-extensions/IMG_3668.PNG`,
+      alt: 'Behind the scenes at Bella Beauty Brazil — professional brow styling',
+      caption: 'Bella Beauty Brazil · Studio behind the scenes',
+    },
+  ],
   // Client-supplied Hybrid Eyelash Extensions photos, labelled by the studio.
   // The collage shows a before-and-after comparison; the other is a result portrait.
   'hybrid-eyelashes': [

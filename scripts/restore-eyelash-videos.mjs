@@ -43,3 +43,36 @@ for (const job of jobs) {
   await writeFile(output, data);
   console.log('Restored untouched original ' + job.source + ' (' + data.length + ' bytes, SHA-256 OK)');
 }
+
+
+// Classic lash-extension PNGs are large. Their binary Git blobs are kept in
+// two raw fragments each solely to comply with the upload transport limit.
+// The published PNG is reconstructed exactly; no re-encoding or image editing.
+const originalClassicPhotos = [
+  {
+    name: 'IMG_3668.PNG',
+    size: 3295329,
+    sha256: '4a13b784a50134eecca26d887a79b0ef531a73a4dc51f018350075b8e5f1039c',
+  },
+  {
+    name: 'IMG_3669.PNG',
+    size: 3222631,
+    sha256: '6dd8f6b129fd1ff1f27fdaad4b69765bd9f4195cda953209c45604e048eb6d07',
+  },
+];
+for (const photo of originalClassicPhotos) {
+  const folder = join('media-originals', 'eyelash-extensions-2026-11', 'classic', 'photos');
+  const parts = await Promise.all([
+    readFile(join(folder, photo.name + '.part-01')),
+    readFile(join(folder, photo.name + '.part-02')),
+  ]);
+  const data = Buffer.concat(parts);
+  if (data.length !== photo.size ||
+      createHash('sha256').update(data).digest('hex') !== photo.sha256) {
+    throw new Error('Classic photo ' + photo.name + ' failed original byte-integrity verification');
+  }
+  const output = join('public', 'assets', 'bella', 'classic-eyelash-extensions', photo.name);
+  await mkdir(dirname(output), { recursive: true });
+  await writeFile(output, data);
+  console.log('Restored original Classic photo ' + photo.name + ' (SHA-256 OK, no edits)');
+}

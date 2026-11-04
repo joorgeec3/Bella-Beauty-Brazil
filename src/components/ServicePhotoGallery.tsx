@@ -81,7 +81,7 @@ export const ServicePhotoGallery: React.FC<{ serviceId: string; language: Langua
           {photos.map((photo, position) => <button type="button" key={photo.src} onClick={() => setIndex(position)} aria-label={photo.caption} aria-pressed={visibleIndex === position} className={`overflow-hidden rounded-xl border-2 cursor-pointer focus-visible:outline-2 focus-visible:outline-[#9a5967] ${isNano ? 'nano-thumb-frame' : ''} ${visibleIndex === position ? 'border-[#9a5967]' : 'border-transparent'}`}>
             <img src={photo.src} alt={photo.alt} loading="lazy" className={isNano
               ? nanoRotation(photo.src) ? `nano-rotated-image ${nanoRotation(photo.src)}` : 'w-full h-full object-contain bg-[#f5eeec]'
-              : 'w-full h-24 sm:h-36 object-cover'} />
+              : serviceId === 'classic-eyelashes' ? 'w-full h-24 sm:h-36 object-contain bg-[#f5eeec]' : 'w-full h-24 sm:h-36 object-cover'} />
           </button>)}
         </div>}
       </div>
