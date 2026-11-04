@@ -208,7 +208,7 @@ const infoPage = (route, lang) => {
   if (route === '/courses') return { title: t.courses + ' | Bella Beauty Brazil', description: t.training,
     image: siteImages.training.heroPhoto, body: '<section><h1>' + escapeHtml(t.courses) + '</h1>' +
     '<p class="seo-lead">' + escapeHtml(t.training) + '</p>' + image(siteImages.training.heroPhoto, 'Bella Beauty Brazil Academy training') +
-    '<div class="seo-grid">' + COURSES.map((course) => '<article class="seo-card">' + image(course.image, course.title) +
+    '<div class="seo-grid">' + [...COURSES].sort((a, b) => (b.id === 'nano-strokes-course') - (a.id === 'nano-strokes-course')).map((course) => '<article class="seo-card">' + image(course.image, course.title) +
       '<h3>' + escapeHtml(course.title) + '</h3><p>' + escapeHtml(course.description) + '</p>' +
       '<p><strong>A$' + escapeHtml(course.price) + '</strong></p></article>').join('') + '</div>' +
     '<section><h2>Lash Lift & Brow Lamination — practical course photography</h2>' +
