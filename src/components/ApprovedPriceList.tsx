@@ -1,7 +1,7 @@
 import React from 'react';
 import { ArrowRight, CalendarDays, ChevronDown } from 'lucide-react';
 import { APPROVED_SERVICE_CATALOG } from '../data/approvedServiceCatalog';
-import { BOOKING_URL, Language } from '../data/siteData';
+import { BOOKING_URL, Language, localPath } from '../data/siteData';
 import { getServiceGallery } from './ServicePhotoGallery';
 import { serviceCoverFor } from '../data/serviceCoverPhotos';
 import { categoryPhotosFor } from '../data/bellaApprovedMedia';
@@ -95,7 +95,7 @@ export const ApprovedPriceList: React.FC<{language: Language}> = ({ language }) 
                 {group.items.map((item) => (
                   <div key={item.name} className="flex gap-3 sm:gap-4 items-start py-4 border-b border-[#f0e6e6]">
                     {approvedServiceRoutes[item.name] && serviceCoverFor(approvedServiceRoutes[item.name]) && <a
-                      href={import.meta.env.BASE_URL + 'services/' + approvedServiceRoutes[item.name]}
+                      href={`${localPath(language)}/services/${approvedServiceRoutes[item.name]}`}
                       aria-label={`${item.name} — ${detailLabels[language].details}`}
                       className="block w-[76px] h-[88px] sm:w-24 sm:h-24 shrink-0 overflow-hidden rounded-xl border border-[#ead8db] bg-[#f7eef0] focus-visible:outline-2 focus-visible:outline-[#9a5967]">
                       <img src={serviceCoverFor(approvedServiceRoutes[item.name])?.src} alt={serviceCoverFor(approvedServiceRoutes[item.name])?.specific ? `${item.name} at Bella Beauty Brazil` : `${item.name} — representative beauty category photo`}
@@ -108,7 +108,7 @@ export const ApprovedPriceList: React.FC<{language: Language}> = ({ language }) 
                     </div>
                     {item.note && <p className="font-montserrat text-xs text-[#9a5967] font-semibold mt-2">{item.note}</p>}
                     {approvedServiceRoutes[item.name] && <a
-                      href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/services/${approvedServiceRoutes[item.name]}`}
+                      href={`${localPath(language)}/services/${approvedServiceRoutes[item.name]}`}
                       className="inline-flex items-center gap-1.5 mt-3 text-xs font-semibold text-[#8b5462] underline underline-offset-4 hover:text-[#5b3239] focus-visible:outline-2 focus-visible:outline-[#9a5967]">
                       {detailLabels[language].details}
                       {getServiceGallery(approvedServiceRoutes[item.name]).photos.length > 0 && ` · ${getServiceGallery(approvedServiceRoutes[item.name]).photos.length} ${getServiceGallery(approvedServiceRoutes[item.name]).illustrative ? detailLabels[language].related : detailLabels[language].photos}`}

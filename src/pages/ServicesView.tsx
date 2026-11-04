@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { ArrowRight, CalendarDays, Clock3, MapPin, Search, X } from 'lucide-react';
-import { BOOKING_URL, WHATSAPP_URL, SERVICES, Language, getLocalizedService, getServiceBookingUrl } from '../data/siteData';
+import { BOOKING_URL, WHATSAPP_URL, SERVICES, Language, getLocalizedService, getServiceBookingUrl, localPath } from '../data/siteData';
 import { siteImages } from '../data/siteImages';
 import { SERVICE_GROUPS } from '../data/serviceGroups';
 import { approvedDescriptionFor } from '../data/approvedServiceCatalog';
@@ -157,7 +157,7 @@ export const ServicesView: React.FC<ServicesViewProps> = ({ initialServiceId, on
       <section aria-label={language === 'en' ? 'Treatment categories' : language === 'pt' ? 'Categorias de tratamentos' : 'Categorías de tratamientos'} className="mb-9">
         <h2 className="font-raleway text-xl sm:text-2xl font-semibold text-[#5b3239] mb-4">{language === 'en' ? 'Browse by treatment category' : language === 'pt' ? 'Explorar por categoria' : 'Explorar por categoría'}</h2>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-          {SERVICE_GROUPS.map(group => <a key={group.id} href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/services/categories/${group.id}`} className="rounded-xl border border-[#e8d6d5] bg-white px-4 py-4 hover:border-[#9a5967] hover:bg-[#fff7f9] transition-colors">
+          {SERVICE_GROUPS.map(group => <a key={group.id} href={`${localPath(language)}/services/categories/${group.id}`} className="rounded-xl border border-[#e8d6d5] bg-white px-4 py-4 hover:border-[#9a5967] hover:bg-[#fff7f9] transition-colors">
             <span className="block font-raleway text-lg font-semibold text-[#5b3239]">{group.title[language]}</span>
             <span className="block text-xs font-montserrat text-[#675960] mt-1">{group.lead[language]}</span>
           </a>)}
@@ -169,7 +169,7 @@ export const ServicesView: React.FC<ServicesViewProps> = ({ initialServiceId, on
           {featuredServiceIds.map((serviceId) => {
             const service = localizedServices.find((item) => item.id === serviceId);
             if (!service) return null;
-            return <a key={service.id} href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/services/${service.id}`} onClick={(event) => navigate(event, service.id)}
+            return <a key={service.id} href={`${localPath(language)}/services/${service.id}`} onClick={(event) => navigate(event, service.id)}
               className="inline-flex gap-1.5 items-center rounded-full border border-[#dfbcc4] bg-white px-3.5 py-2.5 text-xs font-montserrat font-semibold text-[#5b3239] hover:bg-[#f3d9d0] focus-visible:outline-2 focus-visible:outline-[#9a5967] transition-colors">
               {service.title}<ArrowRight className="w-3 h-3 shrink-0" aria-hidden="true" />
             </a>;
@@ -215,11 +215,11 @@ export const ServicesView: React.FC<ServicesViewProps> = ({ initialServiceId, on
         <div data-floating-clearance className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
           {filteredServices.map((service) => <article key={service.id}
             className="bg-white border border-[#e8d6d5] rounded-2xl shadow-sm overflow-hidden flex flex-col sm:flex-row hover:shadow-lg transition-shadow">
-            {cardImageFor(service.id) ? <a href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/services/${service.id}`} onClick={(event) => navigate(event, service.id)}
+            {cardImageFor(service.id) ? <a href={`${localPath(language)}/services/${service.id}`} onClick={(event) => navigate(event, service.id)}
               className="block sm:w-[165px] sm:shrink-0 overflow-hidden bg-[#eee2df] focus-visible:outline-2 focus-visible:outline-[#9a5967]">
               <img src={cardImageFor(service.id)} alt={imageAlt(service.id, service.title)}
                 loading="lazy" className="w-full h-44 sm:h-full max-h-[240px] sm:max-h-none object-contain bg-[#eee2df] transition-transform duration-500" />
-            </a> : <a href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/services/${service.id}`} onClick={(event) => navigate(event, service.id)}
+            </a> : <a href={`${localPath(language)}/services/${service.id}`} onClick={(event) => navigate(event, service.id)}
               aria-label={`${service.title} — ${labels.details}`}
               className="flex sm:w-[165px] sm:shrink-0 min-h-32 items-center justify-center overflow-hidden bg-gradient-to-br from-[#f4e5e8] via-[#eddae0] to-[#d6bac3] text-[#5b3239] border-b sm:border-b-0 sm:border-r border-[#e8d6d5] focus-visible:outline-2 focus-visible:outline-[#9a5967]">
               <span className="flex flex-col gap-2 items-center justify-center text-center px-4 py-5">
@@ -240,7 +240,7 @@ export const ServicesView: React.FC<ServicesViewProps> = ({ initialServiceId, on
                 {service.duration && <span className="inline-flex items-center gap-1"><Clock3 className="w-3.5 h-3.5" aria-hidden="true" />{service.duration}</span>}
               </div>
               <div className="flex flex-wrap items-center gap-2 mt-auto pt-4">
-                <a href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/services/${service.id}`} onClick={(event) => navigate(event, service.id)}
+                <a href={`${localPath(language)}/services/${service.id}`} onClick={(event) => navigate(event, service.id)}
                   className="inline-flex items-center gap-1.5 border border-[#9a5967]/40 rounded-full px-3.5 py-2.5 text-[11px] font-montserrat font-bold text-[#5b3239] hover:bg-[#f3d9d0] focus-visible:outline-2 focus-visible:outline-[#9a5967] transition-colors">
                   {labels.details}<ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
                 </a>

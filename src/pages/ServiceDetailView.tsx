@@ -281,7 +281,8 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
   const noMatchingTreatmentPhoto = !cover;
   // A service without a dedicated comparison must never inherit the Nano Strokes FAQ.
   // Related treatments come from the same website category (e.g. lash extensions stay separate from lash lifts).
-  const sameGroupIds = (groupOfService(base.id)?.serviceIds as readonly string[] | undefined) || [];
+  const serviceGroup = groupOfService(base.id);
+  const sameGroupIds = (serviceGroup?.serviceIds as readonly string[] | undefined) || [];
   const categoryRelated = SERVICES.filter((item) => sameGroupIds.includes(item.id) && item.id !== base.id).slice(0, 4);
   const group = GROUPS[base.id] || {
     related: categoryRelated.map((item) => item.id),
@@ -318,9 +319,16 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
     <div className="bg-site" data-inline-booking-page data-nano-strokes-view={base.id === 'nano-strokes' ? 'true' : undefined}>
       <section data-floating-clearance={base.id === 'nano-strokes' ? true : undefined} className={`relative bg-[#5b3239] text-white ${base.id === 'nano-strokes' ? 'py-9 sm:py-14' : 'py-14 sm:py-20'} overflow-hidden scroll-rise`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <button type="button" onClick={() => onNavigate('services')} className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-[#efb7c8] hover:text-white cursor-pointer mb-8">
-            <ArrowLeft className="w-4 h-4" /> {translated(language, 'All services', 'Todos os serviços', 'Todos los servicios')}
-          </button>
+          {/* Breadcrumb: back to this treatment's category first, then all services. */}
+          <nav aria-label={translated(language, 'Breadcrumb', 'Caminho', 'Ruta')} className="flex flex-wrap items-center gap-2 text-xs uppercase tracking-widest text-[#efb7c8] mb-8">
+            <button type="button" onClick={() => onNavigate('services')} className="hover:text-white cursor-pointer">{translated(language, 'Services', 'Serviços', 'Servicios')}</button>
+            {serviceGroup && <>
+              <span aria-hidden="true">›</span>
+              <button type="button" onClick={() => onNavigate('services-category', serviceGroup.id)} className="inline-flex items-center gap-2 hover:text-white cursor-pointer">
+                <ArrowLeft className="w-4 h-4" /> {serviceGroup.title[language]}
+              </button>
+            </>}
+          </nav>
           <p className="text-xs uppercase tracking-widest text-[#efb7c8] mb-3 font-bold">Bella Beauty Brazil · Greenslopes, Brisbane</p>
           <div className={`grid grid-cols-1 lg:grid-cols-12 ${base.id === 'nano-strokes' ? 'gap-5 sm:gap-7' : 'gap-10'} items-center`}>
             <div className="lg:col-span-6">

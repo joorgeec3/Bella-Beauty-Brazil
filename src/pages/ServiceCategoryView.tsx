@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ArrowLeft, ArrowRight, CalendarDays, ChevronDown, Clock3, Images, MapPin } from 'lucide-react';
-import { SERVICES, Language, getLocalizedService, getServiceBookingUrl, BOOKING_URL, WHATSAPP_URL } from '../data/siteData';
+import { SERVICES, Language, getLocalizedService, getServiceBookingUrl, BOOKING_URL, WHATSAPP_URL, localPath } from '../data/siteData';
 import { getServiceGroup, SERVICE_GROUPS } from '../data/serviceGroups';
 import { APPROVED_SERVICE_CATALOG, approvedDescriptionFor } from '../data/approvedServiceCatalog';
 import { SERVICE_GUIDES } from '../data/serviceGuides';
@@ -23,7 +23,7 @@ const words = {
   es: { priceDuration: 'Precio y duración', durationNotListed: 'Varía según la zona', lipTouchUp: 'Retoque: A$150 · Después de 60 días', all: 'Todos los servicios', opening: 'Abre un tratamiento para ver su información, fotos, vídeos, precios y reservas en un solo lugar.', photos: 'Fotos y vídeos', view: 'Ver página completa del tratamiento', book: 'Reservar ahora', price: 'Precio', care: 'Indicaciones', results: 'Comparaciones de tratamientos relacionados', note: 'Las fotos representativas no garantizan un resultado específico.', extra: 'Opciones y precios de depilación', more: 'Ver detalles y fotos', whatsapp: 'Confirmar detalles con el estudio', none: 'Consultar al estudio' },
 } as const;
 
-const treatSlug = (id: string) => `${import.meta.env.BASE_URL.replace(/\/$/, '')}/services/${id}`;
+const treatSlug = (id: string, language: Language) => `${localPath(language)}/services/${id}`;
 
 const TreatmentEntry: React.FC<{ id: string; language: Language; first: boolean; onNavigate: Props['onNavigate'] }> = ({ id, language, first, onNavigate }) => {
   const [open, setOpen] = useState(first);
@@ -87,7 +87,7 @@ const TreatmentEntry: React.FC<{ id: string; language: Language; first: boolean;
         {id === 'lip-blush' ? <div className="mt-5 rounded-xl bg-[#faf0f2] p-4 sm:p-5"><h3 className="font-raleway font-semibold text-lg text-[#5b3239]">Is this treatment right for me?</h3><p className="font-montserrat text-base leading-7 mt-2 text-[#3f3539]">This treatment may suit you if you would like to enhance pale lips, improve colour definition or achieve a softly tinted look. I assess your natural lip colour and discuss your goals before recommending a personalised treatment.</p></div> : guide && <div className="mt-5 rounded-xl bg-[#faf0f2] p-4 sm:p-5"><h3 className="font-raleway font-semibold text-lg text-[#5b3239]">{copy.care}</h3><p className="font-montserrat text-sm leading-relaxed mt-2 text-[#55464c]">{guide.idealFor}</p>{id !== 'waxing' && <p className="font-montserrat text-sm leading-relaxed mt-2 text-[#55464c]">{guide.comparison}</p>}</div>}
         <div className="flex flex-wrap gap-3 mt-6 items-center">
           <a href={getServiceBookingUrl(id)} className="inline-flex items-center justify-center gap-2 bg-[#5b3239] text-white rounded-full px-5 py-3 text-xs font-bold hover:bg-[#7a4753]"><CalendarDays className="w-4 h-4"/>{copy.book}</a>
-          {id !== 'waxing' && <a href={treatSlug(id)} onClick={onTreatmentLink} className="inline-flex items-center gap-2 rounded-full border border-[#9a5967]/50 px-5 py-3 text-xs font-semibold text-[#5b3239] hover:bg-[#f3d9d0]">{id === 'lip-blush' ? 'View Lip Blush care & details' : copy.view}<ArrowRight className="w-4 h-4"/></a>}
+          {id !== 'waxing' && <a href={treatSlug(id, language)} onClick={onTreatmentLink} className="inline-flex items-center gap-2 rounded-full border border-[#9a5967]/50 px-5 py-3 text-xs font-semibold text-[#5b3239] hover:bg-[#f3d9d0]">{id === 'lip-blush' ? 'View Lip Blush care & details' : copy.view}<ArrowRight className="w-4 h-4"/></a>}
         </div>
       </div>
       {id !== 'waxing' && photoSet.photos.some(photo => photo.src !== cover?.src) && <ServicePhotoGallery serviceId={id} language={language} excludeSrc={cover?.src} />}
@@ -117,6 +117,12 @@ export const ServiceCategoryView: React.FC<Props> = ({ groupId, language, onNavi
         <p className="font-montserrat text-xs uppercase tracking-widest text-[#efb7c8] mt-7">Bella Beauty Brazil · Greenslopes, Brisbane</p>
         <h1 className="font-raleway text-3xl sm:text-5xl uppercase tracking-wider mt-3">{group.title[language]}</h1>
         <p className="font-montserrat text-sm sm:text-base text-[#f3dfe6] mt-4 leading-relaxed max-w-2xl">{group.lead[language]}</p>
+        {/* Quick switch between categories (e.g. Lash Lift ↔ Lash Extensions) without scrolling to the end. */}
+        <nav aria-label={language === 'en' ? 'Other treatment categories' : language === 'pt' ? 'Outras categorias' : 'Otras categorías'} className="mt-5 flex flex-wrap gap-2">
+          {SERVICE_GROUPS.filter(g => g.id !== groupId).map(other => <a key={other.id} href={`${localPath(language)}/services/categories/${other.id}`}
+            onClick={event => { if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return; event.preventDefault(); onNavigate('services-category', other.id); }}
+            className="inline-flex rounded-full bg-white/10 hover:bg-white/20 border border-white/20 px-3 py-1.5 text-[11px] font-semibold text-white">{other.title[language]}</a>)}
+        </nav>
         <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer"
           className="inline-flex items-center rounded-full border border-[#efb7c8]/65 text-[#f3dfe6] px-4 py-2.5 mt-5 font-montserrat text-xs font-semibold hover:bg-white/10">
           {language === 'en' ? 'Questions? WhatsApp' : language === 'pt' ? 'Dúvidas? WhatsApp' : '¿Preguntas? WhatsApp'}
@@ -174,7 +180,7 @@ export const ServiceCategoryView: React.FC<Props> = ({ groupId, language, onNavi
         <a href={BOOKING_URL} className="inline-flex mt-5 rounded-full bg-[#5b3239] text-white px-6 py-3 text-xs font-bold hover:bg-[#7a4753]">{t.book}<ArrowRight className="w-4 h-4 ml-2"/></a>
       </section>}
       <p className="flex gap-2 items-center text-xs font-montserrat text-[#675960] mt-10"><MapPin className="w-4 h-4" />Suite 3, 412 Logan Road, Greenslopes, QLD 4120</p>
-      <nav className="mt-7 flex flex-wrap gap-2">{SERVICE_GROUPS.filter(g => g.id !== groupId).map(other => <a key={other.id} href={`${import.meta.env.BASE_URL.replace(/\/$/,'')}/services/categories/${other.id}`} className="inline-flex gap-2 border border-[#d8bac3] rounded-full px-3.5 py-2 text-xs font-semibold text-[#5b3239] hover:bg-[#f3d9d0]">{other.title[language]}<ArrowRight className="w-3 h-3"/></a>)}</nav>
+      <nav className="mt-7 flex flex-wrap gap-2">{SERVICE_GROUPS.filter(g => g.id !== groupId).map(other => <a key={other.id} href={`${localPath(language)}/services/categories/${other.id}`} className="inline-flex gap-2 border border-[#d8bac3] rounded-full px-3.5 py-2 text-xs font-semibold text-[#5b3239] hover:bg-[#f3d9d0]">{other.title[language]}<ArrowRight className="w-3 h-3"/></a>)}</nav>
     </div>
   </div>;
 };

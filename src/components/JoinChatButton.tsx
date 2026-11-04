@@ -23,7 +23,7 @@ export const JoinChatButton: React.FC<JoinChatButtonProps> = ({ language }) => {
           <div className="bg-[#25D366] text-white p-4 flex items-center justify-between">
             <div className="flex items-center space-x-2">
               <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center font-bold text-sm">
-                M
+                B
               </div>
               <div>
                 <h4 className="font-bold text-xs uppercase tracking-wider">Bella Beauty</h4>

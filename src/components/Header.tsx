@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Calendar, Menu, X, ChevronDown, Globe, GraduationCap } from 'lucide-react';
-import { SERVICES, LOCATIONS, Language } from '../data/siteData';
+import { Calendar, Clock, Menu, X, ChevronDown, Globe, GraduationCap } from 'lucide-react';
+import { SERVICES, Language } from '../data/siteData';
 import { BrandLogo } from './BrandLogo';
 import { SERVICE_GROUPS } from '../data/serviceGroups';
 
@@ -226,8 +226,8 @@ export const Header: React.FC<HeaderProps> = ({
                   </button>
                 ))}
                 <div className="mx-4 my-1 border-t border-[#d8be9b]/50" />
-                <p className="px-4 py-2 text-[10px] font-semibold tracking-wide text-[#806859]">Lash Lift · Lash Extensions · Exos Hair Care</p>
-                {SERVICES.filter((service) => ['lash-lift','classic-eyelashes','hybrid-eyelashes','lash-extension-removal','grow-up-hair-brows','grow-up-hair-scalp'].includes(service.id)).map((service) => (
+                <p className="px-4 py-2 text-[10px] font-semibold tracking-wide text-[#806859]">Exos Hair Care</p>
+                {SERVICES.filter((service) => ['grow-up-hair-brows','grow-up-hair-scalp'].includes(service.id)).map((service) => (
                   <button key={service.id} type="button" onClick={() => onNavigate('services', service.id)}
                     className="w-full text-left px-4 py-2 text-xs text-[#3c3033] hover:bg-[#ede5dc] hover:text-[#9a5967] cursor-pointer">
                     {service.title}
@@ -236,32 +236,15 @@ export const Header: React.FC<HeaderProps> = ({
               </div>
             </div>
 
-            {/* Location & Hours Dropdown */}
-            <div className="relative group">
-              <button
-                onClick={() => onNavigate('locations')}
-                className={`flex items-center gap-1 px-2.5 py-1.5 transition-colors cursor-pointer rounded-sm ${
-                  currentTab === 'locations' ? 'text-[#9a5967] font-bold border-b-2 border-[#9a5967]' : 'hover:text-[#9a5967]'
-                }`}
-              >
-                <span>{language === 'en' ? 'Location & Hours' : language === 'pt' ? 'Local e horários' : 'Ubicación y horarios'}</span>
-                <ChevronDown className="w-3.5 h-3.5 text-[#806859] transition-transform group-hover:rotate-180 group-hover:text-[#9a5967]" />
-              </button>
-              <div className="absolute left-0 mt-0 w-56 bg-[#fbf8f5] shadow-xl rounded-b-md border border-[#d8be9b]/40 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 py-2">
-                {LOCATIONS.map((loc) => (
-                  <button
-                    key={loc.id}
-                    onClick={() => onNavigate('locations', loc.id)}
-                    className="w-full text-left px-4 py-2.5 text-xs text-[#3c3033] hover:bg-[#ede5dc] hover:text-[#9a5967] transition-colors uppercase tracking-wider cursor-pointer flex items-center justify-between"
-                  >
-                    <span>{loc.name}</span>
-                    {loc.isComingSoon && (
-                      <span className="text-[9px] bg-[#9a5967]/15 text-[#5b3239] border border-[#9a5967]/30 px-1.5 py-0.5 rounded-sm font-semibold">{labels.soon}</span>
-                    )}
-                  </button>
-                ))}
-              </div>
-            </div>
+            {/* Location & Hours (single studio, so a direct link instead of a dropdown) */}
+            <button
+              onClick={() => onNavigate('locations')}
+              className={`px-2.5 py-1.5 transition-colors cursor-pointer rounded-sm ${
+                currentTab === 'locations' ? 'text-[#9a5967] font-bold border-b-2 border-[#9a5967]' : 'hover:text-[#9a5967]'
+              }`}
+            >
+              {labels.location}
+            </button>
 
             {/* Courses */}
             <button
@@ -294,7 +277,7 @@ export const Header: React.FC<HeaderProps> = ({
                 className="flex items-center space-x-1.5 bg-[#9a5967] hover:bg-[#7a4753] text-white text-[11px] lg:text-xs font-bold uppercase tracking-wider px-3.5 lg:px-4 py-2 rounded-full transition-all duration-300 shadow-[0_4px_16px_rgba(156,114,68,0.28)] cursor-pointer transform hover:scale-105"
               >
                 <Calendar className="w-3.5 h-3.5 text-white" />
-                <span>{language === 'en' ? 'BOOK NOW' : language === 'pt' ? 'AGENDA' : 'AGENDAR CITA'}</span>
+                <span>{language === 'en' ? 'BOOK NOW' : language === 'pt' ? 'AGENDAR' : 'RESERVAR'}</span>
               </button>
               <button type="button" onClick={() => onNavigate('store')} className="inline-flex items-center gap-1 text-[9px] font-bold uppercase tracking-widest text-[#9a5967] hover:text-[#5b3239] cursor-pointer">
                 <GraduationCap className="w-3 h-3" />{labels.courses}
@@ -318,10 +301,10 @@ export const Header: React.FC<HeaderProps> = ({
             <button
               onClick={onOpenHours}
               className="hidden lg:flex p-1.5 text-[#5c4943] hover:text-[#9a5967] transition-colors cursor-pointer"
-              aria-label="Operating Hours"
-              title={language === 'en' ? 'Operating hours' : language === 'pt' ? 'Horários' : 'Horarios'}
+              aria-label={language === 'en' ? 'Opening hours' : language === 'pt' ? 'Horários' : 'Horarios'}
+              title={language === 'en' ? 'Opening hours' : language === 'pt' ? 'Horários' : 'Horarios'}
             >
-              <Menu className="w-5 h-5" />
+              <Clock className="w-5 h-5" />
             </button>
 
             {/* Mobile/tablet menu trigger (visible below lg) */}
@@ -410,6 +393,17 @@ export const Header: React.FC<HeaderProps> = ({
 
 
           <button
+            onClick={() => handleMobileSelect('store')}
+            className={`w-full text-left px-4 py-2.5 rounded-lg text-sm font-semibold uppercase tracking-wider transition-colors ${
+              currentTab === 'store'
+                ? 'text-[#9a5967] bg-[#ede6df] font-bold'
+                : 'text-[#3c3033] hover:bg-[#ede6df]/60 hover:text-[#9a5967]'
+            }`}
+          >
+              {labels.courses}
+          </button>
+
+          <button
             onClick={() => handleMobileSelect('contact')}
             className={`w-full text-left px-4 py-2.5 rounded-lg text-sm font-semibold uppercase tracking-wider transition-colors ${
               currentTab === 'contact'
@@ -473,7 +467,7 @@ export const Header: React.FC<HeaderProps> = ({
             className="w-full flex items-center justify-center space-x-2 bg-[#9a5967] hover:bg-[#7a4753] text-white text-xs font-bold uppercase tracking-wider py-2.5 rounded-md cursor-pointer shadow-md"
           >
             <Calendar className="w-4 h-4 text-white" />
-            <span>{language === 'en' ? 'BOOK NOW' : language === 'pt' ? 'AGENDA' : 'AGENDAR CITA'}</span>
+            <span>{language === 'en' ? 'BOOK NOW' : language === 'pt' ? 'AGENDAR' : 'RESERVAR'}</span>
           </button>
           <button
             onClick={() => handleMobileSelect('store')}

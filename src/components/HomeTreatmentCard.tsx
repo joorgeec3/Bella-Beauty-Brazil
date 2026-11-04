@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { ArrowRight, ChevronLeft, ChevronRight, Images } from 'lucide-react';
 import type { Language, Service } from '../data/siteData';
+import { localPath } from '../data/siteData';
 import { getServicePhotos } from './ServicePhotoGallery';
 
 interface HomeTreatmentCardProps {
@@ -30,7 +31,7 @@ export const HomeTreatmentCard: React.FC<HomeTreatmentCardProps> = ({
   const ignoreClick = useRef(false);
   const active = photos[activeIndex % photos.length];
   const label = labels[language];
-  const serviceUrl = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/services/${service.id}`;
+  const serviceUrl = `${localPath(language)}/services/${service.id}`;
   const changePhoto = (direction: number) =>
     setActiveIndex((current) => (current + direction + photos.length) % photos.length);
 

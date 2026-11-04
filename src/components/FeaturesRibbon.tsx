@@ -1,6 +1,6 @@
 import React from 'react';
 import { Award, ShieldCheck, Sparkles, Smile } from 'lucide-react';
-import { Language } from '../data/siteData';
+import { Language, localPath } from '../data/siteData';
 import { siteImages } from '../data/siteImages';
 import { getServicePhotos } from './ServicePhotoGallery';
 import { categoryPhotosFor } from '../data/bellaApprovedMedia';
@@ -70,7 +70,7 @@ export const FeaturesRibbon: React.FC<FeaturesRibbonProps> = ({ language, onOpen
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto gap-4 sm:gap-6 lg:gap-7 items-stretch scroll-stagger lg:[&>*:last-child:nth-child(3n+1)]:col-start-2">
         {cards.map((card, index) => {
           const group = SERVICE_GROUPS[index];
-          const href = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/services/categories/${group.id}`;
+          const href = `${localPath(language)}/services/categories/${group.id}`;
           return <a key={card.title} href={href} aria-label={`${card.title} — ${group.lead[language]}`}
             onClick={event => {
               if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;

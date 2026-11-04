@@ -8,6 +8,10 @@ export interface Service {
   benefits?: string[]; link?: string; price?: number; duration?: string; category?: string;
 }
 export interface Course { id: string; title: string; description: string; duration: string; price: number; image: string; bookingUrl: string; }
+/** Site path prefix for a language, so plain links keep the visitor's language (EN has no prefix). */
+export const localPath = (language: Language): string =>
+  `${(import.meta.env?.BASE_URL || '/').replace(/\/$/, '')}${language === 'en' ? '' : '/' + language}`;
+
 /** Single source for opening hours (site, drawer and pre-rendered HTML). Sunday is closed. */
 export const OPENING_HOURS = [
   ['Monday', '11:00–17:30'],
