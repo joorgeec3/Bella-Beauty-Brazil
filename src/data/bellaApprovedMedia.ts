@@ -58,6 +58,21 @@ const labelledPhotos = (photos: TreatmentPhoto[], treatment: string): TreatmentP
     caption: `${treatment} · ${index + 1} / ${photos.length}`,
   }));
 const newerFolderLabels: Record<string,TreatmentPhoto[]> = {
+  // Original user-provided photographs for the Exos Hair Brows page.
+  // They show eyebrow detail and a studio brow-care session. Do not
+  // describe the 3-panel photo as proof of Exos regrowth or efficacy.
+  'grow-up-hair-brows': [
+    {
+      src: `${import.meta.env?.BASE_URL || '/'}assets/bella/exos-hair-brows/IMG_3667-1.PNG`,
+      alt: 'Eyebrow treatment session at Bella Beauty Brazil studio',
+      caption: 'Exos Hair Brows · Studio eyebrow-care session',
+    },
+    {
+      src: `${import.meta.env?.BASE_URL || '/'}assets/bella/exos-hair-brows/IMG_3391.PNG`,
+      alt: 'Three detailed photographs of a natural eyebrow',
+      caption: 'Exos Hair Brows · Eyebrow photography',
+    },
+  ],
   // Client-provided Classic set: one lash close-up plus two honest
   // behind-the-scenes studio photographs. Original PNG bytes are unchanged.
   'classic-eyelashes': [
