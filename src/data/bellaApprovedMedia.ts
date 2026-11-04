@@ -124,6 +124,11 @@ const newerFolderLabels: Record<string,TreatmentPhoto[]> = {
       alt: 'Wet Look Lash Extensions — original photograph from Bella Beauty Brazil',
       caption: 'Wet Look Lash Extensions · Original client photograph',
     },
+    {
+      src: `${import.meta.env?.BASE_URL || '/'}assets/bella/wet-eyelash-extensions/IMG_3675.PNG`,
+      alt: 'Wet Look Lash Extensions — original close-up photograph from Bella Beauty Brazil',
+      caption: 'Wet Look Lash Extensions · Additional original photograph',
+    },
   ],
   // The new RAR explicitly names "Lip Hydration treatment"; only rename
   // captions here. Source images are unchanged, not copied or repeated.
