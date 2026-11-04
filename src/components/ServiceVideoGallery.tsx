@@ -38,6 +38,14 @@ const serviceVideoFolderToRoute: Record<string, string> = {
 // exclude it rather than presenting the wrong procedure.
 // Client-supplied original Wet Look video (H.264 MP4). No transcoding or cropping.
 const additionalStudioClips: Record<string, VideoItem[]> = {
+  'classic-eyelashes': [{
+    src: `${import.meta.env.BASE_URL}assets/bella/eyelash-extensions-originals/classic-eyelashes-original.mp4`,
+    title: 'Classic Eyelash Extensions — client-supplied original video (IMG_3664.MP4)',
+  }],
+  'hybrid-eyelashes': [{
+    src: `${import.meta.env.BASE_URL}assets/bella/eyelash-extensions-originals/hybrid-eyelashes-original.mp4`,
+    title: 'Hybrid Eyelash Extensions — client-supplied original video (IMG_3665.MP4)',
+  }],
   'wet-look-lashes': [{
     src: `${import.meta.env.BASE_URL}assets/bella/wet-eyelash-extensions/IMG_9781.MP4`,
     title: 'Wet Look Lash Extensions — original studio video',
