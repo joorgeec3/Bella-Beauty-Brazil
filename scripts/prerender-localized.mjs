@@ -25,7 +25,7 @@ const details = {
     price: 'Price', duration: 'Duration', studio: 'Our studio in Greenslopes, Brisbane',
     guidance: 'Discuss personal suitability, preparation and aftercare with the studio before booking.',
     disclaimer: 'Photos from our Greenslopes studio.',
-    training: 'Explore practical courses and the Professional Eyebrow Design programme.',
+    training: 'Explore one-to-one Nano Strokes, Lash Lift and Brow Lamination courses with Livia Rego.',
   },
   pt: {
     html: 'pt-BR', search: 'Tratamentos de beleza em Greenslopes, Brisbane', home: 'Beleza e formação profissional em Greenslopes',
@@ -218,8 +218,7 @@ const infoPage = (route, lang) => {
     image('/assets/bella/training/brow-lamination-continuation-2026-11/IMG_2450.JPG', 'Beauty training with a model at the studio') +
     image('/assets/bella/training/brow-lamination-continuation-2026-11/IMG_1986.JPEG', 'Lash Lifting course completion photograph') +
     '</div></section>' +
-    '<h2>Professional Eyebrow Design · Modules 21–27</h2><p>Client Consultation, Brow Design Worksheet, Practical Training, Common Mistakes, Client Aftercare, Professional Photography and Social Media for Brow Artists.</p>' +
-    '<p>Final Examination · Certificate of Completion · Bella Beauty Brazil Academy</p></section>' };
+    '</section>' };
   if (route === '/about') return { title: t.about + ' | Bella Beauty Brazil', description: t.intro,
     image: siteImages.aboutMe.liviaFeaturePhoto, body: '<section><h1>' + escapeHtml(t.about) + '</h1>' +
     image(siteImages.aboutMe.liviaFeaturePhoto, 'Livia Rego, Bella Beauty Brazil', true) +

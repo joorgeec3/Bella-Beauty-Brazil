@@ -3,7 +3,9 @@ import { ArrowRight, CheckCircle2, GraduationCap, MessageCircle } from 'lucide-r
 import { COURSES, Language } from '../data/siteData';
 import { siteImages, siteAsset } from '../data/siteImages';
 import { RobustAutoPlayVideo } from '../components/RobustAutoPlayVideo';
-import { BrowDesignAcademy } from '../components/BrowDesignAcademy';
+// BrowDesignAcademy (Professional Eyebrow Design, Modules 21–27) is hidden
+// from the page at Livia's request (Nov 2026) while she rebuilds that course.
+// The component is kept in src/components/BrowDesignAcademy.tsx.
 
 interface StoreViewProps { language: Language; }
 // Training archive audit (October 2026):
@@ -97,7 +99,7 @@ const Fact: React.FC<{ children: React.ReactNode }> = ({ children }) => (
  * courses sit side by side with equal-height cards (no empty space); videos
  * and photos follow in their own sections.
  */
-export const StoreView: React.FC<StoreViewProps> = ({ language }) => {
+export const StoreView: React.FC<StoreViewProps> = () => {
   const nano = COURSES.find(c => c.id === 'nano-strokes-course')!;
   const others = COURSES.filter(c => c.id !== 'nano-strokes-course');
   return (
@@ -248,7 +250,6 @@ export const StoreView: React.FC<StoreViewProps> = ({ language }) => {
         </div>
       </section>
 
-      <BrowDesignAcademy language={language} />
     </main>
   );
 };
