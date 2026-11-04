@@ -23,16 +23,61 @@ const combinedCourseClips = [1, 2, 3, 4, 5].map(n => ({
 
 
 const whatsappFor = (title: string) => 'https://wa.me/61402148437?text=' + encodeURIComponent('Hi Livia, I would like to enquire about the ' + title + ' at Bella Beauty Brazil.');
-const NANO_LEARN = ['Brow mapping & facial analysis', 'Hair-flow patterns', 'Pigment selection', 'Skin assessment', 'Depth & pressure control', 'Hygiene & safety', 'Client consultation', 'Aftercare'];
-const NANO_INCLUDED = ['Synthetic-skin practice', 'Live demonstration by Livia', 'Supervised treatment on a model, with individual feedback', 'Starter kit: Tebori tool, blades, pigments, mapping supplies and practice skins', 'Training manual & certificate', 'Six months of technical support'];
-const SECONDARY_COURSES: Record<string, { pitch: string; included: string[] }> = {
+const NANO_LEARN: [string, string][] = [
+  ['Brow mapping & facial analysis', 'Design brows that suit each face: proportions, symmetry and the client’s natural features.'],
+  ['Hair-flow patterns', 'Draw strokes that follow the real direction and movement of brow hair, so results look natural.'],
+  ['Pigment selection', 'Choose and match pigment colours to skin tone and undertone for a soft, believable finish.'],
+  ['Skin assessment', 'Read different skin types and know how each one affects healing and stroke definition.'],
+  ['Depth & pressure control', 'The key to crisp, fine strokes that heal well: how deep to work and how much pressure to use.'],
+  ['Hygiene & safety', 'Professional standards for set-up, disposables, cross-contamination and a safe workspace.'],
+  ['Client consultation', 'How to assess suitability, set expectations and plan the treatment with each client.'],
+  ['Aftercare', 'What to tell clients after the treatment so their brows heal beautifully.'],
+];
+const NANO_INCLUDED = [
+  'Practice on synthetic skin until your strokes are confident',
+  'A live demonstration by Livia, step by step',
+  'Your own supervised treatment on a real model, with individual feedback',
+  'Professional starter kit: Tebori tool, disposable blades, pigments, mapping supplies, practice skins and disposables',
+  'Training manual to keep',
+  'Certificate of completion',
+  'Six months of technical support after the course',
+];
+const NANO_WHY = [
+  ['One-to-one, never a group', 'Three full days with Livia’s attention on you, your hand and your questions.'],
+  ['Real model, real studio', 'You finish the course having performed a treatment yourself, not only watched one.'],
+  ['Support after you leave', 'Six months of technical support while you start working on your own clients.'],
+];
+const SECONDARY_COURSES: Record<string, { pitch: string; forWho: string; included: string[] }> = {
   'lash-lift-course': {
-    pitch: 'Learn to lift, curl and tint natural lashes in one personalised day.',
-    included: ['Consultation, lash assessment & shield selection', 'Product application & processing times', 'Two live models: Livia demonstrates, you practise', 'Take-home starter kit, manual & certificate', 'One year of WhatsApp support'],
+    pitch: 'A full day of personalised, one-to-one training with Livia. You’ll learn to lift, curl and tint natural lashes, working on two live models: one where Livia demonstrates every step, and one where you do the treatment yourself under her supervision.',
+    forWho: 'For beginners and beauty professionals who want to add a popular, low-maintenance lash service.',
+    included: [
+      'Consultation and lash assessment: who is suitable and what to expect',
+      'Choosing the right shield for each eye and lash length',
+      'Product application, processing times and how to avoid over-processing',
+      'Lash tinting for a finished, mascara-like look',
+      'Safety, hygiene and aftercare advice for clients',
+      'Two live models: Livia demonstrates, then you practise with her guidance',
+      'Take-home professional starter kit, training manual and certificate',
+      'All products and disposables used during training',
+      'One year of WhatsApp support after the course',
+    ],
   },
   'brow-lamination-course': {
-    pitch: 'Learn to reshape, groom and tint natural brows in one personalised day.',
-    included: ['Brow & hair assessment, mapping and shaping', 'Lamination, tinting & processing times', 'Two live models: Livia demonstrates, you practise', 'Take-home starter kit, manual & certificate', 'One year of WhatsApp support'],
+    pitch: 'A full day of personalised, one-to-one training with Livia. You’ll learn to reshape, groom and tint natural brows for a full, lifted, brushed-up look, working on two live models: one where Livia demonstrates every step, and one where you do the treatment yourself under her supervision.',
+    forWho: 'For beginners and beauty professionals who want to offer one of today’s most requested brow services.',
+    included: [
+      'Consultation and brow and hair assessment',
+      'Brow mapping and shaping to suit each face',
+      'Lamination step by step, with correct processing times',
+      'Brow tinting and choosing the right colour',
+      'Conditioning care to keep brow hair healthy',
+      'Safety, hygiene and aftercare advice for clients',
+      'Two live models: Livia demonstrates, then you practise with her guidance',
+      'Take-home professional starter kit, training manual and certificate',
+      'All products and disposables used during training',
+      'One year of WhatsApp support after the course',
+    ],
   },
 };
 
@@ -78,19 +123,28 @@ export const StoreView: React.FC<StoreViewProps> = ({ language }) => {
       {/* Signature course: Nano Strokes */}
       <section id="nano-strokes-course" className="scroll-mt-24 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20" aria-labelledby="nano-course-heading">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
-          <figure className="rounded-[28px] overflow-hidden border border-[#e8d6d5] bg-[#f4e8ea] shadow-xl">
-            <img src={siteImages.training.coursePhotos['nano-strokes-course']} alt="Bella Nano Strokes Course with Livia Rego" loading="eager" decoding="async" className="w-full aspect-[4/5] object-cover" />
-          </figure>
+          <div className="space-y-4">
+            <figure className="rounded-[28px] overflow-hidden border border-[#e8d6d5] bg-[#f4e8ea] shadow-xl">
+              <img src={siteImages.training.coursePhotos['nano-strokes-course']} alt="Bella Nano Strokes Course with Livia Rego" loading="eager" decoding="async" className="w-full aspect-[4/5] object-cover" />
+            </figure>
+            {NANO_WHY.map(([title, detail]) => (
+              <div key={title} className="rounded-2xl border border-[#e8d6d5] bg-white p-5">
+                <p className="font-raleway text-lg font-semibold text-[#5b3239]">{title}</p>
+                <p className="font-montserrat text-sm text-[#4c3b42] mt-1">{detail}</p>
+              </div>
+            ))}
+          </div>
           <div>
             <span className="inline-flex rounded-full bg-[#5b3239] px-3 py-1 font-montserrat text-[11px] font-bold uppercase tracking-widest text-[#efb7c8]">Signature course</span>
             <h2 id="nano-course-heading" className="font-raleway text-3xl sm:text-4xl font-semibold text-[#5b3239] mt-4">Bella Nano Strokes Course</h2>
-            <p className="font-montserrat text-base leading-relaxed text-[#4c3b42] mt-4">Manual cosmetic tattooing with the Tebori tool. Learn to create realistic, hair-like brow strokes in three days of one-to-one training with Livia.</p>
+            <p className="font-montserrat text-base leading-relaxed text-[#4c3b42] mt-4">Manual cosmetic tattooing with the Tebori tool. In three days of one-to-one training with Livia, you’ll learn to create fine, realistic, hair-like brow strokes that follow the natural movement of each client’s brows.</p>
+            <p className="font-montserrat text-sm leading-relaxed text-[#4c3b42] mt-3">You start on synthetic skin, watch Livia perform a full treatment, and finish by doing your own supervised treatment on a real model. You leave with a professional kit, a manual, a certificate and six months of support.</p>
             <div className="flex flex-wrap gap-2 mt-5">
               <Fact>3 days</Fact><Fact>One-to-one</Fact><Fact>In person · Greenslopes</Fact><Fact>Dates arranged individually</Fact>
             </div>
             <h3 className="font-raleway text-lg font-semibold text-[#5b3239] mt-7">What you’ll learn</h3>
-            <ul className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-2">
-              {NANO_LEARN.map(item => <li key={item} className="flex items-start gap-2 font-montserrat text-sm text-[#4c3b42]"><CheckCircle2 className="w-4 h-4 text-[#9a5967] shrink-0 mt-0.5" aria-hidden="true" />{item}</li>)}
+            <ul className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-3">
+              {NANO_LEARN.map(([title, detail]) => <li key={title} className="flex items-start gap-2 font-montserrat text-sm text-[#4c3b42]"><CheckCircle2 className="w-4 h-4 text-[#9a5967] shrink-0 mt-0.5" aria-hidden="true" /><span><strong className="font-semibold text-[#5b3239]">{title}.</strong> {detail}</span></li>)}
             </ul>
             <h3 className="font-raleway text-lg font-semibold text-[#5b3239] mt-6">What’s included</h3>
             <ul className="mt-3 space-y-2">
@@ -130,20 +184,14 @@ export const StoreView: React.FC<StoreViewProps> = ({ language }) => {
               const info = SECONDARY_COURSES[course.id];
               return (
                 <article key={course.id} className="bg-white rounded-2xl overflow-hidden shadow-lg border border-[#e8d6d5] flex flex-col">
-                  {course.id === 'brow-lamination-course' ? (
-                    <div className="grid grid-cols-3 gap-0.5 bg-[#f4e8ea]">
-                      {BROW_COURSE_PHOTOS.map(photo => (
-                        <img key={photo.name} src={siteAsset('assets/bella/training/brow-lamination-continuation-2026-11/' + photo.name)} alt={photo.alt} loading="lazy" decoding="async" className="block w-full aspect-[8/15] object-cover" />
-                      ))}
-                    </div>
-                  ) : (
-                    <img src={siteImages.training.coursePhotos[course.id as keyof typeof siteImages.training.coursePhotos] || course.image} alt={`${course.title} — Bella Beauty Brazil`} loading="lazy" decoding="async" className="w-full aspect-[16/10] object-cover bg-[#f4e8ea]" />
-                  )}
+                  <img src={course.id === 'brow-lamination-course' ? siteAsset('assets/bella/training/brow-lamination-continuation-2026-11/' + BROW_COURSE_PHOTOS[0].name) : (siteImages.training.coursePhotos[course.id as keyof typeof siteImages.training.coursePhotos] || course.image)} alt={course.id === 'brow-lamination-course' ? BROW_COURSE_PHOTOS[0].alt : `${course.title} — Bella Beauty Brazil`} loading="lazy" decoding="async" className="w-full aspect-[16/10] object-cover bg-[#f4e8ea]" />
                   <div className="p-6 flex flex-col grow">
                     <h3 className="font-raleway text-xl font-bold text-[#5b3239]">{course.title}</h3>
-                    <p className="font-montserrat text-sm text-[#4c3b42] mt-2">{info?.pitch}</p>
+                    <p className="font-montserrat text-sm leading-relaxed text-[#4c3b42] mt-2">{info?.pitch}</p>
+                    <p className="font-montserrat text-sm italic text-[#7a4753] mt-3">{info?.forWho}</p>
                     <div className="flex flex-wrap gap-2 mt-4"><Fact>8 hours</Fact><Fact>One-to-one</Fact><Fact>Dates by arrangement</Fact></div>
-                    <ul className="mt-5 space-y-2 grow">
+                    <p className="font-montserrat text-[11px] font-bold uppercase tracking-widest text-[#9a5967] mt-5">What you’ll learn &amp; what’s included</p>
+                    <ul className="mt-3 space-y-2 grow">
                       {info?.included.map(item => <li key={item} className="flex items-start gap-2 font-montserrat text-sm text-[#4c3b42]"><CheckCircle2 className="w-4 h-4 text-[#9a5967] shrink-0 mt-0.5" aria-hidden="true" />{item}</li>)}
                     </ul>
                     <div className="mt-6 flex items-center justify-between gap-4 border-t border-[#f0e3e5] pt-5">
@@ -158,12 +206,19 @@ export const StoreView: React.FC<StoreViewProps> = ({ language }) => {
             })}
           </div>
 
-          <h3 className="font-raleway text-xl font-semibold text-[#5b3239] text-center mt-14">Brow Lamination Course — class videos</h3>
+          <h3 className="font-raleway text-xl font-semibold text-[#5b3239] text-center mt-14">Brow Lamination Course — class videos &amp; photos</h3>
           <div className="mt-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
             {combinedCourseClips.map((clip, index) => (
               <figure key={clip.key} className="bg-white rounded-2xl overflow-hidden border border-[#e8d6d5]">
                 <div className="aspect-[3/4] w-full bg-[#281d23]"><RobustAutoPlayVideo src={clip.src} poster={siteAsset('assets/bella/training/brow-lamination-continuation-2026-11/Facetune_23-02-2023-12-58-24.JPEG')} controls className="w-full h-full object-contain" /></div>
                 <figcaption className="px-3 py-2 font-montserrat text-xs text-[#5b3239]">Class video {index + 1}</figcaption>
+              </figure>
+            ))}
+          </div>
+          <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl mx-auto">
+            {BROW_COURSE_PHOTOS.slice(1).map(photo => (
+              <figure key={photo.name} className="overflow-hidden rounded-2xl border border-[#e8d6d5] bg-white">
+                <img src={siteAsset('assets/bella/training/brow-lamination-continuation-2026-11/' + photo.name)} alt={photo.alt} loading="lazy" decoding="async" className="block w-full aspect-[4/5] object-cover" />
               </figure>
             ))}
           </div>
