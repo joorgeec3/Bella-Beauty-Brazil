@@ -4,8 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "node scripts/restore-eyelash-videos.mjs && node scripts/restore-exos-brow-media.mjs && vite --port=3000 --host=0.0.0.0",
-    "build": "npm run lint && node scripts/restore-eyelash-videos.mjs && node scripts/restore-exos-brow-media.mjs && vite build && node --import tsx scripts/prerender.mjs && node --import tsx scripts/prerender-localized.mjs && npm run test:seo",
+    "dev": "node scripts/restore-eyelash-videos.mjs && node scripts/restore-exos-brow-media.mjs && node scripts/restore-exos-scalp-media.mjs && vite --port=3000 --host=0.0.0.0",
+    "build": "npm run lint && node scripts/restore-eyelash-videos.mjs && node scripts/restore-exos-brow-media.mjs && node scripts/restore-exos-scalp-media.mjs && vite build && node --import tsx scripts/prerender.mjs && node --import tsx scripts/prerender-localized.mjs && npm run test:seo",
     "test:seo": "node --import tsx scripts/verify-static-site.mjs",
     "preview": "vite preview",
     "clean": "rm -rf dist server.js",

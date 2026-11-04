@@ -98,5 +98,19 @@ for (const lang of Object.keys(languages)) {
   }
 }
 
+
+const exosScalpOriginalSha = 'fc2a7a9f1735798aa74cdf9f4e7b3cfa5135dfc7221a1390a54767ec74784240';
+const exosScalpBytes = await readFile(join(output, 'assets', 'bella', 'exos-hair-scalp', 'IMG_3674.PNG'));
+if (exosScalpBytes.length !== 3862643 ||
+    createHash('sha256').update(exosScalpBytes).digest('hex') !== exosScalpOriginalSha) {
+  throw new Error('Exos Hair Scalp photo was modified or not copied to the build');
+}
+for (const lang of Object.keys(languages)) {
+  const scalpPage = await read(localized(lang, '/services/grow-up-hair-scalp'));
+  if (!scalpPage.includes('/assets/bella/exos-hair-scalp/IMG_3674.PNG')) {
+    throw new Error('Exos Hair Scalp photo missing from prerendered HTML: ' + lang);
+  }
+}
+
 console.log('SEO static HTML passed: ' + expected + ' pages (' + SERVICES.length +
   ' treatments x EN/PT/ES + categories and informational pages).');

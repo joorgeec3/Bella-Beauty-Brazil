@@ -73,6 +73,16 @@ const newerFolderLabels: Record<string,TreatmentPhoto[]> = {
       caption: 'Exos Hair Brows · Eyebrow photography',
     },
   ],
+
+  // Original untouched client photo. Side-by-side comparison is descriptive
+  // only; do not imply that the Exos Hair Scalp service caused regrowth.
+  'grow-up-hair-scalp': [
+    {
+      src: `${import.meta.env?.BASE_URL || '/'}assets/bella/exos-hair-scalp/IMG_3674.PNG`,
+      alt: 'Two side-by-side scalp photographs supplied by Bella Beauty Brazil',
+      caption: 'Exos Hair Scalp · Scalp photography supplied by the studio',
+    },
+  ],
   // Client-provided Classic set: one lash close-up plus two honest
   // behind-the-scenes studio photographs. Original PNG bytes are unchanged.
   'classic-eyelashes': [

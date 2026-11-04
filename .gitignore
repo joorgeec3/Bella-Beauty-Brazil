@@ -8,3 +8,6 @@ audit-captures/
 *.log
 .env*
 !.env.example
+
+# Reconstructed byte-for-byte from tracked original media fragments
+/public/assets/bella/exos-hair-scalp/IMG_3674.PNG
