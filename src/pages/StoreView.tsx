@@ -108,7 +108,7 @@ export const StoreView: React.FC<StoreViewProps> = ({ language }) => {
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 text-center">
           <p className="font-montserrat text-[11px] sm:text-xs uppercase tracking-[0.22em] text-[#efb7c8] font-bold">Bella Beauty Brazil Academy · Greenslopes, Brisbane</p>
           <h1 className="font-raleway text-3xl sm:text-5xl font-light uppercase tracking-[0.06em] leading-tight mt-4">Beauty Courses with Livia Rego</h1>
-          <p className="font-montserrat text-sm sm:text-base leading-relaxed text-[#f2e4e8] max-w-2xl mx-auto mt-5">One-to-one, hands-on training in the studio. Learn at your own pace with demonstrations, supervised practice on real models and ongoing support after the course.</p>
+          <p className="font-montserrat text-sm sm:text-base leading-relaxed text-[#f2e4e8] max-w-2xl mx-auto mt-5">One-to-one, hands-on training in the studio. Learn step by step with demonstrations, supervised practice on real models and ongoing support after the course.</p>
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
             <a href="#nano-strokes-course" className="inline-flex items-center justify-center gap-2 rounded-full bg-[#efb7c8] hover:bg-white px-7 py-4 font-montserrat text-xs uppercase tracking-wider font-bold text-[#5b3239] transition-colors">
               <GraduationCap className="w-4 h-4" aria-hidden="true" />Nano Strokes Course<ArrowRight className="w-4 h-4" aria-hidden="true" />
@@ -140,7 +140,7 @@ export const StoreView: React.FC<StoreViewProps> = ({ language }) => {
             <p className="font-montserrat text-base leading-relaxed text-[#4c3b42] mt-4">Manual cosmetic tattooing with the Tebori tool. In three days of one-to-one training with Livia, you’ll learn to create fine, realistic, hair-like brow strokes that follow the natural movement of each client’s brows.</p>
             <p className="font-montserrat text-sm leading-relaxed text-[#4c3b42] mt-3">You start on synthetic skin, watch Livia perform a full treatment, and finish by doing your own supervised treatment on a real model. You leave with a professional kit, a manual, a certificate and six months of support.</p>
             <div className="flex flex-wrap gap-2 mt-5">
-              <Fact>3 days</Fact><Fact>One-to-one</Fact><Fact>In person · Greenslopes</Fact><Fact>Dates arranged individually</Fact>
+              <Fact>3 days</Fact><Fact>One-to-one</Fact><Fact>In person · Greenslopes</Fact><Fact>Limited dates · check availability</Fact>
             </div>
             <h3 className="font-raleway text-lg font-semibold text-[#5b3239] mt-7">What you’ll learn</h3>
             <ul className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-3">
@@ -189,7 +189,7 @@ export const StoreView: React.FC<StoreViewProps> = ({ language }) => {
                     <h3 className="font-raleway text-xl font-bold text-[#5b3239]">{course.title}</h3>
                     <p className="font-montserrat text-sm leading-relaxed text-[#4c3b42] mt-2">{info?.pitch}</p>
                     <p className="font-montserrat text-sm italic text-[#7a4753] mt-3">{info?.forWho}</p>
-                    <div className="flex flex-wrap gap-2 mt-4"><Fact>8 hours</Fact><Fact>One-to-one</Fact><Fact>Dates by arrangement</Fact></div>
+                    <div className="flex flex-wrap gap-2 mt-4"><Fact>8 hours</Fact><Fact>One-to-one</Fact><Fact>Limited dates · check availability</Fact></div>
                     <p className="font-montserrat text-[11px] font-bold uppercase tracking-widest text-[#9a5967] mt-5">What you’ll learn &amp; what’s included</p>
                     <ul className="mt-3 space-y-2 grow">
                       {info?.included.map(item => <li key={item} className="flex items-start gap-2 font-montserrat text-sm text-[#4c3b42]"><CheckCircle2 className="w-4 h-4 text-[#9a5967] shrink-0 mt-0.5" aria-hidden="true" />{item}</li>)}
@@ -230,9 +230,9 @@ export const StoreView: React.FC<StoreViewProps> = ({ language }) => {
         <h2 id="how-courses-work" className="font-raleway text-2xl sm:text-3xl font-semibold text-[#5b3239] text-center">How it works</h2>
         <ol className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-5">
           {[
-            ['Send a message', 'Tell Livia which course you’re interested in on WhatsApp.'],
-            ['Choose your dates', 'Courses are one-to-one, so dates are arranged around you.'],
-            ['Train & get certified', 'Learn hands-on in the studio and receive your certificate and ongoing support.'],
+            ['Send a message', 'Tell Livia on WhatsApp which course you’re interested in.'],
+            ['Check available dates', 'Livia will send you her available course dates and times. Places are limited because every course is one-to-one.'],
+            ['Confirm your place & train', 'Learn hands-on in the studio and receive your certificate and ongoing support.'],
           ].map(([title, text], i) => (
             <li key={title} className="rounded-2xl border border-[#e8d6d5] bg-white p-6">
               <span className="inline-flex w-9 h-9 items-center justify-center rounded-full bg-[#5b3239] text-[#efb7c8] font-raleway font-bold">{i + 1}</span>
