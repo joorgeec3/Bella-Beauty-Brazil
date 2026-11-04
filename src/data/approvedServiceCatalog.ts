@@ -1,4 +1,4 @@
-/** Client-approved website menu, updated from Livia's October 2026 Timely screenshot. All prices AUD. */
+/** Client-approved website menu, synced with Livia's Timely service list (4 Nov 2026). All prices AUD. */
 export type ApprovedPrice = { name: string; aud: number; description?: string; note?: string };
 export type ApprovedCategory = { id: string; title: string; intro?: string; items: ApprovedPrice[]; footer?: string };
 export const APPROVED_SERVICE_CATALOG: ApprovedCategory[] = [
@@ -12,6 +12,8 @@ export const APPROVED_SERVICE_CATALOG: ApprovedCategory[] = [
       { name: 'Cosmetic Tattoo Removal', aud: 150, description: "Looking to lighten unwanted cosmetic tattoo pigment? I use THink Pigment Remover as a non-laser removal treatment, with suitability assessed before we begin. The number of sessions needed varies depending on the existing tattoo and how your skin responds. Multiple sessions may be required." },
       { name: 'Consultation', aud: 35, note: '20 minutes' },
       { name: 'Annual Colour – From 6 to 12 months', aud: 300, note: '1 hour, 50 minutes' },
+      { name: 'Annual Colour – From 12 to 18 months', aud: 400, note: '2 hours, 5 minutes' },
+      { name: 'Brow Waxing (after microblading)', aud: 48, note: '20 minutes' },
     ],
     footer: 'Nano Strokes and Shadow Brows: initial appointment A$630 (approximately 2.5 hours); touch-up A$150 (approximately 1.5 hours), charged separately; timing to be confirmed. Consultation: A$35 (20 mins). Annual Colour: A$300 (1h50). Lip Blush touch-up information is listed separately and must not be confused with brow touch-ups.',
   },
@@ -22,6 +24,7 @@ export const APPROVED_SERVICE_CATALOG: ApprovedCategory[] = [
       { name: 'Brow Sculpt & Tint', aud: 76, description: "Includes the same personalised consultation, mapping, precise waxing and tweezing as Brow Sculpt, with trimming where needed. Traditional tint enhances the natural brow hairs for a fuller-looking, softly defined finish. The shade is selected to suit your features and preferences." },
       { name: 'Brow Sculpt & Hybrid Dye', aud: 79, description: "Includes the same personalised consultation, mapping, precise waxing and tweezing as Brow Sculpt, with trimming where needed. Hybrid dye colours the brow hairs and temporarily stains the skin, helping soften the appearance of gaps. Colour and intensity are tailored to your preferred finish. Hybrid Dye is a temporary brow colour treatment, not cosmetic tattooing." },
       { name: 'Brow Lamination, Shape & Tint', aud: 133, description: "Brow lamination softens and restructures your existing brow hairs, making them easier to reposition and style. By lifting and spreading the hairs, it can help narrow or uneven brows appear fuller and soften the appearance of small gaps where there is enough hair to work with. It also helps tame unruly or downward-growing hairs. Includes personalised shaping, tint and a conditioning treatment for a groomed finish. Fullness comes from repositioning your existing hairs; results depend on their length, density and condition." },
+      { name: 'Monobrow', aud: 15, note: '10 minutes' },
       { name: 'Male Brow Sculpt', aud: 42, description: "Natural brow grooming with trimming, waxing and tweezing where needed. Removes stray hairs and reduces bulk while maintaining your brows’ natural character." },
       { name: 'Dreamy Brows – Brow Sculpt & Relaxing Massage', aud: 156, description: "Give your brows some love and yourself a moment to unwind. Enjoy a personalised brow sculpt, followed by gentle facial lymphatic drainage and a soothing scalp massage with slow, relaxing movements. A dreamy escape from your busy routine." },
     ],
@@ -34,9 +37,9 @@ export const APPROVED_SERVICE_CATALOG: ApprovedCategory[] = [
       { name: 'Microneedling', aud: 185, description: "A targeted treatment that stimulates the skin’s natural repair process and collagen production to help improve the appearance of fine lines, uneven texture and acne scars. Treatment is personalised to your skin’s needs." },
       { name: 'Lip Bliss Hydration', aud: 99, description: "Give dry lips some extra care with a treatment designed to hydrate and soften, leaving them feeling smoother and looking refreshed. Enhances your natural lips without adding tattoo colour or injectable volume." },
       { name: 'Facial Spa', aud: 150, description: "A moment to unwind while caring for your skin. Enjoy facial cleansing, gentle exfoliation, personalised serums, a facial mask and relaxing massage movements, leaving your skin feeling soft, hydrated and refreshed." },
-      { name: 'Deluxe Facial', aud: 360, note: '2 hours', description: "Enjoy a personalised combination of facial cleansing, dermaplaning and microneedling, with each step selected according to your skin’s needs and suitability. Finished with a facial mask and LED light therapy for a complete skin-care experience." },
-      { name: 'Exos Hair Brows', aud: 150, description: "Personalised care for sparse or overplucked brows, beginning with an assessment of the brow hairs, skin condition and your previous brow treatments.\n\nThe appointment focuses on caring for the skin beneath the brows and assessing the existing hairs. Where appropriate, the treatment plan may include carefully controlled microneedling and LED light therapy, selected according to individual suitability.\n\nA course of appointments may be recommended, with progress photographs and home-care guidance to review changes over time. This is different from brow tinting, lamination or cosmetic tattooing: it focuses on your natural brow hair and underlying skin rather than adding colour or changing the position of the hairs.\n\nResults vary, and regrowth cannot be guaranteed. Sudden, patchy or unexplained brow loss should be assessed by a healthcare professional." },
-      { name: 'Exos Hair Scalp', aud: 200, description: "An individual scalp-care programme for clients concerned about thinning hair or reduced fullness.\n\nYour first appointment includes a discussion of your concerns, hair-care routine and relevant history, followed by a close assessment of the scalp and existing hair. Magnified images and progress photographs may be used to document the starting point and review changes over time.\n\nDepending on suitability, the programme may include scalp cleansing, LED light therapy and carefully controlled microneedling, together with personalised home-care guidance. The number and spacing of appointments are planned individually and reviewed as the programme progresses.\n\nHair changes develop gradually, and results vary. This service does not replace a medical diagnosis or prescribed treatment. Sudden shedding, patchy loss or an inflamed scalp should be assessed by a healthcare professional." },
+      { name: 'Deluxe Facial', aud: 360, note: '1 hour, 50 minutes', description: "Enjoy a personalised combination of facial cleansing, dermaplaning and microneedling, with each step selected according to your skin’s needs and suitability. Finished with a facial mask and LED light therapy for a complete skin-care experience." },
+      { name: 'Exos Hair Brows', aud: 389, note: '1 hour per session · a course of 3–5 sessions is generally recommended', description: "An advanced eyebrow regeneration treatment designed to support natural hair growth and improve the appearance of sparse, thinning or over-plucked brows.\n\nExosHAIR combines targeted stimulation with exosome-based technology to support the environment around the hair follicles, encouraging healthier-looking, stronger and fuller brows over time.\n\nIdeal for clients experiencing gaps, reduced density, thinning or brows affected by years of excessive plucking.\n\nAs hair growth occurs in cycles, a course of 3–5 sessions is generally recommended for optimal results, depending on your individual needs and brow condition.\n\nResults vary between individuals and can be influenced by follicle health, age, hormones and the underlying cause of hair loss. A consultation may be recommended to assess suitability." },
+      { name: 'Exos Hair Scalp', aud: 620, note: '1 hour 15 minutes per session · a course of 3–5 sessions is generally recommended', description: "An advanced scalp regeneration treatment designed to support healthier hair growth, improve hair density and strengthen the appearance of thinning or weakened hair.\n\nExosHAIR combines targeted scalp stimulation with exosome-based technology to support the scalp environment and existing hair follicles, helping promote stronger, healthier and fuller-looking hair over time.\n\nIdeal for clients concerned with thinning, reduced density, excessive shedding or overall hair quality.\n\nAs hair growth occurs in cycles, a course of 3–5 sessions is generally recommended for optimal results, depending on your individual needs and scalp condition.\n\nResults vary between individuals and can be influenced by follicle health, age, hormones and the underlying cause of hair loss. A consultation may be recommended to assess suitability." },
     ],
   },
   {
@@ -51,7 +54,7 @@ export const APPROVED_SERVICE_CATALOG: ApprovedCategory[] = [
       { name: 'Lash Extension Removal', aud: 40, description: "Professional removal of lash extensions using a dedicated remover." },
       { name: 'Classic Lash Infill – 2 weeks', aud: 85 },
       { name: 'Classic Lash Infill – 3 weeks', aud: 105 },
-      { name: 'Hybrid Lash Infill – 2 weeks', aud: 120 },
+      { name: 'Hybrid Lash Infill – 2 weeks', aud: 110 },
       { name: 'Hybrid Lash Infill – 3 weeks', aud: 150 },
     ],
     footer: 'Infills require at least 50% lash retention at two weeks or 40% at three weeks. Additional time and charges may apply if fewer remain.',
@@ -86,6 +89,31 @@ export const APPROVED_SERVICE_CATALOG: ApprovedCategory[] = [
     id: 'smile', title: 'Teeth Whitening',
     items: [
       { name: 'Teeth Whitening', aud: 199, description: "Brighten your smile with a cosmetic teeth whitening treatment designed to lighten the shade of your natural teeth. We discuss your goals and suitability before treatment, with aftercare guidance to help you maintain your result. Results vary depending on your starting shade and the type of discolouration. Whitening does not change the colour of crowns, veneers or fillings." },
+    ],
+  },
+  {
+    id: 'packages', title: 'Packages',
+    intro: 'Combine treatments in one appointment and save.',
+    items: [
+      { name: 'Lash Lift & Brow Lamination', aud: 250, note: '1 hour, 30 minutes · save $16' },
+      { name: 'Lash Lift & Brow Sculpt', aud: 179, note: '1 hour, 20 minutes · save $10' },
+      { name: 'Classic Lash Extensions & Brow Sculpt', aud: 190, note: '1 hour, 50 minutes · save $11' },
+      { name: 'Dermaplaning & Brow Sculpt', aud: 186, note: '1 hour, 20 minutes · save $10' },
+      { name: 'Brow Sculpt & Lash Tint', aud: 91, note: '50 minutes · save $10' },
+      { name: 'Brow Sculpt & Side Face Wax', aud: 91, note: '30 minutes · save $10' },
+      { name: 'Brow Sculpt & Upper Lip Wax', aud: 69, note: '30 minutes · save $5' },
+      { name: 'Brow Sculpt, Upper Lip & Nose Wax', aud: 79, note: '35 minutes · save $10' },
+      { name: 'Waxing Package – Brazilian, Full Legs & Underarms', aud: 194, note: '1 hour, 10 minutes · save $10' },
+    ],
+  },
+  {
+    id: 'add-ons', title: 'Add-ons',
+    intro: 'Add to any treatment.',
+    items: [
+      { name: 'Hydrojelly Face Mask', aud: 35, note: '25 minutes' },
+      { name: 'Hydrojelly Brow & Eye Mask', aud: 30, note: '30 minutes' },
+      { name: 'Lip Hydration Mask', aud: 10, note: '10 minutes' },
+      { name: 'Collagen Eye Patches', aud: 10, note: '10 minutes' },
     ],
   },
 ];

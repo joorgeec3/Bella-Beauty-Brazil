@@ -161,6 +161,8 @@ export const ServiceCategoryView: React.FC<Props> = ({ groupId, language, onNavi
           {[
             { id: 'consultation', title: { en: 'Consultation', pt: 'Consulta', es: 'Consulta' }, duration: { en: '20 minutes', pt: '20 minutos', es: '20 minutos' }, price: 35 },
             { id: 'annual-colour', title: { en: 'Annual Colour · 6–12 months', pt: 'Manutenção anual da cor · 6–12 meses', es: 'Mantenimiento anual del color · 6–12 meses' }, duration: { en: '1 hour, 50 minutes', pt: '1 hora e 50 minutos', es: '1 hora y 50 minutos' }, price: 300 },
+            { id: 'annual-colour-12-18', title: { en: 'Annual Colour · 12–18 months', pt: 'Manutenção anual da cor · 12–18 meses', es: 'Mantenimiento anual del color · 12–18 meses' }, duration: { en: '2 hours, 5 minutes', pt: '2 horas e 5 minutos', es: '2 horas y 5 minutos' }, price: 400 },
+            { id: 'brow-wax-after-microblading', title: { en: 'Brow Waxing · after microblading', pt: 'Depilação de sobrancelha · após microblading', es: 'Depilación de cejas · después del microblading' }, duration: { en: '20 minutes', pt: '20 minutos', es: '20 minutos' }, price: 48 },
           ].map(item => <div key={item.id} className="bg-white border border-[#e8d6d5] rounded-xl p-4 sm:p-5 flex flex-col gap-2">
             <h3 className="font-raleway text-base sm:text-lg font-semibold text-[#5b3239]">{item.title[language]}</h3>
             <p className="font-montserrat text-xs text-[#675960]">{item.duration[language]}</p>
@@ -171,6 +173,17 @@ export const ServiceCategoryView: React.FC<Props> = ({ groupId, language, onNavi
           </div>)}
         </div>
       </section>}
+      {(() => {
+        const extraList = groupId === 'lash-extensions' ? { title: 'Lash infills', ids: ['Classic Lash Infill – 2 weeks','Classic Lash Infill – 3 weeks','Hybrid Lash Infill – 2 weeks','Hybrid Lash Infill – 3 weeks'], cat: 'lashes', note: 'Infills require at least 50% lash retention at two weeks or 40% at three weeks.' }
+          : groupId === 'brow-artistry' ? { title: 'Quick brow extras', ids: ['Monobrow'], cat: 'brows', note: '' } : null;
+        if (!extraList) return null;
+        const items = (APPROVED_SERVICE_CATALOG.find(c => c.id === extraList.cat)?.items ?? []).filter(item => extraList.ids.includes(item.name));
+        return <section className="mt-8 rounded-2xl bg-white border border-[#e8d6d5] p-5 sm:p-6" aria-label={extraList.title}>
+          <h2 className="font-raleway text-xl sm:text-2xl font-semibold text-[#5b3239]">{extraList.title}</h2>
+          <div className="mt-3">{items.map(item => <div key={item.name} className="flex justify-between gap-3 py-2.5 border-b border-[#f0e6e6] text-sm font-montserrat"><span>{item.name}{item.note ? <span className="text-[#675960]"> · {item.note}</span> : null}</span><strong className="text-[#5b3239] shrink-0">A${item.aud}</strong></div>)}</div>
+          {extraList.note && <p className="font-montserrat text-xs text-[#675960] mt-3">{extraList.note}</p>}
+        </section>;
+      })()}
       {waxLists.length>0 && <section className="mt-12" aria-label={t.extra}>
         <h2 className="font-raleway text-2xl sm:text-3xl text-[#5b3239] mb-5">{t.extra}</h2>
         <div className="grid md:grid-cols-2 gap-5">{waxLists.map(list => <div key={list.id} className="rounded-2xl bg-white border border-[#e8d6d5] p-5 sm:p-6">

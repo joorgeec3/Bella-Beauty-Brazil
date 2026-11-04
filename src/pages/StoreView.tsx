@@ -81,6 +81,16 @@ const SECONDARY_COURSES: Record<string, { pitch: string; forWho: string; include
       'One year of WhatsApp support after the course',
     ],
   },
+  'classic-lash-extensions-course': {
+    pitch: 'Personalised, one-to-one training with Livia. You’ll learn to apply classic lash extensions — one extension to each natural lash — for a natural, polished result.',
+    forWho: 'For beginners and beauty professionals who want to start offering lash extensions.',
+    included: [
+      'Lash assessment and consultation',
+      'Classic lash extension application, step by step',
+      'Hygiene, safety and aftercare advice for clients',
+      'Course details and inclusions confirmed when you enquire',
+    ],
+  },
 };
 
 const BROW_COURSE_PHOTOS = [
@@ -184,8 +194,8 @@ export const StoreView: React.FC<StoreViewProps> = () => {
       <section id="more-courses" className="scroll-mt-24 bg-[#fff9fa] border-y border-[#ebd9dd]" aria-labelledby="more-courses-heading">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20">
           <h2 id="more-courses-heading" className="font-raleway text-2xl sm:text-3xl font-semibold text-[#5b3239] text-center">One-day courses</h2>
-          <p className="font-montserrat text-sm text-[#65515b] text-center mt-3 max-w-2xl mx-auto">Perfect if you’re starting out or adding a new service. 8 hours, one-to-one, with two live models.</p>
-          <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+          <p className="font-montserrat text-sm text-[#65515b] text-center mt-3 max-w-2xl mx-auto">Perfect if you’re starting out or adding a new service. One day, one-to-one, in person.</p>
+          <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
             {others.map(course => {
               const info = SECONDARY_COURSES[course.id];
               return (
@@ -195,7 +205,7 @@ export const StoreView: React.FC<StoreViewProps> = () => {
                     <h3 className="font-raleway text-xl font-bold text-[#5b3239]">{course.title}</h3>
                     <p className="font-montserrat text-sm leading-relaxed text-[#4c3b42] mt-2">{info?.pitch}</p>
                     <p className="font-montserrat text-sm italic text-[#7a4753] mt-3">{info?.forWho}</p>
-                    <div className="flex flex-wrap gap-2 mt-4"><Fact>8 hours</Fact><Fact>One-to-one</Fact><Fact>Limited dates · check availability</Fact></div>
+                    <div className="flex flex-wrap gap-2 mt-4"><Fact>{course.duration}</Fact><Fact>One-to-one</Fact><Fact>Limited dates · check availability</Fact></div>
                     <p className="font-montserrat text-[11px] font-bold uppercase tracking-widest text-[#9a5967] mt-5">What you’ll learn &amp; what’s included</p>
                     <ul className="mt-3 space-y-2 grow">
                       {info?.included.map(item => <li key={item} className="flex items-start gap-2 font-montserrat text-sm text-[#4c3b42]"><CheckCircle2 className="w-4 h-4 text-[#9a5967] shrink-0 mt-0.5" aria-hidden="true" />{item}</li>)}

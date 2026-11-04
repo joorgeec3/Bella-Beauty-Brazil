@@ -3,7 +3,7 @@ import { ArrowRight, CalendarDays, Clock3, MapPin, Search, X } from 'lucide-reac
 import { BOOKING_URL, WHATSAPP_URL, SERVICES, Language, getLocalizedService, getServiceBookingUrl, localPath } from '../data/siteData';
 import { siteImages } from '../data/siteImages';
 import { SERVICE_GROUPS } from '../data/serviceGroups';
-import { approvedDescriptionFor } from '../data/approvedServiceCatalog';
+import { APPROVED_SERVICE_CATALOG, approvedDescriptionFor } from '../data/approvedServiceCatalog';
 import { getServiceGallery } from '../components/ServicePhotoGallery';
 import { serviceCoverFor } from '../data/serviceCoverPhotos';
 
@@ -262,6 +262,17 @@ export const ServicesView: React.FC<ServicesViewProps> = ({ initialServiceId, on
 
       {/* The verified lip and facial photos now belong to their precise named
           treatments. Do not repeat those same images in a second generic gallery. */}
+
+      <section id="packages-and-add-ons" aria-labelledby="packages-heading" className="mt-11 sm:mt-14 grid lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)] gap-5">
+        {APPROVED_SERVICE_CATALOG.filter(c => c.id === 'packages' || c.id === 'add-ons').map(list => <div key={list.id} className="rounded-2xl bg-white border border-[#e8d6d5] p-5 sm:p-7">
+          <h2 id={list.id === 'packages' ? 'packages-heading' : undefined} className="font-raleway text-2xl sm:text-3xl font-semibold text-[#5b3239]">{list.title}</h2>
+          {list.intro && <p className="font-montserrat text-sm text-[#675960] mt-1">{list.intro}</p>}
+          <div className="mt-4">{list.items.map(item => <div key={item.name} className="flex justify-between items-start gap-4 py-3 border-b border-[#f0e6e6] last:border-0">
+            <div><p className="font-montserrat text-sm font-semibold text-[#3c3033]">{item.name}</p>{item.note && <p className="font-montserrat text-xs text-[#675960] mt-0.5">{item.note}</p>}</div>
+            <strong className="font-montserrat text-base text-[#5b3239] shrink-0">A${item.aud}</strong>
+          </div>)}</div>
+        </div>)}
+      </section>
 
       <aside className="mt-11 sm:mt-14 rounded-2xl bg-[#f3d9d0] border border-[#e8c5c8] p-6 sm:p-9 flex flex-col md:flex-row md:items-center md:justify-between gap-5">
         <div>
