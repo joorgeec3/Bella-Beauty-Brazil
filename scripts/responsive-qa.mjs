@@ -45,7 +45,7 @@ try {
     const capture = async name => page.screenshot({path:'qa-screenshots/' + width + '-' + name + '.png',fullPage:true,animations:'disabled',timeout:30000});
     await run(width + 'px homepage and six categories', async () => {
       await visit('/');
-      const cats = ['cosmetic-tattooing','brow-artistry','lash-treatments','skin-treatments','teeth-whitening','waxing'];
+      const cats = ['cosmetic-tattooing','brow-artistry','lash-treatments','lash-extensions','skin-treatments','teeth-whitening','waxing'];
       for (const id of cats) {
         assert(await page.locator('a[href$="/services/categories/' + id + '"]').count() > 0, 'Missing category ' + id);
       }

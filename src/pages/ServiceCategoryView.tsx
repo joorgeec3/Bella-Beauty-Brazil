@@ -149,7 +149,7 @@ export const ServiceCategoryView: React.FC<Props> = ({ groupId, language, onNavi
           {language === 'en' ? 'Consultation & colour refresh' : language === 'pt' ? 'Consulta e manutenção da cor' : 'Consulta y mantenimiento del color'}
         </h2>
         <p className="font-montserrat text-xs text-[#675960] mb-4">
-          {language === 'en' ? 'Additional appointments listed in the updated Timely menu.' : language === 'pt' ? 'Atendimentos adicionais do menu Timely atualizado.' : 'Citas adicionales del menú Timely actualizado.'}
+          {language === 'en' ? 'Not sure which technique suits you, or due for a refresh? Book one of these appointments.' : language === 'pt' ? 'Não sabe qual técnica é a ideal ou está na hora de renovar a cor? Agende um destes atendimentos.' : '¿No sabes qué técnica te conviene o toca renovar el color? Reserva una de estas citas.'}
         </p>
         <div className="grid sm:grid-cols-2 gap-3">
           {[
@@ -160,7 +160,7 @@ export const ServiceCategoryView: React.FC<Props> = ({ groupId, language, onNavi
             <p className="font-montserrat text-xs text-[#675960]">{item.duration[language]}</p>
             <strong className="font-montserrat text-lg text-[#5b3239]">A${item.price}</strong>
             <a href={BOOKING_URL} className="mt-1 font-montserrat text-xs font-semibold underline underline-offset-4 text-[#7a4753]">
-              {language === 'en' ? 'Find this appointment on Timely' : language === 'pt' ? 'Encontrar este atendimento no Timely' : 'Encontrar esta cita en Timely'}
+              {language === 'en' ? 'Book now' : language === 'pt' ? 'Agendar agora' : 'Reservar ahora'}
             </a>
           </div>)}
         </div>

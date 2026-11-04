@@ -8,6 +8,15 @@ export interface Service {
   benefits?: string[]; link?: string; price?: number; duration?: string; category?: string;
 }
 export interface Course { id: string; title: string; description: string; duration: string; price: number; image: string; bookingUrl: string; }
+/** Single source for opening hours (site, drawer and pre-rendered HTML). Sunday is closed. */
+export const OPENING_HOURS = [
+  ['Monday', '11:00–17:30'],
+  ['Tuesday', '09:15–19:30'],
+  ['Wednesday', '13:30–15:30'],
+  ['Thursday', '09:15–19:30'],
+  ['Friday', '09:15–16:00'],
+  ['Saturday', '08:30–15:30'],
+] as const;
 export interface LocationItem { id: string; name: string; subtitle?: string; address: string; city: string; hours: string; phone: string; appointmentUrl: string; directionsUrl: string; description: string; isComingSoon?: boolean; }
 export interface Testimonial { id: string; name: string; service: string; content: string; rating: number; }
 export interface InstagramPost { id: string; caption: string; image: string; url: string; isVideo: boolean; }
@@ -77,11 +86,10 @@ const SERVICE_COPY: Record<string, { pt: string; es: string }> = {
   'lash-lift': { pt: 'Elevação e coloração dos cílios para um acabamento elegante e prático.', es: 'Lifting y tinte de pestañas para un acabado elegante y práctico.' },
   'classic-eyelashes': { pt: 'Extensões Classic aplicadas profissionalmente, com opções de manutenção.', es: 'Extensiones Classic aplicadas profesionalmente, con opciones de mantenimiento.' },
   'hybrid-eyelashes': { pt: 'Extensões Hybrid aplicadas profissionalmente, com opções de manutenção.', es: 'Extensiones Hybrid aplicadas profesionalmente, con opciones de mantenimiento.' },
-  'russian-volume': { pt: 'Extensões Russian Volume aplicadas profissionalmente, com opções de manutenção.', es: 'Extensiones Russian Volume aplicadas profesionalmente, con opciones de mantenimiento.' },
-  'dermaplaning': { pt: 'Tratamento de dermaplaning focado na pele, publicado no catálogo Timely.', es: 'Tratamiento de dermaplaning enfocado en la piel, publicado en el catálogo Timely.' },
-  'microneedling': { pt: 'Tratamento de microneedling publicado no catálogo oficial Timely.', es: 'Tratamiento de microneedling publicado en el catálogo oficial de Timely.' },
-  'facial-spa': { pt: 'Tratamento Facial Spa publicado no catálogo oficial Timely.', es: 'Tratamiento Facial Spa publicado en el catálogo oficial de Timely.' },
-  'deluxe-facial': { pt: 'Tratamento Deluxe Facial publicado no catálogo oficial Timely.', es: 'Tratamiento Deluxe Facial publicado en el catálogo oficial de Timely.' },
+  'dermaplaning': { pt: 'Esfoliação suave que remove células mortas e a penugem fina. Inclui limpeza, avaliação da pele, skincare, hidratante e protetor solar.', es: 'Exfoliación suave que elimina células muertas y el vello fino. Incluye limpieza, evaluación de la piel, skincare, hidratante y protector solar.' },
+  'microneedling': { pt: 'Tratamento personalizado que estimula a renovação natural da pele para melhorar linhas finas, textura irregular e cicatrizes de acne.', es: 'Tratamiento personalizado que estimula la renovación natural de la piel para mejorar líneas finas, textura irregular y cicatrices de acné.' },
+  'facial-spa': { pt: 'Limpeza facial relaxante, esfoliação suave, séruns personalizados, máscara e massagem.', es: 'Limpieza facial relajante, exfoliación suave, sérums personalizados, mascarilla y masaje.' },
+  'deluxe-facial': { pt: 'Duas horas de cuidado personalizado com limpeza, dermaplaning, microneedling, máscara e LED.', es: 'Dos horas de cuidado personalizado con limpieza, dermaplaning, microneedling, mascarilla y LED.' },
   'lip-bliss-hydration': { pt: 'Hidratação para lábios secos, sem pigmento de tatuagem ou volume injetável.', es: 'Hidratación para labios secos, sin pigmento de tatuaje ni volumen inyectable.' },
   'grow-up-hair-brows': { pt: 'Cuidados personalizados para sobrancelhas ralas ou com falhas, focados nos fios naturais e na pele.', es: 'Cuidado personalizado para cejas escasas, centrado en el pelo natural y la piel.' },
   'grow-up-hair-scalp': { pt: 'Avaliação e cuidados individuais do couro cabeludo, com orientações de cuidados posteriores.', es: 'Evaluación y cuidados personalizados del cuero cabelludo, con orientación de seguimiento.' },
@@ -98,7 +106,7 @@ const SERVICE_BENEFITS: Record<string, { pt: string[]; es: string[] }> = {
   'brow-lamination': { pt: ['Laminação', 'Formato e tintura', 'Styling personalizado'], es: ['Laminado', 'Diseño y tinte', 'Styling personalizado'] },
   'lash-lift': { pt: ['Elevação e tintura', 'Acabamento prático', 'Consulta para a área dos olhos'], es: ['Lifting y tinte', 'Acabado práctico', 'Consulta para el área de los ojos'] },
   'teeth-whitening': { pt: ['Conversa sobre seus objetivos e indicação.', 'Tratamento focado nos dentes naturais.', 'Orientações de cuidados para manter os resultados.'], es: ['Conversación sobre tus objetivos e idoneidad.', 'Tratamiento enfocado en los dientes naturales.', 'Consejos de cuidado para mantener los resultados.'] },
-  dermaplaning: { pt: ['Protocolo focado na pele', 'Disponibilidade no Timely', 'Cuidado profissional no estúdio'], es: ['Protocolo enfocado en la piel', 'Disponibilidad en Timely', 'Cuidado profesional en el estudio'] },
+  dermaplaning: { pt: ['Protocolo focado na pele', 'Pele mais lisa e luminosa', 'Cuidado profissional no estúdio'], es: ['Protocolo enfocado en la piel', 'Piel más suave y luminosa', 'Cuidado profesional en el estudio'] },
 };
 
 export const getLocalizedService = (service: Service, language: Language): Service => language === 'en' ? service : {
@@ -119,9 +127,9 @@ export const COURSES: Course[] = [
 export const PRODUCTS: Product[] = [
   { id: 'elleeplex', name: 'Elleeplex Advanced Aftercare Formula', price: 38, image: siteImages.services.lashes, category: 'Aftercare', description: 'Advanced aftercare formula for Lash Lift.' },
   { id: 'elleevate', name: 'Elleevate Mascara by Elleebana', price: 38, image: siteImages.services.lashes, category: 'Lashes', description: 'Mascara by Elleebana.' },
-  { id: 'lip-gloss', name: 'Lip Gloss', price: 24, image: siteImages.services.lipBlush, category: 'Lips', description: 'Lip gloss available through Timely.' },
-  { id: 'brow-gel', name: 'Brow Gel', price: 32, image: siteImages.services.brows, category: 'Brows', description: 'Brow gel available through Timely.' },
-  { id: 'lash-serum', name: 'Growth Lashes Serum', price: 75, image: siteImages.services.lashes, category: 'Lashes', description: 'Lash growth serum available through Timely.' },
+  { id: 'lip-gloss', name: 'Lip Gloss', price: 24, image: siteImages.services.lipBlush, category: 'Lips', description: 'Lip gloss available at the studio.' },
+  { id: 'brow-gel', name: 'Brow Gel', price: 32, image: siteImages.services.brows, category: 'Brows', description: 'Brow gel available at the studio.' },
+  { id: 'lash-serum', name: 'Growth Lashes Serum', price: 75, image: siteImages.services.lashes, category: 'Lashes', description: 'Lash growth serum available at the studio.' },
 ];
 
 export const LOCATIONS: LocationItem[] = [{

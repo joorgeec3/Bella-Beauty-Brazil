@@ -95,10 +95,10 @@ export const ContactView: React.FC<ContactViewProps> = ({ language }) => {
                   <h4 className="font-bold text-neutral-900 mb-1">{language === 'en' ? 'Operating Hours' : language === 'pt' ? 'Horários de atendimento' : 'Horarios de atención'}</h4>
                   <p className="text-xs text-neutral-600 leading-relaxed">
                     {language === 'en'
-                      ? <>{location.hours}<br />Bookings via Timely &amp; WhatsApp</>
+                      ? <>{location.hours}<br />Book online or via WhatsApp</>
                       : language === 'pt'
-                      ? <>{location.hours}<br />Agende pelo Timely e WhatsApp</>
-                      : <>{location.hours}<br />Reserva por Timely y WhatsApp</>}
+                      ? <>{location.hours}<br />Agende online ou pelo WhatsApp</>
+                      : <>{location.hours}<br />Reserva online o por WhatsApp</>}
                   </p>
                 </div>
               </div>
@@ -112,14 +112,14 @@ export const ContactView: React.FC<ContactViewProps> = ({ language }) => {
               </h3>
               <p className="font-montserrat text-sm leading-relaxed text-neutral-600 mt-2">
                 {language === 'en'
-                  ? 'Give someone a Bella Beauty experience. Visit our Timely page to explore gift voucher options, or contact the studio for assistance with your purchase.'
+                  ? 'Give someone a Bella Beauty experience. Explore our gift voucher options online, or contact the studio for assistance with your purchase.'
                   : language === 'pt'
-                  ? 'Presenteie alguém com uma experiência Bella Beauty. Acesse nossa página Timely para consultar os vouchers ou fale com o estúdio para receber ajuda na compra.'
-                  : 'Regala una experiencia Bella Beauty. Visita nuestra página de Timely para consultar los vouchers o contacta con el estudio para recibir ayuda.'}
+                  ? 'Presenteie alguém com uma experiência Bella Beauty. Confira as opções de vouchers online ou fale com o estúdio para receber ajuda na compra.'
+                  : 'Regala una experiencia Bella Beauty. Consulta las opciones de vouchers online o contacta con el estudio para recibir ayuda.'}
               </p>
               <div className="flex flex-col sm:flex-row gap-3 mt-5">
                 <a href="https://bellabrazil.gettimely.com/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center rounded-full bg-[#5b3239] hover:bg-[#7a4753] text-white font-montserrat font-bold text-xs uppercase tracking-widest px-6 py-3 transition-colors">
-                  {language === 'en' ? 'View Timely' : language === 'pt' ? 'Acessar Timely' : 'Ver Timely'}
+                  {language === 'en' ? 'View gift vouchers' : language === 'pt' ? 'Ver vouchers' : 'Ver vouchers'}
                 </a>
                 <a href="https://wa.me/61402148437?text=Hi%2C%20I%27d%20like%20help%20purchasing%20a%20Bella%20Beauty%20gift%20voucher." target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center rounded-full border border-[#9a5967] text-[#5b3239] hover:bg-[#f8eef1] font-montserrat font-bold text-xs uppercase tracking-widest px-6 py-3 transition-colors">
                   {language === 'en' ? 'Ask on WhatsApp' : language === 'pt' ? 'Consultar pelo WhatsApp' : 'Consultar por WhatsApp'}

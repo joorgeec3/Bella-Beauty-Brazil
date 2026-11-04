@@ -39,10 +39,10 @@ const copy: Record<Language, {
     noResults: 'No treatments found',
     noResultsText: 'Try a different word or choose another category.',
     details: 'Photos & details', book: 'Book now', enquire: 'Ask the studio',
-    from: 'Prices and availability may change. Confirm on Timely.',
+    from: 'Prices in AUD. Availability is confirmed when you book.',
     helpTitle: 'Not sure which treatment to book?',
     helpText: 'Our studio can help you choose a suitable appointment and explain preparation and aftercare.',
-    helpCta: 'Check appointments on Timely',
+    helpCta: 'See available appointments',
   },
   pt: {
     title: 'Tratamentos de beleza em Greenslopes, Brisbane',
@@ -54,10 +54,10 @@ const copy: Record<Language, {
     noResults: 'Nenhum tratamento encontrado',
     noResultsText: 'Tente outra palavra ou escolha outra categoria.',
     details: 'Ver fotos e detalhes', book: 'Agendar agora', enquire: 'Consultar o estúdio',
-    from: 'Preços e horários podem mudar. Confirme no Timely.',
+    from: 'Preços em AUD. A disponibilidade é confirmada no agendamento.',
     helpTitle: 'Não sabe qual tratamento escolher?',
     helpText: 'O estúdio pode orientar sobre o atendimento adequado, preparo e cuidados após o procedimento.',
-    helpCta: 'Ver horários no Timely',
+    helpCta: 'Ver horários disponíveis',
   },
   es: {
     title: 'Tratamientos de belleza en Greenslopes, Brisbane',
@@ -69,10 +69,10 @@ const copy: Record<Language, {
     noResults: 'No se encontraron tratamientos',
     noResultsText: 'Prueba otra palabra o elige otra categoría.',
     details: 'Fotos y detalles', book: 'Reservar ahora', enquire: 'Consultar al estudio',
-    from: 'Los precios y horarios pueden cambiar. Confirma en Timely.',
+    from: 'Precios en AUD. La disponibilidad se confirma al reservar.',
     helpTitle: '¿No sabes qué tratamiento elegir?',
     helpText: 'El estudio puede orientarte sobre la cita adecuada, la preparación y los cuidados.',
-    helpCta: 'Consultar citas en Timely',
+    helpCta: 'Ver citas disponibles',
   },
 };
 

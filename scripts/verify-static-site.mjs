@@ -19,7 +19,7 @@ const read = (route) => readFile(route === '/' ? join(output, 'index.html') :
 const localized = (lang, route) => languages[lang].prefix + (route === '/' ? '' : route) || '/';
 const xml = await readFile(join(output, 'sitemap.xml'), 'utf8');
 const urls = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
-if (routes.length !== 38 || SERVICES.length !== 26 || SERVICE_GROUPS.length !== 6) {
+if (routes.length !== 39 || SERVICES.length !== 26 || SERVICE_GROUPS.length !== 7) {
   throw new Error('Service catalogue changed. Review and update expected SEO route counts.');
 }
 if (urls.length !== expected || new Set(urls).size !== expected) {
@@ -54,14 +54,20 @@ for (const lang of Object.keys(languages)) {
         throw new Error('Missing static photography: ' + path);
       }
     }
+    if (/>[^<]*Timely[^<]*</.test(html.slice(html.indexOf('<div id="root">')))) {
+      throw new Error('Visible "Timely" wording found (use neutral booking text): ' + path);
+    }
+    if (/Russian Volume/.test(html)) {
+      throw new Error('Russian Volume is no longer offered: ' + path);
+    }
     if (route.startsWith('/services/') && !route.startsWith('/services/categories/')) {
       const id = route.split('/')[2];
       const service = SERVICES.find((s) => s.id === id);
       if (!service || !html.includes(service.title.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;'))) {
         throw new Error('Missing service name/body: ' + path);
       }
-      if (!html.includes('Book on Timely') && !html.includes('Agendar pelo Timely') &&
-          !html.includes('Reservar en Timely')) {
+      if (!html.includes('Book now') && !html.includes('Agendar agora') &&
+          !html.includes('Reservar ahora')) {
         throw new Error('Missing booking action: ' + path);
       }
     }

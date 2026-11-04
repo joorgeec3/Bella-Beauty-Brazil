@@ -19,9 +19,17 @@ export const SERVICE_GROUPS = [
   },
   {
     id: 'lash-treatments',
-    title: { en: 'Lash Treatments', pt: 'Tratamentos de Cílios', es: 'Tratamientos de Pestañas' },
-    lead: { en: 'Lash lifts, tinting, extensions and removal.', pt: 'Lifting, tintura, extensões e remoção.', es: 'Lifting, tinte, extensiones y retirada.' },
-    serviceIds: ['lash-lift-only','lash-lift','classic-eyelashes','hybrid-eyelashes','wet-look-lashes','lash-tint','lash-extension-removal'],
+    title: { en: 'Lash Lift & Tint', pt: 'Lash Lift e Tintura', es: 'Lifting y Tinte de Pestañas' },
+    lead: { en: 'Lash lifts and tinting for your natural lashes, with no extensions.', pt: 'Lifting e tintura para os seus cílios naturais, sem extensões.', es: 'Lifting y tinte para tus pestañas naturales, sin extensiones.' },
+    serviceIds: ['lash-lift-only','lash-lift','lash-tint'],
+    photoCategory: 'Lashes',
+  },
+  {
+    // Lash extensions are a separate service from lash lifts (client request, Nov 2026).
+    id: 'lash-extensions',
+    title: { en: 'Lash Extensions', pt: 'Extensões de Cílios', es: 'Extensiones de Pestañas' },
+    lead: { en: 'Classic, Hybrid and Wet Look lash extensions, infills and removal.', pt: 'Extensões Classic, Hybrid e Wet Look, manutenção e remoção.', es: 'Extensiones Classic, Hybrid y Wet Look, mantenimiento y retirada.' },
+    serviceIds: ['classic-eyelashes','hybrid-eyelashes','wet-look-lashes','lash-extension-removal'],
     photoCategory: 'Lashes',
   },
   {

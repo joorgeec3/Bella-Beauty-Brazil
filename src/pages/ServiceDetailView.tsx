@@ -1,8 +1,10 @@
 import React from 'react';
 import { ArrowLeft, ArrowRight, Calendar, CheckCircle2, Clock, MapPin } from 'lucide-react';
-import { Language, SERVICES, getLocalizedService, getServiceBookingUrl, SERVICE_BOOKING_LINKS, WHATSAPP_URL } from '../data/siteData';
+import { Language, SERVICES, getLocalizedService, getServiceBookingUrl, WHATSAPP_URL } from '../data/siteData';
 import { siteImages } from '../data/siteImages';
 import { SERVICE_GUIDES } from '../data/serviceGuides';
+import { serviceCareFor } from '../data/serviceCare';
+import { groupOfService } from '../data/serviceGroups';
 import { approvedDescriptionFor } from '../data/approvedServiceCatalog';
 import { ServicePhotoGallery, getServiceGallery } from '../components/ServicePhotoGallery';
 import { ServiceVideoGallery } from '../components/ServiceVideoGallery';
@@ -176,8 +178,8 @@ const GROUPS: Record<string, { related: string[]; difference: string; care: stri
   'nano-strokes': {
     related: ['shadow-brows', 'shadow-hybrid', 'brow-sculpt-tint'],
     difference: 'Nano Strokes and Microblading focus on hair-stroke style brow artistry. Shadow or Hybrid Brows create a more defined shaded finish. The best option depends on your desired look and consultation.',
-    care: 'For suitability, preparation and aftercare, follow the instructions provided by Bella Beauty Brazil and confirm details during your Timely booking or consultation.',
-    faq: 'Is this the right brow technique for me? Bella Beauty Brazil will assess your goals and suitability during the consultation. The published Timely price and duration are shown below.',
+    care: 'For suitability, preparation and aftercare, follow the instructions provided by Bella Beauty Brazil and confirm details during your consultation.',
+    faq: 'Is this the right brow technique for me? Bella Beauty Brazil will assess your goals and suitability during the consultation. The price and duration are shown on this page.',
   },
   'shadow-brows': {
     related: ['nano-strokes', 'shadow-hybrid', 'brow-sculpt-tint'],
@@ -222,23 +224,23 @@ const GROUPS: Record<string, { related: string[]; difference: string; care: stri
     faq: 'Can I book brow shaping without the massage? Yes. Brow Sculpt and Brow Sculpt & Tint are available as separate services.',
   },
   'lash-lift': {
-    related: ['classic-eyelashes', 'hybrid-eyelashes', 'brow-lamination'],
+    related: ['lash-lift-only', 'lash-tint', 'brow-lamination'],
     difference: 'Lash Lift & Tint works with the natural lashes. Classic and Hybrid Lash Extensions add applied extensions and create different levels of density.',
     care: 'Follow the eye-area preparation and aftercare instructions supplied by Bella Beauty Brazil. Contact the studio if you have questions about suitability.',
     faq: 'What is the difference between a Lash Lift and extensions? A Lash Lift curls and tints natural lashes; extensions add individual or volume lashes according to the selected set.',
   },
   dermaplaning: {
     related: ['microneedling', 'facial-spa', 'deluxe-facial'],
-    difference: 'Dermaplaning, Microneedling and Facial Spa treatments are skin-focused services with different protocols. Bella Beauty Brazil can confirm suitability and the appropriate option through the official booking process.',
+    difference: 'Dermaplaning, Microneedling and Facial Spa treatments are skin-focused services with different protocols. Bella Beauty Brazil can advise which option suits you best.',
     care: 'Skin preparation and aftercare vary by treatment and individual suitability. Follow the instructions given by Bella Beauty Brazil rather than relying on generic advice.',
-    faq: 'Which facial treatment should I choose? Review the published service descriptions and use the official Timely booking page to ask Bella Beauty Brazil about suitability and availability.',
+    faq: 'Which facial treatment should I choose? For a glow before an event, choose Dermaplaning or Facial Spa. For texture, fine lines or scarring, choose Microneedling. For everything in one visit, choose the Deluxe Facial.',
   },
 };
 
 const GROUP_TRANSLATIONS: Record<string, Record<'pt' | 'es', { difference: string; care: string; faq: string }>> = {
   'nano-strokes': {
-    pt: { difference: 'Nano Strokes e Microblading trabalham um efeito de fios realistas nas sobrancelhas. Shadow ou Hybrid criam um acabamento mais sombreado e definido. A melhor opção depende do resultado desejado e da consulta.', care: 'Para indicação, preparação e cuidados, siga as instruções da Bella Beauty Brazil e confirme os detalhes na reserva ou consulta pelo Timely.', faq: 'Esta é a técnica certa para mim? A Bella Beauty Brazil avaliará seus objetivos e sua indicação durante a consulta. O preço e a duração publicados no Timely aparecem abaixo.' },
-    es: { difference: 'Nano Strokes y Microblading crean un efecto de trazos realistas en las cejas. Shadow o Hybrid ofrecen un acabado más sombreado y definido. La opción adecuada depende del resultado deseado y de la consulta.', care: 'Para indicaciones, preparación y cuidados, sigue las instrucciones de Bella Beauty Brazil y confirma los detalles durante tu reserva o consulta en Timely.', faq: '¿Es esta la técnica adecuada para mí? Bella Beauty Brazil evaluará tus objetivos y tu idoneidad durante la consulta. El precio y la duración publicados en Timely aparecen abajo.' },
+    pt: { difference: 'Nano Strokes e Microblading trabalham um efeito de fios realistas nas sobrancelhas. Shadow ou Hybrid criam um acabamento mais sombreado e definido. A melhor opção depende do resultado desejado e da consulta.', care: 'Para indicação, preparação e cuidados, siga as instruções da Bella Beauty Brazil e confirme os detalhes na consulta.', faq: 'Esta é a técnica certa para mim? A Bella Beauty Brazil avaliará seus objetivos e sua indicação durante a consulta. O preço e a duração aparecem nesta página.' },
+    es: { difference: 'Nano Strokes y Microblading crean un efecto de trazos realistas en las cejas. Shadow o Hybrid ofrecen un acabado más sombreado y definido. La opción adecuada depende del resultado deseado y de la consulta.', care: 'Para indicaciones, preparación y cuidados, sigue las instrucciones de Bella Beauty Brazil y confirma los detalles durante tu consulta.', faq: '¿Es esta la técnica adecuada para mí? Bella Beauty Brazil evaluará tus objetivos y tu idoneidad durante la consulta. El precio y la duración aparecen en esta página.' },
   },
   'shadow-hybrid': {
     pt: { difference: 'Hybrid Dye é uma coloração temporária de sobrancelhas, não uma tatuagem cosmética.', care: 'Converse com o estúdio sobre seu histórico de pele e a necessidade de teste de sensibilidade.', faq: 'Qual a diferença para Tint? A coloração híbrida colore os pelos e pigmenta temporariamente a pele.' },
@@ -257,12 +259,12 @@ const GROUP_TRANSLATIONS: Record<string, Record<'pt' | 'es', { difference: strin
     es: { difference: 'Brow Lamination, Shape & Tint es styling de cejas. No es igual al tatuaje cosmético o Nano Strokes, que crean efectos de pigmento semipermanente.', care: 'Sigue las indicaciones de preparación y cuidados de Bella Beauty Brazil para tu cita. Contacta al estudio si tienes dudas sobre la idoneidad.', faq: '¿Cómo se diferencia Brow Lamination del tatuaje? La laminación peina el pelo existente, mientras el tatuaje cosmético deposita pigmento para un acabado semipermanente.' },
   },
   'lash-lift': {
-    pt: { difference: 'Lash Lift & Tint trabalha com os cílios naturais. Extensões Classic, Hybrid e Russian Volume adicionam extensões aplicadas e criam níveis diferentes de densidade.', care: 'Siga as instruções de preparação e cuidados para a área dos olhos fornecidas pela Bella Beauty Brazil. Confirme indicação e requisitos antes de reservar.', faq: 'Qual a diferença entre Lash Lift e extensões? Lash Lift curva e colore os cílios naturais; extensões adicionam cílios individuais ou volume conforme o conjunto escolhido.' },
-    es: { difference: 'Lash Lift & Tint trabaja con las pestañas naturales. Las extensiones Classic, Hybrid y Russian Volume añaden extensiones y crean distintos niveles de densidad.', care: 'Sigue las instrucciones de preparación y cuidados para el área de los ojos de Bella Beauty Brazil. Confirma idoneidad y requisitos antes de reservar.', faq: '¿Cuál es la diferencia entre Lash Lift y extensiones? Lash Lift curva y tiñe las pestañas naturales; las extensiones añaden pestañas individuales o volumen según el set.' },
+    pt: { difference: 'Lash Lift & Tint trabalha com os cílios naturais. Extensões Classic, Hybrid e Wet Look adicionam extensões aplicadas e criam níveis diferentes de densidade.', care: 'Siga as instruções de preparação e cuidados para a área dos olhos fornecidas pela Bella Beauty Brazil. Confirme indicação e requisitos antes de reservar.', faq: 'Qual a diferença entre Lash Lift e extensões? Lash Lift curva e colore os cílios naturais; extensões adicionam cílios individuais ou volume conforme o conjunto escolhido.' },
+    es: { difference: 'Lash Lift & Tint trabaja con las pestañas naturales. Las extensiones Classic, Hybrid y Wet Look añaden extensiones y crean distintos niveles de densidad.', care: 'Sigue las instrucciones de preparación y cuidados para el área de los ojos de Bella Beauty Brazil. Confirma idoneidad y requisitos antes de reservar.', faq: '¿Cuál es la diferencia entre Lash Lift y extensiones? Lash Lift curva y tiñe las pestañas naturales; las extensiones añaden pestañas individuales o volumen según el set.' },
   },
   dermaplaning: {
-    pt: { difference: 'Dermaplaning, Microneedling e Facial Spa são tratamentos para a pele com protocolos diferentes. A Bella Beauty Brazil pode confirmar a indicação pelo processo oficial de reserva.', care: 'A preparação e os cuidados variam conforme o tratamento e a indicação individual. Siga as instruções dadas pela Bella Beauty Brazil, não orientações genéricas.', faq: 'Qual tratamento facial devo escolher? Consulte as descrições publicadas e use o Timely oficial para perguntar à Bella Beauty Brazil sobre indicação e disponibilidade.' },
-    es: { difference: 'Dermaplaning, Microneedling y Facial Spa son tratamientos de piel con protocolos diferentes. Bella Beauty Brazil puede confirmar la idoneidad durante el proceso oficial de reserva.', care: 'La preparación y los cuidados varían según el tratamiento y la idoneidad individual. Sigue las instrucciones de Bella Beauty Brazil, no consejos genéricos.', faq: '¿Qué tratamiento facial debo elegir? Revisa las descripciones publicadas y usa el Timely oficial para preguntar sobre idoneidad y disponibilidad.' },
+    pt: { difference: 'Dermaplaning, Microneedling e Facial Spa são tratamentos para a pele com protocolos diferentes. A Bella Beauty Brazil pode orientar qual é o mais indicado.', care: 'A preparação e os cuidados variam conforme o tratamento e a indicação individual. Siga as instruções dadas pela Bella Beauty Brazil, não orientações genéricas.', faq: 'Qual tratamento facial devo escolher? Para um brilho antes de um evento: Dermaplaning ou Facial Spa. Para textura, linhas finas ou cicatrizes: Microneedling. Para tudo em uma visita: Deluxe Facial.' },
+    es: { difference: 'Dermaplaning, Microneedling y Facial Spa son tratamientos de piel con protocolos diferentes. Bella Beauty Brazil puede orientarte sobre la opción adecuada.', care: 'La preparación y los cuidados varían según el tratamiento y la idoneidad individual. Sigue las instrucciones de Bella Beauty Brazil, no consejos genéricos.', faq: '¿Qué tratamiento facial debo elegir? Para lucir radiante antes de un evento: Dermaplaning o Facial Spa. Para textura, líneas finas o cicatrices: Microneedling. Para todo en una visita: Deluxe Facial.' },
   },
 };
 
@@ -278,18 +280,21 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
   const cover = serviceCoverFor(base.id);
   const noMatchingTreatmentPhoto = !cover;
   // A service without a dedicated comparison must never inherit the Nano Strokes FAQ.
-  const categoryRelated = SERVICES.filter((item) => item.category === base.category && item.id !== base.id).slice(0, 3);
+  // Related treatments come from the same website category (e.g. lash extensions stay separate from lash lifts).
+  const sameGroupIds = (groupOfService(base.id)?.serviceIds as readonly string[] | undefined) || [];
+  const categoryRelated = SERVICES.filter((item) => sameGroupIds.includes(item.id) && item.id !== base.id).slice(0, 4);
   const group = GROUPS[base.id] || {
     related: categoryRelated.map((item) => item.id),
     difference: `${base.title} is a ${base.category || 'beauty'} service offered at Bella Beauty Brazil. Other treatments in this category may use different techniques. Confirm the appropriate option with the studio before booking.`,
     care: 'Preparation, suitability and aftercare vary by treatment. Follow the instructions provided by Bella Beauty Brazil during your appointment.',
-    faq: `How can I book ${base.title}? Check the official Timely booking page for service availability, current prices and appointment details.`,
+    faq: `How can I book ${base.title}? Click “Book now” to choose an available appointment, or message us on WhatsApp with any questions.`,
   };
   const fallbackTranslation = language === 'pt'
-    ? { difference: `${base.title} é um serviço da categoria ${base.category || 'beleza'} da Bella Beauty Brazil. Confirme a técnica mais adequada diretamente com o estúdio.`, care: 'O preparo, a indicação e os cuidados dependem do tratamento. Siga as orientações da Bella Beauty Brazil.', faq: `Como agendar ${base.title}? Consulte a disponibilidade, os preços e as informações no Timely oficial.` }
-    : { difference: `${base.title} es un servicio de ${base.category || 'belleza'} de Bella Beauty Brazil. Consulta con el estudio qué técnica es la adecuada.`, care: 'La preparación, la idoneidad y los cuidados varían según el tratamiento. Sigue las instrucciones de Bella Beauty Brazil.', faq: `¿Cómo reservar ${base.title}? Consulta disponibilidad, precios y detalles en el Timely oficial.` };
+    ? { difference: `${base.title} é um serviço da categoria ${base.category || 'beleza'} da Bella Beauty Brazil. Confirme a técnica mais adequada diretamente com o estúdio.`, care: 'O preparo, a indicação e os cuidados dependem do tratamento. Siga as orientações da Bella Beauty Brazil.', faq: `Como agendar ${base.title}? Clique em “Agendar agora” para escolher um horário ou fale conosco pelo WhatsApp.` }
+    : { difference: `${base.title} es un servicio de ${base.category || 'belleza'} de Bella Beauty Brazil. Consulta con el estudio qué técnica es la adecuada.`, care: 'La preparación, la idoneidad y los cuidados varían según el tratamiento. Sigue las instrucciones de Bella Beauty Brazil.', faq: `¿Cómo reservar ${base.title}? Haz clic en “Reservar ahora” para elegir una cita o escríbenos por WhatsApp.` };
   const groupCopy = language === 'en' ? group : GROUP_TRANSLATIONS[base.id]?.[language] || { ...group, ...fallbackTranslation };
   const guide = SERVICE_GUIDES[base.id]?.[language];
+  const care = serviceCareFor(base.id, language);
   const faqAnswerOnly = (value: string) => value.includes('?') ? value.slice(value.indexOf('?') + 1).trim() : value;
   const extensionIds = ['classic-eyelashes', 'hybrid-eyelashes', 'wet-look-lashes', 'lash-extension-removal'];
   const extensionFaqAnswer = extensionIds.includes(base.id)
@@ -407,9 +412,9 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
               <h2 className="font-raleway text-2xl sm:text-3xl font-bold uppercase tracking-wider text-[#5b3239]">{translated(language, 'About this treatment', 'Sobre este tratamento', 'Sobre este tratamiento')}</h2>
               <p className="font-montserrat text-neutral-700 leading-relaxed mt-4">{base.id === 'lip-blush' && language === 'en' ? "Lip Blush enhances your natural lip colour and definition with a shade selected especially for you. I use a cosmetic tattoo machine to deposit pigment into the lips, creating a softly tinted finish. The colour appears stronger immediately after treatment and softens as the lips heal." : base.id === 'teeth-whitening' ? service.description : language === 'en' ? (approvedDescriptionFor(base.id) || service.description) : service.description}</p>
               {/* Approved descriptions are shown without administrative attribution. */}
-              {(guide || base.id === 'teeth-whitening') && <>
+              {(guide || care?.suitability || base.id === 'teeth-whitening') && <>
                 <h3 className="font-raleway text-xl font-bold text-[#5b3239] mt-8">{['teeth-whitening', 'lip-blush'].includes(base.id) ? translated(language, 'Is this treatment right for me?', 'Este tratamento é indicado para mim?', '¿Es este tratamiento adecuado para mí?') : translated(language, 'Who may this treatment suit?', 'Para quem este tratamento pode ser indicado?', '¿Para quién puede ser adecuado este tratamiento?')}</h3>
-                <p className="font-montserrat text-neutral-700 leading-relaxed mt-3">{base.id === 'lip-blush' && language === 'en' ? "This treatment may suit you if you would like to enhance pale lips, improve colour definition or achieve a softly tinted look. I assess your natural lip colour and discuss your goals before recommending a personalised treatment." : base.id === 'teeth-whitening' ? translated(language, 'Interested in a brighter smile? Contact me before booking to discuss suitability and what to expect.', 'Quer um sorriso mais branco? Entre em contato antes de agendar para conversar sobre a indicação e o que esperar.', '¿Te interesa una sonrisa más blanca? Contáctame antes de reservar para hablar sobre la idoneidad y qué esperar.') : guide?.idealFor}</p>
+                <p className="font-montserrat text-neutral-700 leading-relaxed mt-3">{base.id === 'lip-blush' && language === 'en' ? "This treatment may suit you if you would like to enhance pale lips, improve colour definition or achieve a softly tinted look. I assess your natural lip colour and discuss your goals before recommending a personalised treatment." : care?.suitability || guide?.idealFor}</p>
                 {base.id === 'nano-strokes' ? (
                   <>
                     <h3 className="font-raleway text-xl font-bold text-[#5b3239] mt-8">{translated(language, 'How does it work?', 'Como funciona?', '¿Cómo funciona?')}</h3>
@@ -425,7 +430,7 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
                 : ['brow-sculpt', 'teeth-whitening'].includes(base.id) ? null : (
                   <>
                     <h3 className="font-raleway text-xl font-bold text-[#5b3239] mt-8">{translated(language, 'How is it different?', 'Quais são as diferenças?', '¿En qué se diferencia?')}</h3>
-                    <p className="font-montserrat text-neutral-700 leading-relaxed mt-3">{guide?.comparison}</p>
+                    <p className="font-montserrat text-neutral-700 leading-relaxed mt-3">{care?.comparison || guide?.comparison}</p>
                   </>
                 )}
               </>}
@@ -472,13 +477,21 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
                 <h2 className="font-raleway text-2xl font-bold text-[#5b3239]">{heading}</h2>
                 <ul className="list-disc pl-6 space-y-3 mt-5 font-montserrat text-base leading-7 text-[#3f3539]">{items.map(item => <li key={item}>{item}</li>)}</ul>
               </section>)}
+            </> : (care?.before || care?.after) ? <>
+              {([
+                [translated(language, 'Before your appointment', 'Antes do atendimento', 'Antes de tu cita'), care!.before],
+                [translated(language, 'Aftercare', 'Cuidados depois', 'Cuidados posteriores'), care!.after],
+              ] as const).filter(([, items]) => items?.length).map(([heading, items]) => <section key={heading} className="bg-[#f3d9d0] rounded-2xl border border-[#e8c5c8] p-6 sm:p-10 scroll-rise">
+                <h2 className="font-raleway text-2xl font-bold text-[#5b3239]">{heading}</h2>
+                <ul className="list-disc pl-6 space-y-3 mt-5 font-montserrat text-base leading-7 text-[#3f3539]">{items!.map(item => <li key={item}>{item}</li>)}</ul>
+              </section>)}
             </> : <section className="bg-[#f3d9d0] rounded-2xl border border-[#e8c5c8] p-6 sm:p-10 scroll-rise">
               <h2 className="font-raleway text-2xl font-bold uppercase tracking-wider text-[#5b3239]">{translated(language, 'Preparation and aftercare', 'Preparação e cuidados', 'Preparación y cuidados')}</h2>
               <p className="font-montserrat text-neutral-700 leading-relaxed mt-4">{groupCopy.care}</p>
             </section>}
             <section className="space-y-3">
               <h2 className="font-raleway text-2xl font-bold uppercase tracking-wider text-[#5b3239]">FAQ</h2>
-              {base.id === 'lip-blush' ? lipBlushFaqs.map(([q,a]) => <details key={q} className="bg-white border border-[#e8d6d5] rounded-xl p-5"><summary className="font-montserrat text-base font-bold text-[#5b3239] cursor-pointer">{q}</summary><p className="font-montserrat text-base leading-7 text-[#3f3539] mt-3">{a}</p></details>) : base.id === 'teeth-whitening' ? teethWhiteningFaqs[language].map(([q, a], i) => <details key={q} className="bg-white border border-[#e8d6d5] rounded-xl p-5" open={i === 0}><summary className="font-montserrat font-bold text-[#5b3239] cursor-pointer">{q}</summary><p className="font-montserrat text-sm text-neutral-700 leading-relaxed mt-3">{a}</p></details>) : <><details className="bg-white border border-[#e8d6d5] rounded-xl p-5" open><summary className="font-montserrat font-bold text-[#5b3239] cursor-pointer">
+              {care?.faqs ? care.faqs.map(([q, a], i) => <details key={q} className="bg-white border border-[#e8d6d5] rounded-xl p-5" open={i === 0}><summary className="font-montserrat font-bold text-[#5b3239] cursor-pointer">{q}</summary><p className="font-montserrat text-sm text-neutral-700 leading-relaxed mt-3">{a}</p></details>) : base.id === 'lip-blush' ? lipBlushFaqs.map(([q,a]) => <details key={q} className="bg-white border border-[#e8d6d5] rounded-xl p-5"><summary className="font-montserrat text-base font-bold text-[#5b3239] cursor-pointer">{q}</summary><p className="font-montserrat text-base leading-7 text-[#3f3539] mt-3">{a}</p></details>) : base.id === 'teeth-whitening' ? teethWhiteningFaqs[language].map(([q, a], i) => <details key={q} className="bg-white border border-[#e8d6d5] rounded-xl p-5" open={i === 0}><summary className="font-montserrat font-bold text-[#5b3239] cursor-pointer">{q}</summary><p className="font-montserrat text-sm text-neutral-700 leading-relaxed mt-3">{a}</p></details>) : <><details className="bg-white border border-[#e8d6d5] rounded-xl p-5" open><summary className="font-montserrat font-bold text-[#5b3239] cursor-pointer">
                 {base.id === 'brow-sculpt'
                   ? translated(language, 'What should I avoid before my appointment?', 'O que devo evitar antes do meu agendamento?', '¿Qué debo evitar antes de mi cita?')
                   : base.id === 'shadow-brows'
@@ -498,7 +511,7 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
                     : extensionFaqAnswer || faqAnswerOnly(groupCopy.faq)}
               </p></details>
               {guide && base.id !== 'nano-strokes' && !extensionFaqAnswer && <details className="bg-white border border-[#e8d6d5] rounded-xl p-5"><summary className="font-montserrat font-bold text-[#5b3239] cursor-pointer">{guide.question}</summary><p className="font-montserrat text-sm text-neutral-700 leading-relaxed mt-3">{guide.answer}</p></details>}
-              {!['shadow-brows', 'brow-sculpt', 'brow-lamination', 'lash-lift'].includes(base.id) && <details className="bg-white border border-[#e8d6d5] rounded-xl p-5"><summary className="font-montserrat font-bold text-[#5b3239] cursor-pointer">{translated(language, 'Where can I confirm the latest price?', 'Onde confirmar o preço atual?', '¿Dónde puedo confirmar el precio actual?')}</summary><p className="font-montserrat text-sm text-neutral-700 leading-relaxed mt-3">{isPriceConfirmed ? translated(language, 'The price and duration shown reflect the service catalogue recorded for this website. Prices and availability may change; the official Timely page is the final reference when booking.', 'O preço e a duração apresentados refletem o catálogo registrado para este site. Eles podem mudar; consulte o Timely oficial para o valor e a disponibilidade atualizados.', 'El precio y la duración corresponden al catálogo registrado para este sitio. Pueden cambiar; consulta el Timely oficial para conocer el precio y la disponibilidad actual.') : translated(language, 'No price is displayed here because it was not confirmed in the available catalogue. Please enquire through Timely.', 'Nenhum preço é exibido porque não foi confirmado no catálogo disponível. Consulte pelo Timely.', 'No se muestra precio porque no fue confirmado en el catálogo disponible. Consulta por Timely.')}</p></details>}</>}
+              </>}
             </section>
           </div>
           <aside className="lg:col-span-4 space-y-5">
@@ -509,7 +522,7 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
               {base.id === 'shadow-brows' && <p className="mt-3 font-montserrat text-sm font-medium leading-relaxed text-white/95">{translated(language, 'Shadow Brows touch-up: A$150 · Approximately 1.5 hours. ', 'Retoque Shadow Brows: A$150 · Aproximadamente 1,5 hora. Confirme o prazo com o estúdio.', 'Retoque Shadow Brows: A$150 · Aproximadamente 1,5 horas. Confirma el plazo con el estudio.')}</p>}
               {service.duration && <div className="flex items-center gap-3 mt-3 text-neutral-200"><Clock className="w-5 h-5" /><span className="font-montserrat text-sm">{service.duration}</span></div>}
               <a href={getServiceBookingUrl(base.id)} className="mt-7 inline-flex w-full items-center justify-center gap-2 bg-[#efb7c8] hover:bg-white text-[#5b3239] text-xs font-bold uppercase tracking-widest px-5 py-4 rounded-full cursor-pointer transition-colors"><Calendar className="w-4 h-4" />{translated(language, 'Book now', 'Agendar agora', 'Reservar ahora')}</a>
-              {!SERVICE_BOOKING_LINKS[base.id] && <p className="mt-3 font-montserrat text-xs text-white/75 leading-relaxed">{translated(language, 'Choose your treatment on the Timely booking page.', 'Escolha o tratamento na página de agendamento do Timely.', 'Selecciona tu tratamiento en la página de reservas de Timely.')}</p>}
+              
               <p className="font-montserrat text-xs text-neutral-300 mt-5 leading-relaxed">{translated(language, 'Bella Beauty Brazil · Suite 3, 412 Logan Road, Greenslopes, QLD 4120.', 'Bella Beauty Brazil · Suite 3, 412 Logan Road, Greenslopes, QLD 4120.', 'Bella Beauty Brazil · Suite 3, 412 Logan Road, Greenslopes, QLD 4120.')}</p>
             </div>
             <div className="bg-white rounded-2xl border border-[#e8d6d5] p-6">

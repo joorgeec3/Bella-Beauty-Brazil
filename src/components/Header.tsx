@@ -222,7 +222,7 @@ export const Header: React.FC<HeaderProps> = ({
                 {SERVICE_GROUPS.map((group) => (
                   <button key={group.id} type="button" onClick={() => onNavigate('services-category', group.id)}
                     className="w-full text-left px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-[#5b3239] hover:bg-[#f3d9d0] cursor-pointer">
-                    {language === 'en' ? ({ 'brow-artistry': 'Brows', 'lash-treatments': 'Lashes', 'skin-treatments': 'Skin' } as Record<string, string>)[group.id] || group.title.en : language === 'pt' ? group.title.pt : group.title.es}
+                    {language === 'en' ? ({ 'brow-artistry': 'Brows', 'lash-treatments': 'Lash Lift & Tint', 'lash-extensions': 'Lash Extensions', 'skin-treatments': 'Skin' } as Record<string, string>)[group.id] || group.title.en : language === 'pt' ? group.title.pt : group.title.es}
                   </button>
                 ))}
                 <div className="mx-4 my-1 border-t border-[#d8be9b]/50" />

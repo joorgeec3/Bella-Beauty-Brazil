@@ -94,8 +94,8 @@ export const StoreView: React.FC<StoreViewProps> = ({ language }) => {
           {language === 'en'
             ? 'Learn with Livia at Bella Beauty Brazil in Greenslopes, Brisbane. Personalised training combines explanations, demonstrations and guided practice.'
             : language === 'pt'
-              ? 'Formações individuais da Bella Beauty Brazil. Consulte os valores e a disponibilidade na plataforma oficial Timely antes de reservar.'
-              : 'Formaciones individuales en Bella Beauty Brazil. Consulta precios y disponibilidad en la plataforma oficial Timely antes de reservar.'}
+              ? 'Aprenda com a Livia na Bella Beauty Brazil, em Greenslopes, Brisbane. Formação individual com explicações, demonstrações e prática supervisionada.'
+              : 'Aprende con Livia en Bella Beauty Brazil, en Greenslopes, Brisbane. Formación individual con explicaciones, demostraciones y práctica guiada.'}
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {COURSES.map((course) => (

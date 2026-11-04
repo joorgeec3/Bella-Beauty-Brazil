@@ -25,9 +25,15 @@ export const FeaturesRibbon: React.FC<FeaturesRibbonProps> = ({ language, onOpen
     },
     {
       image: getServicePhotos('lash-lift')[1]?.src,
-      title: 'Lash Treatments',
-      text: language === 'en' ? 'Lash Lift & Tint • Lash Extensions.' : language === 'pt' ? 'Lash Lift & Tint • Extensões de cílios.' : 'Lash Lift & Tint • Extensiones de pestañas.',
-      footer: language === 'en' ? 'Natural lashes & extensions' : language === 'pt' ? 'Cílios naturais e extensões' : 'Pestañas naturales y extensiones',
+      title: 'Lash Lift & Tint',
+      text: language === 'en' ? 'Lash Lift • Lash Lift & Tint • Lash Tint.' : language === 'pt' ? 'Lash Lift • Lash Lift & Tint • Tintura de cílios.' : 'Lash Lift • Lash Lift & Tint • Tinte de pestañas.',
+      footer: language === 'en' ? 'Natural lashes, no extensions' : language === 'pt' ? 'Cílios naturais, sem extensões' : 'Pestañas naturales, sin extensiones',
+    },
+    {
+      image: getServicePhotos('hybrid-eyelashes')[0]?.src,
+      title: 'Lash Extensions',
+      text: language === 'en' ? 'Classic • Hybrid • Wet Look • Removal.' : language === 'pt' ? 'Classic • Hybrid • Wet Look • Remoção.' : 'Classic • Hybrid • Wet Look • Retirada.',
+      footer: language === 'en' ? 'Lash extension sets' : language === 'pt' ? 'Extensões de cílios' : 'Extensiones de pestañas',
     },
     {
       image: categoryPhotosFor('skin-treatments-geral')[0]?.src,
@@ -61,7 +67,7 @@ export const FeaturesRibbon: React.FC<FeaturesRibbonProps> = ({ language, onOpen
         </h2>
         <div className="w-16 h-0.5 bg-[#9a5967] mx-auto mt-3" />
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto gap-4 sm:gap-6 lg:gap-7 items-stretch scroll-stagger">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto gap-4 sm:gap-6 lg:gap-7 items-stretch scroll-stagger lg:[&>*:last-child:nth-child(3n+1)]:col-start-2">
         {cards.map((card, index) => {
           const group = SERVICE_GROUPS[index];
           const href = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/services/categories/${group.id}`;

@@ -88,10 +88,10 @@ export const AppointmentModal: React.FC<AppointmentModalProps> = ({
         <div className="mt-8 text-center text-xs text-neutral-500 font-montserrat">
           <p>
             {language === 'en'
-              ? 'Select our Greenslopes studio to continue to the official Timely booking page.'
+              ? 'Select our Greenslopes studio to continue to online booking.'
               : language === 'pt'
-              ? 'Selecione nosso estúdio em Greenslopes para abrir o agendamento oficial pelo Timely.'
-              : 'Selecciona nuestro estudio en Greenslopes para continuar con la reserva oficial en Timely.'}
+              ? 'Selecione nosso estúdio em Greenslopes para abrir o agendamento online.'
+              : 'Selecciona nuestro estudio en Greenslopes para continuar con la reserva online.'}
           </p>
         </div>
 

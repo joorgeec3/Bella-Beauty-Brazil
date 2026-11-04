@@ -133,7 +133,7 @@ export default function App() {
       },
       contact: {
         title: 'Contact & Book | Bella Beauty Brazil Brisbane',
-        description: 'Contact Bella Beauty Brazil and book through the official Timely booking page. Located in Greenslopes, Brisbane Southside.',
+        description: 'Contact Bella Beauty Brazil and book online. Located in Greenslopes, Brisbane Southside.',
       },
       store: {
         title: 'Beauty Courses | Bella Beauty Brazil Professional Training',
@@ -150,7 +150,7 @@ export default function App() {
       },
       'service-detail': {
         title: 'Beauty Treatment | Bella Beauty Brazil Greenslopes',
-        description: 'Explore a Bella Beauty Brazil treatment with confirmed Timely details, preparation guidance, FAQs and official booking in Greenslopes, Brisbane.',
+        description: 'Explore a Bella Beauty Brazil treatment with prices, preparation guidance, FAQs and online booking in Greenslopes, Brisbane.',
       },
     };
     // Keep browser-updated tags aligned with the static PT/ES HTML and sitemap.
@@ -160,7 +160,7 @@ export default function App() {
         about: { title: 'Conheça Livia Rego | Bella Beauty Brazil', description: 'Conheça Livia Rego e a Bella Beauty Brazil, estúdio de beleza em Greenslopes, Brisbane.' },
         services: { title: 'Tratamentos de beleza em Greenslopes | Bella Beauty Brazil', description: 'Descubra serviços de sobrancelhas, cílios, tatuagem cosmética e tratamentos de pele em Greenslopes, Brisbane.' },
         locations: { title: 'Localização e horários | Bella Beauty Brazil', description: 'Visite a Bella Beauty Brazil na Suite 3, 412 Logan Road, Greenslopes QLD 4120.' },
-        contact: { title: 'Contato e agendamentos | Bella Beauty Brazil', description: 'Entre em contato com a Bella Beauty Brazil e agende pelo Timely em Greenslopes, Brisbane.' },
+        contact: { title: 'Contato e agendamentos | Bella Beauty Brazil', description: 'Entre em contato com a Bella Beauty Brazil e agende online em Greenslopes, Brisbane.' },
         store: { title: 'Cursos profissionais de beleza | Bella Beauty Brazil', description: 'Formação profissional individual e programa Professional Eyebrow Design com Livia Rego em Brisbane.' },
       },
       es: {
@@ -168,7 +168,7 @@ export default function App() {
         about: { title: 'Conoce a Livia Rego | Bella Beauty Brazil', description: 'Conoce a Livia Rego y Bella Beauty Brazil, estudio de belleza en Greenslopes, Brisbane.' },
         services: { title: 'Tratamientos de belleza en Greenslopes | Bella Beauty Brazil', description: 'Descubre tratamientos de cejas, pestañas, tatuaje cosmético y cuidado de la piel en Greenslopes, Brisbane.' },
         locations: { title: 'Ubicación y horarios | Bella Beauty Brazil', description: 'Visita Bella Beauty Brazil en Suite 3, 412 Logan Road, Greenslopes QLD 4120.' },
-        contact: { title: 'Contacto y reservas | Bella Beauty Brazil', description: 'Contacta con Bella Beauty Brazil y reserva en Timely en Greenslopes, Brisbane.' },
+        contact: { title: 'Contacto y reservas | Bella Beauty Brazil', description: 'Contacta con Bella Beauty Brazil y reserva online en Greenslopes, Brisbane.' },
         store: { title: 'Cursos profesionales de belleza | Bella Beauty Brazil', description: 'Formación personalizada y programa Professional Eyebrow Design con Livia Rego en Brisbane.' },
       },
     };

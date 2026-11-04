@@ -1,6 +1,6 @@
 import React from 'react';
 import { X, Clock } from 'lucide-react';
-import { Language } from '../data/siteData';
+import { Language, OPENING_HOURS } from '../data/siteData';
 import { SITE_IMAGES } from '../data/siteImages';
 
 interface SideHoursDrawerProps {
@@ -45,11 +45,11 @@ export const SideHoursDrawer: React.FC<SideHoursDrawerProps> = ({
             </button>
           </div>
 
-          {/* Horários confirmados no Timely; domingo permanece não publicado. */}
+          {/* Horários em OPENING_HOURS (siteData); domingo fechado. */}
           <div className="mb-8">
             <table className="w-full text-sm font-montserrat border-collapse">
               <tbody>
-                {[['Monday', '11:00–17:30'], ['Tuesday', '09:15–19:30'], ['Wednesday', '13:30–15:30'], ['Thursday', '09:15–19:30'], ['Friday', '09:15–16:00'], ['Saturday', '08:30–15:30']].map(([day, hours]) => <tr key={day} className="border-b border-neutral-100"><td className="py-2.5 font-semibold text-neutral-800">{language === 'pt' ? ({ Monday: 'Segunda-feira', Tuesday: 'Terça-feira', Wednesday: 'Quarta-feira', Thursday: 'Quinta-feira', Friday: 'Sexta-feira', Saturday: 'Sábado' } as Record<string, string>)[day] : language === 'es' ? ({ Monday: 'Lunes', Tuesday: 'Martes', Wednesday: 'Miércoles', Thursday: 'Jueves', Friday: 'Viernes', Saturday: 'Sábado' } as Record<string, string>)[day] : day}</td><td className="py-2.5 text-right text-neutral-500 text-xs">{hours}</td></tr>)}
+                {OPENING_HOURS.map(([day, hours]) => <tr key={day} className="border-b border-neutral-100"><td className="py-2.5 font-semibold text-neutral-800">{language === 'pt' ? ({ Monday: 'Segunda-feira', Tuesday: 'Terça-feira', Wednesday: 'Quarta-feira', Thursday: 'Quinta-feira', Friday: 'Sexta-feira', Saturday: 'Sábado' } as Record<string, string>)[day] : language === 'es' ? ({ Monday: 'Lunes', Tuesday: 'Martes', Wednesday: 'Miércoles', Thursday: 'Jueves', Friday: 'Viernes', Saturday: 'Sábado' } as Record<string, string>)[day] : day}</td><td className="py-2.5 text-right text-neutral-500 text-xs">{hours}</td></tr>)}
               </tbody>
             </table>
             <p className="text-[11px] text-neutral-400 font-montserrat mt-2 text-center">

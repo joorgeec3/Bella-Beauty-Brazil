@@ -16,8 +16,8 @@ const services = {
   'shadow-hybrid': { title: 'Brow Sculpt & Hybrid Dye', description: 'Personalised brow shaping with hybrid dye to tint hairs and temporarily stain the skin.', image: '/assets/bella/client-2026-10/brow-styling.webp', price: '79', duration: '40 mins' },
   'lip-blush': { title: 'Lip Blush – Lip Tattooing', description: 'Cosmetic lip tattoo to enhance the natural colour and definition of the lips. Colour softens as lips heal.', image: '/assets/bella/client-2026-10/lip-blush-procedure.webp', price: '630', duration: '2 hours, 30 mins' },
   'brow-sculpt-tint': { title: 'Brow Sculpt & Tint', description: 'A personalised brow shape, sculpt and tint service tailored to your features.', image: '/assets/bella/client-2026-10/brow-tools.webp', price: '76', duration: '35 mins' },
-  'brow-lamination': { title: 'Brow Lamination, Shape & Tint', description: 'A structured brow lamination, shape and tint service published in Timely.', image: '/assets/bella/client-2026-10/brow-styling.webp', price: '133', duration: '1 hour' },
-  'lash-lift': { title: 'Lash Lift & Tint', description: 'Lift and tint services published in Timely.', image: '/assets/bella/lashes.jpg', price: '133', duration: '1 hour, 10 mins' },
+  'brow-lamination': { title: 'Brow Lamination, Shape & Tint', description: 'A structured brow lamination, shape and tint service for a lifted, polished finish on your natural brow hairs.', image: '/assets/bella/client-2026-10/brow-styling.webp', price: '133', duration: '1 hour' },
+  'lash-lift': { title: 'Lash Lift & Tint', description: 'Lift and curl your natural lashes, then add a tint for darker definition. No extensions needed.', image: '/assets/bella/lashes.jpg', price: '133', duration: '1 hour, 10 mins' },
   dermaplaning: { title: 'Dermaplaning', description: 'Gentle skin exfoliation, removing dead cells and fine facial hair. Includes cleansing, skin assessment, skincare, moisturiser and SPF.', image: '/assets/bella/dermaplaning-facial-treatment.webp', price: '140', duration: '55 mins' },
   'brow-sculpt': { title: 'Brow Sculpt Signature', description: 'Personalised brow shaping with mapping, careful trimming, waxing and tweezing where needed. Each appointment enhances your natural shape while preserving fullness. Tint and dye are not included.', image: '/assets/bella/client-2026-10/brow-styling.webp', price: '56', duration: '25 mins' },
   'classic-eyelashes': { title: 'Classic Lash Extensions', description: 'Classic eyelash extensions for an elegant natural look.', image: '/assets/bella/lashes.jpg', price: '145', duration: '1 hour, 30 mins' },
@@ -28,7 +28,7 @@ const services = {
   'lip-bliss-hydration': { title: 'Lip Bliss Hydration', description: 'Hydration treatment for dry lips without tattoo pigment or injectable volume.', image: '/assets/bella/gallery/studio-treatment-room.webp', price: '99' },
   'grow-up-hair-brows': { title: 'Exos Hair Brows', description: 'Personalised care for sparse or overplucked natural brows and the underlying skin.', image: '/assets/bella/gallery/studio-treatment-room.webp', price: '150' },
   'grow-up-hair-scalp': { title: 'Exos Hair Scalp', description: 'Individual scalp assessment and care for clients concerned about thinning hair.', image: '/assets/bella/gallery/studio-treatment-room.webp', price: '200' },
-  'teeth-whitening': { title: 'Teeth Whitening', description: 'Teeth whitening service published by Bella Beauty Brazil in the official Timely catalogue; confirm suitability and aftercare with the studio.', image: '/assets/bella/gallery/studio-treatment-room.webp', price: '199', duration: '1 hour' },
+  'teeth-whitening': { title: 'Teeth Whitening', description: 'Cosmetic teeth whitening to lighten the shade of your natural teeth, with aftercare guidance to maintain your result.', image: '/assets/bella/gallery/studio-treatment-room.webp', price: '199', duration: '1 hour' },
   waxing: { title: 'Brazilian Waxing', description: 'Professional Brazilian waxing from Bella Beauty Brazil.', image: '/assets/bella/client-2026-10/waxing-treatment.webp', price: '82', duration: '30 mins' },
 };
 
@@ -94,7 +94,7 @@ const renderPage = ({ title, description, canonicalUrl, body, schema }) => {
 for (const [slug, service] of Object.entries(services)) {
   const url = `${siteOrigin}/services/${slug}`;
   const title = `${service.title} | Bella Beauty Brazil Greenslopes`;
-  const description = `${service.description} Confirmed Timely details and official booking at Bella Beauty Brazil in Greenslopes, Brisbane.`;
+  const description = `${service.description} Prices and online booking at Bella Beauty Brazil in Greenslopes, Brisbane.`;
   const schema = { '@context': 'https://schema.org', '@type': 'Service', name: service.title, description: service.description, provider: { '@type': 'BeautySalon', name: 'Bella Beauty Brazil', telephone: '+61 402 148 437', address: { '@type': 'PostalAddress', streetAddress: 'Suite 3, 412 Logan Road', addressLocality: 'Greenslopes', addressRegion: 'QLD', postalCode: '4120', addressCountry: 'AU' } }, areaServed: ['Greenslopes', 'Brisbane Southside', 'Greater Brisbane'], offers: service.price ? { '@type': 'Offer', priceCurrency: 'AUD', price: service.price, url: 'https://book.gettimely.com/bellabrazil/book/embed?client-login=true' } : undefined };
   const guide = SERVICE_GUIDES[slug]?.en;
   const treatmentInfo = slug === 'nano-strokes'
@@ -137,7 +137,7 @@ const simplePages = {
   services: ['Beauty Treatments in Greenslopes, Brisbane', 'Personalised beauty treatments in Greenslopes, Brisbane. Explore brows, lashes, cosmetic tattooing and skin treatments, with care tailored to you.'],
   courses: ['Professional Beauty Courses', 'Explore one-on-one Lash Lift & Tint, Brow Lamination and Bella Nano Strokes training in Brisbane.'],
   locations: ['Find Us & Opening Hours', 'Visit Bella Beauty Brazil at Suite 3, 412 Logan Road, Greenslopes QLD 4120.'],
-  contact: ['Contact & Book', 'Contact Bella Beauty Brazil or book an appointment via the official Timely booking page.'],
+  contact: ['Contact & Book', 'Contact Bella Beauty Brazil or book an appointment online.'],
 };
 for (const [slug, [title, description]] of Object.entries(simplePages)) {
   const canonicalUrl = `${siteOrigin}/${slug}`;

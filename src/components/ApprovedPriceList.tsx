@@ -67,8 +67,8 @@ const detailLabels = {
 export const ApprovedPriceList: React.FC<{language: Language}> = ({ language }) => {
   const labels = {
     en: { eyebrow: 'Bella Beauty Brazil · Treatment Menu', heading: 'Treatment Prices', intro: 'Explore every service and price from our updated studio menu. All amounts are in Australian dollars (AUD).', services: 'options', book: 'Book now', note: 'The booking system confirms availability and final service selection.' },
-    pt: { eyebrow: 'Bella Beauty Brazil · Menu atualizado', heading: 'Todos os tratamentos e valores', intro: 'Confira todos os serviços e preços do menu atualizado do estúdio. Todos os valores estão em dólares australianos (AUD).', services: 'opções', book: 'Agendar agora', note: 'Consulte disponibilidade e escolha o procedimento no Timely.' },
-    es: { eyebrow: 'Bella Beauty Brazil · Servicios actualizados', heading: 'Todos los tratamientos y precios', intro: 'Consulta los servicios y precios actualizados del estudio. Importes en dólares australianos (AUD).', services: 'opciones', book: 'Reservar ahora', note: 'Confirma disponibilidad y selección del servicio en Timely.' },
+    pt: { eyebrow: 'Bella Beauty Brazil · Menu atualizado', heading: 'Todos os tratamentos e valores', intro: 'Confira todos os serviços e preços do menu atualizado do estúdio. Todos os valores estão em dólares australianos (AUD).', services: 'opções', book: 'Agendar agora', note: 'Escolha o procedimento e o horário ao agendar online.' },
+    es: { eyebrow: 'Bella Beauty Brazil · Servicios actualizados', heading: 'Todos los tratamientos y precios', intro: 'Consulta los servicios y precios actualizados del estudio. Importes en dólares australianos (AUD).', services: 'opciones', book: 'Reservar ahora', note: 'Elige el servicio y el horario al reservar online.' },
   }[language];
 
   return (

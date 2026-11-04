@@ -1,6 +1,8 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
-import { SERVICES, COURSES, BOOKING_URL, getLocalizedService } from '../src/data/siteData.ts';
+import { SERVICES, COURSES, BOOKING_URL, OPENING_HOURS, getLocalizedService } from '../src/data/siteData.ts';
+import { serviceCareFor } from '../src/data/serviceCare.ts';
+import { APPROVED_SERVICE_CATALOG } from '../src/data/approvedServiceCatalog.ts';
 import { SERVICE_GROUPS } from '../src/data/serviceGroups.ts';
 import { SERVICE_GUIDES } from '../src/data/serviceGuides.ts';
 import { serviceGalleryFor } from '../src/data/bellaApprovedMedia.ts';
@@ -17,10 +19,11 @@ const details = {
     about: 'About Bella Beauty Brazil', contact: 'Contact', locations: 'Location and opening hours',
     learn: 'Learn more', photo: 'Photos of this treatment', related: 'Other treatments',
     benefits: 'What this treatment offers', suitability: 'Who might this suit?',
-    compare: 'Treatment comparison', faq: 'Frequently asked questions', booking: 'Book on Timely',
+    compare: 'Treatment comparison', faq: 'Frequently asked questions', booking: 'Book now', before: 'Before your appointment', after: 'Aftercare', hours: 'Opening hours', closed: 'Sunday: closed', directions: 'Get directions', waxMenu: 'Waxing menu',
+    days: { Monday: 'Monday', Tuesday: 'Tuesday', Wednesday: 'Wednesday', Thursday: 'Thursday', Friday: 'Friday', Saturday: 'Saturday' },
     price: 'Price', duration: 'Duration', studio: 'Our studio in Greenslopes, Brisbane',
     guidance: 'Discuss personal suitability, preparation and aftercare with the studio before booking.',
-    disclaimer: 'These are related studio images, not guaranteed results for this specific treatment.',
+    disclaimer: 'Photos from our Greenslopes studio.',
     training: 'Explore practical courses and the Professional Eyebrow Design programme.',
   },
   pt: {
@@ -30,10 +33,11 @@ const details = {
     about: 'Sobre a Bella Beauty Brazil', contact: 'Contato', locations: 'Localização e horários',
     learn: 'Saiba mais', photo: 'Fotos do tratamento', related: 'Outros tratamentos',
     benefits: 'Benefícios deste atendimento', suitability: 'Para quem é indicado?',
-    compare: 'Comparação entre tratamentos', faq: 'Perguntas frequentes', booking: 'Agendar pelo Timely',
+    compare: 'Comparação entre tratamentos', faq: 'Perguntas frequentes', booking: 'Agendar agora', before: 'Antes do atendimento', after: 'Cuidados depois', hours: 'Horário de atendimento', closed: 'Domingo: fechado', directions: 'Como chegar', waxMenu: 'Menu de depilação',
+    days: { Monday: 'Segunda-feira', Tuesday: 'Terça-feira', Wednesday: 'Quarta-feira', Thursday: 'Quinta-feira', Friday: 'Sexta-feira', Saturday: 'Sábado' },
     price: 'Preço', duration: 'Duração', studio: 'Nosso estúdio em Greenslopes, Brisbane',
     guidance: 'Consulte o estúdio sobre indicação individual, preparação e cuidados antes de agendar.',
-    disclaimer: 'Estas são imagens relacionadas do estúdio, não resultados garantidos deste tratamento.',
+    disclaimer: 'Fotos do nosso estúdio em Greenslopes.',
     training: 'Conheça as formações práticas e o programa Professional Eyebrow Design.',
   },
   es: {
@@ -43,10 +47,11 @@ const details = {
     about: 'Sobre Bella Beauty Brazil', contact: 'Contacto', locations: 'Ubicación y horarios',
     learn: 'Más información', photo: 'Fotos del tratamiento', related: 'Otros tratamientos',
     benefits: 'Beneficios del tratamiento', suitability: '¿Para quién es adecuado?',
-    compare: 'Comparación de tratamientos', faq: 'Preguntas frecuentes', booking: 'Reservar en Timely',
+    compare: 'Comparación de tratamientos', faq: 'Preguntas frecuentes', booking: 'Reservar ahora', before: 'Antes de tu cita', after: 'Cuidados posteriores', hours: 'Horario', closed: 'Domingo: cerrado', directions: 'Cómo llegar', waxMenu: 'Menú de depilación',
+    days: { Monday: 'Lunes', Tuesday: 'Martes', Wednesday: 'Miércoles', Thursday: 'Jueves', Friday: 'Viernes', Saturday: 'Sábado' },
     price: 'Precio', duration: 'Duración', studio: 'Nuestro estudio en Greenslopes, Brisbane',
     guidance: 'Consulta al estudio sobre tu situación personal, preparación y cuidados antes de reservar.',
-    disclaimer: 'Estas son imágenes relacionadas del estudio, no resultados garantizados de este tratamiento.',
+    disclaimer: 'Fotos de nuestro estudio en Greenslopes.',
     training: 'Conoce los cursos prácticos y el programa Professional Eyebrow Design.',
   },
 };
@@ -109,6 +114,11 @@ const footer = (lang) => '<footer><strong>Bella Beauty Brazil · Greenslopes, Br
 const wrap = (lang, route, inner) => '<main class="bella-seo"><header>' + navigation(lang) +
   languagesNav(route) + '</header>' + inner + footer(lang) + '</main>';
 
+const hoursList = (lang) => '<h2>' + escapeHtml(details[lang].hours) + '</h2><ul>' +
+  OPENING_HOURS.map(([day, hours]) => '<li>' + escapeHtml(details[lang].days[day]) + ': ' + escapeHtml(hours) + '</li>').join('') +
+  '<li>' + escapeHtml(details[lang].closed) + '</li></ul>';
+const directions = (lang) => '<p><a href="https://www.google.com/maps/search/?api=1&amp;query=Suite%203%2C%20412%20Logan%20Road%2C%20Greenslopes%20QLD%204120">' +
+  escapeHtml(details[lang].directions) + '</a></p>';
 const photosFor = (service) => {
   const gallery = serviceGalleryFor(service.id);
   const photos = gallery.photos.length ? gallery.photos : [{ src: service.image, alt: service.title, caption: service.title }];
@@ -131,9 +141,18 @@ const servicePage = (service, lang) => {
     '<div class="seo-media">' + gallery.photos.map((photo) => image(photo.src, photo.alt)).join('') + '</div></section>';
   const benefits = s.benefits?.length ? '<h2>' + escapeHtml(text.benefits) + '</h2><ul>' +
     s.benefits.map((b) => '<li>' + escapeHtml(b) + '</li>').join('') + '</ul>' : '';
-  const faq = guide ? '<section><h2>' + escapeHtml(text.suitability) + '</h2><p>' + escapeHtml(guide.idealFor) + '</p>' +
-    (guide.comparison ? '<h2>' + escapeHtml(text.compare) + '</h2><p>' + escapeHtml(guide.comparison) + '</p>' : '') +
-    '<h2>' + escapeHtml(text.faq) + '</h2><h3>' + escapeHtml(guide.question) + '</h3><p>' + escapeHtml(guide.answer) + '</p></section>' : '';
+  const care = serviceCareFor(service.id, lang);
+  const suitability = care?.suitability || guide?.idealFor;
+  const comparison = care?.comparison || guide?.comparison;
+  const faqs = care?.faqs || (guide ? [[guide.question, guide.answer]] : []);
+  const list = (title, items) => items?.length ? '<h2>' + escapeHtml(title) + '</h2><ul>' +
+    items.map((item) => '<li>' + escapeHtml(item) + '</li>').join('') + '</ul>' : '';
+  const faq = (suitability || faqs.length || care) ? '<section>' +
+    (suitability ? '<h2>' + escapeHtml(text.suitability) + '</h2><p>' + escapeHtml(suitability) + '</p>' : '') +
+    (comparison ? '<h2>' + escapeHtml(text.compare) + '</h2><p>' + escapeHtml(comparison) + '</p>' : '') +
+    list(text.before, care?.before) + list(text.after, care?.after) +
+    (faqs.length ? '<h2>' + escapeHtml(text.faq) + '</h2>' + faqs.map(([q, a]) => '<h3>' + escapeHtml(q) + '</h3><p>' + escapeHtml(a) + '</p>').join('') : '') +
+    '</section>' : '';
   const category = SERVICE_GROUPS.find((g) => g.serviceIds.includes(service.id));
   const others = category ? category.serviceIds.filter((id) => id !== service.id).slice(0, 6) : [];
   const related = others.length ? '<h2>' + escapeHtml(text.related) + '</h2><ul>' +
@@ -144,7 +163,7 @@ const servicePage = (service, lang) => {
     (s.price ? '<p><strong>' + text.price + ': A$' + escapeHtml(s.price) + '</strong></p>' : '') +
     (s.duration ? '<p>' + escapeHtml(text.duration) + ': ' + escapeHtml(s.duration) + '</p>' : '') +
     '<a class="seo-action" href="' + escapeHtml(BOOKING_URL) + '">' + escapeHtml(text.booking) + '</a>' +
-    media + benefits + faq + '<p>' + escapeHtml(text.guidance) + '</p>' + related + '</article>';
+    media + benefits + faq + (care?.after || care?.before ? '' : '<p>' + escapeHtml(text.guidance) + '</p>') + related + '</article>';
   const schema = {
     '@context': 'https://schema.org', '@type': 'Service', name: s.title, description: s.description,
     image: absoluteImage(gallery.photos[0].src), inLanguage: text.html,
@@ -161,7 +180,11 @@ const categoryPage = (group, lang) => {
   const text = details[lang], services = group.serviceIds.map((id) => serviceMap.get(id)).filter(Boolean);
   const body = '<section><h1>' + escapeHtml(group.title[lang]) + ' · Greenslopes</h1>' +
     '<p class="seo-lead">' + escapeHtml(group.lead[lang]) + '</p><div class="seo-grid">' +
-    services.map((s) => serviceCard(s, lang)).join('') + '</div></section>';
+    services.map((s) => serviceCard(s, lang)).join('') + '</div>' +
+    (group.id === 'waxing' ? '<h2>' + escapeHtml(text.waxMenu) + '</h2>' +
+      APPROVED_SERVICE_CATALOG.filter((c) => c.id.endsWith('waxing')).map((c) => '<h3>' + escapeHtml(c.title) + '</h3><ul>' +
+        c.items.map((item) => '<li>' + escapeHtml(item.name) + ' — A$' + escapeHtml(item.aud) + '</li>').join('') + '</ul>').join('') : '') +
+    '</section>';
   return { title: group.title[lang] + ' | Bella Beauty Brazil Greenslopes', description: group.lead[lang],
     body, image: photosFor(services[0]).photos[0].src };
 };
@@ -206,13 +229,14 @@ const infoPage = (route, lang) => {
   if (route === '/locations') return { title: t.locations + ' | Bella Beauty Brazil', description: t.studio,
     image: siteImages.hero.mainBella, body: '<section><h1>' + escapeHtml(t.locations) + '</h1>' +
     '<p>Suite 3, 412 Logan Road, Greenslopes QLD 4120, Australia.</p>' +
-    '<p>Monday to Saturday · Appointment times and availability through Timely.</p>' +
+    hoursList(lang) + directions(lang) +
     '<a class="seo-action" href="' + escapeHtml(BOOKING_URL) + '">' + escapeHtml(t.booking) + '</a></section>' };
   return { title: t.contact + ' | Bella Beauty Brazil', description: t.studio,
     image: siteImages.hero.mainBella, body: '<section><h1>' + escapeHtml(t.contact) + '</h1>' +
     '<p>Suite 3, 412 Logan Road, Greenslopes QLD 4120, Australia.</p>' +
     '<p><a href="tel:+61402148437">+61 402 148 437</a></p>' +
-    '<p><a href="https://wa.me/61402148437">WhatsApp</a></p>' +
+    '<p><a href="https://wa.me/61402148437">WhatsApp</a> · <a href="https://www.instagram.com/bellabeautybrazil/">Instagram @bellabeautybrazil</a></p>' +
+    hoursList(lang) + directions(lang) +
     '<a class="seo-action" href="' + escapeHtml(BOOKING_URL) + '">' + escapeHtml(t.booking) + '</a></section>' };
 };
 
