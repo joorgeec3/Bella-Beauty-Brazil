@@ -182,7 +182,7 @@ const extensionFaqs: Record<Language, [string, string][]> = {
   en: [
     ['What’s the difference between Classic, Hybrid and Wet Look?', 'Classic places one extension on each natural lash for a natural, mascara-like look. Hybrid mixes classic lashes with light fans for more texture and fullness. Wet Look creates a darker, denser, defined finish.'],
     ['How long do lash extensions last?', 'Extensions shed with your natural lashes, which renew every few weeks. With good aftercare, a set looks full for about 2–3 weeks, then an infill keeps it going.'],
-    ['How often do I need an infill, and how much does it cost?', 'Every 2–3 weeks. Classic infills are A$85 at 2 weeks or A$105 at 3 weeks; Hybrid infills are A$120 at 2 weeks or A$150 at 3 weeks. Infills need at least 50% of the set at 2 weeks or 40% at 3 weeks; otherwise extra time and charges may apply. For Wet Look infills, message us on WhatsApp.'],
+    ['How often do I need an infill, and how much does it cost?', 'Every 2–3 weeks. Classic infills are A$85 at 2 weeks or A$105 at 3 weeks; Hybrid infills are A$110 at 2 weeks or A$150 at 3 weeks. Infills need at least 50% of the set at 2 weeks or 40% at 3 weeks; otherwise extra time and charges may apply. For Wet Look infills, message us on WhatsApp.'],
     ['Will extensions damage my natural lashes?', 'Not when they’re applied correctly. Each extension is sized to your natural lash and isolated so lashes grow freely. Pulling them off is what causes damage, so always book a professional removal.'],
     ['Can I wear mascara with extensions?', 'It isn’t needed and it’s best avoided, as it clumps the lashes and is hard to remove without oil. If you must, use a water-based mascara on the tips only.'],
     ['What if I have a reaction?', 'Mild redness for a few hours can happen. If you notice swelling or itching, contact me straight away; I’ll remove the set if needed.'],
@@ -190,7 +190,7 @@ const extensionFaqs: Record<Language, [string, string][]> = {
   pt: [
     ['Qual a diferença entre Classic, Hybrid e Wet Look?', 'O Classic aplica uma extensão em cada cílio natural, com efeito natural, parecido com rímel. O Hybrid mistura fios clássicos com leques leves para mais textura e volume. O Wet Look cria um acabamento mais escuro, denso e marcado.'],
     ['Quanto tempo dura a extensão de cílios?', 'As extensões caem junto com os cílios naturais, que se renovam a cada poucas semanas. Com os cuidados certos, o conjunto fica cheio por cerca de 2 a 3 semanas; depois a manutenção mantém o resultado.'],
-    ['De quanto em quanto tempo preciso de manutenção, e quanto custa?', 'A cada 2–3 semanas. Manutenção Classic: A$85 com 2 semanas ou A$105 com 3 semanas. Manutenção Hybrid: A$120 com 2 semanas ou A$150 com 3 semanas. É preciso ter pelo menos 50% dos fios com 2 semanas ou 40% com 3 semanas; se houver menos, pode haver tempo e valor adicionais. Para manutenção Wet Look, fale conosco pelo WhatsApp.'],
+    ['De quanto em quanto tempo preciso de manutenção, e quanto custa?', 'A cada 2–3 semanas. Manutenção Classic: A$85 com 2 semanas ou A$105 com 3 semanas. Manutenção Hybrid: A$110 com 2 semanas ou A$150 com 3 semanas. É preciso ter pelo menos 50% dos fios com 2 semanas ou 40% com 3 semanas; se houver menos, pode haver tempo e valor adicionais. Para manutenção Wet Look, fale conosco pelo WhatsApp.'],
     ['A extensão estraga os cílios naturais?', 'Não, quando aplicada corretamente. Cada fio é escolhido para o seu cílio natural e isolado, para os cílios crescerem livres. O que estraga é arrancar as extensões; por isso, faça sempre a remoção profissional.'],
     ['Posso usar rímel com extensão?', 'Não é necessário e é melhor evitar, porque embola os fios e é difícil de remover sem óleo. Se precisar, use rímel à base de água só nas pontas.'],
     ['E se eu tiver alguma reação?', 'Uma vermelhidão leve por algumas horas pode acontecer. Se notar inchaço ou coceira, me chame na hora; se for preciso, removo as extensões.'],
@@ -198,7 +198,7 @@ const extensionFaqs: Record<Language, [string, string][]> = {
   es: [
     ['¿Qué diferencia hay entre Classic, Hybrid y Wet Look?', 'Classic coloca una extensión en cada pestaña natural, con un efecto natural, como rímel. Hybrid combina pestañas clásicas con abanicos ligeros para más textura y volumen. Wet Look crea un acabado más oscuro, denso y definido.'],
     ['¿Cuánto duran las extensiones de pestañas?', 'Las extensiones caen con tus pestañas naturales, que se renuevan cada pocas semanas. Con buenos cuidados, el set se ve lleno unas 2 a 3 semanas; después, el mantenimiento lo conserva.'],
-    ['¿Cada cuánto necesito mantenimiento y cuánto cuesta?', 'Cada 2–3 semanas. Mantenimiento Classic: A$85 a las 2 semanas o A$105 a las 3 semanas. Mantenimiento Hybrid: A$120 a las 2 semanas o A$150 a las 3 semanas. Se necesita al menos el 50% del set a las 2 semanas o el 40% a las 3 semanas; si queda menos, puede haber tiempo y costo adicionales. Para el mantenimiento Wet Look, escríbenos por WhatsApp.'],
+    ['¿Cada cuánto necesito mantenimiento y cuánto cuesta?', 'Cada 2–3 semanas. Mantenimiento Classic: A$85 a las 2 semanas o A$105 a las 3 semanas. Mantenimiento Hybrid: A$110 a las 2 semanas o A$150 a las 3 semanas. Se necesita al menos el 50% del set a las 2 semanas o el 40% a las 3 semanas; si queda menos, puede haber tiempo y costo adicionales. Para el mantenimiento Wet Look, escríbenos por WhatsApp.'],
     ['¿Las extensiones dañan las pestañas naturales?', 'No, si se aplican correctamente. Cada extensión se elige según tu pestaña natural y se aísla para que crezca libremente. Lo que daña es arrancarlas; por eso, reserva siempre una retirada profesional.'],
     ['¿Puedo usar rímel con extensiones?', 'No hace falta y es mejor evitarlo, porque apelmaza las pestañas y es difícil de quitar sin aceite. Si lo necesitas, usa rímel a base de agua solo en las puntas.'],
     ['¿Y si tengo una reacción?', 'Puede haber un enrojecimiento leve durante unas horas. Si notas hinchazón o picor, escríbeme de inmediato; si hace falta, retiro el set.'],
@@ -375,7 +375,7 @@ const deluxeCare: CareByLanguage = {
     suitability: 'Dermaplaning, microneedling, mask and LED in one appointment — the best value when you want visible results. Same suitability as microneedling.',
     comparison: skinComparison.en,
     faqs: [
-      ['What is included in the Deluxe Facial?', 'Cleansing, dermaplaning, microneedling, a facial mask and LED light therapy, with each step selected for your skin. It takes about 2 hours.'],
+      ['What is included in the Deluxe Facial?', 'Cleansing, dermaplaning, microneedling, a facial mask and LED light therapy, with each step selected for your skin. It takes about 1 hour 50 minutes.'],
       ['Is it better value than booking treatments separately?', 'Yes. You get dermaplaning and microneedling plus a mask and LED in one visit.'],
       skinChoiceFaq.en,
     ],
