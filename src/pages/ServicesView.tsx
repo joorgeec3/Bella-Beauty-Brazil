@@ -17,6 +17,8 @@ interface ServicesViewProps {
 const categories = ['All', 'Brows', 'Lips', 'Lashes', 'Skin', 'Smile', 'Waxing'] as const;
 type Category = typeof categories[number];
 
+// Services use the data category 'Skin Treatments'; the filter chip is labelled 'Skin'.
+const filterCategoryOf = (category: string) => (category === 'Skin Treatments' ? 'Skin' : category);
 const categoryLabels: Record<Language, Record<Category, string>> = {
   en: { All: 'All', Brows: 'Brows', Lips: 'Lips', Lashes: 'Lashes', Skin: 'Skin', Smile: 'Smile', Waxing: 'Waxing' },
   pt: { All: 'Todos', Brows: 'Sobrancelhas', Lips: 'Lábios', Lashes: 'Cílios', Skin: 'Pele', Smile: 'Sorriso', Waxing: 'Depilação' },
@@ -113,7 +115,7 @@ const cardSummary = (value: string): string => {
 
 export const ServicesView: React.FC<ServicesViewProps> = ({ initialServiceId, onNavigateToService, language }) => {
   const [category, setCategory] = useState<Category>(() => {
-    const initial = SERVICES.find((service) => service.id === initialServiceId)?.category;
+    const initial = filterCategoryOf(SERVICES.find((service) => service.id === initialServiceId)?.category || '');
     return categories.includes(initial as Category) ? initial as Category : 'All';
   });
   const [search, setSearch] = useState('');
@@ -123,7 +125,7 @@ export const ServicesView: React.FC<ServicesViewProps> = ({ initialServiceId, on
   const filteredServices = useMemo(() => {
     const query = normalizeSearch(search.trim());
     return localizedServices.filter((service) => {
-      if (category !== 'All' && service.category !== category) return false;
+      if (category !== 'All' && filterCategoryOf(service.category) !== category) return false;
       if (!query) return true;
       return normalizeSearch([service.title, service.description, service.subtitle, service.category].filter(Boolean).join(' ')).includes(query);
     });
@@ -191,7 +193,7 @@ export const ServicesView: React.FC<ServicesViewProps> = ({ initialServiceId, on
         </div>
         <div role="group" aria-label={labels.explore} className="flex flex-wrap gap-2">
           {categories.map((item) => {
-            const count = item === 'All' ? SERVICES.length : SERVICES.filter((service) => service.category === item).length;
+            const count = item === 'All' ? SERVICES.length : SERVICES.filter((service) => filterCategoryOf(service.category) === item).length;
             return <button key={item} type="button" onClick={() => setCategory(item)} aria-pressed={category === item}
               className={'inline-flex items-center gap-2 rounded-full border px-3.5 py-2.5 font-montserrat text-xs font-semibold cursor-pointer transition-colors focus-visible:outline-2 focus-visible:outline-[#9a5967] ' +
                 (category === item ? 'border-[#5b3239] bg-[#5b3239] text-white' : 'border-[#e8d6d5] bg-[#faf6f6] text-[#5b3239] hover:bg-[#f3d9d0]')}>
@@ -224,11 +226,11 @@ export const ServicesView: React.FC<ServicesViewProps> = ({ initialServiceId, on
               className="flex sm:w-[165px] sm:shrink-0 min-h-32 items-center justify-center overflow-hidden bg-gradient-to-br from-[#f4e5e8] via-[#eddae0] to-[#d6bac3] text-[#5b3239] border-b sm:border-b-0 sm:border-r border-[#e8d6d5] focus-visible:outline-2 focus-visible:outline-[#9a5967]">
               <span className="flex flex-col gap-2 items-center justify-center text-center px-4 py-5">
                 <span aria-hidden="true" className="w-12 h-12 rounded-full border border-[#9a5967]/40 flex items-center justify-center font-raleway text-2xl font-semibold">{service.title.trim().charAt(0)}</span>
-                <span className="font-montserrat text-[10px] font-bold uppercase tracking-wide">{categoryLabels[language][service.category as Category] || service.category}</span>
+                <span className="font-montserrat text-[10px] font-bold uppercase tracking-wide">{categoryLabels[language][filterCategoryOf(service.category) as Category] || service.category}</span>
               </span>
             </a>}
             <div className="min-w-0 p-4 sm:p-5 flex-1 flex flex-col">
-              <span className="font-montserrat text-[10px] font-bold uppercase tracking-[0.14em] text-[#9a5967]">{categoryLabels[language][service.category as Category] || service.category}</span>
+              <span className="font-montserrat text-[10px] font-bold uppercase tracking-[0.14em] text-[#9a5967]">{categoryLabels[language][filterCategoryOf(service.category) as Category] || service.category}</span>
               <h2 className="font-raleway text-lg sm:text-xl font-semibold text-[#5b3239] mt-1 leading-snug">{service.title}</h2>
               <p className="font-montserrat text-xs text-neutral-600 leading-relaxed line-clamp-2 mt-2">{cardSummary(browCardSummaries[language][service.id] || (language === 'en' ? (approvedDescriptionFor(service.id) || service.description) : service.description))}</p>
               {serviceCoverFor(service.id) && !serviceCoverFor(service.id)?.specific && <p className="font-montserrat text-[10px] leading-snug text-[#846f75] mt-2">{language === 'en' ? 'Representative beauty category photo' : language === 'pt' ? 'Foto representativa da categoria' : 'Foto representativa de la categoría'}</p>}
