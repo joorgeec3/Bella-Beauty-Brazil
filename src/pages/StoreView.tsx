@@ -217,8 +217,7 @@ export const StoreView: React.FC<StoreViewProps> = () => {
               <div className="w-full aspect-[9/16] bg-[#281d23]"><video src={siteAsset('assets/bella/training/courses-2026-11/lash-lift-class.mp4')} poster={siteAsset('assets/bella/training/courses-2026-11/lash-lift-class.webp')} controls playsInline preload="none" className="w-full h-full object-cover" /></div>
             </figure>
             <div className="text-center md:text-left">
-              <p className="font-montserrat text-[11px] font-bold uppercase tracking-widest text-[#9a5967]">Lash Lift Course</p>
-              <h3 className="font-raleway text-xl sm:text-2xl font-semibold text-[#5b3239] mt-2">A day in class with Livia</h3>
+              <h3 className="font-raleway text-xl sm:text-2xl font-semibold text-[#5b3239]">A day in class with Livia</h3>
               <p className="font-montserrat text-sm leading-relaxed text-[#4c3b42] mt-3">From Livia’s explanation and mapping to the hands-on treatment on a live model and the certificate at the end of the day.</p>
             </div>
           </div>
