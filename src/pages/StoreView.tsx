@@ -224,9 +224,9 @@ export const StoreView: React.FC<StoreViewProps> = () => {
           </div>
 
           <div id="brow-lamination-course-photos" className="mt-14 text-center">
-            <p className="font-montserrat text-[11px] font-bold uppercase tracking-widest text-[#9a5967]">Brow Lamination Course</p>
-            <h3 className="font-raleway text-xl sm:text-2xl font-semibold text-[#5b3239] mt-2">Inside the Brow Lamination class</h3>
-            <p className="font-montserrat text-sm text-[#4c3b42] mt-2">Photos and videos from Livia’s Brow Lamination training in the studio.</p>
+            <p className="font-montserrat text-[11px] font-bold uppercase tracking-widest text-[#9a5967]">Bella Beauty Brazil Academy</p>
+            <h3 className="font-raleway text-xl sm:text-2xl font-semibold text-[#5b3239] mt-2">Inside our classes</h3>
+            <p className="font-montserrat text-sm text-[#4c3b42] mt-2">Real photos and videos from Livia’s one-to-one training in the studio.</p>
           </div>
           <div className="mt-6 grid grid-cols-2 lg:grid-cols-4 gap-4">
             {[
