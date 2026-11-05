@@ -232,10 +232,14 @@ export const StoreView: React.FC<StoreViewProps> = () => {
               </figure>
             ))}
           </div>
-          <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl mx-auto">
-            {BROW_COURSE_PHOTOS.slice(1).map(photo => (
-              <figure key={photo.name} className="overflow-hidden rounded-2xl border border-[#e8d6d5] bg-white">
-                <img src={siteAsset('assets/bella/training/brow-lamination-continuation-2026-11/' + photo.name)} alt={photo.alt} loading="lazy" decoding="async" className="block w-full aspect-[4/5] object-cover" />
+          <div className="mt-4 grid grid-cols-2 lg:grid-cols-4 gap-4">
+            {[
+              ...BROW_COURSE_PHOTOS.slice(1).map(photo => ({ src: siteAsset('assets/bella/training/brow-lamination-continuation-2026-11/' + photo.name), alt: photo.alt })),
+              { src: siteAsset('assets/bella/classic-eyelash-extensions/IMG_3667.PNG'), alt: 'Brow lamination training in the studio at Bella Beauty Brazil' },
+              { src: siteAsset('assets/bella/classic-eyelash-extensions/IMG_3668.PNG'), alt: 'Brow lamination class with Livia Rego at Bella Beauty Brazil' },
+            ].map(photo => (
+              <figure key={photo.src} className="overflow-hidden rounded-2xl border border-[#e8d6d5] bg-white">
+                <img src={photo.src} alt={photo.alt} loading="lazy" decoding="async" className="block w-full aspect-[4/5] object-cover" />
               </figure>
             ))}
           </div>

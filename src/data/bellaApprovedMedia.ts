@@ -86,16 +86,6 @@ const newerFolderLabels: Record<string,TreatmentPhoto[]> = {
       alt: 'Classic Eyelash Extensions — close-up of the lashes at Bella Beauty Brazil',
       caption: 'Classic Eyelash Extensions · Lash close-up',
     },
-    {
-      src: `${import.meta.env?.BASE_URL || '/'}assets/bella/classic-eyelash-extensions/IMG_3667.PNG`,
-      alt: 'Behind the scenes at Bella Beauty Brazil — brow treatment in progress',
-      caption: 'Bella Beauty Brazil · Studio behind the scenes',
-    },
-    {
-      src: `${import.meta.env?.BASE_URL || '/'}assets/bella/classic-eyelash-extensions/IMG_3668.PNG`,
-      alt: 'Behind the scenes at Bella Beauty Brazil — professional brow styling',
-      caption: 'Bella Beauty Brazil · Studio behind the scenes',
-    },
   ],
   // Client-supplied Hybrid Eyelash Extensions photos, labelled by the studio.
   // The collage shows a before-and-after comparison; the other is a result portrait.
@@ -169,7 +159,16 @@ const supplementary: Record<string,TreatmentPhoto[]> = {
     { src: siteImages.waxingPhotos.face, alt: 'Wax applied to facial hair near the cheek', caption: 'Facial waxing · illustrative photograph' },
   ],
 };
+// Livia's own skin-treatment photos (Nov 2026). When a treatment is listed
+// here, only these photos are shown for it.
+const skinRoot = `${import.meta.env?.BASE_URL || '/'}assets/bella/skin-2026-11`;
+const LIVIA_SKIN_PHOTOS: Record<string, TreatmentPhoto[]> = {
+  'microneedling': [
+    { src: `${skinRoot}/microneedling-01.webp`, alt: 'Livia Rego performing microneedling at Bella Beauty Brazil', caption: 'Microneedling · Bella Beauty Brazil' },
+  ],
+};
 export const serviceGalleryFor = (serviceId: string): TreatmentGallery => {
+  if (LIVIA_SKIN_PHOTOS[serviceId]) return {photos:LIVIA_SKIN_PHOTOS[serviceId],illustrative:false};
   // Lash Tint and Lash Extension Removal are shown without photos (Livia, Nov 2026).
   if (serviceId === 'lash-tint' || serviceId === 'lash-extension-removal') return {photos:[],illustrative:false};
   const folder = exactFolderByService[serviceId];
