@@ -107,16 +107,16 @@ export const StoreView: React.FC<StoreViewProps> = () => {
       {/* Hero: one clear message and a direct path to the signature course */}
       <header className="relative isolate overflow-hidden bg-[#21171c] text-white border-b border-[#9a5967]/30">
         <div aria-hidden="true" className="pointer-events-none absolute -left-20 top-0 w-72 h-72 bg-[#9a5967]/20 rounded-full blur-3xl" />
-        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 text-center">
-          <p className="font-montserrat text-[11px] sm:text-xs uppercase tracking-[0.22em] text-[#efb7c8] font-bold">Bella Beauty Brazil Academy · Greenslopes, Brisbane</p>
-          <h1 className="font-raleway text-3xl sm:text-5xl font-light uppercase tracking-[0.06em] leading-tight mt-4">Beauty Courses with Livia Rego</h1>
-          <p className="font-montserrat text-sm sm:text-base leading-relaxed text-[#f2e4e8] max-w-2xl mx-auto mt-5">One-to-one, hands-on training in the studio. Learn step by step with demonstrations, supervised practice on real models and ongoing support after the course.</p>
-          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
-            <a href="#nano-strokes-course" className="inline-flex items-center justify-center gap-2 rounded-full bg-[#efb7c8] hover:bg-white px-7 py-4 font-montserrat text-xs uppercase tracking-wider font-bold text-[#5b3239] transition-colors">
+        <div className="relative max-w-6xl mx-auto px-5 sm:px-6 lg:px-8 py-10 sm:py-16 text-center">
+          <p className="font-montserrat text-[10px] sm:text-xs uppercase tracking-[0.18em] sm:tracking-[0.22em] text-[#efb7c8] font-bold">Bella Beauty Brazil Academy</p>
+          <h1 className="font-raleway text-4xl leading-tight sm:text-5xl font-normal mt-3">Beauty Courses<span className="block text-[#efb7c8] italic text-2xl sm:text-4xl mt-1">with Livia Rego</span></h1>
+          <p className="font-montserrat text-sm sm:text-base leading-relaxed text-[#f2e4e8] max-w-xl mx-auto mt-4">One-to-one, hands-on training in Greenslopes, Brisbane.<br className="hidden sm:block" /> Real models, step-by-step guidance and support after the course.</p>
+          <div className="mt-7 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 max-w-sm sm:max-w-none mx-auto">
+            <a href="#nano-strokes-course" className="inline-flex items-center justify-center gap-2 rounded-full bg-[#efb7c8] hover:bg-white px-6 py-3.5 font-montserrat text-xs uppercase tracking-wider font-bold text-[#5b3239] transition-colors">
               <GraduationCap className="w-4 h-4" aria-hidden="true" />Nano Strokes Course<ArrowRight className="w-4 h-4" aria-hidden="true" />
             </a>
-            <a href="#more-courses" className="inline-flex items-center justify-center gap-2 rounded-full border border-[#efb7c8]/70 hover:bg-white/10 px-7 py-4 font-montserrat text-xs uppercase tracking-wider font-bold text-white transition-colors">
-              Lash Lift &amp; Brow Lamination courses
+            <a href="#more-courses" className="inline-flex items-center justify-center gap-2 rounded-full border border-[#efb7c8]/70 hover:bg-white/10 px-6 py-3.5 font-montserrat text-xs uppercase tracking-wider font-bold text-white transition-colors">
+              One-day courses
             </a>
           </div>
         </div>
