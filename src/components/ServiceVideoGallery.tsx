@@ -17,7 +17,7 @@ const approvedVideoClips: Record<string, string[]> = {
   'shadow-brows': ['shadow-brows/01.mp4','shadow-brows/03.mp4','shadow-brows/04.mp4'],
   // Lip Blush already uses the newer client-supplied gallery clip below.
   // The older lip-blush/01.mp4 repeats the same treatment visually; keep only the clearer clip.
-  'brow-sculpt': ['brow-sculpt/01.mp4'],
+  // brow-sculpt/01.mp4 removed (Nov 2026): it repeats the same session as client brow-sculpt-video-02.
   // Formerly shown as a generic lip-treatment video; RAR names it Lip Hydration.
   'lip-bliss-hydration': ['lip-treatments-geral/01.mp4'],
 };
