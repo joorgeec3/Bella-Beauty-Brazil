@@ -169,6 +169,9 @@ const LIVIA_SKIN_PHOTOS: Record<string, TreatmentPhoto[]> = {
   'dermaplaning': [
     { src: `${skinRoot}/dermaplaning-01.webp`, alt: 'Dermaplaning treatment at Bella Beauty Brazil', caption: 'Dermaplaning · Bella Beauty Brazil' },
   ],
+  'facial-spa': [
+    { src: `${skinRoot}/facial-spa-01.webp`, alt: 'Facial Spa cleansing at Bella Beauty Brazil', caption: 'Facial Spa · Bella Beauty Brazil' },
+  ],
   'deluxe-facial': [
     { src: `${skinRoot}/deluxe-facial-01.webp`, alt: 'Deluxe Facial at Bella Beauty Brazil — facial massage, cleansing and LED light mask', caption: 'Deluxe Facial · Bella Beauty Brazil' },
   ],
