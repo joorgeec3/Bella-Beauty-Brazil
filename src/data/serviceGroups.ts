@@ -64,14 +64,15 @@ export const groupName = (id: string, language: Language) => getServiceGroup(id)
  * Small extra services shown as a simple text line (not a full card) under
  * the main service they belong with — Livia's request, Nov 2026.
  */
-export const ADD_ON_LINES: Record<string, string> = {
-  'lash-lift': 'lash-tint',
-  'classic-eyelashes': 'lash-extension-removal',
-  'hybrid-eyelashes': 'lash-extension-removal',
-  'wet-look-lashes': 'lash-extension-removal',
+export const ADD_ON_LINES: Record<string, string[]> = {
+  'lash-lift': ['lash-lift-only', 'lash-tint'],
+  'classic-eyelashes': ['lash-extension-removal'],
+  'hybrid-eyelashes': ['lash-extension-removal'],
+  'wet-look-lashes': ['lash-extension-removal'],
 };
-export const ADD_ON_IDS = new Set(Object.values(ADD_ON_LINES));
+export const ADD_ON_IDS = new Set(Object.values(ADD_ON_LINES).flat());
 export const ADD_ON_NOTES: Record<string, string> = {
+  'lash-lift-only': 'the same lift, without tint',
   'lash-tint': 'colour for your natural lashes, no lift',
   'lash-extension-removal': 'safe professional removal of lash extensions',
 };

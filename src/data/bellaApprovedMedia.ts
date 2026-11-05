@@ -23,7 +23,8 @@ export const PHOTO_FOLDERS = {
   'brow-tint': collection('brow-tint',3,'Brow Tint'),
   'brow-dye': collection('brow-dye',6,'Brow Dye'),
   'brow-lamination': collection('brow-lamination',7,'Brow Lamination'),
-  'lash-lift': collection('lash-lift',8,'Lash Lift'),
+  // Photo 01 removed at Livia's request (Nov 2026).
+  'lash-lift': collection('lash-lift',8,'Lash Lift').slice(1),
   'lash-extensions': collection('lash-extensions',3,'Lash Extensions (style not specified)'),
   'teeth-whitening': collection('teeth-whitening',3,'Teeth Whitening'),
   'skin-treatments-geral': collection('skin-treatments-geral',3,'Skin Treatments (general)'),
