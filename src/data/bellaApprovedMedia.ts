@@ -63,14 +63,9 @@ const newerFolderLabels: Record<string,TreatmentPhoto[]> = {
   // describe the 3-panel photo as proof of Exos regrowth or efficacy.
   'grow-up-hair-brows': [
     {
-      src: `${import.meta.env?.BASE_URL || '/'}assets/bella/exos-hair-brows/IMG_3667-1.PNG`,
-      alt: 'Eyebrow treatment session at Bella Beauty Brazil studio',
-      caption: 'Exos Hair Brows · Studio eyebrow-care session',
-    },
-    {
-      src: `${import.meta.env?.BASE_URL || '/'}assets/bella/exos-hair-brows/IMG_3391.PNG`,
-      alt: 'Three detailed photographs of a natural eyebrow',
-      caption: 'Exos Hair Brows · Eyebrow photography',
+      src: `${import.meta.env?.BASE_URL || '/'}assets/bella/exos-hair-brows-2026-11/exos-hair-brows-results.webp`,
+      alt: 'Exos Hair Brows — three close-up photos of the same natural eyebrow',
+      caption: 'Exos Hair Brows · Brow progress',
     },
   ],
 
