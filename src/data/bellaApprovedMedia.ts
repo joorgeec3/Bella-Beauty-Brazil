@@ -166,6 +166,9 @@ const LIVIA_SKIN_PHOTOS: Record<string, TreatmentPhoto[]> = {
   'microneedling': [
     { src: `${skinRoot}/microneedling-01.webp`, alt: 'Livia Rego performing microneedling at Bella Beauty Brazil', caption: 'Microneedling · Bella Beauty Brazil' },
   ],
+  'deluxe-facial': [
+    { src: `${skinRoot}/deluxe-facial-01.webp`, alt: 'Deluxe Facial at Bella Beauty Brazil — facial massage, cleansing and LED light mask', caption: 'Deluxe Facial · Bella Beauty Brazil' },
+  ],
 };
 export const serviceGalleryFor = (serviceId: string): TreatmentGallery => {
   if (LIVIA_SKIN_PHOTOS[serviceId]) return {photos:LIVIA_SKIN_PHOTOS[serviceId],illustrative:false};
