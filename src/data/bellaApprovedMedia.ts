@@ -166,6 +166,9 @@ const LIVIA_SKIN_PHOTOS: Record<string, TreatmentPhoto[]> = {
   'microneedling': [
     { src: `${skinRoot}/microneedling-01.webp`, alt: 'Livia Rego performing microneedling at Bella Beauty Brazil', caption: 'Microneedling · Bella Beauty Brazil' },
   ],
+  'dermaplaning': [
+    { src: `${skinRoot}/dermaplaning-01.webp`, alt: 'Dermaplaning treatment at Bella Beauty Brazil', caption: 'Dermaplaning · Bella Beauty Brazil' },
+  ],
   'deluxe-facial': [
     { src: `${skinRoot}/deluxe-facial-01.webp`, alt: 'Deluxe Facial at Bella Beauty Brazil — facial massage, cleansing and LED light mask', caption: 'Deluxe Facial · Bella Beauty Brazil' },
   ],
