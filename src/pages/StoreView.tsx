@@ -223,16 +223,12 @@ export const StoreView: React.FC<StoreViewProps> = () => {
             </div>
           </div>
 
-          <h3 className="font-raleway text-xl font-semibold text-[#5b3239] text-center mt-14">Brow Lamination Course — class videos &amp; photos</h3>
-          <div className="mt-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-            {combinedCourseClips.map((clip, index) => (
-              <figure key={clip.key} className="bg-white rounded-2xl overflow-hidden border border-[#e8d6d5]">
-                <div className="aspect-[3/4] w-full bg-[#281d23]"><RobustAutoPlayVideo src={clip.src} poster={siteAsset('assets/bella/training/brow-lamination-continuation-2026-11/Facetune_23-02-2023-12-58-24.JPEG')} controls className="w-full h-full object-contain" /></div>
-                <figcaption className="px-3 py-2 font-montserrat text-xs text-[#5b3239]">Class video {index + 1}</figcaption>
-              </figure>
-            ))}
+          <div id="brow-lamination-course-photos" className="mt-14 text-center">
+            <p className="font-montserrat text-[11px] font-bold uppercase tracking-widest text-[#9a5967]">Brow Lamination Course</p>
+            <h3 className="font-raleway text-xl sm:text-2xl font-semibold text-[#5b3239] mt-2">Inside the Brow Lamination class</h3>
+            <p className="font-montserrat text-sm text-[#4c3b42] mt-2">Photos and videos from Livia’s Brow Lamination training in the studio.</p>
           </div>
-          <div className="mt-4 grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="mt-6 grid grid-cols-2 lg:grid-cols-4 gap-4">
             {[
               ...BROW_COURSE_PHOTOS.slice(1).map(photo => ({ src: siteAsset('assets/bella/training/brow-lamination-continuation-2026-11/' + photo.name), alt: photo.alt })),
               { src: siteAsset('assets/bella/classic-eyelash-extensions/IMG_3667.PNG'), alt: 'Brow lamination training in the studio at Bella Beauty Brazil' },
@@ -240,6 +236,14 @@ export const StoreView: React.FC<StoreViewProps> = () => {
             ].map(photo => (
               <figure key={photo.src} className="overflow-hidden rounded-2xl border border-[#e8d6d5] bg-white">
                 <img src={photo.src} alt={photo.alt} loading="lazy" decoding="async" className="block w-full aspect-[4/5] object-cover" />
+              </figure>
+            ))}
+          </div>
+          <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+            {combinedCourseClips.map((clip, index) => (
+              <figure key={clip.key} className="bg-white rounded-2xl overflow-hidden border border-[#e8d6d5]">
+                <div className="aspect-[3/4] w-full bg-[#281d23]"><RobustAutoPlayVideo src={clip.src} poster={siteAsset('assets/bella/training/brow-lamination-continuation-2026-11/Facetune_23-02-2023-12-58-24.JPEG')} controls className="w-full h-full object-contain" /></div>
+                <figcaption className="px-3 py-2 font-montserrat text-xs text-[#5b3239]">Class video {index + 1}</figcaption>
               </figure>
             ))}
           </div>
