@@ -18,7 +18,7 @@ const categories = ['All', 'Brows', 'Lips', 'Lashes', 'Skin', 'Smile', 'Waxing']
 type Category = typeof categories[number];
 
 // Services use the data category 'Skin Treatments'; the filter chip is labelled 'Skin'.
-const filterCategoryOf = (category: string) => (category === 'Skin Treatments' ? 'Skin' : category);
+const filterCategoryOf = (category?: string): string => (category === 'Skin Treatments' ? 'Skin' : category || '');
 const categoryLabels: Record<Language, Record<Category, string>> = {
   en: { All: 'All', Brows: 'Brows', Lips: 'Lips', Lashes: 'Lashes', Skin: 'Skin', Smile: 'Smile', Waxing: 'Waxing' },
   pt: { All: 'Todos', Brows: 'Sobrancelhas', Lips: 'Lábios', Lashes: 'Cílios', Skin: 'Pele', Smile: 'Sorriso', Waxing: 'Depilação' },
