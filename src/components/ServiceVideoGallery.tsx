@@ -4,6 +4,7 @@ import type { Language } from '../data/siteData';
 import { galleryVideos } from '../data/galleryData';
 import { RobustAutoPlayVideo } from './RobustAutoPlayVideo';
 import { serviceCoverFor } from '../data/serviceCoverPhotos';
+import { SERVICES } from '../data/siteData';
 
 type VideoItem = { src: string; title: string };
 
@@ -19,7 +20,7 @@ const approvedVideoClips: Record<string, string[]> = {
   // The older lip-blush/01.mp4 repeats the same treatment visually; keep only the clearer clip.
   // brow-sculpt/01.mp4 removed (Nov 2026): it repeats the same session as client brow-sculpt-video-02.
   // Formerly shown as a generic lip-treatment video; RAR names it Lip Hydration.
-  'lip-bliss-hydration': ['lip-treatments-geral/01.mp4'],
+  // lip-treatments-geral/01.mp4 removed (Nov 2026): same clip as lip-bliss-hydration-video-01.
 };
 // Additional, previously uploaded clips from strictly named folders in the RAR.
  // The misleading "dermaplaning-video-01" is intentionally excluded because
@@ -119,7 +120,7 @@ export const ServiceVideoGallery: React.FC<{ serviceId: string; language: Langua
           <Film className="w-4 h-4" aria-hidden="true"/>
           <span className="font-montserrat text-[11px] font-bold uppercase tracking-widest">Bella Beauty Brazil</span>
         </div>
-        <h2 id={`service-videos-heading-${serviceId}`} className="font-raleway text-2xl sm:text-3xl font-semibold text-[#5b3239]">{copy.heading}</h2>
+        <h2 id={`service-videos-heading-${serviceId}`} className="font-raleway text-2xl sm:text-3xl font-semibold text-[#5b3239]">{SERVICES.find(item => item.id === serviceId)?.title ? `${SERVICES.find(item => item.id === serviceId)?.title} — treatment videos` : copy.heading}</h2>
         <p className="font-montserrat text-sm text-[#675960] mt-2 mb-6">{copy.description}</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 lg:gap-7">
           {available.map((item, index) => (
