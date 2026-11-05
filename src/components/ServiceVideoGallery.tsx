@@ -39,6 +39,10 @@ const serviceVideoFolderToRoute: Record<string, string> = {
 // exclude it rather than presenting the wrong procedure.
 // Client-supplied original Wet Look video (H.264 MP4). No transcoding or cropping.
 const additionalStudioClips: Record<string, VideoItem[]> = {
+  'dermaplaning': [{
+    src: `${import.meta.env.BASE_URL}assets/bella/skin-2026-11/dermaplaning-video-01.mp4`,
+    title: 'Dermaplaning — treatment video from Livia (Derma reels)',
+  }],
   'classic-eyelashes': [{
     src: `${import.meta.env.BASE_URL}assets/bella/eyelash-extensions-originals/classic-eyelashes-original.mp4`,
     title: 'Classic Eyelash Extensions — client-supplied original video (IMG_3664.MP4)',
