@@ -175,6 +175,8 @@ const supplementary: Record<string,TreatmentPhoto[]> = {
   ],
 };
 export const serviceGalleryFor = (serviceId: string): TreatmentGallery => {
+  // Lash Tint and Lash Extension Removal are shown without photos (Livia, Nov 2026).
+  if (serviceId === 'lash-tint' || serviceId === 'lash-extension-removal') return {photos:[],illustrative:false};
   const folder = exactFolderByService[serviceId];
   if(folder)return {photos:serviceId === 'shadow-hybrid' ? dyeReferencePhotos : PHOTO_FOLDERS[folder],illustrative:false};
   if(newerFolderLabels[serviceId])return {photos:newerFolderLabels[serviceId],illustrative:false};

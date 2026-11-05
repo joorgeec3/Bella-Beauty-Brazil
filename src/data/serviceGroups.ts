@@ -71,3 +71,7 @@ export const ADD_ON_LINES: Record<string, string> = {
   'wet-look-lashes': 'lash-extension-removal',
 };
 export const ADD_ON_IDS = new Set(Object.values(ADD_ON_LINES));
+export const ADD_ON_NOTES: Record<string, string> = {
+  'lash-tint': 'colour for your natural lashes, no lift',
+  'lash-extension-removal': 'safe professional removal of lash extensions',
+};

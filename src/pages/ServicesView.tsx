@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { ArrowRight, CalendarDays, Clock3, MapPin, Search, X } from 'lucide-react';
 import { BOOKING_URL, WHATSAPP_URL, SERVICES, Language, getLocalizedService, getServiceBookingUrl, localPath } from '../data/siteData';
 import { siteImages } from '../data/siteImages';
-import { SERVICE_GROUPS, ADD_ON_LINES, ADD_ON_IDS } from '../data/serviceGroups';
+import { SERVICE_GROUPS, ADD_ON_LINES, ADD_ON_IDS, ADD_ON_NOTES } from '../data/serviceGroups';
 import { approvedDescriptionFor } from '../data/approvedServiceCatalog';
 import { getServiceGallery } from '../components/ServicePhotoGallery';
 import { serviceCoverFor } from '../data/serviceCoverPhotos';
@@ -243,7 +243,7 @@ export const ServicesView: React.FC<ServicesViewProps> = ({ initialServiceId, on
                 <span className="font-bold text-[#5b3239]">{typeof service.price === 'number' ? 'A$' + service.price : labels.enquire}</span>
                 {service.duration && <span className="inline-flex items-center gap-1"><Clock3 className="w-3.5 h-3.5" aria-hidden="true" />{service.duration}</span>}
               </div>
-              {ADD_ON_LINES[service.id] && (() => { const extra = SERVICES.find(item => item.id === ADD_ON_LINES[service.id]); return extra ? <p className="mt-3 border-t border-[#f0e3e5] pt-3 font-montserrat text-xs text-[#5b3239] flex flex-wrap items-center gap-x-2 gap-y-1"><span aria-hidden="true">—</span><a href={`${localPath(language)}/services/${extra.id}`} className="font-semibold underline-offset-2 hover:underline">{extra.title}</a><span>· A${extra.price}</span>{extra.duration && <span className="text-[#675960]">· {extra.duration}</span>}<a href={getServiceBookingUrl(extra.id)} className="font-bold text-[#9a5967] underline underline-offset-2">Book</a></p> : null; })()}
+              {ADD_ON_LINES[service.id] && (() => { const extra = SERVICES.find(item => item.id === ADD_ON_LINES[service.id]); return extra ? <p className="mt-3 border-t border-[#f0e3e5] pt-3 font-montserrat text-xs text-[#5b3239] flex flex-wrap items-center gap-x-2 gap-y-1"><span aria-hidden="true">—</span><span><strong className="font-semibold">{extra.title}</strong> – {ADD_ON_NOTES[extra.id]}</span><span>· A${extra.price}</span>{extra.duration && <span className="text-[#675960]">· {extra.duration}</span>}<a href={getServiceBookingUrl(extra.id)} className="font-bold text-[#9a5967] underline underline-offset-2">Book</a></p> : null; })()}
               <div className="flex flex-wrap items-center gap-2 mt-auto pt-4">
                 <a href={`${localPath(language)}/services/${service.id}`} onClick={(event) => navigate(event, service.id)}
                   className="inline-flex items-center gap-1.5 border border-[#9a5967]/40 rounded-full px-3.5 py-2.5 text-[11px] font-montserrat font-bold text-[#5b3239] hover:bg-[#f3d9d0] focus-visible:outline-2 focus-visible:outline-[#9a5967] transition-colors">
