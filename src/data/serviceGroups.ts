@@ -59,3 +59,15 @@ export type ServiceGroupId = typeof SERVICE_GROUPS[number]['id'];
 export const getServiceGroup = (id: string) => SERVICE_GROUPS.find(group => group.id === id);
 export const groupOfService = (serviceId: string) => SERVICE_GROUPS.find(group => (group.serviceIds as readonly string[]).includes(serviceId));
 export const groupName = (id: string, language: Language) => getServiceGroup(id)?.title[language] ?? id;
+
+/**
+ * Small extra services shown as a simple text line (not a full card) under
+ * the main service they belong with — Livia's request, Nov 2026.
+ */
+export const ADD_ON_LINES: Record<string, string> = {
+  'lash-lift': 'lash-tint',
+  'classic-eyelashes': 'lash-extension-removal',
+  'hybrid-eyelashes': 'lash-extension-removal',
+  'wet-look-lashes': 'lash-extension-removal',
+};
+export const ADD_ON_IDS = new Set(Object.values(ADD_ON_LINES));

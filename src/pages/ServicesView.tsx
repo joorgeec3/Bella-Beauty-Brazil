@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { ArrowRight, CalendarDays, Clock3, MapPin, Search, X } from 'lucide-react';
 import { BOOKING_URL, WHATSAPP_URL, SERVICES, Language, getLocalizedService, getServiceBookingUrl, localPath } from '../data/siteData';
 import { siteImages } from '../data/siteImages';
-import { SERVICE_GROUPS } from '../data/serviceGroups';
+import { SERVICE_GROUPS, ADD_ON_LINES, ADD_ON_IDS } from '../data/serviceGroups';
 import { approvedDescriptionFor } from '../data/approvedServiceCatalog';
 import { getServiceGallery } from '../components/ServicePhotoGallery';
 import { serviceCoverFor } from '../data/serviceCoverPhotos';
@@ -125,6 +125,7 @@ export const ServicesView: React.FC<ServicesViewProps> = ({ initialServiceId, on
   const filteredServices = useMemo(() => {
     const query = normalizeSearch(search.trim());
     return localizedServices.filter((service) => {
+      if (ADD_ON_IDS.has(service.id)) return false;
       if (category !== 'All' && filterCategoryOf(service.category) !== category) return false;
       if (!query) return true;
       return normalizeSearch([service.title, service.description, service.subtitle, service.category].filter(Boolean).join(' ')).includes(query);
@@ -193,7 +194,8 @@ export const ServicesView: React.FC<ServicesViewProps> = ({ initialServiceId, on
         </div>
         <div role="group" aria-label={labels.explore} className="flex flex-wrap gap-2">
           {categories.map((item) => {
-            const count = item === 'All' ? SERVICES.length : SERVICES.filter((service) => filterCategoryOf(service.category) === item).length;
+            const listed = SERVICES.filter((service) => !ADD_ON_IDS.has(service.id));
+            const count = item === 'All' ? listed.length : listed.filter((service) => filterCategoryOf(service.category) === item).length;
             return <button key={item} type="button" onClick={() => setCategory(item)} aria-pressed={category === item}
               className={'inline-flex items-center gap-2 rounded-full border px-3.5 py-2.5 font-montserrat text-xs font-semibold cursor-pointer transition-colors focus-visible:outline-2 focus-visible:outline-[#9a5967] ' +
                 (category === item ? 'border-[#5b3239] bg-[#5b3239] text-white' : 'border-[#e8d6d5] bg-[#faf6f6] text-[#5b3239] hover:bg-[#f3d9d0]')}>
@@ -241,6 +243,7 @@ export const ServicesView: React.FC<ServicesViewProps> = ({ initialServiceId, on
                 <span className="font-bold text-[#5b3239]">{typeof service.price === 'number' ? 'A$' + service.price : labels.enquire}</span>
                 {service.duration && <span className="inline-flex items-center gap-1"><Clock3 className="w-3.5 h-3.5" aria-hidden="true" />{service.duration}</span>}
               </div>
+              {ADD_ON_LINES[service.id] && (() => { const extra = SERVICES.find(item => item.id === ADD_ON_LINES[service.id]); return extra ? <p className="mt-3 border-t border-[#f0e3e5] pt-3 font-montserrat text-xs text-[#5b3239] flex flex-wrap items-center gap-x-2 gap-y-1"><span aria-hidden="true">—</span><a href={`${localPath(language)}/services/${extra.id}`} className="font-semibold underline-offset-2 hover:underline">{extra.title}</a><span>· A${extra.price}</span>{extra.duration && <span className="text-[#675960]">· {extra.duration}</span>}<a href={getServiceBookingUrl(extra.id)} className="font-bold text-[#9a5967] underline underline-offset-2">Book</a></p> : null; })()}
               <div className="flex flex-wrap items-center gap-2 mt-auto pt-4">
                 <a href={`${localPath(language)}/services/${service.id}`} onClick={(event) => navigate(event, service.id)}
                   className="inline-flex items-center gap-1.5 border border-[#9a5967]/40 rounded-full px-3.5 py-2.5 text-[11px] font-montserrat font-bold text-[#5b3239] hover:bg-[#f3d9d0] focus-visible:outline-2 focus-visible:outline-[#9a5967] transition-colors">

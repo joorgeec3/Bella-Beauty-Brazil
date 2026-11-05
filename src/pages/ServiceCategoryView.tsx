@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowLeft, ArrowRight, CalendarDays, ChevronDown, Clock3, Images, MapPin } from 'lucide-react';
 import { SERVICES, Language, getLocalizedService, getServiceBookingUrl, BOOKING_URL, WHATSAPP_URL, localPath } from '../data/siteData';
-import { getServiceGroup, SERVICE_GROUPS } from '../data/serviceGroups';
+import { getServiceGroup, SERVICE_GROUPS, ADD_ON_IDS } from '../data/serviceGroups';
 import { APPROVED_SERVICE_CATALOG, approvedDescriptionFor } from '../data/approvedServiceCatalog';
 import { SERVICE_GUIDES } from '../data/serviceGuides';
 import { NanoStrokesContent } from '../components/NanoStrokesContent';
@@ -101,7 +101,8 @@ export const ServiceCategoryView: React.FC<Props> = ({ groupId, language, onNavi
   const group = getServiceGroup(groupId);
   if (!group) return null;
   const t = words[language];
-  const visibleServiceIds = group.serviceIds.filter(id => id !== 'lash-lift-only');
+  const visibleServiceIds = group.serviceIds.filter(id => id !== 'lash-lift-only' && !ADD_ON_IDS.has(id));
+  const addOnIds = group.serviceIds.filter(id => ADD_ON_IDS.has(id));
   // Previous homepage category-level pictures remain available here, once
   // each, and are never falsely presented as a result of an exact procedure.
   const usedTreatmentPhotos = new Set(group.serviceIds.flatMap(id => getServiceGallery(id).photos.map(photo => photo.src)));
@@ -136,6 +137,7 @@ export const ServiceCategoryView: React.FC<Props> = ({ groupId, language, onNavi
       </div>
       <div className="space-y-4">
         {visibleServiceIds.map((id, i) => <React.Fragment key={id}><TreatmentEntry key={id} id={id} language={language} first={i===0} onNavigate={onNavigate}/>{id === 'lash-lift' && <div className="rounded-xl border border-[#e8d6d5] bg-white px-5 py-4 flex flex-wrap items-center justify-between gap-3"><span className="font-montserrat text-sm font-semibold text-[#5b3239]">Lash Lift Only — without tint</span><span className="font-montserrat text-sm font-semibold text-[#5b3239]">A$119</span></div>}</React.Fragment>)}
+        {addOnIds.map(id => { const extra = SERVICES.find(item => item.id === id); return extra ? <div key={id} id={`treatment-${id}`} className="rounded-xl border border-[#e8d6d5] bg-white px-5 py-4 flex flex-wrap items-center justify-between gap-3"><span className="font-montserrat text-sm font-semibold text-[#5b3239]">— {extra.title}{extra.duration ? <span className="font-normal text-[#675960]"> · {extra.duration}</span> : null}</span><span className="flex items-center gap-4"><span className="font-montserrat text-sm font-semibold text-[#5b3239]">A${extra.price}</span><a href={getServiceBookingUrl(id)} className="font-montserrat text-xs font-bold text-[#9a5967] underline underline-offset-2">Book</a></span></div> : null; })}
       </div>
       {groupId !== 'waxing' && categoryPhotos.length > 0 && <details className="mt-10 rounded-2xl border border-[#e8d6d5] bg-white overflow-hidden">
         <summary className="cursor-pointer px-5 sm:px-7 py-5 font-raleway text-lg sm:text-xl font-semibold text-[#5b3239] focus-visible:outline-2 focus-visible:outline-[#9a5967]">
