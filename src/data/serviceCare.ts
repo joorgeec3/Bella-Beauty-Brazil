@@ -39,6 +39,9 @@ const lashLiftCare: CareByLanguage = {
       ['Is it suitable if I wear contact lenses or have sensitive eyes?', 'Yes, in most cases. Remove your lenses before the treatment and bring your case. If you have very sensitive eyes, an eye infection or recent eye surgery, message me before booking.'],
       ['How often can I repeat it?', 'Every 6–8 weeks, once the lift has grown out. Repeating sooner can over-process the lashes.'],
       ['What’s the difference between a lash lift and extensions?', 'A lash lift curls your own lashes (with tint if you choose Lash Lift & Tint), with no added lashes and no infills. Extensions add individual lashes for more length and volume and need infills every 2–3 weeks.'],
+      ['Does a lash lift hurt?', 'No. You relax with your eyes closed for the whole appointment. Some clients feel a light tingle from the solution, but it should never sting; tell me straight away if anything feels uncomfortable.'],
+      ['How long does the appointment take?', 'Lash Lift & Tint takes about 1 hour 10 minutes, and Lash Lift only about 40 minutes. Lash Lift & Brow Lamination together takes about 1 hour 30 minutes.'],
+      ['Where are you located?', 'Bella Beauty Brazil is at Suite 3, 412 Logan Road, Greenslopes, on Brisbane’s Southside, a few minutes from Coorparoo, Stones Corner, Annerley, Holland Park and Camp Hill.'],
     ],
   },
   pt: {
@@ -60,6 +63,9 @@ const lashLiftCare: CareByLanguage = {
       ['Posso fazer se uso lentes de contato ou tenho olhos sensíveis?', 'Na maioria dos casos, sim. Retire as lentes antes do procedimento e traga o estojo. Se tiver olhos muito sensíveis, infecção ou cirurgia recente nos olhos, me chame antes de agendar.'],
       ['De quanto em quanto tempo posso repetir?', 'A cada 6 a 8 semanas, quando o efeito já tiver crescido. Repetir antes pode ressecar os cílios.'],
       ['Qual a diferença entre lash lift e extensão?', 'O lash lift curva os seus próprios cílios (e tinge, no Lash Lift & Tint), sem fios adicionais e sem manutenção. A extensão adiciona fios para mais comprimento e volume e precisa de manutenção a cada 2–3 semanas.'],
+      ['O lash lift dói?', 'Não. Você relaxa de olhos fechados durante todo o atendimento. Algumas clientes sentem um leve formigamento, mas nunca deve arder; me avise na hora se sentir qualquer desconforto.'],
+      ['Quanto tempo leva o atendimento?', 'Lash Lift & Tint leva cerca de 1 hora e 10 minutos, e o Lash Lift só, cerca de 40 minutos. Lash Lift & Brow Lamination juntos levam cerca de 1 hora e 30 minutos.'],
+      ['Onde fica o estúdio?', 'A Bella Beauty Brazil fica na Suite 3, 412 Logan Road, Greenslopes, na zona sul de Brisbane, a poucos minutos de Coorparoo, Stones Corner, Annerley, Holland Park e Camp Hill.'],
     ],
   },
   es: {
@@ -81,6 +87,9 @@ const lashLiftCare: CareByLanguage = {
       ['¿Es adecuado si uso lentes de contacto o tengo ojos sensibles?', 'Sí, en la mayoría de los casos. Quítate los lentes antes del tratamiento y trae el estuche. Si tienes ojos muy sensibles, una infección o una cirugía ocular reciente, escríbeme antes de reservar.'],
       ['¿Cada cuánto puedo repetirlo?', 'Cada 6 a 8 semanas, cuando el efecto haya crecido. Repetirlo antes puede dañar las pestañas.'],
       ['¿Qué diferencia hay entre lifting y extensiones?', 'El lifting riza tus propias pestañas (y las tiñe, en Lash Lift & Tint), sin pestañas añadidas ni mantenimiento. Las extensiones añaden pestañas para más largo y volumen y necesitan mantenimiento cada 2–3 semanas.'],
+      ['¿Duele el lifting de pestañas?', 'No. Te relajas con los ojos cerrados durante toda la cita. Algunas clientas sienten un leve hormigueo, pero nunca debe arder; avísame enseguida si sientes alguna molestia.'],
+      ['¿Cuánto dura la cita?', 'Lash Lift & Tint dura unos 70 minutos y Lash Lift solo unos 40 minutos. Lash Lift y Brow Lamination juntos duran unos 90 minutos.'],
+      ['¿Dónde están ubicados?', 'Bella Beauty Brazil está en Suite 3, 412 Logan Road, Greenslopes, en la zona sur de Brisbane, a pocos minutos de Coorparoo, Stones Corner, Annerley, Holland Park y Camp Hill.'],
     ],
   },
 };
