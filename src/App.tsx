@@ -365,7 +365,7 @@ export default function App() {
               onOpenServices={() => handleNavigate('services')}
               language={language}
             />
-            <FeaturesRibbon language={language} onOpenCategory={(groupId) => handleNavigate('services-category', groupId)} />
+            <FeaturesRibbon language={language} onOpenCategory={(groupId) => handleNavigate('services-category', groupId)} onOpenCourses={() => handleNavigate('store')} />
             <TickerMarquee language={language} />
             <LocationsCarousel
               onOpenAppointment={openBooking}

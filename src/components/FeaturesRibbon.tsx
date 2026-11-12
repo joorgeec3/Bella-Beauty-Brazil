@@ -1,15 +1,15 @@
 import React from 'react';
 import { Award, ShieldCheck, Sparkles, Smile } from 'lucide-react';
-import { Language, localPath } from '../data/siteData';
+import { COURSES, Language, localPath } from '../data/siteData';
 import { siteImages } from '../data/siteImages';
 import { getServicePhotos } from './ServicePhotoGallery';
 import { categoryPhotosFor } from '../data/bellaApprovedMedia';
 import { SERVICE_GROUPS, ServiceGroupId } from '../data/serviceGroups';
 
-interface FeaturesRibbonProps { language: Language; onOpenCategory: (groupId: ServiceGroupId) => void; }
+interface FeaturesRibbonProps { language: Language; onOpenCategory: (groupId: ServiceGroupId) => void; onOpenCourses: () => void; }
 interface FeatureCardData { image?: string; video?: string; title: string; text: string; footer: string; }
 
-export const FeaturesRibbon: React.FC<FeaturesRibbonProps> = ({ language, onOpenCategory }) => {
+export const FeaturesRibbon: React.FC<FeaturesRibbonProps> = ({ language, onOpenCategory, onOpenCourses }) => {
   const cards: FeatureCardData[] = [
     {
       image: getServicePhotos('shadow-brows')[1]?.src,
@@ -55,6 +55,10 @@ export const FeaturesRibbon: React.FC<FeaturesRibbonProps> = ({ language, onOpen
     },
   ];
 
+  const coursesHeading = language === 'en' ? 'Professional Courses' : language === 'pt' ? 'Cursos Profissionais' : 'Cursos Profesionales';
+  const courseDuration = (duration: string) => language === 'en' ? duration
+    : duration.replace('hours', 'horas').replace('days', language === 'pt' ? 'dias' : 'días');
+
   return <section data-floating-clearance className="relative bg-[#181214] text-white pt-14 pb-20 overflow-hidden border-t border-[#9a5967]/25">
     {/* Decorative brand pair only; not client treatment result photographs. */}
     <img src={siteImages.editorial.skinPortrait} alt="" aria-hidden="true" loading="lazy" className="pointer-events-none absolute left-0 top-10 h-64 w-44 sm:h-[340px] sm:w-[240px] object-cover object-center opacity-[0.11] sm:opacity-[0.14] [mask-image:linear-gradient(to_right,black,transparent)]" />
@@ -85,6 +89,30 @@ export const FeaturesRibbon: React.FC<FeaturesRibbonProps> = ({ language, onOpen
             </span>
           </a>;
         })}
+      </div>
+      <div className="mt-14 pt-10 border-t border-[#9a5967]/25">
+        <div className="text-center max-w-2xl mx-auto mb-10 reveal-on-scroll">
+          <span className="text-xs font-bold uppercase tracking-widest text-[#efb7c8] block mb-1">{language === 'en' ? 'Learn with Livia' : language === 'pt' ? 'Aprenda com Livia' : 'Aprende con Livia'}</span>
+          <h2 className="font-raleway text-[21px] leading-snug sm:text-2xl lg:text-3xl font-light uppercase tracking-[0.04em] text-white">{coursesHeading}</h2>
+          <div className="w-16 h-0.5 bg-[#9a5967] mx-auto mt-3" />
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto gap-4 sm:gap-6 lg:gap-7 items-stretch scroll-stagger">
+          {COURSES.map(course => <a key={course.id} href={`${localPath(language)}/courses`} aria-label={`${course.title} — ${coursesHeading}`}
+            onClick={event => {
+              if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
+              event.preventDefault();
+              onOpenCourses();
+            }}
+            className="block rounded-2xl sm:rounded-3xl focus-visible:outline-4 focus-visible:outline-[#efb7c8]">
+            <FeatureCard image={course.image} title={course.title}
+              text={`${language === 'en' ? 'One-on-one, in person' : 'Individual, presencial'} • ${courseDuration(course.duration)}.`}
+              footer={`$${course.price.toLocaleString('en-AU')} AUD`} />
+            <span className="flex items-center justify-center gap-2 mt-2 text-xs font-semibold text-[#f3c9d4]">
+              {language === 'en' ? 'View course details' : language === 'pt' ? 'Ver detalhes do curso' : 'Ver detalles del curso'}
+              <span aria-hidden="true">→</span>
+            </span>
+          </a>)}
+        </div>
       </div>
       <div className="mt-14 pt-10 border-t border-[#9a5967]/25 reveal-from-left">
         <div className="bg-[#22181b] rounded-3xl p-6 sm:p-8 lg:p-10 border border-[#9a5967]/30 shadow-2xl relative overflow-hidden">

@@ -14,9 +14,9 @@ export const localPath = (language: Language): string =>
 
 /** Single source for opening hours (site, drawer and pre-rendered HTML). Sunday is closed. */
 export const OPENING_HOURS = [
-  ['Monday', '11:00–17:30'],
-  ['Tuesday', '09:15–19:30'],
-  ['Wednesday', '13:30–15:30'],
+  ['Monday', '11:30–17:30'],
+  ['Tuesday', '09:15–19:00'],
+  ['Wednesday', '13:30–16:00'],
   ['Thursday', '09:15–19:30'],
   ['Friday', '09:15–16:00'],
   ['Saturday', '08:30–15:30'],
@@ -137,7 +137,7 @@ export const PRODUCTS: Product[] = [
 ];
 
 export const LOCATIONS: LocationItem[] = [{
-  id: 'greenslopes', name: 'Greenslopes', subtitle: 'Bella Beauty Brazil', address: 'Suite 3, 412 Logan Road', city: 'Greenslopes, QLD 4120, Australia', hours: 'Mon 11:00am–5:30pm · Tue 9:15am–7:30pm · Wed 1:30pm–3:30pm · Thu 9:15am–7:30pm · Fri 9:15am–4:00pm · Sat 8:30am–3:30pm', phone: '+61 402 148 437', appointmentUrl: BOOKING_URL, directionsUrl: 'https://www.google.com/maps/dir/?api=1&destination=Suite+3%2C+412+Logan+Road%2C+Greenslopes+QLD+4120+Australia', description: 'Beauty studio in Greenslopes, Brisbane.'
+  id: 'greenslopes', name: 'Greenslopes', subtitle: 'Bella Beauty Brazil', address: 'Suite 3, 412 Logan Road', city: 'Greenslopes, QLD 4120, Australia', hours: 'Mon 11:30am–5:30pm · Tue 9:15am–7:00pm · Wed 1:30pm–4:00pm · Thu 9:15am–7:30pm · Fri 9:15am–4:00pm · Sat 8:30am–3:30pm', phone: '+61 402 148 437', appointmentUrl: BOOKING_URL, directionsUrl: 'https://www.google.com/maps/dir/?api=1&destination=Suite+3%2C+412+Logan+Road%2C+Greenslopes+QLD+4120+Australia', description: 'Beauty studio in Greenslopes, Brisbane.'
 }];
 
 export const TESTIMONIALS: Testimonial[] = [];
