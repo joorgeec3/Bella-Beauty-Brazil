@@ -1,8 +1,174 @@
 {
   "redirects": [
-    { "source": "/pt", "destination": "/", "permanent": true },
-    { "source": "/pt/:path*", "destination": "/:path*", "permanent": true },
-    { "source": "/es", "destination": "/", "permanent": true },
-    { "source": "/es/:path*", "destination": "/:path*", "permanent": true }
+    {
+      "source": "/pt",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/pt/:path*",
+      "destination": "/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/es",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/es/:path*",
+      "destination": "/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/lashes",
+      "destination": "/services/categories/lash-treatments",
+      "permanent": true
+    },
+    {
+      "source": "/lashes/",
+      "destination": "/services/categories/lash-treatments",
+      "permanent": true
+    },
+    {
+      "source": "/lash-lift",
+      "destination": "/services/lash-lift",
+      "permanent": true
+    },
+    {
+      "source": "/lash-lift/",
+      "destination": "/services/lash-lift",
+      "permanent": true
+    },
+    {
+      "source": "/brows",
+      "destination": "/services/categories/brow-artistry",
+      "permanent": true
+    },
+    {
+      "source": "/brows/",
+      "destination": "/services/categories/brow-artistry",
+      "permanent": true
+    },
+    {
+      "source": "/eyebrows",
+      "destination": "/services/categories/brow-artistry",
+      "permanent": true
+    },
+    {
+      "source": "/eyebrows/",
+      "destination": "/services/categories/brow-artistry",
+      "permanent": true
+    },
+    {
+      "source": "/brow-lamination",
+      "destination": "/services/brow-lamination",
+      "permanent": true
+    },
+    {
+      "source": "/brow-lamination/",
+      "destination": "/services/brow-lamination",
+      "permanent": true
+    },
+    {
+      "source": "/cosmetic-tattoo",
+      "destination": "/services/categories/cosmetic-tattooing",
+      "permanent": true
+    },
+    {
+      "source": "/cosmetic-tattoo/",
+      "destination": "/services/categories/cosmetic-tattooing",
+      "permanent": true
+    },
+    {
+      "source": "/cosmetic-tattooing",
+      "destination": "/services/categories/cosmetic-tattooing",
+      "permanent": true
+    },
+    {
+      "source": "/cosmetic-tattooing/",
+      "destination": "/services/categories/cosmetic-tattooing",
+      "permanent": true
+    },
+    {
+      "source": "/microblading",
+      "destination": "/services/nano-strokes",
+      "permanent": true
+    },
+    {
+      "source": "/microblading/",
+      "destination": "/services/nano-strokes",
+      "permanent": true
+    },
+    {
+      "source": "/nano-strokes",
+      "destination": "/services/nano-strokes",
+      "permanent": true
+    },
+    {
+      "source": "/nano-strokes/",
+      "destination": "/services/nano-strokes",
+      "permanent": true
+    },
+    {
+      "source": "/lip-blush",
+      "destination": "/services/lip-blush",
+      "permanent": true
+    },
+    {
+      "source": "/lip-blush/",
+      "destination": "/services/lip-blush",
+      "permanent": true
+    },
+    {
+      "source": "/skin",
+      "destination": "/services/categories/skin-treatments",
+      "permanent": true
+    },
+    {
+      "source": "/skin/",
+      "destination": "/services/categories/skin-treatments",
+      "permanent": true
+    },
+    {
+      "source": "/facials",
+      "destination": "/services/categories/skin-treatments",
+      "permanent": true
+    },
+    {
+      "source": "/facials/",
+      "destination": "/services/categories/skin-treatments",
+      "permanent": true
+    },
+    {
+      "source": "/dermaplaning",
+      "destination": "/services/dermaplaning",
+      "permanent": true
+    },
+    {
+      "source": "/dermaplaning/",
+      "destination": "/services/dermaplaning",
+      "permanent": true
+    },
+    {
+      "source": "/book",
+      "destination": "/contact",
+      "permanent": true
+    },
+    {
+      "source": "/book/",
+      "destination": "/contact",
+      "permanent": true
+    },
+    {
+      "source": "/booking",
+      "destination": "/contact",
+      "permanent": true
+    },
+    {
+      "source": "/booking/",
+      "destination": "/contact",
+      "permanent": true
+    }
   ]
 }
