@@ -532,6 +532,10 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({ serviceId,
               <a href={getServiceBookingUrl(base.id)} className="mt-7 inline-flex w-full items-center justify-center gap-2 bg-[#efb7c8] hover:bg-white text-[#5b3239] text-xs font-bold uppercase tracking-widest px-5 py-4 rounded-full cursor-pointer transition-colors"><Calendar className="w-4 h-4" />{translated(language, 'Book now', 'Agendar agora', 'Reservar ahora')}</a>
               
               <p className="font-montserrat text-xs text-neutral-300 mt-5 leading-relaxed">{translated(language, 'Bella Beauty Brazil · Suite 3, 412 Logan Road, Greenslopes, QLD 4120.', 'Bella Beauty Brazil · Suite 3, 412 Logan Road, Greenslopes, QLD 4120.', 'Bella Beauty Brazil · Suite 3, 412 Logan Road, Greenslopes, QLD 4120.')}</p>
+              <p className="font-montserrat text-xs text-neutral-300 mt-3 leading-relaxed">{translated(language,
+                `${service.title} for clients across Brisbane's Southside: Greenslopes, Coorparoo, Annerley, Stones Corner, Holland Park, Camp Hill, Tarragindi, Mount Gravatt, Carina, Moorooka and Woolloongabba.`,
+                `${service.title} para clientes de toda a zona sul de Brisbane: Greenslopes, Coorparoo, Annerley, Stones Corner, Holland Park, Camp Hill, Tarragindi, Mount Gravatt, Carina, Moorooka e Woolloongabba.`,
+                `${service.title} para clientas de toda la zona sur de Brisbane: Greenslopes, Coorparoo, Annerley, Stones Corner, Holland Park, Camp Hill, Tarragindi, Mount Gravatt, Carina, Moorooka y Woolloongabba.`)}</p>
             </div>
             <div className="bg-white rounded-2xl border border-[#e8d6d5] p-6">
               <h2 className="font-raleway text-xl font-bold uppercase tracking-wider text-[#5b3239]">{translated(language, 'Related services', 'Serviços relacionados', 'Servicios relacionados')}</h2>
