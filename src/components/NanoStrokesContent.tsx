@@ -18,7 +18,7 @@ type NanoText = {
 const copy: Record<Language, NanoText> = {
   en: {
     aboutTitle: 'About this treatment',
-    about: 'Nano Strokes is a manual microblading technique that creates fine, natural-looking hair strokes to enhance your brows. Using a Tebori hand tool, I follow the direction of your natural brow hairs to fill sparse areas and create a shape that complements your features.',
+    about: 'Microblading with my Nano Strokes technique is a manual cosmetic tattoo that creates fine, natural-looking hair strokes to enhance your brows. Using a Tebori hand tool, I follow the direction of your natural brow hairs to fill sparse areas and create a shape that complements your features.',
     suitabilityTitle: 'Is this treatment right for me?',
     suitability: 'For those wanting more definition with a natural hair-stroke appearance. I assess your skin, existing brows and any previous tattooing before recommending the most suitable technique.',
     benefitsTitle: 'Benefits',
@@ -49,7 +49,7 @@ const copy: Record<Language, NanoText> = {
     ],
     faqTitle: 'FAQs',
     faqs: [
-      { q: 'How long do Nano Strokes last?', a: 'Results typically last around 12 months and gradually fade over time. Longevity varies with skin type, lifestyle and aftercare. I assess your brows before recommending a refresh.' },
+      { q: 'How long does microblading (Nano Strokes) last?', a: 'Results typically last around 12 months and gradually fade over time. Longevity varies with skin type, lifestyle and aftercare. I assess your brows before recommending a refresh.' },
       { q: 'Will my brows look darker at first?', a: 'Yes. They may initially look darker and more defined. Colour changes and some flaking can occur during healing, so allow your skin to heal before judging the result.' },
       { q: 'Can I wear makeup or exercise afterwards?', a: 'Avoid brow makeup for 14 days and strenuous exercise or heavy sweating for 2–5 days. Allow longer if the area remains sensitive.' },
       { q: 'Can I book if I have an old brow tattoo?', a: 'Please send clear photos before booking so I can assess the existing pigment and discuss your options.' },
@@ -59,7 +59,7 @@ const copy: Record<Language, NanoText> = {
   },
   pt: {
     aboutTitle: 'Sobre este tratamento',
-    about: 'Nano Strokes é uma técnica manual de microblading que cria traços delicados com aparência natural. Usando a ferramenta manual Tebori, sigo a direção dos pelos naturais para preencher falhas e criar um formato que valorize seus traços.',
+    about: 'O microblading com a minha técnica Nano Strokes é uma tatuagem cosmética manual que cria traços delicados com aparência natural. Usando a ferramenta manual Tebori, sigo a direção dos pelos naturais para preencher falhas e criar um formato que valorize seus traços.',
     suitabilityTitle: 'Este tratamento é indicado para mim?',
     suitability: 'Para quem deseja maior definição sem perder o efeito natural de fios. Avalio sua pele, sobrancelhas e qualquer tatuagem anterior antes de recomendar a técnica mais adequada.',
     benefitsTitle: 'Benefícios',
@@ -100,7 +100,7 @@ const copy: Record<Language, NanoText> = {
   },
   es: {
     aboutTitle: 'Sobre este tratamiento',
-    about: 'Nano Strokes es una técnica manual de microblading que crea trazos delicados con aspecto natural. Con una herramienta manual Tebori, sigo la dirección natural del vello para rellenar zonas despobladas y crear una forma que favorezca tus rasgos.',
+    about: 'El microblading con mi técnica Nano Strokes es un tatuaje cosmético manual que crea trazos delicados con aspecto natural. Con una herramienta manual Tebori, sigo la dirección natural del vello para rellenar zonas despobladas y crear una forma que favorezca tus rasgos.',
     suitabilityTitle: '¿Es adecuado para mí?',
     suitability: 'Para quienes desean mayor definición manteniendo el aspecto natural de los trazos. Evalúo tu piel, cejas y cualquier tatuaje anterior antes de recomendar la técnica adecuada.',
     benefitsTitle: 'Beneficios',
@@ -156,7 +156,7 @@ const shadowCopy: Record<Language, NanoText> = {
     faqs: [
       { q: 'Will the colour look darker at first?', a: 'Yes. Colour can look stronger initially and soften as the brows heal.' },
       { q: 'What if I have previous brow tattooing?', a: 'Please send photos for assessment before booking.' },
-      { q: 'What is the difference between Shadow Brows and Nano Strokes?', a: 'Shadow Brows creates a soft, shaded effect similar to brow powder. My Nano Strokes technique uses a Tebori hand tool to create individual hair-like strokes.' },
+      { q: 'What is the difference between Shadow Brows and microblading (Nano Strokes)?', a: 'Shadow Brows creates a soft, shaded effect similar to brow powder. My Nano Strokes technique uses a Tebori hand tool to create individual hair-like strokes.' },
       { q: 'Will my brows look too bold?', a: 'Shadow Brows can be soft and subtle. I personalise the shape, colour and shading intensity to suit your features and preferred look.' },
       { q: 'How do you choose the shape and colour?', a: 'I assess your natural brows and facial features, then discuss the shape and colour with you before treatment.' },
     ],

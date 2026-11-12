@@ -14,7 +14,7 @@ export const FeaturesRibbon: React.FC<FeaturesRibbonProps> = ({ language, onOpen
     {
       image: getServicePhotos('shadow-brows')[1]?.src,
       title: 'Cosmetic Tattooing',
-      text: language === 'en' ? 'Nano Strokes • Shadow Brows • Lip Blush • Cosmetic Tattoo Removal.' : language === 'pt' ? 'Nano Strokes • Shadow Brows • Lip Blush • Remoção de Tatuagem Cosmética.' : 'Nano Strokes • Shadow Brows • Lip Blush • Eliminación de Tatuaje Cosmético.',
+      text: language === 'en' ? 'Microblading (Nano Strokes) • Shadow Brows • Lip Blush • Cosmetic Tattoo Removal.' : language === 'pt' ? 'Microblading (Nano Strokes) • Shadow Brows • Lip Blush • Remoção de Tatuagem Cosmética.' : 'Microblading (Nano Strokes) • Shadow Brows • Lip Blush • Eliminación de Tatuaje Cosmético.',
       footer: language === 'en' ? 'Cosmetic tattoo treatments' : language === 'pt' ? 'Tatuagem cosmética' : 'Tatuaje cosmético',
     },
     {

@@ -25,7 +25,7 @@ const details = {
     price: 'Price', duration: 'Duration', studio: 'Our studio in Greenslopes, Brisbane',
     guidance: 'Discuss personal suitability, preparation and aftercare with the studio before booking.',
     disclaimer: 'Photos from our Greenslopes studio.',
-    training: 'Explore one-to-one Nano Strokes, Lash Lift and Brow Lamination courses with Livia Rego.',
+    training: 'Explore one-to-one Microblading (Nano Strokes), Lash Lift and Brow Lamination courses with Livia Rego.',
   },
   pt: {
     html: 'pt-BR', search: 'Tratamentos de beleza em Greenslopes, Brisbane', home: 'Beleza e formação profissional em Greenslopes',

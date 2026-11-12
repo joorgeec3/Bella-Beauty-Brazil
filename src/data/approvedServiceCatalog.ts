@@ -6,7 +6,7 @@ export const APPROVED_SERVICE_CATALOG: ApprovedCategory[] = [
     id: 'cosmetic', title: 'Cosmetic Tattooing',
     intro: 'Enhance your brows and lips with colour and definition designed around you. Every treatment starts with a consultation to understand your preferences and plan a result that complements your features.',
     items: [
-      { name: 'Microblading – Nano Strokes', aud: 630, note: 'Initial treatment approximately 2.5 hours · Touch-up A$150, approximately 1.5 hours, charged separately · Timing to be confirmed', description: "Nano Strokes is an advanced form of microblading focused on creating delicate, realistic hair-like strokes. Using a manual tool called a Tebori, I design each pattern to follow the natural flow of your brow hairs, adding definition and filling gaps while respecting your individual features." },
+      { name: 'Microblading Brows (Nano Strokes)', aud: 630, note: 'Initial treatment approximately 2.5 hours · Touch-up A$150, approximately 1.5 hours, charged separately · Timing to be confirmed', description: "Nano Strokes is an advanced form of microblading focused on creating delicate, realistic hair-like strokes. Using a manual tool called a Tebori, I design each pattern to follow the natural flow of your brow hairs, adding definition and filling gaps while respecting your individual features." },
       { name: 'Shadow Brows', aud: 630, note: 'Initial treatment approximately 2.5 hours · Touch-up A$150, approximately 1.5 hours, charged separately · Timing to be confirmed', description: "Shading creates a softly filled-in appearance, similar to brow powder. The shape, colour and intensity are tailored to your features and preferences, from gentle definition to a more noticeable makeup effect." },
       { name: 'Lip Blush – Lip Tattooing', aud: 630, note: 'Initial treatment 2h30 · Lip Blush touch-up from 28 to 45 days; price and duration to be confirmed with the studio', description: "Enhance your natural lip colour and add definition with a shade selected especially for you. Lip Blush uses a cosmetic tattoo machine to introduce pigment into the lips. The colour looks stronger immediately after treatment and softens as the lips heal." },
       { name: 'Cosmetic Tattoo Removal', aud: 150, description: "Looking to lighten unwanted cosmetic tattoo pigment? I use THink Pigment Remover as a non-laser removal treatment, with suitability assessed before we begin. The number of sessions needed varies depending on the existing tattoo and how your skin responds. Multiple sessions may be required." },
@@ -99,7 +99,7 @@ const APPROVED_NAMES_BY_SERVICE_ID: Record<string,string> = {
   "wet-look-lashes": "Wet Look Lash Extensions",
   "lash-tint": "Lash Tint",
   "lash-extension-removal": "Lash Extension Removal",
-  "nano-strokes": "Microblading – Nano Strokes",
+  "nano-strokes": "Microblading Brows (Nano Strokes)",
   "shadow-brows": "Shadow Brows",
   "lip-blush": "Lip Blush – Lip Tattooing",
   "brow-sculpt": "Brow Sculpt Signature",

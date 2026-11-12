@@ -34,7 +34,7 @@ const copy: Record<Language, {
   en: {
     title: 'Beauty Treatments in Greenslopes, Brisbane',
     intro: 'Personalised beauty treatments in Greenslopes, Brisbane. Explore brows, lashes, cosmetic tattooing and skin treatments, with care tailored to you.',
-    search: 'Search treatments, e.g. nano strokes or lash lift',
+    search: 'Search treatments, e.g. microblading or lash lift',
     quick: 'Quick access',
     explore: 'Explore treatments',
     result: 'service', results: 'services', clear: 'Clear filters',
@@ -49,7 +49,7 @@ const copy: Record<Language, {
   pt: {
     title: 'Tratamentos de beleza em Greenslopes, Brisbane',
     intro: 'Tratamentos de beleza personalizados em Greenslopes, Brisbane. Conheça sobrancelhas, cílios, tatuagem cosmética e tratamentos de pele.',
-    search: 'Buscar tratamentos: nano strokes, cílios...',
+    search: 'Buscar tratamentos: microblading, cílios...',
     quick: 'Acesso rápido',
     explore: 'Explore os tratamentos',
     result: 'serviço', results: 'serviços', clear: 'Limpar filtros',
@@ -64,7 +64,7 @@ const copy: Record<Language, {
   es: {
     title: 'Tratamientos de belleza en Greenslopes, Brisbane',
     intro: 'Tratamientos de belleza personalizados en Greenslopes, Brisbane. Descubre cejas, pestañas, tatuaje cosmético y cuidado de la piel.',
-    search: 'Buscar tratamientos: nano strokes, pestañas...',
+    search: 'Buscar tratamientos: microblading, pestañas...',
     quick: 'Acceso rápido',
     explore: 'Explorar tratamientos',
     result: 'servicio', results: 'servicios', clear: 'Limpiar filtros',

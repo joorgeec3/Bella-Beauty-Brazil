@@ -138,7 +138,7 @@ export const StoreView: React.FC<StoreViewProps> = () => {
           </div>
           <div>
             <span className="inline-flex rounded-full bg-[#5b3239] px-3 py-1 font-montserrat text-[11px] font-bold uppercase tracking-widest text-[#efb7c8]">Signature course</span>
-            <h2 id="nano-course-heading" className="font-raleway text-3xl sm:text-4xl font-semibold text-[#5b3239] mt-4">Bella Nano Strokes Course</h2>
+            <h2 id="nano-course-heading" className="font-raleway text-3xl sm:text-4xl font-semibold text-[#5b3239] mt-4">Microblading Course – Bella Nano Strokes</h2>
             <p className="font-montserrat text-base leading-relaxed text-[#4c3b42] mt-4">Manual cosmetic tattooing with the Tebori tool. In three days of one-to-one training with Livia, you’ll learn to create fine, realistic, hair-like brow strokes that follow the natural movement of each client’s brows.</p>
             <p className="font-montserrat text-sm leading-relaxed text-[#4c3b42] mt-3">You start on synthetic skin, watch Livia perform a full treatment, and finish by doing your own supervised treatment on a real model. You leave with a professional kit, a manual, a certificate and six months of support.</p>
             <div className="flex flex-wrap gap-2 mt-5">
@@ -164,7 +164,7 @@ export const StoreView: React.FC<StoreViewProps> = () => {
           </div>
         </div>
         <div className="mt-10">
-          <h3 className="font-raleway text-xl font-semibold text-[#5b3239] text-center">Inside the Nano Strokes course</h3>
+          <h3 className="font-raleway text-xl font-semibold text-[#5b3239] text-center">Inside the Nano Strokes microblading course</h3>
           <div className="mt-5 grid grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
             <figure className="overflow-hidden rounded-2xl border border-[#e8d6d5] bg-white">
               <div className="w-full aspect-[3/4] bg-[#281d23]"><video src={siteAsset('assets/bella/training/courses-2026-11/nano-pigments-class.mp4')} poster={siteAsset('assets/bella/training/courses-2026-11/nano-pigments-class.webp')} controls playsInline preload="none" className="w-full h-full object-cover" /></div>

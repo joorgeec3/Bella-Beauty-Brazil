@@ -112,7 +112,7 @@ export default function App() {
     const metadata: Record<string, { title: string; description: string }> = {
       home: {
         title: 'Brows, Lashes & Cosmetic Tattooing in Greenslopes, Brisbane | Bella Beauty Brazil',
-        description: 'Bella Beauty Brazil by Livia Rego offers Nano Strokes, Microblading, Lip Blush, brows, lashes, skin treatments and professional courses in Greenslopes, Brisbane.',
+        description: 'Bella Beauty Brazil by Livia Rego offers cosmetic tattooing (microblading with Nano Strokes, Shadow Brows and Lip Blush), lash lift, brow lamination, brows, skin treatments and professional courses in Greenslopes, Brisbane Southside.',
       },
       about: {
         title: 'Meet Livia | Bella Beauty Brazil in Greenslopes',

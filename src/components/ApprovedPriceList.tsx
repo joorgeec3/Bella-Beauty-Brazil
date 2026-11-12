@@ -8,7 +8,7 @@ import { categoryPhotosFor } from '../data/bellaApprovedMedia';
 
 /** Matching PDF entries open a full service page with the correct client photos, when available. */
 const approvedServiceRoutes: Record<string,string> = {
-  "Microblading – Nano Strokes": "nano-strokes",
+  "Microblading Brows (Nano Strokes)": "nano-strokes",
   "Shadow Brows": "shadow-brows",
   "Lip Blush – Lip Tattooing": "lip-blush",
   "Cosmetic Tattoo Removal": "cosmetic-tattoo-removal",

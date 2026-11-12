@@ -15,7 +15,7 @@ const founderStory: Record<Language, { tagline: string; paragraphs: string[] }> 
       "Hi, I’m Livia Rego, founder of Bella Beauty Brazil, brow specialist, cosmetic tattoo artist and beauty educator based in Greenslopes, Brisbane.",
       "Originally from the Amazon region of Brazil, I moved to Australia looking for new challenges. With a background in foreign trade and air cargo sales, I never imagined beauty would become such a meaningful part of my life.",
       "I built Bella Beauty Brazil from a home-based business, growing through personal connections, loyal clients and the care I put into every appointment.",
-      "Brows are a special passion of mine. From carefully mapped brow sculpting to realistic Nano Strokes, I love the details that make each face unique. I also offer Lip Blush, lash treatments and facials, and share my knowledge through one-on-one beauty training.",
+      "Brows are a special passion of mine. From carefully mapped brow sculpting to realistic Nano Strokes microblading, I love the details that make each face unique. I also offer Lip Blush, lash treatments and facials, and share my knowledge through one-on-one beauty training.",
       "I believe good work takes time. That’s why I choose quality over quantity, giving each client my full attention. I take time to listen, understand your preferences and carefully plan your treatment. My goal is to earn your trust and build a lasting relationship, so you feel confident coming back to me.",
       "As a business owner and a mother, I know how much it means to take a little time for yourself. Whether you visit me for a quick brow appointment or a bigger change, I want you to feel welcome, listened to and cared for.",
       "I’d love to welcome you to Bella Beauty Brazil."

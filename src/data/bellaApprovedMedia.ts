@@ -15,7 +15,7 @@ const collection = (folder: string, count: number, title: string): TreatmentPhot
   }));
 
 export const PHOTO_FOLDERS = {
-  'nano-strokes': collection('nano-strokes',10,'Microblading – Nano Strokes'),
+  'nano-strokes': collection('nano-strokes',10,'Microblading Brows (Nano Strokes)'),
   'shadow-brows': collection('shadow-brows',7,'Shadow Brows'),
   'lip-blush': collection('lip-blush',14,'Lip Blush'),
   'cosmetic-tattoo-removal': collection('cosmetic-tattoo-removal',2,'Cosmetic Tattoo Removal'),
