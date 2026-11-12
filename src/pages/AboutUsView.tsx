@@ -14,8 +14,10 @@ const founderStory: Record<Language, { tagline: string; paragraphs: string[] }> 
     "paragraphs": [
       "Hi, I’m Livia Rego, founder of Bella Beauty Brazil, brow specialist, cosmetic tattoo artist and beauty educator based in Greenslopes, Brisbane.",
       "Originally from the Amazon region of Brazil, I moved to Australia looking for new challenges. With a background in foreign trade and air cargo sales, I never imagined beauty would become such a meaningful part of my life.",
+      "Brisbane has been my home for 11 years, and I now have 9 years of experience in beauty, specialising in brows, microblading and cosmetic tattooing.",
       "I built Bella Beauty Brazil from a home-based business, growing through personal connections, loyal clients and the care I put into every appointment.",
-      "Brows are a special passion of mine. From carefully mapped brow sculpting to realistic Nano Strokes microblading, I love the details that make each face unique. I also offer Lip Blush, lash treatments and facials, and share my knowledge through one-on-one beauty training.",
+      "Brows are a special passion of mine. From carefully mapped brow sculpting to realistic microblading with my Nano Strokes technique, I love the details that make each face unique. I also offer Lip Blush, lash treatments and facials, and share my knowledge through one-on-one beauty training.",
+      "As an educator, I keep my courses small and personal. My students receive in-depth technical content, close guidance during practice and ongoing support after the course, so they leave confident to work on their own clients.",
       "I believe good work takes time. That’s why I choose quality over quantity, giving each client my full attention. I take time to listen, understand your preferences and carefully plan your treatment. My goal is to earn your trust and build a lasting relationship, so you feel confident coming back to me.",
       "As a business owner and a mother, I know how much it means to take a little time for yourself. Whether you visit me for a quick brow appointment or a bigger change, I want you to feel welcome, listened to and cared for.",
       "I’d love to welcome you to Bella Beauty Brazil."
@@ -26,8 +28,10 @@ const founderStory: Record<Language, { tagline: string; paragraphs: string[] }> 
     "paragraphs": [
       "Oi, sou Livia Rego, fundadora da Bella Beauty Brazil, especialista em sobrancelhas, tatuagem cosmética e educadora na área da beleza em Greenslopes, Brisbane.",
       "Sou da região amazônica do Brasil e me mudei para a Austrália em busca de novos desafios. Com experiência em comércio exterior e vendas de carga aérea, nunca imaginei que a beleza se tornaria uma parte tão importante da minha vida.",
+      "Moro em Brisbane há 11 anos e tenho 9 anos de experiência na beleza, com especialização em sobrancelhas, microblading e tatuagem cosmética.",
       "Comecei a Bella Beauty Brazil atendendo em casa e cresci por meio de conexões pessoais, clientes fiéis e do cuidado que dedico a cada atendimento.",
       "As sobrancelhas são uma paixão especial. Da modelagem cuidadosa aos fios realistas de Nano Strokes, adoro os detalhes que tornam cada rosto único. Também ofereço Lip Blush, tratamentos de cílios e faciais, além de compartilhar meu conhecimento em cursos de beleza individuais.",
+      "Como educadora, mantenho meus cursos pequenos e personalizados. Minhas alunas recebem conteúdo técnico aprofundado, acompanhamento de perto durante a prática e suporte depois do curso, para saírem seguras para atender as próprias clientes.",
       "Acredito que um bom trabalho exige tempo. Por isso, prefiro qualidade à quantidade e dedico toda a minha atenção a cada cliente. Escuto suas preferências, procuro entender o que você deseja e planejo cada tratamento com cuidado. Meu objetivo é conquistar sua confiança e construir uma relação duradoura, para que você se sinta segura ao voltar.",
       "Como empresária e mãe, sei como é importante reservar um momento para cuidar de si. Seja para um atendimento rápido de sobrancelhas ou uma transformação maior, quero que você se sinta acolhida, ouvida e bem cuidada.",
       "Vou adorar receber você na Bella Beauty Brazil."
@@ -38,8 +42,10 @@ const founderStory: Record<Language, { tagline: string; paragraphs: string[] }> 
     "paragraphs": [
       "Hola, soy Livia Rego, fundadora de Bella Beauty Brazil, especialista en cejas, artista de tatuaje cosmético y educadora de belleza en Greenslopes, Brisbane.",
       "Soy originaria de la región amazónica de Brasil y me mudé a Australia en busca de nuevos desafíos. Con experiencia en comercio exterior y ventas de carga aérea, nunca imaginé que la belleza llegaría a ser una parte tan importante de mi vida.",
+      "Brisbane es mi hogar desde hace 11 años y tengo 9 años de experiencia en belleza, especializada en cejas, microblading y tatuaje cosmético.",
       "Comencé Bella Beauty Brazil desde casa y crecí gracias a las conexiones personales, a clientas fieles y al cuidado que pongo en cada cita.",
       "Las cejas son una pasión especial para mí. Desde el diseño cuidadoso hasta los trazos realistas de Nano Strokes, me encantan los detalles que hacen que cada rostro sea único. También ofrezco Lip Blush, tratamientos de pestañas y faciales, y comparto mis conocimientos en formación de belleza individual.",
+      "Como educadora, mantengo mis cursos pequeños y personalizados. Mis alumnas reciben contenido técnico en profundidad, acompañamiento cercano durante la práctica y apoyo después del curso, para que salgan seguras de atender a sus propias clientas.",
       "Creo que un buen trabajo requiere tiempo. Por eso prefiero la calidad a la cantidad y dedico toda mi atención a cada clienta. Escucho tus preferencias, me tomo el tiempo para entender lo que buscas y planifico tu tratamiento cuidadosamente. Mi objetivo es ganar tu confianza y construir una relación duradera para que te sientas segura al volver.",
       "Como empresaria y madre, sé lo importante que es dedicarte un momento a ti misma. Tanto si vienes para una cita rápida de cejas como para un cambio mayor, quiero que te sientas bienvenida, escuchada y cuidada.",
       "Me encantará recibirte en Bella Beauty Brazil."

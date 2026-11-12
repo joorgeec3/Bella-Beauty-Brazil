@@ -133,7 +133,7 @@ for (const group of SERVICE_GROUPS) {
 }
 // Keep all public entry pages crawlable as well; React takes over after hydration.
 const simplePages = {
-  about: ['Meet Livia Rego', 'Discover Bella Beauty Brazil, a personalised beauty studio in Greenslopes, Brisbane.'],
+  about: ['Meet Livia Rego', 'Livia Rego is the founder of Bella Beauty Brazil in Greenslopes, Brisbane: a brow specialist, microblading and cosmetic tattoo artist and beauty educator with 9 years of experience, living in Brisbane for 11 years.'],
   services: ['Beauty Treatments in Greenslopes, Brisbane', 'Personalised beauty treatments in Greenslopes, Brisbane. Explore brows, lashes, cosmetic tattooing and skin treatments, with care tailored to you.'],
   courses: ['Professional Beauty Courses', 'Explore one-on-one Lash Lift & Tint, Brow Lamination and Bella Nano Strokes microblading training in Brisbane.'],
   locations: ['Find Us & Opening Hours', 'Visit Bella Beauty Brazil at Suite 3, 412 Logan Road, Greenslopes QLD 4120.'],
@@ -141,8 +141,9 @@ const simplePages = {
 };
 for (const [slug, [title, description]] of Object.entries(simplePages)) {
   const canonicalUrl = `${siteOrigin}/${slug}`;
+  const aboutText = slug === 'about' ? '<h2>Experience</h2><p>Originally from the Amazon region of Brazil, Livia has called Brisbane home for 11 years and has 9 years of experience in beauty. She specialises in brows, microblading (her Nano Strokes technique, drawn by hand with a Tebori tool), Shadow Brows, Lip Blush, lash lift, brow lamination and facials.</p><h2>How Livia works</h2><p>Quality over quantity: every appointment includes time to listen, assess the skin and plan the treatment, with an honest recommendation of the most suitable technique.</p><h2>Beauty educator</h2><p>Livia teaches small, one-on-one courses in Lash Lift &amp; Tint, Brow Lamination and microblading, with in-depth technical content, close guidance during practice and ongoing support after the course.</p><h2>Location</h2><p>Suite 3, 412 Logan Road, Greenslopes, serving Brisbane Southside clients from Coorparoo, Annerley, Stones Corner, Holland Park, Camp Hill, Tarragindi, Mount Gravatt, Carina, Moorooka and Woolloongabba.</p>' : '';
   const catalogueLinks = slug === 'services' ? `<h2>Our treatment categories</h2><ul>${SERVICE_GROUPS.map(group => `<li><a href="${siteOrigin}/services/categories/${group.id}">${escapeHtml(group.title.en)}</a></li>`).join('')}</ul>` : '';
-  const body = `<main><article><h1>${escapeHtml(title)}</h1><p>${escapeHtml(description)}</p>${catalogueLinks}<a href="https://book.gettimely.com/bellabrazil/book/embed?client-login=true">Book with Bella Beauty Brazil</a></article></main>`;
+  const body = `<main><article><h1>${escapeHtml(title)}</h1><p>${escapeHtml(description)}</p>${aboutText}${catalogueLinks}<a href="https://book.gettimely.com/bellabrazil/book/embed?client-login=true">Book with Bella Beauty Brazil</a></article></main>`;
   const html = renderPage({ title: `${title} | Bella Beauty Brazil`, description, canonicalUrl, body });
   // Use directories for informational routes on every host. /services already exists
   // as a directory for individual treatment pages; writing dist/services as a file
