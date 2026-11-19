@@ -78,3 +78,15 @@ section.bg-\[\#3c3033\],
   background-image: linear-gradient(to top, rgba(46, 37, 40, 0.55), rgba(46, 37, 40, 0.12) 55%, rgba(255, 255, 255, 0)) !important;
 }
 section.bg-\[\#5b3239\] img.brightness-\[0\.82\] { filter: brightness(0.95) contrast(1.02) !important; }
+
+/* 4. Round 2 (Livia's feedback): stronger card descriptions, no faded photo behind */
+:is(.bg-\[\#181214\], .bg-\[\#21171c\], section.bg-\[\#3c3033\], .bg-black, .bg-\[\#22181b\], .bg-\[\#1c1416\])
+  :is([class*="text-[#e"], [class*="text-[#f"]):not([class*="bg-[#"]):not(.text-\[\#efb7c8\]):not(.text-\[\#f3c9d4\]):not(.text-\[\#f8d1dd\]):not(.text-\[\#e5acbc\]) {
+  color: var(--lt-text) !important;
+}
+.bg-\[\#22181b\] p.text-\[\#e8d9dd\] { color: #4c3b42 !important; font-weight: 500; }
+.bg-\[\#22181b\] .text-\[\#e5acbc\] { color: var(--lt-wine) !important; }
+/* Decorative faded portraits behind the treatments section: hidden on the light theme */
+.bg-\[\#181214\] > img[aria-hidden="true"].pointer-events-none,
+.bg-\[\#21171c\] > img[aria-hidden="true"].pointer-events-none,
+section.bg-\[\#3c3033\] > img[aria-hidden="true"].pointer-events-none { display: none !important; }
