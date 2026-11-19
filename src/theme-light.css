@@ -90,3 +90,36 @@ section.bg-\[\#5b3239\] img.brightness-\[0\.82\] { filter: brightness(0.95) cont
 .bg-\[\#181214\] > img[aria-hidden="true"].pointer-events-none,
 .bg-\[\#21171c\] > img[aria-hidden="true"].pointer-events-none,
 section.bg-\[\#3c3033\] > img[aria-hidden="true"].pointer-events-none { display: none !important; }
+
+/* 5. Round 3: reviews, opening hours and anything still pale */
+/* Review card and opening-hours card become white cards */
+.bg-\[\#4a383c\],
+aside.bg-\[\#3c3033\] {
+  background-color: var(--lt-card) !important;
+  color: var(--lt-text) !important;
+  border-color: var(--lt-line) !important;
+  box-shadow: 0 14px 34px -20px rgba(91, 50, 57, 0.4) !important;
+}
+/* Headings and big numbers inside the light sections: always wine */
+:is(section.bg-\[\#3c3033\], aside.bg-\[\#3c3033\], .bg-\[\#4a383c\], .bg-\[\#181214\], .bg-\[\#21171c\], .bg-black) :is(h1, h2, h3, h4, p, span, li, blockquote):not([class*="text-[#"]):not([class*="bg-[#"]):not([class*="text-emerald"]) {
+  color: var(--lt-wine) !important;
+}
+:is(section.bg-\[\#3c3033\], aside.bg-\[\#3c3033\], .bg-\[\#4a383c\]) :is(.text-white, .text-neutral-300, .text-neutral-400):not([class*="bg-[#"]) {
+  color: var(--lt-text) !important;
+}
+:is(section.bg-\[\#3c3033\], aside.bg-\[\#3c3033\], .bg-\[\#4a383c\]) .text-\[\#efb7c8\]:not([class*="bg-[#"]) { color: var(--lt-rose) !important; }
+/* Stars keep their rose fill */
+:is(section.bg-\[\#3c3033\], .bg-\[\#4a383c\]) .fill-\[\#efb7c8\] { fill: #c9798c !important; color: #c9798c !important; }
+/* Review arrows: wine outline instead of white glass */
+:is(section.bg-\[\#3c3033\], .bg-\[\#4a383c\]) button.bg-white\/10 {
+  background-color: #fff !important;
+  border-color: var(--lt-line) !important;
+  color: var(--lt-wine) !important;
+}
+/* Opening hours rows */
+aside.bg-\[\#3c3033\] [class*="bg-white/"] { background-color: var(--lt-chip) !important; border-color: var(--lt-line) !important; }
+aside.bg-\[\#3c3033\] .bg-\[\#9a5967\]\/35 { background-color: #f6e4e8 !important; color: var(--lt-wine) !important; --tw-ring-color: #e3c3cb !important; }
+aside.bg-\[\#3c3033\] .text-emerald-200 { color: #2f7a52 !important; }
+aside.bg-\[\#3c3033\] .bg-emerald-500\/20 { background-color: #e3f3ea !important; }
+/* Header icons a little stronger */
+header .text-\[\#5c4943\] { color: var(--lt-wine) !important; }
