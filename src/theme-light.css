@@ -126,3 +126,27 @@ header .text-\[\#5c4943\] { color: var(--lt-wine) !important; }
 /* Text inside filled wine/rose buttons stays white (beats the rules above) */
 :is([class^="bg-[#5b3239]"], [class*=" bg-[#5b3239]"], [class^="bg-[#7a4753]"], [class*=" bg-[#7a4753]"], [class^="bg-[#9a5967]"], [class*=" bg-[#9a5967] "], [class$=" bg-[#9a5967]"]) :is(span, p, svg, strong):not(#lt-keep) { color: #fff !important; }
 :is([class^="bg-[#5b3239]"], [class*=" bg-[#5b3239]"], [class^="bg-[#7a4753]"], [class*=" bg-[#7a4753]"], [class^="bg-[#9a5967]"], [class*=" bg-[#9a5967] "], [class$=" bg-[#9a5967]"]):not(#lt-keep) { color: #fff !important; }
+
+/* 6. Round 4: elegant hero title + solid, clear header */
+/* "SIGNATURE CARE": lighter, finer serif instead of heavy bold white */
+section.bg-\[\#5b3239\] h1.font-bold {
+  font-family: 'Cormorant Garamond', 'Instrument Serif', serif !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.08em !important;
+  color: #fbf4ef !important;
+  font-size: clamp(2.5rem, 8.5vw, 6.25rem) !important;
+  line-height: 1.05 !important;
+  text-shadow: 0 2px 22px rgba(30, 18, 22, 0.35) !important;
+}
+section.bg-\[\#5b3239\] h2.font-extralight {
+  font-family: 'Cormorant Garamond', serif !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.32em !important;
+  color: #f6e3e8 !important;
+}
+/* Header: solid ivory, wine icons and labels, solid wine Book Now */
+header.sticky { background-color: #fbf8f6 !important; backdrop-filter: none !important; }
+header .text-\[\#5c4943\], header .text-\[\#9a5967\], header .text-\[\#3c3033\] { color: var(--lt-wine) !important; opacity: 1 !important; }
+header button.bg-\[\#9a5967\] { background-color: var(--lt-wine) !important; box-shadow: 0 4px 14px rgba(91, 50, 57, 0.25) !important; }
+header button.bg-\[\#9a5967\]:hover { background-color: #7a4753 !important; }
+header svg { opacity: 1 !important; }
