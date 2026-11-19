@@ -150,3 +150,19 @@ header .text-\[\#5c4943\], header .text-\[\#9a5967\], header .text-\[\#3c3033\] 
 header button.bg-\[\#9a5967\] { background-color: var(--lt-wine) !important; box-shadow: 0 4px 14px rgba(91, 50, 57, 0.25) !important; }
 header button.bg-\[\#9a5967\]:hover { background-color: #7a4753 !important; }
 header svg { opacity: 1 !important; }
+
+/* 7. Brand colours from the studio sign: wine + champagne gold on light */
+:root { --lt-gold: #9c7650; --lt-gold-soft: #c9a87e; --lt-gold-line: #e3cfb2; }
+/* Small uppercase labels above titles: champagne gold */
+:is(p, span, div).uppercase.text-\[\#9a5967\]:not([class*="bg-[#"]),
+:is(p, span, div).uppercase.text-\[\#efb7c8\]:not([class*="bg-[#"]),
+:is(p, span, div).uppercase.text-\[\#e5acbc\]:not([class*="bg-[#"]) { color: var(--lt-gold) !important; }
+/* Stars and the little decorative icons: gold */
+.fill-\[\#efb7c8\], .fill-\[\#fbbc04\] { fill: var(--lt-gold-soft) !important; color: var(--lt-gold-soft) !important; }
+/* Thin rules under headings: gold */
+.bg-\[\#9a5967\].h-0\.5, .bg-\[\#9a5967\].h-px, .location-rule { background: linear-gradient(90deg, var(--lt-gold-soft), var(--lt-gold-line)) !important; }
+/* Card outlines on the light sections: soft champagne */
+:is(.bg-\[\#22181b\], .bg-\[\#4a383c\], aside.bg-\[\#3c3033\]) { border-color: var(--lt-gold-line) !important; }
+/* Header: gold pulse dot and divider */
+header .bg-\[\#9a5967\].rounded-full.animate-pulse { background-color: var(--lt-gold-soft) !important; }
+header.sticky { border-bottom-color: var(--lt-gold-line) !important; }

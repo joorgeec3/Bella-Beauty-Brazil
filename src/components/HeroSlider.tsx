@@ -15,20 +15,20 @@ export const HeroSlider: React.FC<HeroSliderProps> = ({ onOpenAppointment, onOpe
   <section className="relative w-full overflow-hidden bg-[#f8f3f0] select-none">
     <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[1fr_1.05fr] items-stretch lg:min-h-[640px]">
       {/* Photo */}
-      <div className="relative order-1 lg:order-2 h-[56vh] min-h-[340px] max-h-[560px] lg:h-auto lg:max-h-none lg:my-10 lg:mr-8 overflow-hidden lg:rounded-[32px] scroll-motion-layer" data-scroll-motion>
+      <div className="relative order-1 lg:order-2 lg:ring-1 lg:ring-[#d9c3a3] lg:ring-offset-8 lg:ring-offset-[#f8f3f0] h-[56vh] min-h-[340px] max-h-[560px] lg:h-auto lg:max-h-none lg:my-10 lg:mr-8 overflow-hidden lg:rounded-[32px] scroll-motion-layer" data-scroll-motion>
         <img src={SITE_IMAGES.hero.mainBella} alt="Bella Beauty Brazil beauty studio in Greenslopes, Brisbane" className="hero-image-drift w-full h-full object-cover object-[center_30%]" />
         <div className="absolute inset-0 bg-gradient-to-t from-[#f8f3f0] via-transparent to-transparent lg:hidden" aria-hidden="true" />
       </div>
 
       {/* Text */}
       <div className="relative order-2 lg:order-1 -mt-16 lg:mt-0 px-6 sm:px-10 lg:pl-12 xl:pl-16 lg:pr-6 pb-14 lg:py-16 flex flex-col justify-center text-center lg:text-left hero-content-reveal">
-        <p className="font-montserrat text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.32em] text-[#9a5967]">Greenslopes · Brisbane Southside</p>
+        <p className="font-montserrat text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.32em] text-[#9c7650]">Greenslopes · Brisbane Southside</p>
         <p style={{ fontFamily: SERIF }} className="mt-4 text-[15px] sm:text-lg tracking-[0.34em] uppercase text-[#5b3239]">Bella Beauty Brazil</p>
         <h1 style={{ fontFamily: SERIF }} className="mt-3 font-medium text-[#5b3239] text-[2.6rem] leading-[1.02] sm:text-6xl lg:text-[4.4rem]">
           Signature Care
           <span className="block italic font-normal text-[#9a5967] text-[1.6rem] sm:text-4xl lg:text-[2.7rem] mt-2">for brows, lashes &amp; skin</span>
         </h1>
-        <div className="mx-auto lg:mx-0 mt-6 h-px w-16 bg-[#c9a3ad]" aria-hidden="true" />
+        <div className="mx-auto lg:mx-0 mt-6 h-px w-20 bg-gradient-to-r from-[#c9a87e] to-[#e6d3b8]" aria-hidden="true" />
         <p className="mt-6 max-w-md mx-auto lg:mx-0 font-montserrat text-sm sm:text-base leading-relaxed text-[#4c3b42]">
           Cosmetic tattoo, brow lamination, lash lift and more, personalised by Livia Rego with 9 years of experience.
         </p>
@@ -39,8 +39,8 @@ export const HeroSlider: React.FC<HeroSliderProps> = ({ onOpenAppointment, onOpe
         <a href={GOOGLE_REVIEWS_URL} target="_blank" rel="noopener noreferrer" aria-label="See Bella Beauty Brazil’s Google reviews: rated 5.0 from 126 reviews" className="group mt-7 inline-flex items-center justify-center lg:justify-start gap-2 self-center lg:self-start font-montserrat text-xs text-[#5b3239] hover:text-[#9a5967] transition-colors">
           <span className="flex h-[22px] w-[22px] shrink-0 items-center justify-center rounded-full bg-white shadow-sm"><img src={siteAsset('/assets/bella/google-g-logo.png')} alt="" aria-hidden="true" className="h-[14px] w-[14px] object-contain" /></span>
           <span className="font-semibold">5.0</span>
-          <span className="inline-flex gap-px" aria-hidden="true">{Array.from({ length: 5 }, (_, index) => <Star key={index} className="h-3 w-3 fill-[#fbbc04] text-[#fbbc04]" />)}</span>
-          <span className="underline underline-offset-4 decoration-[#c9a3ad]">126 Google reviews</span>
+          <span className="inline-flex gap-px" aria-hidden="true">{Array.from({ length: 5 }, (_, index) => <Star key={index} className="h-3 w-3 fill-[#c9a87e] text-[#c9a87e]" />)}</span>
+          <span className="underline underline-offset-4 decoration-[#c9a87e]">126 Google reviews</span>
         </a>
       </div>
     </div>
