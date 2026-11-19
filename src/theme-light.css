@@ -123,3 +123,6 @@ aside.bg-\[\#3c3033\] .text-emerald-200 { color: #2f7a52 !important; }
 aside.bg-\[\#3c3033\] .bg-emerald-500\/20 { background-color: #e3f3ea !important; }
 /* Header icons a little stronger */
 header .text-\[\#5c4943\] { color: var(--lt-wine) !important; }
+/* Text inside filled wine/rose buttons stays white (beats the rules above) */
+:is([class*="bg-[#5b3239]"], [class*="bg-[#7a4753]"], [class*="bg-[#9a5967]"]):not([class*="/"]) :is(span, p, svg, strong):not(#lt-keep) { color: #fff !important; }
+:is([class*="bg-[#5b3239]"], [class*="bg-[#7a4753]"], [class*="bg-[#9a5967]"]):not([class*="/"]):not(#lt-keep) { color: #fff !important; }
