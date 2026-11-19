@@ -1,0 +1,80 @@
+/*
+ * LIGHT THEME TEST (Nov 2026) — Livia asked to preview the site with a
+ * soft, light look instead of the dark burgundy sections.
+ * Everything is in this one file, so the test can be removed by deleting
+ * the import in main.tsx.
+ *
+ * Palette: ivory page, white cards, wine/burgundy text, rose accents.
+ */
+:root {
+  --lt-page: #f8f3f0;
+  --lt-soft: #f3e9e6;
+  --lt-card: #ffffff;
+  --lt-chip: #fbf5f4;
+  --lt-line: #ead8db;
+  --lt-wine: #5b3239;
+  --lt-text: #4c3b42;
+  --lt-rose: #9a5967;
+}
+
+/* 1. Dark sections become light */
+.bg-\[\#181214\],
+.bg-\[\#21171c\],
+section.bg-\[\#3c3033\],
+.bg-black {
+  background-color: var(--lt-page) !important;
+  color: var(--lt-text) !important;
+}
+.bg-\[\#181214\].border-t,
+.bg-black.border-t { border-color: var(--lt-line) !important; }
+
+/* Cards and chips inside those sections */
+.bg-\[\#22181b\] {
+  background-color: var(--lt-card) !important;
+  border-color: var(--lt-line) !important;
+  box-shadow: 0 10px 30px -18px rgba(91, 50, 57, 0.35) !important;
+}
+.bg-\[\#1c1416\] {
+  background-color: var(--lt-chip) !important;
+  border-color: var(--lt-line) !important;
+}
+/* Photo frames inside cards: soft blush instead of near-black */
+.bg-\[\#22181b\] .bg-\[\#181214\],
+.bg-\[\#181214\] .bg-\[\#181214\] { background-color: #f4ebe9 !important; }
+.from-\[\#70424f\].via-\[\#4e313d\] {
+  background-image: linear-gradient(135deg, #f6e6ea, #efdde1, #e6cfd5) !important;
+}
+
+/* 2. Light text inside the now-light sections becomes wine / rose */
+:is(.bg-\[\#181214\], .bg-\[\#21171c\], section.bg-\[\#3c3033\], .bg-black, .bg-\[\#22181b\], .bg-\[\#1c1416\])
+  :is(.text-white, .text-white\/95, .text-white\/90, .text-white\/85, .text-white\/80, .text-white\/70, .text-neutral-200, .text-neutral-300, .text-neutral-400, .text-\[\#f2e4e8\], .text-\[\#f3dfe6\], .text-\[\#f4e0e4\]):not([class*="bg-[#"]):not([class*="bg-white"]) {
+  color: var(--lt-wine) !important;
+}
+:is(.bg-\[\#181214\], .bg-\[\#21171c\], section.bg-\[\#3c3033\], .bg-black, .bg-\[\#22181b\], .bg-\[\#1c1416\])
+  :is(.text-\[\#f3c9d4\], .text-\[\#f8d1dd\], .text-\[\#efb7c8\], .text-\[\#e5acbc\]):not([class*="bg-[#"]) {
+  color: var(--lt-rose) !important;
+}
+/* Body copy a touch softer than headings */
+:is(.bg-\[\#181214\], .bg-\[\#21171c\], section.bg-\[\#3c3033\], .bg-black) p.text-neutral-300,
+:is(.bg-\[\#181214\], .bg-\[\#21171c\], section.bg-\[\#3c3033\], .bg-black) p.text-neutral-400 {
+  color: var(--lt-text) !important;
+}
+/* Buttons that keep their own dark fill keep white text */
+:is([class*="bg-[#5b3239]"], [class*="bg-[#7a4753]"], [class*="bg-[#9a5967]"]) :is(.text-white, svg) { color: #fff !important; }
+/* Outline buttons that were white-on-dark */
+:is(.bg-\[\#21171c\], section.bg-\[\#3c3033\], .bg-black) a.text-white[class*="border"],
+:is(.bg-\[\#21171c\], section.bg-\[\#3c3033\], .bg-black) button.text-white[class*="border"] {
+  color: var(--lt-wine) !important;
+  border-color: rgba(154, 89, 103, 0.5) !important;
+}
+/* Dividers / white hairlines on the old dark background */
+:is(.bg-\[\#181214\], .bg-\[\#21171c\], section.bg-\[\#3c3033\], .bg-black) :is(.border-white\/10, .border-white\/20, .border-neutral-800) {
+  border-color: var(--lt-line) !important;
+}
+:is(.bg-\[\#181214\], .bg-\[\#21171c\], .bg-black) .fill-current.text-white { color: var(--lt-page) !important; }
+
+/* 3. Hero: keep the photo, remove the heavy burgundy wash */
+.from-\[\#2e2528\]\/90.via-\[\#5b3239\]\/30 {
+  background-image: linear-gradient(to top, rgba(46, 37, 40, 0.55), rgba(46, 37, 40, 0.12) 55%, rgba(255, 255, 255, 0)) !important;
+}
+section.bg-\[\#5b3239\] img.brightness-\[0\.82\] { filter: brightness(0.95) contrast(1.02) !important; }
